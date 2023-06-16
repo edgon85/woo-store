@@ -3,25 +3,43 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --darkPrimary: #c2185b;
+  --lightPrimary: #f8bbd0;
+  --primary: #e91e63;
+  --white: #ffffff;
+  --accent: #8bc34a;
+  --primary-text: #212121;
+  --secondary-text: #757575;
+  --divider: #bdbdbd;
+  --black: #000000;
+  --grey: #f9f8f8;
+  --bg: #f6f6f6;
+  --green-1: #65c482;
+  --green-2: #2d9d20;
+  --grey-2: #fbfdff;
+  --grey-3: #656f7e;
+  --red: #ff4a4a;
+  --grey-4: #b8b4b4;
+  --title-32bold: 700 2rem/2.25rem Roboto;
+  --title-45bold: 700 2.8125rem / normal Roboto;
+  --subtitle-22medium: 500 1.375rem/1.625rem Roboto;
+  --subtitle-22bold: 700 1.375rem/1.625rem Roboto;
+  --body-16regular: 400 1rem/1.25rem Roboto;
+  --body-16bold: 700 1rem/1.25rem Roboto;
+  --body-14regular: 400 0.875rem/1.125rem Roboto;
+  --body-14regular_u: 500 0.875rem/1.25rem Roboto;
+  --caption-12bold: 700 0.75rem/1rem Roboto;
+  --caption-12regular: 400 0.75rem/1rem Roboto;
+  --caption-12regular_u: 400 0.75rem/1.25rem Roboto;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font: var(--body-14regular);
+  background-color: var(--bg);
+}
+
+.main-wrapper {
+  max-width: 1366px;
+  /* border: 1px solid red; */
+  margin: auto;
 }
