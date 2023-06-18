@@ -1,0 +1,78 @@
+.navbar {
+  background: var(--white);
+}
+
+.content {
+  block-size: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Navbar Search */
+
+.navbarSearch {
+  border: 1px solid var(--divider);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  flex: 1;
+  min-width: 41.875rem;
+}
+
+.navbarContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline-start: 1rem;
+}
+
+.inputContent {
+  block-size: 44px;
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inputContent input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  outline: none;
+  border: none;
+  border-right: 1px solid var(--divider);
+}
+
+.select-content {
+  block-size: 44px;
+  background-color: #f6f9fc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 1rem;
+}
+
+.select-content select {
+  border: none;
+  background: transparent;
+  color: var(--primary-text);
+  outline: none;
+}
+
+.inputContent input::placeholder,
+.inputContent input::-webkit-input-placeholder {
+  color: var(--secondary-text);
+}
+
+.inputContent input :-ms-input-placeholder {
+  color: var(--secondary-text);
+}
+
+
+.navbar-actions {
+    /* border: 1px solid red; */
+    display: flex;
+    gap: .5rem;
+  }
