@@ -4,6 +4,7 @@ export * from './CurrencyIcon';
 export * from './HangerIcon';
 export * from './HeartIcon';
 export * from './LogoutIcon';
+export * from './MenuIcon';
 export * from './SearchIcon';
 export * from './SettingsIcon';
 export * from './UserIcon';
