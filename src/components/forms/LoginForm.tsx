@@ -1,9 +1,27 @@
+import { isEmail, isPassword } from '@/utils';
 import Link from 'next/link';
 
+import { useForm } from 'react-hook-form';
+
+type FormData = {
+  email: string;
+  password: string;
+};
+
 export const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onLoginUser = ({ email, password }: FormData) => {
+    console.log({ email, password });
+  };
+
   return (
     <div className="w-full">
-      <form>
+      <form onSubmit={handleSubmit(onLoginUser)} noValidate>
         <div className="mb-3">
           <label
             htmlFor="large-input"
@@ -12,11 +30,25 @@ export const LoginForm = () => {
             Correo
           </label>
           <input
-            type="text"
+            type="email"
             id="large-input"
-            className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
+            className={`block w-full p-4  ${
+              !errors.email
+                ? 'border border-divider text-gray-900'
+                : 'bg-red-50 border border-red-500 text-red-900'
+            } rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none`}
+            // className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
             placeholder="user@correo.com"
+            {...register('email', {
+              required: 'Este campo es requerido',
+              validate: isEmail,
+            })}
           />
+          {errors.email && (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+              {errors.email.message}
+            </p>
+          )}
         </div>
         <div className="mb-3">
           <label
@@ -28,9 +60,23 @@ export const LoginForm = () => {
           <input
             type="password"
             id="password-input"
-            className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
+            // className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
+            className={`block w-full p-4  ${
+              !errors.password
+                ? 'border border-divider text-gray-900'
+                : 'bg-red-50 border border-red-500 text-red-900'
+            } rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none`}
             placeholder="contraseña"
+            {...register('password', {
+              required: 'Este campo es requerido',
+              minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+            })}
           />
+          {errors.password && (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
         <button

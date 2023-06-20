@@ -1,23 +1,27 @@
+import { isEmail, isPassword } from '@/utils';
 import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+
+type FormData = {
+  fullName: string;
+  email: string;
+  password: string;
+};
 
 export const RegisterForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onRegisterUser = ({ fullName, email, password }: FormData) => {
+    console.log({ fullName, email, password });
+  };
+
   return (
     <div className="w-full">
-      <form>
-        <div className="mb-3">
-          <label
-            htmlFor="large-input"
-            className="block mb-2 text-lg font-medium text-gray-900"
-          >
-            Correo
-          </label>
-          <input
-            type="text"
-            id="large-input"
-            className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            placeholder="Nombre y apellido"
-          />
-        </div>
+      <form onSubmit={handleSubmit(onRegisterUser)}>
         <div className="mb-3">
           <label
             htmlFor="large-input"
@@ -26,11 +30,43 @@ export const RegisterForm = () => {
             Nombre y apellido
           </label>
           <input
+            type="text"
+            id="large-input"
+            className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
+            placeholder="Nombre y apellido"
+            {...register('fullName', {
+              required: 'Este campo es requerido',
+              minLength: { value: 3, message: 'Mínimo 3 caracteres' },
+            })}
+          />
+          {errors.fullName && (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+              {errors.fullName.message}
+            </p>
+          )}
+        </div>
+        <div className="mb-3">
+          <label
+            htmlFor="large-input"
+            className="block mb-2 text-lg font-medium text-gray-900"
+          >
+            Correo electrónico
+          </label>
+          <input
             type="email"
             id="large-input"
             className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
             placeholder="user@correo.com"
+            {...register('email', {
+              required: 'Este campo es requerido',
+              validate: isEmail,
+            })}
           />
+          {errors.email && (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+              {errors.email.message}
+            </p>
+          )}
         </div>
         <div className="mb-3">
           <label
@@ -44,7 +80,17 @@ export const RegisterForm = () => {
             id="password-input"
             className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
             placeholder="contraseña"
+            {...register('password', {
+              required: 'Este campo es requerido',
+              minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+              validate: isPassword,
+            })}
           />
+          {errors.password && (
+            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
         <button
