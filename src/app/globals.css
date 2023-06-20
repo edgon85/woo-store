@@ -20,6 +20,8 @@
   --grey-3: #656f7e;
   --red: #ff4a4a;
   --grey-4: #b8b4b4;
+  --facebook: #3b5998;
+  --google: #4285f4;
   --title-32bold: 700 2rem/2.25rem Roboto;
   --title-45bold: 700 2.8125rem / normal Roboto;
   --subtitle-22medium: 500 1.375rem/1.625rem Roboto;
@@ -43,3 +45,7 @@ body {
   /* border: 1px solid red; */
   margin: auto;
 }
+/* input:focus {
+  border-bottom: red !important;
+  outline: none;
+} */
