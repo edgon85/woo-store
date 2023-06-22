@@ -11,8 +11,10 @@ import {
   UserIcon,
 } from '../icons';
 import { DropdownItem } from './DropdownItem';
+import { useAuth } from '@/hooks';
 
 export const DropdownAccount = () => {
+  const { logout } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -63,7 +65,10 @@ export const DropdownAccount = () => {
             <DropdownItem title="Configuración" icon={<SettingsIcon />} />
           </ul>
           <div className="py-2">
-            <button className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">
+            <button
+              onClick={logout}
+              className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+            >
               <LogoutIcon />
               Cerrar sesión
             </button>

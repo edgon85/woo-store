@@ -5,15 +5,17 @@ import { BtnCircle } from '../buttons';
 import { DropdownAccount } from '../dropdowns';
 import { BellIcon, SearchIcon } from '../icons';
 import Link from 'next/link';
+import { useAuth } from '@/hooks';
 
 export const NavbarActions = () => {
   const session = useSession();
 
-  const { status } = session;
+  // const { status } = session;
+  const { isLoggedIn } = useAuth();
 
   return (
     <div className="flex gap-2">
-      {status === 'unauthenticated' && (
+      {!isLoggedIn && (
         <Link
           href={'/auth/login'}
           type="button"
@@ -26,7 +28,7 @@ export const NavbarActions = () => {
         <BtnCircle icon={<SearchIcon />} />
       </div>
 
-      {status === 'authenticated' && (
+      {isLoggedIn && (
         <>
           <DropdownAccount />
 
