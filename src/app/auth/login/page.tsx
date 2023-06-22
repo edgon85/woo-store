@@ -1,10 +1,30 @@
 'use client';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { redirect, useSearchParams } from 'next/navigation';
 
 import { BtnSocial, FacebookIcon, GoogleIcon, LoginForm } from '@/components';
-import { useState } from 'react';
 
 export default function LoginPage() {
   const [selectEmail, setSelectEmail] = useState(false);
+
+  const session = useSession();
+  const params = useSearchParams();
+
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    setError(params.get('error')!);
+    setSuccess(params.get('success')!);
+  }, [params]);
+
+  if (session.status === 'loading') return <p>Loading...</p>;
+
+  if (session.status === 'authenticated') {
+    console.log(session.data);
+    redirect('/');
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -33,6 +53,15 @@ export default function LoginPage() {
           </button>
         </div>
 
+        {error && (
+          <div
+            className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50"
+            role="alert"
+          >
+            <span className="font-medium">Error</span> correo / contraseña
+            incorrecto
+          </div>
+        )}
         {selectEmail && <LoginForm />}
       </div>
     </div>

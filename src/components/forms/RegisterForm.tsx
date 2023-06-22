@@ -1,3 +1,4 @@
+'use client'
 import { isEmail, isPassword } from '@/utils';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';

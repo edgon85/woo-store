@@ -1,7 +1,11 @@
-import { isEmail, isPassword } from '@/utils';
-import Link from 'next/link';
+'use client'
 
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import { signIn } from 'next-auth/react';
+
+import { isEmail } from '@/utils';
+
 
 type FormData = {
   email: string;
@@ -9,6 +13,7 @@ type FormData = {
 };
 
 export const LoginForm = () => {
+
   const {
     register,
     handleSubmit,
@@ -16,7 +21,10 @@ export const LoginForm = () => {
   } = useForm<FormData>();
 
   const onLoginUser = ({ email, password }: FormData) => {
-    console.log({ email, password });
+    signIn('credentials', {
+      email,
+      password,
+    });
   };
 
   return (

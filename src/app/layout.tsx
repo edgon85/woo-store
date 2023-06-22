@@ -1,5 +1,7 @@
 import './globals.css';
 import { Roboto } from 'next/font/google';
+import { Providers } from './providers';
+import { Navbar } from '@/components';
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -19,7 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <Providers>
+          <div>{children}</div>
+        </Providers>
+      </body>
     </html>
   );
 }
