@@ -3,6 +3,8 @@ import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
 import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import myUser from '@/actions/getUser';
 
 export interface AuthState {
   isLoggedIn: boolean;

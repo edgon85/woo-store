@@ -8,21 +8,23 @@ import { BtnSocial, FacebookIcon, GoogleIcon, LoginForm } from '@/components';
 export default function LoginPage() {
   const [selectEmail, setSelectEmail] = useState(false);
 
-  const session = useSession();
+  const { status } = useSession();
   const params = useSearchParams();
 
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  // const [success, setSuccess] = useState('');
 
   useEffect(() => {
+    if (params.get('error') !== null) {
+      setSelectEmail(true);
+    }
     setError(params.get('error')!);
-    setSuccess(params.get('success')!);
-  }, [params]);
+    // setSuccess(params.get('success')!);
+  }, [error, params]);
 
-  if (session.status === 'loading') return <p>Loading...</p>;
+  if (status === 'loading') return <p>Loading...</p>;
 
-  if (session.status === 'authenticated') {
-    console.log(session.data);
+  if (status === 'authenticated') {
     redirect('/');
   }
 
