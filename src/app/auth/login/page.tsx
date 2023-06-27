@@ -5,9 +5,12 @@ import { useSession } from 'next-auth/react';
 import { redirect, useSearchParams } from 'next/navigation';
 
 import { BtnSocial, FacebookIcon, GoogleIcon, LoginForm } from '@/components';
+import { useAuth } from '@/hooks';
 
 export default function LoginPage() {
   const [selectEmail, setSelectEmail] = useState(false);
+
+  const { providers } = useAuth();
 
   const { status } = useSession();
   const params = useSearchParams();
@@ -36,7 +39,21 @@ export default function LoginPage() {
       <div className="bg-white p-4 rounded flex flex-col justify-center items-center gap-2 min-w-[90%] md:min-w-[50%] lg:min-w-[30%] shadow-md">
         <h2 className="text-lg mb-3">Bienvenido a Woo</h2>
         <div className="flex flex-col w-full gap-2">
-          <BtnSocial
+          {Object.values(providers).map((provider: any) => {
+            if (provider.id === 'credentials') {
+              return <div key={'credentials'}></div>;
+            }
+
+            return (
+              <BtnSocial
+                key={provider.id}
+                title={`iniciar con ${provider.name}`}
+                provider={provider.id}
+              />
+            );
+          })}
+
+          {/* <BtnSocial
             icon={<GoogleIcon />}
             title="iniciar con google"
             provider="google"
@@ -45,7 +62,7 @@ export default function LoginPage() {
             icon={<FacebookIcon />}
             title="iniciar con facebook"
             provider="facebook"
-          />
+          /> */}
         </div>
 
         <div className="mt-4">

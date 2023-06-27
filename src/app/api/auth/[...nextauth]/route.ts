@@ -1,11 +1,19 @@
 import NextAuth, { AuthOptions } from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import FacebookProvider from 'next-auth/providers/facebook';
 import { signIn } from 'next-auth/react';
 
 export const handler = NextAuth({
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       id: 'credentials',
       name: 'Credentials',
@@ -41,7 +49,6 @@ export const handler = NextAuth({
         }
         const user = await authResponse.json();
 
-        
         return user;
       },
     }),
@@ -62,14 +69,41 @@ export const handler = NextAuth({
     async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
+        console.log(account.type);
 
         switch (account.type) {
           case 'oauth':
-            token.user = {};
+            const customData = {
+              ...token,
+              provider: account.provider,
+            };
+
+            const authResponse = await fetch(
+              'http://localhost:5000/api/auth/next-auth',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  data: customData,
+                }),
+              }
+            );
+
+            if (!authResponse.ok) {
+              token.user = undefined;
+              break;
+            }
+
+            const currentUser = await authResponse.json();
+
+
+            token.user = currentUser.user;
+
             break;
 
           case 'credentials':
-           
             token.user = user;
             break;
         }
