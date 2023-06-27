@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect, useSearchParams } from 'next/navigation';
 
-import { BtnSocial, FacebookIcon, GoogleIcon, LoginForm } from '@/components';
+import { BtnSocial, LoginForm } from '@/components';
 import { useAuth } from '@/hooks';
 
 export default function LoginPage() {
@@ -16,7 +16,6 @@ export default function LoginPage() {
   const params = useSearchParams();
 
   const [error, setError] = useState('');
-  // const [success, setSuccess] = useState('');
 
   const query = params.get('p');
 
@@ -52,17 +51,6 @@ export default function LoginPage() {
               />
             );
           })}
-
-          {/* <BtnSocial
-            icon={<GoogleIcon />}
-            title="iniciar con google"
-            provider="google"
-          />
-          <BtnSocial
-            icon={<FacebookIcon />}
-            title="iniciar con facebook"
-            provider="facebook"
-          /> */}
         </div>
 
         <div className="mt-4">

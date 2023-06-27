@@ -24,7 +24,14 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      dispatch({ type: '[Auth] - Login', payload: data.user as IUser });
+      const currentUser = data.user as IUser;
+
+      if (!currentUser?.isActive || currentUser === undefined) {
+        console.log('usuario inactivo, comuníquese con un administrador');
+        signOut();
+      }
+
+      dispatch({ type: '[Auth] - Login', payload: currentUser });
     }
   }, [status, data]);
 
@@ -71,6 +78,13 @@ export const AuthProvider: FC<Props> = ({ children }) => {
         hasError: true,
         message: 'hay error',
       };
+    }
+  };
+
+  const checkUser = () => {
+    if (!state.user?.isActive) {
+      console.log('Usuario esta inactivo, comuníquese con un administrador');
+      logout();
     }
   };
 

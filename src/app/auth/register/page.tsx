@@ -6,14 +6,14 @@ import { redirect, useSearchParams } from 'next/navigation';
 
 import {
   BtnSocial,
-  FacebookIcon,
-  GoogleIcon,
   RegisterForm,
 } from '@/components';
+import { useAuth } from '@/hooks';
 
 const RegisterPage = () => {
   const [selectEmail, setSelectEmail] = useState(false);
   const params = useSearchParams();
+  const { providers } = useAuth();
 
   const query = params.get('p');
 
@@ -30,16 +30,19 @@ const RegisterPage = () => {
       <div className="bg-white p-4 rounded flex flex-col justify-center items-center gap-2 min-w-[90%] md:min-w-[50%] lg:min-w-[30%] shadow-md">
         <h2 className="text-lg mb-3">Regístrate en Woo</h2>
         <div className="flex flex-col w-full gap-2">
-          <BtnSocial
-            icon={<GoogleIcon />}
-            title="registrarse con google"
-            provider="google"
-          />
-          <BtnSocial
-            icon={<FacebookIcon />}
-            title="registrarse con facebook"
-            provider="facebook"
-          />
+          {Object.values(providers).map((provider: any) => {
+            if (provider.id === 'credentials') {
+              return <div key={'credentials'}></div>;
+            }
+
+            return (
+              <BtnSocial
+                key={provider.id}
+                title={`registrarse con ${provider.name}`}
+                provider={provider.id}
+              />
+            );
+          })}
         </div>
 
         <div className="mt-4">
