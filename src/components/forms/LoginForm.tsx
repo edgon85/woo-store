@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 
 import { isEmail } from '@/utils';
+import { useSearchParams } from 'next/navigation';
 
 
 type FormData = {
@@ -14,12 +15,16 @@ type FormData = {
 
 export const LoginForm = () => {
 
+  const searchParams = useSearchParams();
+  const query = searchParams.get('p');
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
+  const myQuery = query !== null ? `?p=${query}` : '';
   const onLoginUser = ({ email, password }: FormData) => {
     signIn('credentials', {
       email,
@@ -96,7 +101,7 @@ export const LoginForm = () => {
       </form>
       <div className="mt-4 text-center">
         <span className="text-sm">¿No tienes cuenta? </span>
-        <Link href="/auth/register" className="text-primary underline text-sm">
+        <Link href={`/auth/register${myQuery}`} className="text-primary underline text-sm">
           crear cuenta
         </Link>
       </div>

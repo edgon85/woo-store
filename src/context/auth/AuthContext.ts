@@ -4,6 +4,10 @@ import { createContext } from 'react';
 type ContextProps = {
     isLoggedIn: boolean;
     user?: IUser
+    registerUser: (fullName: string, email: string, password: string) => Promise<{
+        hasError: boolean;
+        message?: string;
+    }>
     logout: () => void;
     
 };

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { redirect, useSearchParams } from 'next/navigation';
 
 import {
   BtnSocial,
@@ -11,6 +13,17 @@ import {
 
 const RegisterPage = () => {
   const [selectEmail, setSelectEmail] = useState(false);
+  const params = useSearchParams();
+
+  const query = params.get('p');
+
+  const { status } = useSession();
+
+  if (status === 'loading') return <p>Loading...</p>;
+
+  if (status === 'authenticated') {
+    redirect(`${query !== null ? query : '/'}`);
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen">

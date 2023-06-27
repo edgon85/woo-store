@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect, useSearchParams } from 'next/navigation';
@@ -14,6 +15,8 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   // const [success, setSuccess] = useState('');
 
+  const query = params.get('p');
+
   useEffect(() => {
     if (params.get('error') !== null) {
       setSelectEmail(true);
@@ -25,7 +28,7 @@ export default function LoginPage() {
   if (status === 'loading') return <p>Loading...</p>;
 
   if (status === 'authenticated') {
-    redirect('/');
+    redirect(`${query !== null ? query : '/'}`);
   }
 
   return (

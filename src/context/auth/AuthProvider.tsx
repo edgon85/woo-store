@@ -3,8 +3,6 @@ import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
 import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import myUser from '@/actions/getUser';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -30,6 +28,52 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
   }, [status, data]);
 
+  const registerUser = async (
+    fullName: string,
+    email: string,
+    password: string
+  ): Promise<{ hasError: boolean; message?: string }> => {
+    try {
+      const authResponse = await fetch(
+        'http://localhost:5000/api/auth/register',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            fullName,
+            email,
+            password,
+          }),
+        }
+      );
+
+      if (!authResponse.ok) {
+        const resp = await authResponse.json();
+        // console.log(resp)
+        return {
+          hasError: true,
+          message: resp.message,
+        };
+      }
+      const user = await authResponse.json();
+
+      dispatch({ type: '[Auth] - Login', payload: user as IUser });
+
+      return {
+        hasError: false,
+      };
+    } catch (error) {
+      console.log(error);
+
+      return {
+        hasError: true,
+        message: 'hay error',
+      };
+    }
+  };
+
   const logout = () => {
     signOut();
     redirect('/');
@@ -42,6 +86,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
         /* methods */
         logout,
+        registerUser,
       }}
     >
       {children}

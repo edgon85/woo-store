@@ -1,6 +1,9 @@
-'use client'
+'use client';
+import { useAuth } from '@/hooks';
 import { isEmail, isPassword } from '@/utils';
 import Link from 'next/link';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 type FormData = {
@@ -10,18 +13,46 @@ type FormData = {
 };
 
 export const RegisterForm = () => {
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const { registerUser, login } = useAuth();
+
+  const searchParams = useSearchParams();
+  const query = searchParams.get('p');
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onRegisterUser = ({ fullName, email, password }: FormData) => {
-    console.log({ fullName, email, password });
+  const myQuery = query !== null ? `?p=${query}` : '';
+
+  const onRegisterUser = async ({ fullName, email, password }: FormData) => {
+    const { hasError, message } = await registerUser(fullName, email, password);
+
+    if (hasError) {
+      setShowError(true);
+      setErrorMessage(message || '');
+      setTimeout(() => {
+        setShowError(false);
+      }, 5000);
+      return;
+    }
+
+    login(email, password);
   };
 
   return (
     <div className="w-full">
+      {showError && (
+        <div
+          className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50"
+          role="alert"
+        >
+          <span className="font-medium">Error</span> {errorMessage}
+        </div>
+      )}
       <form onSubmit={handleSubmit(onRegisterUser)}>
         <div className="mb-3">
           <label
@@ -103,7 +134,10 @@ export const RegisterForm = () => {
       </form>
       <div className="mt-4 text-center">
         <span className="text-sm">¿ya tienes cuenta? </span>
-        <Link href="/auth/login" className="text-primary underline text-sm">
+        <Link
+          href={`/auth/login${myQuery}`}
+          className="text-primary underline text-sm"
+        >
           Iniciar sesión
         </Link>
       </div>
