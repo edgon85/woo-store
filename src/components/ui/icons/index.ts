@@ -1,5 +1,6 @@
 export * from './BellIcon';
 export * from './ClipboardDocumentIcon';
+export * from './CloseIcon';
 export * from './CurrencyIcon';
 export * from './FacebookIcon';
 export * from './GoogleIcon';
