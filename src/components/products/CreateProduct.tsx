@@ -1,9 +1,21 @@
 'use client';
-import { ChangeEvent, useState } from 'react';
-import { SelectList } from '../ui/SelectList';
+
 import { SelectsCategories } from './SelectsCategories';
+import { MainModal } from '../ui';
+import { useModal } from '@/hooks';
+
+import { IoMdPricetags } from 'react-icons/io';
+import { TbRulerMeasure } from 'react-icons/tb';
+import { ItemCreate } from './ItemCreate';
+import { BrandSelect } from './create/BrandSelect';
+import { useState } from 'react';
+import { IBrand } from '@/interfaces';
 
 export const CreateProduct = () => {
+  const { onOpenModal } = useModal();
+
+  const [brand, setBrand] = useState<IBrand | null>(null);
+
   return (
     <div className="w-full max-w-2xl p-4">
       <h2 className="text-2xl font-extrabold mb-4">Subir articulo nuevo</h2>
@@ -42,6 +54,28 @@ export const CreateProduct = () => {
         </div>
         <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
           <SelectsCategories />
+        </div>
+        <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
+          <ItemCreate
+            title="Marca"
+            icon={IoMdPricetags}
+            value={`${brand?.name !== undefined ? brand?.name : ''}`}
+            onClick={() => onOpenModal('brand')}
+          />
+          <ItemCreate
+            title="Talla"
+            icon={TbRulerMeasure}
+            value=""
+            onClick={() => onOpenModal('talla')}
+          />
+          {
+            <MainModal
+              modalId="brand"
+              title="Seleccione marca"
+              body={<BrandSelect setBrand={setBrand} brandSelectedId={brand?.id!} />}
+            />
+          }
+          {<MainModal modalId="talla" body={<>Modal de talla</>} />}
         </div>
       </form>
     </div>

@@ -26,7 +26,6 @@ module.exports = {
       divider: '#bdbdbd',
       background: '#f6f6f6',
       transparent: 'transparent',
-      current: 'currentColor',
       black: colors.black,
       white: colors.white,
       gray: colors.gray,

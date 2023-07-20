@@ -7,7 +7,6 @@ export const SelectsCategories = () => {
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
 
-  console.log(gender);
   return (
     <>
       <div>
