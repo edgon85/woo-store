@@ -14,3 +14,13 @@ export interface IBrand {
   name: string;
   slug: string;
 }
+
+export interface IClotesSize {
+  id: string;
+  size: string;
+  us?: number;
+  eu?: number;
+  uk?: number;
+  waist?: string;
+  long?: string;
+}

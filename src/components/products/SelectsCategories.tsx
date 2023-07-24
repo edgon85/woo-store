@@ -1,11 +1,24 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SelectList } from '../ui/SelectList';
 
-export const SelectsCategories = () => {
+type Props = {
+  setClothesData: ({}: any) => void;
+};
+
+export const SelectsCategories = ({ setClothesData }: Props) => {
   const [gender, setGender] = useState('');
   const [clothesType, setClothesType] = useState('');
   const [category, setCategory] = useState('');
   const [subCategory, setSubCategory] = useState('');
+
+  useEffect(() => {
+    setClothesData({
+      gender,
+      clothesType,
+      category,
+      subCategory,
+    });
+  }, [category, clothesType, gender, setClothesData, subCategory]);
 
   return (
     <>

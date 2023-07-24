@@ -9,12 +9,21 @@ import { TbRulerMeasure } from 'react-icons/tb';
 import { ItemCreate } from './ItemCreate';
 import { BrandSelect } from './create/BrandSelect';
 import { useState } from 'react';
-import { IBrand } from '@/interfaces';
+import { IBrand, IClotesSize } from '@/interfaces';
+import { Measurements } from './create/Measurements';
+import { measurementFormat } from '@/utils';
 
 export const CreateProduct = () => {
   const { onOpenModal } = useModal();
 
+  const [clothesData, setClothesData] = useState({
+    gender: '',
+    clothesType: '',
+    category: '',
+    subCategory: '',
+  });
   const [brand, setBrand] = useState<IBrand | null>(null);
+  const [talla, setTalla] = useState<IClotesSize | null>({ id: '', size: '' });
 
   return (
     <div className="w-full max-w-2xl p-4">
@@ -53,7 +62,7 @@ export const CreateProduct = () => {
           </div>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
-          <SelectsCategories />
+          <SelectsCategories setClothesData={setClothesData} />
         </div>
         <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
           <ItemCreate
@@ -62,20 +71,39 @@ export const CreateProduct = () => {
             value={`${brand?.name !== undefined ? brand?.name : ''}`}
             onClick={() => onOpenModal('brand')}
           />
-          <ItemCreate
-            title="Talla"
-            icon={TbRulerMeasure}
-            value=""
-            onClick={() => onOpenModal('talla')}
-          />
-          {
-            <MainModal
-              modalId="brand"
-              title="Seleccione marca"
-              body={<BrandSelect setBrand={setBrand} brandSelectedId={brand?.id!} />}
+          {clothesData.category && clothesData.clothesType !== 'accesorios' ? (
+            <ItemCreate
+              uppercase
+              title="Talla"
+              icon={TbRulerMeasure}
+              value={measurementFormat(
+                clothesData.gender,
+                clothesData.category,
+                talla!
+              )}
+              onClick={() => onOpenModal('talla')}
             />
-          }
-          {<MainModal modalId="talla" body={<>Modal de talla</>} />}
+          ) : null}
+
+          <MainModal
+            modalId="brand"
+            title="Seleccione marca"
+            body={
+              <BrandSelect setBrand={setBrand} brandSelectedId={brand?.id!} />
+            }
+          />
+
+          <MainModal
+            modalId="talla"
+            body={
+              <Measurements
+                gender={clothesData.gender}
+                typeOfClothes={clothesData.clothesType}
+                category={clothesData.category}
+                setTalla={setTalla}
+              />
+            }
+          />
         </div>
       </form>
     </div>
