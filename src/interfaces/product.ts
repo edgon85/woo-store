@@ -24,3 +24,9 @@ export interface IClotesSize {
   waist?: string;
   long?: string;
 }
+
+export interface IClothesState { 
+  id: string,
+  title: string;
+  subtitle?: string;
+}

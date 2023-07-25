@@ -6,12 +6,14 @@ import { useModal } from '@/hooks';
 
 import { IoMdPricetags } from 'react-icons/io';
 import { TbRulerMeasure } from 'react-icons/tb';
+import { BsCheck2Circle } from 'react-icons/bs';
 import { ItemCreate } from './ItemCreate';
 import { BrandSelect } from './create/BrandSelect';
 import { useState } from 'react';
-import { IBrand, IClotesSize } from '@/interfaces';
+import { IBrand, IClotesSize, IClothesState } from '@/interfaces';
 import { Measurements } from './create/Measurements';
 import { measurementFormat } from '@/utils';
+import { ClothesState } from './create/ClothesState';
 
 export const CreateProduct = () => {
   const { onOpenModal } = useModal();
@@ -24,6 +26,7 @@ export const CreateProduct = () => {
   });
   const [brand, setBrand] = useState<IBrand | null>(null);
   const [talla, setTalla] = useState<IClotesSize | null>({ id: '', size: '' });
+  const [clothesState, setClothesState] = useState<IClothesState | null>(null);
 
   return (
     <div className="w-full max-w-2xl p-4">
@@ -84,6 +87,24 @@ export const CreateProduct = () => {
               onClick={() => onOpenModal('talla')}
             />
           ) : null}
+
+          <ItemCreate
+            title="Estado"
+            icon={BsCheck2Circle}
+            value={clothesState?.title!}
+            onClick={() => onOpenModal('clothes-state')}
+          />
+
+          <MainModal
+            modalId="clothes-state"
+            title="Estado de la prenda o accesorio"
+            body={
+              <ClothesState
+                setClothesState={setClothesState}
+                clothesSelected={clothesState?.id!}
+              />
+            }
+          />
 
           <MainModal
             modalId="brand"
