@@ -33,6 +33,8 @@ module.exports = {
       indigo: colors.indigo,
       yellow: colors.yellow,
       red: colors.red,
+      blue: colors.blue,
+      green: colors.green,
     },
   },
   plugins: [],

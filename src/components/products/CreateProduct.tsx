@@ -1,19 +1,18 @@
 'use client';
 
-import { SelectsCategories } from './SelectsCategories';
-import { MainModal } from '../ui';
-import { useModal } from '@/hooks';
-
+import { useState } from 'react';
 import { IoMdPricetags } from 'react-icons/io';
 import { TbRulerMeasure } from 'react-icons/tb';
-import { BsCheck2Circle } from 'react-icons/bs';
-import { ItemCreate } from './ItemCreate';
-import { BrandSelect } from './create/BrandSelect';
-import { useState } from 'react';
-import { IBrand, IClotesSize, IClothesState } from '@/interfaces';
-import { Measurements } from './create/Measurements';
+import { BsCheck2Circle, BsDropletHalf } from 'react-icons/bs';
+
+import { useModal } from '@/hooks';
 import { measurementFormat } from '@/utils';
-import { ClothesState } from './create/ClothesState';
+import { IBrand, IClotesSize, IClothesState, IColor } from '@/interfaces';
+
+import { MainModal } from '../ui';
+import { ItemCreate } from './ItemCreate';
+import { SelectsCategories } from './SelectsCategories';
+import { BrandSelect, ClothesState, ColorSelect, Measurements } from './create';
 
 export const CreateProduct = () => {
   const { onOpenModal } = useModal();
@@ -27,6 +26,7 @@ export const CreateProduct = () => {
   const [brand, setBrand] = useState<IBrand | null>(null);
   const [talla, setTalla] = useState<IClotesSize | null>({ id: '', size: '' });
   const [clothesState, setClothesState] = useState<IClothesState | null>(null);
+  const [color, setColor] = useState<IColor[]>([]);
 
   return (
     <div className="w-full max-w-2xl p-4">
@@ -93,6 +93,23 @@ export const CreateProduct = () => {
             icon={BsCheck2Circle}
             value={clothesState?.title!}
             onClick={() => onOpenModal('clothes-state')}
+          />
+
+          <ItemCreate
+            title="Color"
+            icon={BsDropletHalf}
+            value={
+              color?.length === 2
+                ? `${color[0].name} y ${color[1].name}`
+                : `${color?.length === 0 ? '' : color[0].name}`
+            }
+            onClick={() => onOpenModal('color')}
+          />
+
+          <MainModal
+            modalId="color"
+            title="Color de la prenda"
+            body={<ColorSelect setColor={setColor} colorSelect={color!} />}
           />
 
           <MainModal

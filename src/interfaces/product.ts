@@ -25,8 +25,14 @@ export interface IClotesSize {
   long?: string;
 }
 
-export interface IClothesState { 
-  id: string,
+export interface IClothesState {
+  id: string;
   title: string;
   subtitle?: string;
+}
+
+export interface IColor {
+  id: string;
+  name: string;
+  codeColor: string;
 }
