@@ -9,10 +9,16 @@ import { useModal } from '@/hooks';
 import { measurementFormat } from '@/utils';
 import { IBrand, IClotesSize, IClothesState, IColor } from '@/interfaces';
 
-import { MainModal } from '../ui';
+import { Button, MainModal } from '../ui';
 import { ItemCreate } from './ItemCreate';
 import { SelectsCategories } from './SelectsCategories';
-import { BrandSelect, ClothesState, ColorSelect, Measurements } from './create';
+import {
+  BrandSelect,
+  ClothesState,
+  ColorSelect,
+  Measurements,
+  NumberInput,
+} from './create';
 
 export const CreateProduct = () => {
   const { onOpenModal } = useModal();
@@ -27,6 +33,7 @@ export const CreateProduct = () => {
   const [talla, setTalla] = useState<IClotesSize | null>({ id: '', size: '' });
   const [clothesState, setClothesState] = useState<IClothesState | null>(null);
   const [color, setColor] = useState<IColor[]>([]);
+  const [price, setPrice] = useState<number>(0);
 
   return (
     <div className="w-full max-w-2xl p-4">
@@ -141,6 +148,18 @@ export const CreateProduct = () => {
                 setTalla={setTalla}
               />
             }
+          />
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
+          <NumberInput setPrice={setPrice} />
+        </div>
+
+        <div className="mt-4">
+          <Button
+            label="Publicar"
+            type="button"
+            onClick={() => console.log('publicar')}
           />
         </div>
       </form>
