@@ -56,7 +56,7 @@ export const ColorSelect = ({ setColor, colorSelect }: Props) => {
           <label
             className="flex justify-between items-center py-4 border-b cursor-pointer"
             key={color.id}
-            htmlFor={color.id}
+            htmlFor={`${color.id}`}
           >
             <div className="flex items-center">
               <span
@@ -78,7 +78,7 @@ export const ColorSelect = ({ setColor, colorSelect }: Props) => {
                 !selectColor.find((resp) => resp.id === color.id)
               }
               className="w-5 h-5 bg-primary text-primary"
-              id={color.id}
+              id={`${color.id}`}
               onChange={(e) => handleChange(color, e.target.checked)}
               name={color.name}
               value={color.id}

@@ -8,7 +8,7 @@ type Props = {
   outlined?: boolean;
   small?: boolean;
   icon?: IconType;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const Button = ({

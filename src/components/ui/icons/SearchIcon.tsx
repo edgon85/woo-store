@@ -3,7 +3,7 @@ type Props = {
   color?: string;
 };
 
-export const SearchIcon = ({ size = '24', color }: Props) => {
+export const SearchIcon = ({ size = '24', color="currentColor" }: Props) => {
   return (
     <svg
       width={size}
@@ -12,7 +12,7 @@ export const SearchIcon = ({ size = '24', color }: Props) => {
       fill="none"
       /*       viewBox="0 0 24 24"*/
       strokeWidth={1.5} 
-      stroke="currentColor"
+      stroke={color}
       className="w-6 h-6"
     >
       <path
