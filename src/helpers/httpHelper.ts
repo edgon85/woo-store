@@ -18,13 +18,17 @@ export const getBrandData = async (filter: string) => {
   }
 };
 
-export const createBrand = async (title: string) => {
+export const createBrand = async (title: string, token: string) => {
   try {
-    const { data } = await wooApi.post('/brands', {
-      title,
-    });
-
-    console.log(data);
+    const { data } = await wooApi.post(
+      '/brands',
+      { title },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return {
       message: 'ok',
@@ -32,8 +36,8 @@ export const createBrand = async (title: string) => {
     };
   } catch (error: any) {
     return {
-        message: error.response.data.message,
-        data: null
+      message: error.response.data.message,
+      data: null,
     };
   }
 };

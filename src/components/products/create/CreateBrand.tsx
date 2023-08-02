@@ -1,5 +1,5 @@
 import { createBrand } from '@/helpers/httpHelper';
-import { useModal } from '@/hooks';
+import { useAuth, useModal } from '@/hooks';
 import { IBrand } from '@/interfaces';
 import { BsPlusCircle } from 'react-icons/bs';
 import Swal from 'sweetalert2';
@@ -12,6 +12,7 @@ type Props = {
 
 export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
   const { onCloseModal } = useModal();
+  const { user } = useAuth();
 
   const handleOnclick = () => {
     Swal.fire({
@@ -23,7 +24,7 @@ export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
       cancelButtonText: 'Cancelar',
       showLoaderOnConfirm: true,
       preConfirm: async () => {
-        const { message, data } = await createBrand(name);
+        const { message, data } = await createBrand(name, user?.token!);
         if (message !== 'ok') {
           Swal.showValidationMessage(`error: ${message}`);
           return;
