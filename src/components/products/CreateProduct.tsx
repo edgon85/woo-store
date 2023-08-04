@@ -7,7 +7,13 @@ import { BsCheck2Circle, BsDropletHalf } from 'react-icons/bs';
 
 import { useModal } from '@/hooks';
 import { measurementFormat } from '@/utils';
-import { IBrand, IClotesSize, IClothesState, IColor, IProduct } from '@/interfaces';
+import {
+  IBrand,
+  IClotesSize,
+  IClothesState,
+  IColor,
+  IProduct,
+} from '@/interfaces';
 
 import { Button, MainModal } from '../ui';
 import { ItemCreate } from './ItemCreate';
@@ -42,7 +48,11 @@ export const CreateProduct = () => {
     subCategory: '',
   });
   const [brand, setBrand] = useState<IBrand | null>(null);
-  const [talla, setTalla] = useState<IClotesSize | null>({ id: 0, size: '' });
+  const [talla, setTalla] = useState<IClotesSize | null>({
+    id: 0,
+    size: '',
+    slug: '',
+  });
   const [clothesState, setClothesState] = useState<IClothesState | null>(null);
   const [color, setColor] = useState<IColor[]>([]);
   const [price, setPrice] = useState<number>(0);
@@ -135,11 +145,11 @@ export const CreateProduct = () => {
                 uppercase
                 title="Talla"
                 icon={TbRulerMeasure}
-                value={measurementFormat(
-                  clothesData.gender,
-                  clothesData.category,
-                  talla!
-                )}
+                value={
+                  talla?.size !== 'unica'
+                    ? measurementFormat(clothesData.category, talla!)
+                    : 'única'
+                }
                 onClick={() => onOpenModal('talla')}
               />
             ) : null}
@@ -183,7 +193,7 @@ export const CreateProduct = () => {
               modalId="brand"
               title="Seleccione marca"
               body={
-                <BrandSelect setBrand={setBrand} branSelectedId={brand?.id!}/>
+                <BrandSelect setBrand={setBrand} branSelectedId={brand?.id!} />
               }
             />
 

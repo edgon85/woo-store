@@ -1,5 +1,5 @@
+import { IClotesSize } from '@/interfaces';
 import { wooApi } from '@/wooApi';
-import { AxiosError } from 'axios';
 
 export const getBrandData = async (filter: string) => {
   try {
@@ -39,5 +39,17 @@ export const createBrand = async (title: string, token: string) => {
       message: error.response.data.message,
       data: null,
     };
+  }
+};
+
+export const getMeasurementFilter = async (gender: string, type: string) => {
+  try {
+    const { data } = await wooApi.get(
+      `/measurements?gender=${gender}&type=${type}`
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 };

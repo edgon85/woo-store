@@ -39,12 +39,15 @@ export interface IBrand {
 
 export interface IClotesSize {
   id: number;
+  slug: string;
   size: string;
   us?: number;
   eu?: number;
   uk?: number;
   waist?: string;
   long?: string;
+  gender?: string;
+  type?: string;
 }
 
 export interface IClothesState {
@@ -54,7 +57,7 @@ export interface IClothesState {
 }
 
 export interface IColor {
-  id: number;
+  id: string;
   name: string;
   codeColor: string;
 }
