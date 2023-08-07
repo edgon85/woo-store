@@ -1,18 +1,20 @@
+import { IUser } from './user';
+
 export interface IProduct {
   _id?: string;
   title: string;
-  slug: string;
-  category: string;
-  subcategory: string;
+  slug?: string;
+  category: ICategory;
+  subcategory: ISubcategory;
   color: IColor[];
   description: string;
   gender: string;
-  brand: number;
+  brand: IBrand;
   price: number;
   size: number;
-  state: number;
+  state: IClothesState;
   type: string;
-  user: string;
+  user: IUser;
   images: string[];
   isFeatured?: boolean;
   available: boolean;
@@ -61,31 +63,3 @@ export interface IColor {
   name: string;
   codeColor: string;
 }
-
-/* 
-export interface IProduct {
-  _id?: string;
-  title: string;
-  price: number;
-  discount: number;
-  images: string[];
-  id: string;
-  slug: string;
-  category: number;
-  subCategory: number;
-  inStock: number;
-  type: string;
-  tags: string[];
-  description: string;
-  isFeatured?: boolean;
-  available: boolean;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  image: string;
-  creationAt: string;
-  updatedAt: string;
-}
-*/

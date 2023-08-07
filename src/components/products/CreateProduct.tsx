@@ -5,14 +5,16 @@ import { IoMdPricetags } from 'react-icons/io';
 import { TbRulerMeasure } from 'react-icons/tb';
 import { BsCheck2Circle, BsDropletHalf } from 'react-icons/bs';
 
-import { useModal } from '@/hooks';
+import { useAuth, useModal } from '@/hooks';
 import { measurementFormat } from '@/utils';
 import {
   IBrand,
+  ICategory,
   IClotesSize,
   IClothesState,
   IColor,
   IProduct,
+  ISubcategory,
 } from '@/interfaces';
 
 import { Button, MainModal } from '../ui';
@@ -26,9 +28,16 @@ import {
   NumberInput,
 } from './create';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  SelectCategory,
+  SelectClothesType,
+  SelectGender,
+  SelectSubcategory,
+} from './select-categories';
 
 export const CreateProduct = () => {
   const { onOpenModal } = useModal();
+  const { user } = useAuth();
 
   const {
     register,
@@ -41,12 +50,18 @@ export const CreateProduct = () => {
     },
   });
 
-  const [clothesData, setClothesData] = useState({
+  /*  const [clothesData, setClothesData] = useState({
     gender: '',
     clothesType: '',
     category: '',
     subCategory: '',
-  });
+  }); */
+
+  const [gender, setGender] = useState<string>('');
+  const [clothesType, setClothesType] = useState<string>('');
+  const [category, setCategory] = useState<ICategory | null>(null);
+  const [subcategory, setSubcategory] = useState<ISubcategory | null>(null);
+
   const [brand, setBrand] = useState<IBrand | null>(null);
   const [talla, setTalla] = useState<IClotesSize | null>({
     id: 0,
@@ -62,20 +77,19 @@ export const CreateProduct = () => {
       images: ['', ''],
       title: data.title,
       description: data.description,
-      gender: clothesData.gender,
-      type: clothesData.clothesType,
-      category: clothesData.category,
-      subcategory: clothesData.subCategory,
-      brand: brand?.id!,
+      gender,
+      type: clothesType,
+      category: category!,
+      subcategory: subcategory!,
+      brand: brand!,
       size: talla?.id!,
-      state: clothesState?.id!,
+      state: clothesState!,
       color: color,
       price: price,
       slug: '',
-      user: '',
+      user: user!,
       available: true,
     };
-
     console.log(newProduct);
   };
 
@@ -128,10 +142,92 @@ export const CreateProduct = () => {
         </div>
         {
           <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
-            <SelectsCategories setClothesData={setClothesData} />
+            {/* <SelectsCategories setGender={setGender} gender={gender}/> */}
+            <ItemCreate
+              title="Genero"
+              value={gender}
+              onClick={() => {
+                onOpenModal('gender');
+              }}
+            />
+            <MainModal
+              modalId="gender"
+              title="Seleccione genero"
+              body={<SelectGender setGender={setGender} gender={gender} />}
+            />
+            {/* ····························································· */}
+            {gender && (
+              <>
+                <ItemCreate
+                  title="Tipo de prenda"
+                  value={clothesType}
+                  onClick={() => {
+                    onOpenModal('clothes-type');
+                  }}
+                />
+                <MainModal
+                  modalId="clothes-type"
+                  title="Seleccione tipo de prenda"
+                  body={
+                    <SelectClothesType
+                      setClothesType={setClothesType}
+                      clothesType={clothesType}
+                    />
+                  }
+                />
+              </>
+            )}
+            {/* ····························································· */}
+            {clothesType && (
+              <>
+                <ItemCreate
+                  title="Categoría"
+                  value={category?.title!}
+                  onClick={() => {
+                    onOpenModal('category');
+                  }}
+                />
+                <MainModal
+                  modalId="category"
+                  title="Seleccione categoría"
+                  body={
+                    <SelectCategory
+                      categoryId={category?.id!}
+                      clothesType={clothesType}
+                      gender={gender}
+                      setCategory={setCategory}
+                    />
+                  }
+                />
+              </>
+            )}
+            {/* ····························································· */}
+            {category && (
+              <>
+                <ItemCreate
+                  title="Subcategoria"
+                  value={subcategory?.title!}
+                  onClick={() => {
+                    onOpenModal('subcategory');
+                  }}
+                />
+                <MainModal
+                  modalId="subcategory"
+                  title="Seleccione Subcategoria"
+                  body={
+                    <SelectSubcategory
+                      subcategoryId={subcategory?.id!}
+                      category={category.title}
+                      gender={gender}
+                      setSubcategory={setSubcategory!}
+                    />
+                  }
+                />
+              </>
+            )}
           </div>
         }
-        {clothesData.subCategory && (
+        {subcategory && (
           <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
             <ItemCreate
               title="Marca"
@@ -139,15 +235,14 @@ export const CreateProduct = () => {
               value={`${brand?.title !== undefined ? brand?.title : ''}`}
               onClick={() => onOpenModal('brand')}
             />
-            {clothesData.category &&
-            clothesData.clothesType !== 'accesorios' ? (
+            {category && clothesType !== 'accesorios' ? (
               <ItemCreate
                 uppercase
                 title="Talla"
                 icon={TbRulerMeasure}
                 value={
                   talla?.size !== 'unica'
-                    ? measurementFormat(clothesData.category, talla!)
+                    ? measurementFormat(category.type, talla!)
                     : 'única'
                 }
                 onClick={() => onOpenModal('talla')}
@@ -201,9 +296,9 @@ export const CreateProduct = () => {
               modalId="talla"
               body={
                 <Measurements
-                  gender={clothesData.gender}
-                  typeOfClothes={clothesData.clothesType}
-                  category={clothesData.category}
+                  gender={gender}
+                  typeOfClothes={clothesType}
+                  category={category?.type}
                   setTalla={setTalla}
                 />
               }

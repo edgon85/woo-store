@@ -1,4 +1,38 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useModal } from '@/hooks';
+import { MainModal } from '../ui';
+import { ItemCreate } from './ItemCreate';
+import { SelectGender } from './select-categories';
+
+type Props = {
+  setGender: (gender: string) => void;
+  gender: string;
+};
+
+export const SelectsCategories = ({ setGender, gender }: Props) => {
+  const { onOpenModal } = useModal();
+  const handleGender = () => {};
+
+  return (
+    <>
+     {/*  <ItemCreate
+        title="Genero"
+        value={gender}
+        onClick={() => {
+          onOpenModal('gender');
+        }}
+      />
+      <MainModal
+        modalId="gender"
+        title="Seleccione genero"
+        body={<SelectGender setGender={setGender} />}
+      /> */}
+
+      {/* ···································································· */}
+    </>
+  );
+};
+
+/* import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SelectList } from '../ui/SelectList';
 
 type Props = {
@@ -29,10 +63,7 @@ export const SelectsCategories = ({ setClothesData }: Props) => {
           handleChange={(e: ChangeEvent<HTMLSelectElement>) =>
             setGender(e.target.value)
           }
-          /* handleChange={(e: ChangeEvent<HTMLInputElement>) =>
-        setGender(e.target.value)
-    } */
-          // url="http://localhost:5000/api/categories"
+         
           url="/gender"
         />
       </div>
@@ -44,7 +75,7 @@ export const SelectsCategories = ({ setClothesData }: Props) => {
             handleChange={(e: ChangeEvent<HTMLSelectElement>) =>
               setClothesType(e.target.value)
             }
-            // url="http://localhost:5000/api/categories"
+          
             url={gender !== 'niños' ? '/type' : '/children'}
           />
         </div>
@@ -76,4 +107,4 @@ export const SelectsCategories = ({ setClothesData }: Props) => {
       )}
     </>
   );
-};
+}; */

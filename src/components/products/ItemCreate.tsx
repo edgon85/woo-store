@@ -18,7 +18,7 @@ export const ItemCreate = ({ title, value, icon: Icon, onClick, uppercase }: Pro
       <p className="flex gap-2 items-center">
         {Icon && <Icon size={24} />} {title}
       </p>
-      <span className="text-primary flex gap-2 items-center">
+      <span className="text-primary flex gap-2 items-center capitalize">
         {uppercase ? value.toUpperCase() : value} <IoIosArrowForward size={16} color="gray" />
       </span>
     </div>
