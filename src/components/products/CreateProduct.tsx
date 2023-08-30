@@ -10,7 +10,7 @@ import { measurementFormat } from '@/utils';
 import {
   IBrand,
   ICategory,
-  IClotesSize,
+  IMeasurement,
   IClothesState,
   IColor,
   IProduct,
@@ -34,6 +34,7 @@ import {
   SelectGender,
   SelectSubcategory,
 } from './select-categories';
+import { createProduct } from '@/helpers/httpHelper';
 
 export const CreateProduct = () => {
   const { onOpenModal } = useModal();
@@ -63,7 +64,7 @@ export const CreateProduct = () => {
   const [subcategory, setSubcategory] = useState<ISubcategory | null>(null);
 
   const [brand, setBrand] = useState<IBrand | null>(null);
-  const [talla, setTalla] = useState<IClotesSize | null>({
+  const [talla, setTalla] = useState<IMeasurement | null>({
     id: 0,
     size: '',
     slug: '',
@@ -74,23 +75,34 @@ export const CreateProduct = () => {
 
   const onHandleSubmit: SubmitHandler<FieldValues> = (data) => {
     const newProduct: IProduct = {
-      images: ['', ''],
+      images: [
+        'https://picsum.photos/400/600',
+        'https://picsum.photos/400/600',
+      ],
       title: data.title,
       description: data.description,
-      gender,
-      type: clothesType,
-      category: category!,
       subcategory: subcategory!,
       brand: brand!,
-      size: talla?.id!,
-      state: clothesState!,
-      color: color,
       price: price,
       slug: '',
-      user: user!,
       available: true,
+      colors: [...color.map((col) => col.id)],
+      measurement: talla!,
+      clothesState: clothesState!,
     };
-    console.log(newProduct);
+
+    onCreateNewProduct(newProduct, user!.token);
+  };
+
+  const onCreateNewProduct = async (product: IProduct, token: string) => {
+    await createProduct(product, token)
+      .then((resp) => {
+        console.log('Producto creado con éxito');
+        console.log(resp);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
   };
 
   return (
@@ -217,8 +229,8 @@ export const CreateProduct = () => {
                   body={
                     <SelectSubcategory
                       subcategoryId={subcategory?.id!}
-                      category={category.title}
-                      gender={gender}
+                      category={category.id}
+                      // gender={gender}
                       setSubcategory={setSubcategory!}
                     />
                   }
@@ -242,7 +254,7 @@ export const CreateProduct = () => {
                 icon={TbRulerMeasure}
                 value={
                   talla?.size !== 'unica'
-                    ? measurementFormat(category.type, talla!)
+                    ? measurementFormat(category.title, talla!)
                     : 'única'
                 }
                 onClick={() => onOpenModal('talla')}
@@ -298,7 +310,7 @@ export const CreateProduct = () => {
                 <Measurements
                   gender={gender}
                   typeOfClothes={clothesType}
-                  category={category?.type}
+                  category={category?.id}
                   setTalla={setTalla}
                 />
               }

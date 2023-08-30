@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react';
 import { IoIosCheckmark } from 'react-icons/io';
 
 type Props = {
-  gender: string;
+  //  gender: string;
   category: string;
   subcategoryId: string;
   setSubcategory: (subcategory: ISubcategory) => void;
 };
 
 export const SelectSubcategory = ({
-  gender,
+  // gender,
   category,
   subcategoryId,
   setSubcategory,
@@ -27,11 +27,12 @@ export const SelectSubcategory = ({
   };
 
   useEffect(() => {
-    getSubcategoryData(gender, category);
-  }, [gender, category]);
+    getSubcategoryData(category);
+  }, [category]);
 
-  const getSubcategoryData = async (gender: string, type: string) => {
-    const data = await getSubcategories(gender, type);
+  const getSubcategoryData = async (categoryId: string) => {
+    
+    const data = await getSubcategories(categoryId);
     setSubcategories(data);
   };
 

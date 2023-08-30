@@ -42,10 +42,10 @@ export const Measurements = ({
         {measurements
           .sort((a, b) => a.id - b.id)
           .map((measurement) => {
-            const { slug } = measurement;
+            const { id } = measurement;
             return (
               <li
-                key={slug}
+                key={id}
                 className="w-full px-4 py-2 border-b border-gray-200  cursor-pointer hover:bg-lightPrimary"
               >
                 <Items
@@ -67,9 +67,9 @@ type ItemsProps = {
   category: string;
 };
 export const Items = ({ measurement, onHandleClick, category }: ItemsProps) => {
-  const { eu, gender, long, size, slug, type, uk, us, waist } = measurement;
+  const { eu, gender, long, size, slug, clothesType, uk, us, waist } = measurement;
 
-  if (gender === 'mujer' && type === 'ropa') {
+  if (gender === 'mujer' && clothesType === 'ropa') {
     return (
       <p onClick={() => onHandleClick(measurement)}>
         <span className="bg-indigo-100 text-indigo-800 font-medium  px-2.5 py-0.5 rounded">
@@ -95,7 +95,7 @@ export const Items = ({ measurement, onHandleClick, category }: ItemsProps) => {
     );
   }
 
-  if (gender === 'mujer' && type === 'zapatos') {
+  if (gender === 'mujer' && clothesType === 'zapatos') {
     return (
       <p onClick={() => onHandleClick(measurement)}>
         <span className="bg-indigo-100 text-indigo-800 font-medium  px-2.5 py-0.5 rounded">
@@ -117,7 +117,7 @@ export const Items = ({ measurement, onHandleClick, category }: ItemsProps) => {
     );
   }
 
-  if (gender === 'hombre' && type === 'zapatos') {
+  if (gender === 'hombre' && clothesType === 'zapatos') {
     return (
       <p onClick={() => onHandleClick(measurement)}>
         <span className="bg-indigo-100 text-indigo-800 font-medium  px-2.5 py-0.5 rounded">
@@ -160,7 +160,7 @@ export const Items = ({ measurement, onHandleClick, category }: ItemsProps) => {
     );
   }
 
-  if (gender === 'hombre' && type === 'ropa') {
+  if (gender === 'hombre' && clothesType === 'ropa') {
     return (
       <p onClick={() => onHandleClick(measurement)}>
         <span className="bg-indigo-100 text-indigo-800 font-medium  px-2.5 py-0.5 rounded">

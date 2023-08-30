@@ -4,34 +4,34 @@ import { IoIosCheckmark } from 'react-icons/io';
 
 const clothesStates: IClothesState[] = [
   {
-    id: 1111,
+    id: 1,
     title: 'Nuevo con etiquetas',
     subtitle:
       'Articulo sin estrenar que aun tiene las etiquetas o está en su empaque original',
   },
   {
-    id: 222,
-    title: 'nuevo sin etiquetas',
+    id: 2,
+    title: 'Nuevo sin etiquetas',
     subtitle:
       'Articulo sin estrenar que no tiene etiquetas o el empaque original',
   },
   {
-    id: 3333,
+    id: 3,
     title: 'Puesto una vez',
     subtitle: 'El articulo solo se a usado una vez',
   },
   {
-    id: 4444,
+    id: 4,
     title: 'Muy bueno',
     subtitle: 'Articulo usado que puede tener algún defecto menor',
   },
   {
-    id: 5555,
+    id: 5,
     title: 'Usado',
     subtitle: 'Articulo usado que puede tener defectos o estar desgastado',
   },
   {
-    id: 6666,
+    id: 6,
     title: 'Satisfactorio',
     subtitle: 'Articulo bastante usado con defectos o desgaste',
   },

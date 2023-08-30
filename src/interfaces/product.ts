@@ -1,31 +1,27 @@
 import { IUser } from './user';
 
 export interface IProduct {
-  _id?: string;
+  id?: string;
   title: string;
   slug?: string;
-  category: ICategory;
-  subcategory: ISubcategory;
-  color: IColor[];
   description: string;
-  gender: string;
-  brand: IBrand;
+  subcategory: ISubcategory;
   price: number;
-  size: number;
-  state: IClothesState;
-  type: string;
-  user: IUser;
   images: string[];
   isFeatured?: boolean;
   available: boolean;
-  creationAt?: string;
-  updatedAt?: string;
+  colors: number[];
+  brand: IBrand;
+  measurement: IMeasurement;
+  clothesState: IClothesState;
+  user?: IUser;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface ICategory {
   id: string;
   title: string;
-  type: string;
 }
 
 export interface ISubcategory {
@@ -39,7 +35,7 @@ export interface IBrand {
   slug: string;
 }
 
-export interface IClotesSize {
+export interface IMeasurement {
   id: number;
   slug: string;
   size: string;
@@ -49,7 +45,7 @@ export interface IClotesSize {
   waist?: string;
   long?: string;
   gender?: string;
-  type?: string;
+  clothesType?: string;
 }
 
 export interface IClothesState {
@@ -59,7 +55,7 @@ export interface IClothesState {
 }
 
 export interface IColor {
-  id: string;
+  id: number;
   name: string;
   codeColor: string;
 }

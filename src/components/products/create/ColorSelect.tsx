@@ -1,8 +1,9 @@
-import { colors } from '@/assets/data';
+// import { colors } from '@/assets/data';
 import { Button } from '@/components/ui';
+import { getAllColors } from '@/helpers/httpHelper';
 import { useModal } from '@/hooks';
 import { IColor } from '@/interfaces';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, use, useEffect, useState } from 'react';
 
 import { GrCheckbox, GrCheckboxSelected } from 'react-icons/gr';
 import { IconBaseProps } from 'react-icons/lib';
@@ -14,7 +15,12 @@ type Props = {
 
 export const ColorSelect = ({ setColor, colorSelect }: Props) => {
   const [selectColor, setSelectColor] = useState<IColor[]>([]);
+  const [colors, setColors] = useState<IColor[]>([]);
   const { onCloseModal } = useModal();
+
+  useEffect(() => {
+    fetchColors();
+  }, []);
 
   const handleChange = (color: IColor, isChecked: boolean) => {
     let draft = structuredClone(selectColor);
@@ -28,6 +34,11 @@ export const ColorSelect = ({ setColor, colorSelect }: Props) => {
 
       setSelectColor(draft);
     }
+  };
+
+  const fetchColors = async () => {
+    const  data = await getAllColors();
+    setColors(data);
   };
 
   return (
@@ -63,7 +74,7 @@ export const ColorSelect = ({ setColor, colorSelect }: Props) => {
                 className={`inline-block w-7 h-7 rounded-full border mr-4`}
                 style={{
                   background: `${
-                    codeColor === ''
+                    codeColor === 'multicolor'
                       ? 'radial-gradient(red, orange, #ff0, pink, black, #00f, purple, red)'
                       : codeColor
                   }`,

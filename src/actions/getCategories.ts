@@ -13,10 +13,11 @@ export const getCategories = async (gender: string, type: string) => {
   }
 };
 
-export const getSubcategories = async (gender: string, category: string) => {
+export const getSubcategories = async (categoryId: string) => {
   try {
     const { data } = await wooApi.get(
-      `/subcategories?gender=${gender}&category=${category}`
+      // `/subcategories?gender=${gender}&category=${category}`
+      `/subcategories?category=${categoryId}`
     );
 
     return data;
