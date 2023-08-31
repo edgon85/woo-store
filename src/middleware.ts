@@ -50,6 +50,7 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     '/products/create',
+    '/profile/:path*',
     '/checkout/address',
     '/checkout/summary',
     '/admin/:path*',

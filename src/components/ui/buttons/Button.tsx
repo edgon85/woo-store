@@ -33,9 +33,13 @@ export const Button = ({
             hover:opacity-80
             transition
             w-full
-            ${outlined ? 'bg-white' : 'bg-primary'}
-            ${outlined ? 'border-black' : 'border-primary'}
-            ${outlined ? 'text-black' : 'text-white'}
+            flex
+            justify-center
+            items-center
+            gap-2
+            ${outlined ? 'bg-[var(--bg)]' : 'bg-primary'}
+            ${outlined ? 'border-primary' : 'border-primary'}
+            ${outlined ? 'text-primary' : 'text-white'}
             ${small ? 'text-sm' : 'text-md'}
             ${small ? 'py-1' : 'py-3'}
             ${small ? 'font-light' : 'font-semibold'}

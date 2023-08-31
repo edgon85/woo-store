@@ -1,13 +1,14 @@
 import { getMeasurementFilter } from '@/helpers/httpHelper';
 import { useModal } from '@/hooks';
-import { IClotesSize } from '@/interfaces';
+import { IMeasurement } from '@/interfaces';
+
 import { useEffect, useState } from 'react';
 
 type Props = {
   gender: string;
   typeOfClothes: string;
   category?: string;
-  setTalla: (talla: IClotesSize) => void;
+  setTalla: (talla: IMeasurement) => void;
 };
 export const Measurements = ({
   gender,
@@ -16,9 +17,9 @@ export const Measurements = ({
   setTalla,
 }: Props) => {
   const { onCloseModal } = useModal();
-  const [measurements, setMeasurements] = useState<IClotesSize[]>([]);
+  const [measurements, setMeasurements] = useState<IMeasurement[]>([]);
 
-  const handleClick = (size: IClotesSize) => {
+  const handleClick = (size: IMeasurement) => {
     setTalla({ ...size });
     onCloseModal();
   };
@@ -62,12 +63,13 @@ export const Measurements = ({
 };
 
 type ItemsProps = {
-  measurement: IClotesSize;
-  onHandleClick: (measurement: IClotesSize) => void;
+  measurement: IMeasurement;
+  onHandleClick: (measurement: IMeasurement) => void;
   category: string;
 };
 export const Items = ({ measurement, onHandleClick, category }: ItemsProps) => {
-  const { eu, gender, long, size, slug, clothesType, uk, us, waist } = measurement;
+  const { eu, gender, long, size, slug, clothesType, uk, us, waist } =
+    measurement;
 
   if (gender === 'mujer' && clothesType === 'ropa') {
     return (

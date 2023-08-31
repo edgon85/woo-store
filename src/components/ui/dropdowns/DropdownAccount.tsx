@@ -55,7 +55,7 @@ export const DropdownAccount = () => {
             className="py-2 text-sm text-gray-700"
             aria-labelledby="dropdownDividerButton"
           >
-            <DropdownItem title="Mi closet" icon={<HangerIcon />} />
+            <DropdownItem title="Mi closet" icon={<HangerIcon />} path='/profile'/>
             <DropdownItem
               title="Mis pedidos"
               icon={<ClipboardDocumentIcon />}

@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchIcon } from '@/components/ui';
 import { getBrandData } from '@/helpers/httpHelper';
 import { useModal } from '@/hooks';

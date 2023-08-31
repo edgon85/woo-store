@@ -1,18 +1,15 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { BtnCircle } from '../buttons';
 import { DropdownAccount } from '../dropdowns';
 import { BellIcon, SearchIcon } from '../icons';
 import Link from 'next/link';
 import { useAuth } from '@/hooks';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export const NavbarActions = () => {
-
   const path = usePathname();
-
-  // const { status } = session;
+  const router = useRouter();
   const { isLoggedIn } = useAuth();
 
   return (
@@ -37,6 +34,7 @@ export const NavbarActions = () => {
           <BtnCircle icon={<BellIcon />} />
 
           <button
+            onClick={() => router.push('/products/create')}
             type="button"
             className="hidden lg:block focus:outline-none text-white bg-[var(--primary)] hover:bg-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 "
           >
