@@ -31,7 +31,7 @@ export const NumberInput = ({ setPrice }: Props) => {
     <div className="relative z-0 w-full mb-6 group">
       <label
         htmlFor="price"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900"
       >
         Precio de venta {value && <span>Q{formatNumberWithCommas(value)}</span>}
       </label>

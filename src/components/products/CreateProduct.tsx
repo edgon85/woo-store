@@ -129,8 +129,9 @@ export const CreateProduct = () => {
       if (result.isConfirmed) {
         Swal.fire({
           title: `${result.value.title} creado`,
+          icon: 'success'
         });
-        router.replace('/profile');
+        router.replace(`/profile/${user?.id}`);
       }
     });
   };
