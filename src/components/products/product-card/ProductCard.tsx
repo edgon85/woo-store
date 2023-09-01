@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui';
-import { IProduct, IProductPlain } from '@/interfaces';
+import { IProductPlain } from '@/interfaces';
 import Image from 'next/image';
 
 type cardProps = {
   product: IProductPlain;
+  userId?: string;
 };
-export const ProductCard = ({ product }: cardProps) => {
+export const ProductCard = ({ product, userId }: cardProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md  min-h-[400px]">
       <div className="w-full min-h-[300px] mb-2 relative">
@@ -24,9 +25,15 @@ export const ProductCard = ({ product }: cardProps) => {
           <span>Talla: {product.size}</span> | <span>{product.state}</span>
         </p>
         <p className="text-gray-500">{product.brand}</p>
-        <div className="mt-2">
-          <Button label="Comprar" type="button" />
-        </div>
+        {product.user === userId ? (
+          <div className="mt-2">
+            <Button label="Editar" type="button" outlined />
+          </div>
+        ) : (
+          <div className="mt-2">
+            <Button label="Comprar" type="button" />
+          </div>
+        )}
       </div>
     </div>
   );
