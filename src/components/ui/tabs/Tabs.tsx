@@ -3,6 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+
+type Props = {
+  userId: string
+}
 export const Tabs = () => {
   const pathName = usePathname();
 

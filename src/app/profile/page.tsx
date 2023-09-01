@@ -1,6 +1,10 @@
-import { HeaderProfile, ProductCard, Tabs } from '@/components';
+import { HeaderProfile, Tabs } from '@/components';
 
-export default function ProfilePage() {
+
+export default async function ProfilePage() {
+  
+ 
+
   return (
     <main className="px-4 lg:px-0 main-wrapper pt-4 pb-4">
       <HeaderProfile />
@@ -9,48 +13,7 @@ export default function ProfilePage() {
       </section>
       <section className="mt-4">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <ProductCard
-            imageUrl="https://via.placeholder.com/150"
-            name="Producto 1"
-            price="$19.99"
-            description="Descripción del producto aquí..."
-          />
-          <ProductCard
-            imageUrl="https://via.placeholder.com/150"
-            name="Producto 1"
-            price="$19.99"
-            description="Descripción del producto aquí..."
-          />
-          <ProductCard
-            imageUrl="https://via.placeholder.com/150"
-            name="Producto 1"
-            price="$19.99"
-            description="Descripción del producto aquí..."
-          />
-          <ProductCard
-            imageUrl="https://via.placeholder.com/150"
-            name="Producto 1"
-            price="$19.99"
-            description="Descripción del producto aquí..."
-          />
-          <ProductCard
-            imageUrl="https://via.placeholder.com/150"
-            name="Producto 1"
-            price="$19.99"
-            description="Descripción del producto aquí..."
-          />
-          <ProductCard
-            imageUrl="https://via.placeholder.com/150"
-            name="Producto 1"
-            price="$19.99"
-            description="Descripción del producto aquí..."
-          />
-          <ProductCard
-            imageUrl="https://via.placeholder.com/150"
-            name="Producto 1"
-            price="$19.99"
-            description="Descripción del producto aquí..."
-          />
+          grid
         </div>
       </section>
     </main>

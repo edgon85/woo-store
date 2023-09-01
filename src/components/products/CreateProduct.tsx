@@ -35,10 +35,13 @@ import {
   SelectSubcategory,
 } from './select-categories';
 import { createProduct } from '@/helpers/httpHelper';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 export const CreateProduct = () => {
   const { onOpenModal } = useModal();
   const { user } = useAuth();
+  const router = useRouter();
 
   const {
     register,
@@ -95,14 +98,41 @@ export const CreateProduct = () => {
   };
 
   const onCreateNewProduct = async (product: IProduct, token: string) => {
-    await createProduct(product, token)
+    /*  await createProduct(product, token)
       .then((resp) => {
         console.log('Producto creado con éxito');
         console.log(resp);
       })
       .catch((err) => {
         throw new Error(err);
-      });
+      }); */
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      html: `Se va a crear un nuevo producto`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, crear',
+      cancelButtonText: 'Cancelar',
+      showLoaderOnConfirm: true,
+      preConfirm: async () => {
+        const { message, data } = await createProduct(product, token);
+        if (message !== 'ok') {
+          Swal.showValidationMessage(`error: ${message}`);
+          return;
+        }
+
+        return data;
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `${result.value.title} creado`,
+        });
+        router.replace('/profile');
+      }
+    });
   };
 
   return (

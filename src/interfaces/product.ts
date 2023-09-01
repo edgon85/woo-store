@@ -59,3 +59,19 @@ export interface IColor {
   name: string;
   codeColor: string;
 }
+
+export interface IProductPlain {
+  id: string;
+  slug: string;
+  title: string;
+  price: number;
+  isfeatured: boolean;
+  available: boolean;
+  user: string;
+  images: string[];
+  brand: string;
+  size: string;
+  state: string;
+  subcategory: string;
+  colores: string[];
+}

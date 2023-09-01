@@ -14,7 +14,7 @@ import { DropdownItem } from './DropdownItem';
 import { useAuth } from '@/hooks';
 
 export const DropdownAccount = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -55,7 +55,11 @@ export const DropdownAccount = () => {
             className="py-2 text-sm text-gray-700"
             aria-labelledby="dropdownDividerButton"
           >
-            <DropdownItem title="Mi closet" icon={<HangerIcon />} path='/profile'/>
+            <DropdownItem
+              title="Mi closet"
+              icon={<HangerIcon />}
+              path={`/profile/${user?.id}`}
+            />
             <DropdownItem
               title="Mis pedidos"
               icon={<ClipboardDocumentIcon />}
