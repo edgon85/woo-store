@@ -49,3 +49,17 @@ body {
   border-bottom: red !important;
   outline: none;
 } */
+.custom-select select::-ms-expand {
+  display: none;
+}
+.custom-select select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 8 8"><path d="M0 2l4 4 4-4H0z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.5rem top 50%, 0 0;
+  background-size: 12px 12px;
+  cursor: pointer;
+  padding-right: 1.5rem;
+}
