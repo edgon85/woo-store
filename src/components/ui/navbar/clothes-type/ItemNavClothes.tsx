@@ -1,4 +1,5 @@
 import { useFetchCategoryByGenderAndType } from '@/helpers';
+import { useCategory } from '@/hooks';
 import { useRouter } from 'next/navigation';
 
 type Props = {
@@ -12,11 +13,12 @@ type Props = {
 export const ItemMegaMenu = ({
   isCollapsed,
   itemName,
-  gender,
+  // gender,
   toggleMenu,
   menuName,
 }: Props) => {
   const router = useRouter();
+  const { gender, setClothesType } = useCategory();
 
   const { categories: cat, loading } = useFetchCategoryByGenderAndType(
     gender,
@@ -37,6 +39,7 @@ export const ItemMegaMenu = ({
   const handleOnclick = (slug: string) => {
     router.push(`/${gender}/${slug}`);
     toggleMenu(menuName);
+    setClothesType(itemName)
   };
 
   return (

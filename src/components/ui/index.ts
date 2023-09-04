@@ -3,3 +3,4 @@ export * from './icons';
 export * from './navbar';
 export * from './modal';
 export * from './tabs';
+export * from './categories';

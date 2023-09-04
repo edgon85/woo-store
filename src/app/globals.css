@@ -49,17 +49,45 @@ body {
   border-bottom: red !important;
   outline: none;
 } */
-.custom-select select::-ms-expand {
+
+/* Estilos personalizados para el acordeón */
+.accordion input[type='checkbox'] {
   display: none;
 }
-.custom-select select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 8 8"><path d="M0 2l4 4 4-4H0z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 0.5rem top 50%, 0 0;
-  background-size: 12px 12px;
+.accordion label {
   cursor: pointer;
-  padding-right: 1.5rem;
+  display: flex;
+  justify-content: space-between; /* Alineación para el ícono en el lado izquierdo */
+  align-items: center; /* Alineación verticalmente centrada */
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+.accordion label:hover {
+  background-color: #e5e7eb;
+}
+.accordion input[type='checkbox'] + label {
+  padding-left: 2rem; /* Espacio para el texto */
+}
+.accordion input[type='checkbox'] + label::after {
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>');
+  width: 1rem;
+  height: 1rem;
+  /* margin-right: 0.5rem; */
+  transition: transform 0.2s;
+}
+.accordion input[type='checkbox'] + label + div {
+  display: none;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.accordion input[type='checkbox']:checked + label::after {
+  /* transform: translateY(-50%) rotate(90deg);
+   */
+  transform: rotate(90deg);
+}
+
+.accordion input[type='checkbox']:checked + label + div {
+  display: block;
 }

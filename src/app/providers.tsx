@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthProvider, ModalProvider } from '@/context';
+import { AuthProvider, ModalProvider, CategoryProvider } from '@/context';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
 
@@ -12,14 +12,16 @@ export function Providers({ children }: Props) {
   return (
     <SessionProvider>
       <AuthProvider>
-        <SWRConfig
-          value={{
-            fetcher: (resource, init) =>
-              fetch(resource, init).then((res) => res.json()),
-          }}
-        >
-          <ModalProvider>{children}</ModalProvider>
-        </SWRConfig>
+        <CategoryProvider>
+          <SWRConfig
+            value={{
+              fetcher: (resource, init) =>
+                fetch(resource, init).then((res) => res.json()),
+            }}
+          >
+            <ModalProvider>{children}</ModalProvider>
+          </SWRConfig>
+        </CategoryProvider>
       </AuthProvider>
     </SessionProvider>
   );

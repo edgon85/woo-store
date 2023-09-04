@@ -3,13 +3,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { GenderSelected } from '../../dropdowns';
 
 import { ItemMegaMenu } from './ItemNavClothes';
+import { useCategory } from '@/hooks';
 
 type MenuState = {
   [menuName: string]: boolean;
 };
 
 export const NavClothesType = () => {
-  const [gender, setGender] = useState('mujer');
+  // const [gender, setGender] = useState('mujer');
+  const { gender } = useCategory();
   const [menuState, setMenuState] = useState<MenuState>({
     isClothesMenuOpen: false,
     isShoesMenuOpen: false,
@@ -30,6 +32,7 @@ export const NavClothesType = () => {
         return acc;
       }, {} as MenuState),
     }));
+    // setClothesType(clothes!);
   }, []);
 
   const handleClickOutside = useCallback(
@@ -56,10 +59,10 @@ export const NavClothesType = () => {
   }, [handleClickOutside]);
 
   return (
-    <section className="bg-white px-4 lg:px-0">
+    <section className="bg-white px-4 lg:px-0 hidden sm:block">
       <nav className="main-wrapper pt-4 pb-4 flex justify-between items-center">
         <div className="flex-1">
-          <GenderSelected selectGender={setGender} />
+          <GenderSelected />
         </div>
         <ul className="flex-1 flex  items-center gap-8">
           <li ref={menuRefs['isClothesMenuOpen']}>

@@ -1,4 +1,7 @@
+'use client';
+
 import { Button } from '@/components/ui';
+import { useAuth } from '@/hooks';
 import { IProductPlain } from '@/interfaces';
 import Image from 'next/image';
 
@@ -7,6 +10,8 @@ type cardProps = {
   userId?: string;
 };
 export const ProductCard = ({ product, userId }: cardProps) => {
+  const { user } = useAuth();
+
   return (
     <div className="bg-white rounded-lg shadow-md  min-h-[400px]">
       <div className="w-full min-h-[300px] mb-2 relative">
@@ -25,7 +30,7 @@ export const ProductCard = ({ product, userId }: cardProps) => {
           <span>Talla: {product.size}</span> | <span>{product.state}</span>
         </p>
         <p className="text-gray-500">{product.brand}</p>
-        {product.user === userId ? (
+        {product.user === user?.id ? (
           <div className="mt-2">
             <Button label="Editar" type="button" outlined />
           </div>
