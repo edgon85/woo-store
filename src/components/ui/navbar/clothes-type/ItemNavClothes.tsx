@@ -1,5 +1,6 @@
 import { useFetchCategoryByGenderAndType } from '@/helpers';
 import { useCategory } from '@/hooks';
+import { ICategory } from '@/interfaces';
 import { useRouter } from 'next/navigation';
 
 type Props = {
@@ -18,7 +19,7 @@ export const ItemMegaMenu = ({
   menuName,
 }: Props) => {
   const router = useRouter();
-  const { gender, setClothesType, setCategoryId } = useCategory();
+  const { gender, setClothesType, setCategory } = useCategory();
 
   const { categories: cat, loading } = useFetchCategoryByGenderAndType(
     gender,
@@ -36,11 +37,11 @@ export const ItemMegaMenu = ({
     }
   }
 
-  const handleOnclick = (slug: string, catId: string) => {
-    router.push(`/${gender}/${slug}`);
+  const handleOnclick = (category: ICategory) => {
+    router.push(`/${gender}/${category.slug}`);
     toggleMenu(menuName);
     setClothesType(itemName);
-    setCategoryId(catId);
+    setCategory(category);
   };
 
   return (
@@ -55,10 +56,10 @@ export const ItemMegaMenu = ({
       {groupedClothingData.map((columnData, columnIndex) => (
         <div key={columnIndex} className="p-4 pb-0 text-gray-900 md:pb-4">
           <ul className="space-y-4" aria-labelledby="mega-menu-dropdown-button">
-            {columnData.map((cat: any) => (
+            {columnData.map((cat: ICategory) => (
               <li key={cat.id}>
                 <button
-                  onClick={() => handleOnclick(cat.slug, cat.id)}
+                  onClick={() => handleOnclick(cat)}
                   // href='#'
                   className="text-gray-500 dark:text-gray-400 hover:text-darkPrimary capitalize"
                 >

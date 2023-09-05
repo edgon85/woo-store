@@ -6,24 +6,28 @@ export const useCategory = () => {
     gender,
     clothesType,
     setGender,
-    categoryId,
-    subcategoryId,
+    category,
+    subcategory,
+    isCategorySelected,
 
     setClothesType,
-    setCategoryId,
-    setSubcategoryId,
+    setCategory,
+    setSubcategory,
+    onCategorySelected,
   } = useContext(CategoryContext);
 
   return {
     gender,
     clothesType,
-    categoryId,
-    subcategoryId,
+    category,
+    subcategory,
+    isCategorySelected,
 
     /* Methods */
     setGender,
     setClothesType,
-    setCategoryId,
-    setSubcategoryId,
+    setCategory,
+    setSubcategory,
+    onCategorySelected,
   };
 };

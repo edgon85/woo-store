@@ -4,19 +4,24 @@ import { useCategory } from '@/hooks';
 import { ISubcategory } from '@/interfaces';
 
 import styles from './Categories.module.css';
-import { GrCheckbox, GrCheckboxSelected } from 'react-icons/gr';
+import { useRouter } from 'next/navigation';
 
 export const CategoriesItemLi = () => {
-  const { categoryId, subcategoryId, setSubcategoryId } = useCategory();
+  const { gender, category, subcategory, setSubcategory } =
+    useCategory();
+  const router = useRouter();
 
-  const { subcategories, loading, isError } =
-    useFetchSubcategoryByCategoryId(categoryId);
+  const { subcategories, loading, isError } = useFetchSubcategoryByCategoryId(
+    category.id
+  );
 
-  const handleChange = (id: string, isChecked: boolean) => {
-    if (id === subcategoryId) {
-      setSubcategoryId('');
+  const handleChange = (currentSubcategory: ISubcategory) => {
+    if (currentSubcategory.id === subcategory.id) {
+      setSubcategory({ id: '', title: '', slug: '' });
+      router.push(`/${gender}/${category.slug}`);
     } else {
-      setSubcategoryId(id);
+      setSubcategory(currentSubcategory);
+      router.push(`/${gender}/${category.slug}/${currentSubcategory.slug}`);
     }
   };
 
@@ -32,24 +37,19 @@ export const CategoriesItemLi = () => {
               type="checkbox"
               id={sub.id}
               className="flex"
-              onChange={(e) => handleChange(sub.id, e.target.checked)}
             />
             <li
-              //htmlFor={sub.id}
-              //   onClick={() => setSubcategoryId(sub.id)}
-              // className={`flex justify-between items-center text-black  py-2 cursor-pointer capitalize`}
+              onClick={() => handleChange(sub)}
               className={`flex justify-between items-center 
-              ${sub.id == subcategoryId ? 'text-darkPrimary' : 'text-black'}
+              ${sub.id == subcategory.id ? 'text-darkPrimary' : 'text-black'}
               py-2 cursor-pointer hover:text-darkPrimary capitalize`}
             >
               <label className={styles.label} htmlFor={sub.id}>
                 <span>{sub.title}</span>
               </label>
-              {sub.id == subcategoryId ? (
-                <RadiaSelectIcon color="var(--primary)" size='16'/>
-              ) : (
-                null
-              )}
+              {sub.id == subcategory.id ? (
+                <RadiaSelectIcon color="var(--primary)" size="16" />
+              ) : null}
             </li>
           </div>
         );

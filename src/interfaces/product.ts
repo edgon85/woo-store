@@ -22,11 +22,13 @@ export interface IProduct {
 export interface ICategory {
   id: string;
   title: string;
+  slug: string;
 }
 
 export interface ISubcategory {
   id: string;
   title: string;
+  slug?: string;
 }
 
 export interface IBrand {

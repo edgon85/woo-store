@@ -1,10 +1,12 @@
+import { ICategory, ISubcategory } from '@/interfaces';
 import { CategoryState } from './';
 
 type CategoryActionType =
   | { type: '[Category] - gender'; payload: string }
   | { type: '[Category] - clothes type'; payload: string }
-  | { type: '[Category] - category'; payload: string }
-  | { type: '[Category] - subcategory'; payload: string };
+  | { type: '[Category] - category'; payload: ICategory }
+  | { type: '[Category] - category selected' }
+  | { type: '[Category] - subcategory'; payload: ISubcategory };
 
 export const CategoryReducer = (
   state: CategoryState,
@@ -25,12 +27,17 @@ export const CategoryReducer = (
     case '[Category] - category':
       return {
         ...state,
-        categoryId: action.payload,
+        category: { ...action.payload },
       };
     case '[Category] - subcategory':
       return {
         ...state,
-        subcategoryId: action.payload,
+        subcategory: { ...action.payload },
+      };
+    case '[Category] - category selected':
+      return {
+        ...state,
+        isCategorySelected: !state.isCategorySelected,
       };
 
     default:

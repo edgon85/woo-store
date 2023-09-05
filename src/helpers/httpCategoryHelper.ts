@@ -39,6 +39,7 @@ export const useFetchSubcategoryByCategoryId = (
 ) => {
   const url = `http://localhost:5000/api/subcategories?category=${categoryId}`;
 
+
   const { data, error, isLoading } = useSWR<ISubcategory[]>(url, config);
 
   return {

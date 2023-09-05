@@ -1,18 +1,25 @@
 import { FC, useReducer } from 'react';
 import { CategoryContext, CategoryReducer } from './';
+import { ICategory, ISubcategory } from '@/interfaces';
 
 export interface CategoryState {
   gender: string;
   clothesType: string;
-  categoryId: string;
-  subcategoryId: string;
+  category: ICategory;
+  isCategorySelected: boolean;
+  subcategory: ISubcategory;
 }
 
 const CATEGORY_INITIAL_STATE: CategoryState = {
   gender: 'mujer',
   clothesType: 'ropa',
-  categoryId: '59f36816-035b-44cb-bc32-30dd85a7cc14',
-  subcategoryId: '',
+  category: {
+    id: '59f36816-035b-44cb-bc32-30dd85a7cc14',
+    title: '',
+    slug: 'vestidos',
+  },
+  subcategory: { id: '', title: '', slug: '' },
+  isCategorySelected: false,
 };
 
 type Props = {
@@ -28,11 +35,14 @@ export const CategoryProvider: FC<Props> = ({ children }) => {
   const setClothesType = (clothesType: string) =>
     dispatch({ type: '[Category] - clothes type', payload: clothesType });
 
-  const setCategoryId = (categoryId: string) =>
-    dispatch({ type: '[Category] - category', payload: categoryId });
+  const setCategory = (category: ICategory) =>
+    dispatch({ type: '[Category] - category', payload: category });
 
-  const setSubcategoryId = (subcategoryId: string) =>
-    dispatch({ type: '[Category] - subcategory', payload: subcategoryId });
+  const setSubcategory = (subcategory: ISubcategory) =>
+    dispatch({ type: '[Category] - subcategory', payload: subcategory });
+
+  const onCategorySelected = () =>
+    dispatch({ type: '[Category] - category selected' });
 
   return (
     <CategoryContext.Provider
@@ -42,8 +52,9 @@ export const CategoryProvider: FC<Props> = ({ children }) => {
         /* Methods */
         setGender,
         setClothesType,
-        setCategoryId,
-        setSubcategoryId,
+        setCategory,
+        setSubcategory,
+        onCategorySelected
       }}
     >
       {children}
