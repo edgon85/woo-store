@@ -1,20 +1,16 @@
 'use client';
 
 import { CategoriesItem } from './CategoriesItem';
+import styles from './Categories.module.css';
 
-type Props = {
-  gender: string;
-  clothesType: string;
-};
-
-export const NavCategories = ({ gender, clothesType }: Props) => {
+export const NavCategories = () => {
   return (
     <div className="">
       {/* <h2 className="text-2xl font-semibold mb-4">Categorías</h2> */}
-      <div className="accordion">
+      <div className={styles.accordion}>
         {/* <!-- Categoría 1 --> */}
         <div>
-          <CategoriesItem gender={gender} clothesType={clothesType} />
+          <CategoriesItem />
           {/* <input type="checkbox" id="category1" className="hidden" />
           <label htmlFor="category1">Subcategoría</label>
 

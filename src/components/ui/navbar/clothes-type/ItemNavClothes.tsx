@@ -18,7 +18,7 @@ export const ItemMegaMenu = ({
   menuName,
 }: Props) => {
   const router = useRouter();
-  const { gender, setClothesType } = useCategory();
+  const { gender, setClothesType, setCategoryId } = useCategory();
 
   const { categories: cat, loading } = useFetchCategoryByGenderAndType(
     gender,
@@ -36,10 +36,11 @@ export const ItemMegaMenu = ({
     }
   }
 
-  const handleOnclick = (slug: string) => {
+  const handleOnclick = (slug: string, catId: string) => {
     router.push(`/${gender}/${slug}`);
     toggleMenu(menuName);
-    setClothesType(itemName)
+    setClothesType(itemName);
+    setCategoryId(catId);
   };
 
   return (
@@ -57,7 +58,7 @@ export const ItemMegaMenu = ({
             {columnData.map((cat: any) => (
               <li key={cat.id}>
                 <button
-                  onClick={() => handleOnclick(cat.slug)}
+                  onClick={() => handleOnclick(cat.slug, cat.id)}
                   // href='#'
                   className="text-gray-500 dark:text-gray-400 hover:text-darkPrimary capitalize"
                 >

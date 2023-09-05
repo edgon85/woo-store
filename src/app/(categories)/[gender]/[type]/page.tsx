@@ -12,7 +12,7 @@ export default async function CategoriesPage({
     <div className="container main-wrapper pt-4 flex">
       {/* <!-- Sección de Categorías (Lado Izquierdo) --> */}
       <div className="w-full md:w-1/5 pr-4 hidden sm:block">
-        <NavCategories gender={gender} clothesType={type} />
+        <NavCategories />
       </div>
 
       {/* <!-- Sección de Cuadrícula de 4 Columnas (Lado Derecho) --> */}

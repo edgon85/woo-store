@@ -1,3 +1,4 @@
+import { ISubcategory } from '@/interfaces';
 import useSWR, { SWRConfiguration } from 'swr';
 
 export const getCategoryByGenderAndType = async (
@@ -29,5 +30,20 @@ export const useFetchCategoryByGenderAndType = (
     categories: data,
     loading: !error && !data,
     isError: error,
+  };
+};
+
+export const useFetchSubcategoryByCategoryId = (
+  categoryId: string,
+  config: SWRConfiguration = {}
+) => {
+  const url = `http://localhost:5000/api/subcategories?category=${categoryId}`;
+
+  const { data, error, isLoading } = useSWR<ISubcategory[]>(url, config);
+
+  return {
+    subcategories: data || [],
+    loading: !error && !data,
+    isError: !error,
   };
 };

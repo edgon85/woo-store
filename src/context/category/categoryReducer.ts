@@ -2,7 +2,9 @@ import { CategoryState } from './';
 
 type CategoryActionType =
   | { type: '[Category] - gender'; payload: string }
-  | { type: '[Category] - clothes type'; payload: string };
+  | { type: '[Category] - clothes type'; payload: string }
+  | { type: '[Category] - category'; payload: string }
+  | { type: '[Category] - subcategory'; payload: string };
 
 export const CategoryReducer = (
   state: CategoryState,
@@ -19,6 +21,16 @@ export const CategoryReducer = (
       return {
         ...state,
         clothesType: action.payload,
+      };
+    case '[Category] - category':
+      return {
+        ...state,
+        categoryId: action.payload,
+      };
+    case '[Category] - subcategory':
+      return {
+        ...state,
+        subcategoryId: action.payload,
       };
 
     default:
