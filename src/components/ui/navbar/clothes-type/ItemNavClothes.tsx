@@ -1,6 +1,7 @@
-import { useFetchCategoryByGenderAndType } from '@/helpers';
-import { useCategory } from '@/hooks';
+// import { useFetchCategoryByGenderAndType } from '@/helpers';
+import { useCategory, useFetcher } from '@/hooks';
 import { ICategory } from '@/interfaces';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 type Props = {
@@ -21,16 +22,15 @@ export const ItemMegaMenu = ({
   const router = useRouter();
   const { gender, setClothesType, setCategory } = useCategory();
 
-  const { categories: cat, loading } = useFetchCategoryByGenderAndType(
-    gender,
-    itemName
+  const { data: cat, isLoading } = useFetcher(
+    `/categories?gender=${gender}&type=${itemName}`
   );
 
   const columns = 3; // Cambia esto al número de columnas que desees (en este caso, 3)
 
   const groupedClothingData = [];
 
-  if (!loading) {
+  if (!isLoading) {
     // Divide los datos de ropa en grupos de 6 elementos por columna
     for (let i = 0; i < columns; i++) {
       groupedClothingData.push(cat.slice(i * 6, (i + 1) * 6));
@@ -38,10 +38,11 @@ export const ItemMegaMenu = ({
   }
 
   const handleOnclick = (category: ICategory) => {
-    router.push(`/${gender}/${category.slug}`);
+    Cookies.set('category', JSON.stringify(category));
     toggleMenu(menuName);
     setClothesType(itemName);
     setCategory(category);
+    router.push(`/${gender}/${category.slug}`);
   };
 
   return (
@@ -49,9 +50,9 @@ export const ItemMegaMenu = ({
       id="mega-menu-dropdown"
       className={`absolute z-10 grid ${
         isCollapsed ? 'grid-cols-2' : 'hidden'
-      } w-auto text-sm bg-white border border-gray-100 rounded-lg shadow-md dark:border-gray-700 ${
+      } w-auto text-sm bg-white border border-gray-100 rounded-lg shadow-md ${
         isCollapsed ? 'md:grid-cols-3' : ''
-      } dark:bg-gray-700`}
+      } `}
     >
       {groupedClothingData.map((columnData, columnIndex) => (
         <div key={columnIndex} className="p-4 pb-0 text-gray-900 md:pb-4">
@@ -61,7 +62,7 @@ export const ItemMegaMenu = ({
                 <button
                   onClick={() => handleOnclick(cat)}
                   // href='#'
-                  className="text-gray-500 dark:text-gray-400 hover:text-darkPrimary capitalize"
+                  className="text-gray-500 hover:text-darkPrimary capitalize"
                 >
                   {cat.title}
                 </button>

@@ -1,27 +1,34 @@
-import { useFetchSubcategoryByCategoryId } from '@/helpers';
+import Cookies from 'js-cookie';
+
+// import { useFetchSubcategoryByCategoryId, useFetchSubcategoryByCategoryIdPrueba } from '@/helpers';
 import { RadiaSelectIcon } from '../icons';
-import { useCategory } from '@/hooks';
+import { useCategory, useFetcher } from '@/hooks';
 import { ISubcategory } from '@/interfaces';
 
 import styles from './Categories.module.css';
 import { useRouter } from 'next/navigation';
 
 export const CategoriesItemLi = () => {
-  const { gender, category, subcategory, setSubcategory } =
-    useCategory();
+  const { gender, category, subcategory, setSubcategory } = useCategory();
   const router = useRouter();
 
-  const { subcategories, loading, isError } = useFetchSubcategoryByCategoryId(
+  /*  const { subcategories, loading, isError } = useFetchSubcategoryByCategoryIdPrueba(
     category.id
+  ); */
+
+  const { data: subcategories, isLoading: loading } = useFetcher(
+    `/subcategories?category=${category.id}`
   );
 
   const handleChange = (currentSubcategory: ISubcategory) => {
     if (currentSubcategory.id === subcategory.id) {
       setSubcategory({ id: '', title: '', slug: '' });
       router.push(`/${gender}/${category.slug}`);
+      Cookies.remove('subcategory');
     } else {
       setSubcategory(currentSubcategory);
       router.push(`/${gender}/${category.slug}/${currentSubcategory.slug}`);
+      Cookies.set('subcategory', JSON.stringify(currentSubcategory));
     }
   };
 
@@ -33,11 +40,7 @@ export const CategoriesItemLi = () => {
       {subcategories.map((sub: ISubcategory) => {
         return (
           <div key={sub.id}>
-            <input
-              type="checkbox"
-              id={sub.id}
-              className="flex"
-            />
+            <input type="checkbox" id={sub.id} className="flex" />
             <li
               onClick={() => handleChange(sub)}
               className={`flex justify-between items-center 

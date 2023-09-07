@@ -10,19 +10,19 @@ type Props = {
 
 export function Providers({ children }: Props) {
   return (
-    <SessionProvider>
-      <AuthProvider>
-        <CategoryProvider>
-          <SWRConfig
-            value={{
-              fetcher: (resource, init) =>
-                fetch(resource, init).then((res) => res.json()),
-            }}
-          >
+    <SWRConfig
+      value={{
+        fetcher: (resource, init) =>
+          fetch(resource, init).then((res) => res.json()),
+      }}
+    >
+      <SessionProvider>
+        <AuthProvider>
+          <CategoryProvider>
             <ModalProvider>{children}</ModalProvider>
-          </SWRConfig>
-        </CategoryProvider>
-      </AuthProvider>
-    </SessionProvider>
+          </CategoryProvider>
+        </AuthProvider>
+      </SessionProvider>
+    </SWRConfig>
   );
 }

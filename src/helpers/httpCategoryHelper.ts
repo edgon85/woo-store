@@ -1,7 +1,7 @@
-import { ISubcategory } from '@/interfaces';
-import useSWR, { SWRConfiguration } from 'swr';
 
-export const getCategoryByGenderAndType = async (
+
+
+/* export const getCategoryByGenderAndType = async (
   gender: string,
   clothesType: string
 ) => {
@@ -15,9 +15,9 @@ export const getCategoryByGenderAndType = async (
   }
 
   return resp.json();
-};
+}; */
 
-export const useFetchCategoryByGenderAndType = (
+/* export const useFetchCategoryByGenderAndType = (
   gender: string,
   clothesType: string,
   config: SWRConfiguration = {}
@@ -31,20 +31,20 @@ export const useFetchCategoryByGenderAndType = (
     loading: !error && !data,
     isError: error,
   };
-};
+}; */
 
-export const useFetchSubcategoryByCategoryId = (
+/* export const useFetchSubcategoryByCategoryId = (
   categoryId: string,
-  config: SWRConfiguration = {}
 ) => {
-  const url = `http://localhost:5000/api/subcategories?category=${categoryId}`;
+  const url = `${process.env.API_BASE_URL}/subcategories?category=${categoryId}`;
+  // const url = `api/subcategories?category=${categoryId}`;
 
-
-  const { data, error, isLoading } = useSWR<ISubcategory[]>(url, config);
+  console.log(urlBase);
+  const { data, error, isLoading } = useSWR<ISubcategory[]>(url);
 
   return {
     subcategories: data || [],
     loading: !error && !data,
     isError: !error,
   };
-};
+}; */
