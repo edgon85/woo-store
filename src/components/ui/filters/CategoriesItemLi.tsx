@@ -9,12 +9,10 @@ import styles from './Categories.module.css';
 import { useRouter } from 'next/navigation';
 
 export const CategoriesItemLi = () => {
-  const { gender, category, subcategory, setSubcategory } = useFilter();
+  const { gender, category, subcategory, setSubcategory, setBrands } =
+    useFilter();
   const router = useRouter();
 
-  /*  const { subcategories, loading, isError } = useFetchSubcategoryByCategoryIdPrueba(
-    category.id
-  ); */
 
   const { data: subcategories, isLoading: loading } = useFetcher<ICategory[]>(
     `/subcategories?category=${category.id}`
@@ -25,10 +23,12 @@ export const CategoriesItemLi = () => {
       setSubcategory({ id: '', title: '', slug: '' });
       router.push(`/${gender}/${category.slug}`);
       Cookies.remove('subcategory');
+      setBrands([]);
     } else {
       setSubcategory(currentSubcategory);
       router.push(`/${gender}/${category.slug}/${currentSubcategory.slug}`);
       Cookies.set('subcategory', JSON.stringify(currentSubcategory));
+      setBrands([]);
     }
   };
 

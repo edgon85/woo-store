@@ -9,6 +9,7 @@ export interface FilterState {
   clothesType: string;
   category: ICategory;
   subcategory: ISubcategory;
+  brands: string[];
   isCategorySelected: boolean;
   isBrandSelected: boolean;
 }
@@ -24,6 +25,7 @@ const CATEGORY_INITIAL_STATE: FilterState = {
   subcategory: { id: '', title: '', slug: '' },
   isCategorySelected: false,
   isBrandSelected: false,
+  brands: [],
 };
 
 type Props = {
@@ -79,8 +81,11 @@ export const FilterProvider: FC<Props> = ({ children }) => {
   const onCategorySelected = () =>
     dispatch({ type: '[Filter] - category selected' });
 
-  const onBrandSelected = () =>
-    dispatch({ type: '[Filter] - Brand selected' });
+  const onBrandSelected = () => dispatch({ type: '[Filter] - Brand selected' });
+
+  const setBrands = (brands: string[]) => {
+    dispatch({ type: '[Filter] - Brands', payload: brands });
+  };
 
   return (
     <FilterContext.Provider
@@ -93,7 +98,8 @@ export const FilterProvider: FC<Props> = ({ children }) => {
         setCategory,
         setSubcategory,
         onCategorySelected,
-        onBrandSelected
+        onBrandSelected,
+        setBrands
       }}
     >
       {children}

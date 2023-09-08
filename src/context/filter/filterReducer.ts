@@ -6,8 +6,9 @@ type CategoryActionType =
   | { type: '[Filter] - clothes type'; payload: string }
   | { type: '[Filter] - category'; payload: ICategory }
   | { type: '[Filter] - category selected' }
+  | { type: '[Filter] - subcategory'; payload: ISubcategory }
   | { type: '[Filter] - Brand selected' }
-  | { type: '[Filter] - subcategory'; payload: ISubcategory };
+  | { type: '[Filter] - Brands'; payload: string[] };
 
 export const FilterReducer = (
   state: FilterState,
@@ -29,10 +30,12 @@ export const FilterReducer = (
       return {
         ...state,
         category: { ...action.payload },
+        brands: [],
       };
     case '[Filter] - subcategory':
       return {
         ...state,
+        brands: state.subcategory.id === '' ? [] : [...state.brands],
         subcategory: { ...action.payload },
       };
     case '[Filter] - category selected':
@@ -44,6 +47,11 @@ export const FilterReducer = (
       return {
         ...state,
         isBrandSelected: !state.isBrandSelected,
+      };
+    case '[Filter] - Brands':
+      return {
+        ...state,
+        brands: [...action.payload],
       };
 
     default:

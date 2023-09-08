@@ -5,15 +5,17 @@ export const useFilter = () => {
   const {
     gender,
     clothesType,
-    setGender,
     category,
     subcategory,
+    brands,
     isCategorySelected,
     isBrandSelected,
 
+    setGender,
     setClothesType,
     setCategory,
     setSubcategory,
+    setBrands,
     onCategorySelected,
     onBrandSelected,
   } = useContext(FilterContext);
@@ -23,6 +25,7 @@ export const useFilter = () => {
     clothesType,
     category,
     subcategory,
+    brands,
     isCategorySelected,
     isBrandSelected,
 
@@ -31,6 +34,7 @@ export const useFilter = () => {
     setClothesType,
     setCategory,
     setSubcategory,
+    setBrands,
     onCategorySelected,
     onBrandSelected,
   };

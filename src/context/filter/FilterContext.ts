@@ -8,6 +8,7 @@ type ContextProps = {
   subcategory: ISubcategory;
   isCategorySelected: boolean;
   isBrandSelected: boolean;
+  brands: string[];
 
   setGender: (gender: string) => void;
   setClothesType: (clothesType: string) => void;
@@ -15,6 +16,7 @@ type ContextProps = {
   setSubcategory: (subcategory: ISubcategory) => void;
   onCategorySelected: () => void;
   onBrandSelected: () => void;
+  setBrands: (brands: string[]) => void;
 };
 
 export const FilterContext = createContext<ContextProps>({} as ContextProps);
