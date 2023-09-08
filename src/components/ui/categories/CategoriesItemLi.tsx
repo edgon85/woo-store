@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 // import { useFetchSubcategoryByCategoryId, useFetchSubcategoryByCategoryIdPrueba } from '@/helpers';
 import { RadiaSelectIcon } from '../icons';
 import { useCategory, useFetcher } from '@/hooks';
-import { ISubcategory } from '@/interfaces';
+import { ICategory, ISubcategory } from '@/interfaces';
 
 import styles from './Categories.module.css';
 import { useRouter } from 'next/navigation';
@@ -16,7 +16,7 @@ export const CategoriesItemLi = () => {
     category.id
   ); */
 
-  const { data: subcategories, isLoading: loading } = useFetcher(
+  const { data: subcategories, isLoading: loading } = useFetcher<ICategory[]>(
     `/subcategories?category=${category.id}`
   );
 

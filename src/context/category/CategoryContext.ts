@@ -6,13 +6,15 @@ type ContextProps = {
   clothesType: string;
   category: ICategory;
   subcategory: ISubcategory;
-  isCategorySelected: boolean
+  isCategorySelected: boolean;
+  isBrandSelected: boolean;
 
   setGender: (gender: string) => void;
   setClothesType: (clothesType: string) => void;
   setCategory: (category: ICategory) => void;
   setSubcategory: (subcategory: ISubcategory) => void;
-  onCategorySelected: () => void
+  onCategorySelected: () => void;
+  onBrandSelected: () => void;
 };
 
 export const CategoryContext = createContext<ContextProps>({} as ContextProps);

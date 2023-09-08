@@ -6,6 +6,7 @@ type CategoryActionType =
   | { type: '[Category] - clothes type'; payload: string }
   | { type: '[Category] - category'; payload: ICategory }
   | { type: '[Category] - category selected' }
+  | { type: '[Category] - Brand selected' }
   | { type: '[Category] - subcategory'; payload: ISubcategory };
 
 export const CategoryReducer = (
@@ -38,6 +39,11 @@ export const CategoryReducer = (
       return {
         ...state,
         isCategorySelected: !state.isCategorySelected,
+      };
+    case '[Category] - Brand selected':
+      return {
+        ...state,
+        isBrandSelected: !state.isBrandSelected,
       };
 
     default:

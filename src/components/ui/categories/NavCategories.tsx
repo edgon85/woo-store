@@ -1,6 +1,7 @@
 'use client';
 
 import { CategoriesItem } from './CategoriesItem';
+import { BrandsItems } from './brands/BrandsItems';
 import styles from './Categories.module.css';
 
 export const NavCategories = () => {
@@ -11,31 +12,13 @@ export const NavCategories = () => {
         {/* <!-- Categoría 1 --> */}
         <div>
           <CategoriesItem />
-          {/* <input type="checkbox" id="category1" className="hidden" />
-          <label htmlFor="category1">Subcategoría</label>
-
-          <div>
-            <CategoriesItem />
-            <CategoriesItem />
-          </div> */}
         </div>
         {/* <!-- Marca --> */}
-        <input type="checkbox" id="brand" className="hidden" />
-        <label htmlFor="brand">Marca</label>
+
         <div>
-          <ul className="pl-4">
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.1
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.2
-              </a>
-            </li>
-          </ul>
+          <BrandsItems />
         </div>
+
 
         {/* <!-- Talla--> */}
         <input type="checkbox" id="measurement" className="hidden" />

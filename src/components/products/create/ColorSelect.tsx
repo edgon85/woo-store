@@ -3,10 +3,8 @@ import { Button } from '@/components/ui';
 import { getAllColors } from '@/helpers/httpHelper';
 import { useModal } from '@/hooks';
 import { IColor } from '@/interfaces';
-import { MouseEvent, use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { GrCheckbox, GrCheckboxSelected } from 'react-icons/gr';
-import { IconBaseProps } from 'react-icons/lib';
 
 type Props = {
   setColor: (color: IColor[]) => void;

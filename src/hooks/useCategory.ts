@@ -9,11 +9,13 @@ export const useCategory = () => {
     category,
     subcategory,
     isCategorySelected,
+    isBrandSelected,
 
     setClothesType,
     setCategory,
     setSubcategory,
     onCategorySelected,
+    onBrandSelected,
   } = useContext(CategoryContext);
 
   return {
@@ -22,6 +24,7 @@ export const useCategory = () => {
     category,
     subcategory,
     isCategorySelected,
+    isBrandSelected,
 
     /* Methods */
     setGender,
@@ -29,5 +32,6 @@ export const useCategory = () => {
     setCategory,
     setSubcategory,
     onCategorySelected,
+    onBrandSelected,
   };
 };

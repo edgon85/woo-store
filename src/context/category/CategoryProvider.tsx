@@ -8,8 +8,9 @@ export interface CategoryState {
   gender: string;
   clothesType: string;
   category: ICategory;
-  isCategorySelected: boolean;
   subcategory: ISubcategory;
+  isCategorySelected: boolean;
+  isBrandSelected: boolean;
 }
 
 const CATEGORY_INITIAL_STATE: CategoryState = {
@@ -22,6 +23,7 @@ const CATEGORY_INITIAL_STATE: CategoryState = {
   },
   subcategory: { id: '', title: '', slug: '' },
   isCategorySelected: false,
+  isBrandSelected: false,
 };
 
 type Props = {
@@ -77,6 +79,9 @@ export const CategoryProvider: FC<Props> = ({ children }) => {
   const onCategorySelected = () =>
     dispatch({ type: '[Category] - category selected' });
 
+  const onBrandSelected = () =>
+    dispatch({ type: '[Category] - Brand selected' });
+
   return (
     <CategoryContext.Provider
       value={{
@@ -88,6 +93,7 @@ export const CategoryProvider: FC<Props> = ({ children }) => {
         setCategory,
         setSubcategory,
         onCategorySelected,
+        onBrandSelected
       }}
     >
       {children}
