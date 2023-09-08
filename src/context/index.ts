@@ -1,3 +1,3 @@
 export * from './auth';
 export * from './modal';
-export * from './category';
+export * from './filter';

@@ -1,46 +1,46 @@
 import { ICategory, ISubcategory } from '@/interfaces';
-import { CategoryState } from './';
+import { FilterState } from './';
 
 type CategoryActionType =
-  | { type: '[Category] - gender'; payload: string }
-  | { type: '[Category] - clothes type'; payload: string }
-  | { type: '[Category] - category'; payload: ICategory }
-  | { type: '[Category] - category selected' }
-  | { type: '[Category] - Brand selected' }
-  | { type: '[Category] - subcategory'; payload: ISubcategory };
+  | { type: '[Filter] - gender'; payload: string }
+  | { type: '[Filter] - clothes type'; payload: string }
+  | { type: '[Filter] - category'; payload: ICategory }
+  | { type: '[Filter] - category selected' }
+  | { type: '[Filter] - Brand selected' }
+  | { type: '[Filter] - subcategory'; payload: ISubcategory };
 
-export const CategoryReducer = (
-  state: CategoryState,
+export const FilterReducer = (
+  state: FilterState,
   action: CategoryActionType
-): CategoryState => {
+): FilterState => {
   switch (action.type) {
-    case '[Category] - gender':
+    case '[Filter] - gender':
       return {
         ...state,
         gender: action.payload,
       };
 
-    case '[Category] - clothes type':
+    case '[Filter] - clothes type':
       return {
         ...state,
         clothesType: action.payload,
       };
-    case '[Category] - category':
+    case '[Filter] - category':
       return {
         ...state,
         category: { ...action.payload },
       };
-    case '[Category] - subcategory':
+    case '[Filter] - subcategory':
       return {
         ...state,
         subcategory: { ...action.payload },
       };
-    case '[Category] - category selected':
+    case '[Filter] - category selected':
       return {
         ...state,
         isCategorySelected: !state.isCategorySelected,
       };
-    case '[Category] - Brand selected':
+    case '[Filter] - Brand selected':
       return {
         ...state,
         isBrandSelected: !state.isBrandSelected,

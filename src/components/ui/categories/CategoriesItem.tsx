@@ -1,8 +1,8 @@
 import { CategoriesItemLi } from './CategoriesItemLi';
-import { useCategory } from '@/hooks';
+import { useFilter } from '@/hooks';
 
 export const CategoriesItem = () => {
-  const { isCategorySelected, onCategorySelected } = useCategory();
+  const { isCategorySelected, onCategorySelected } = useFilter();
 
   return (
     <>

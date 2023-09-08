@@ -1,6 +1,6 @@
 'use client';
 
-import { useCategory } from '@/hooks';
+import { useFilter } from '@/hooks';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoIosMan, IoIosWoman, IoMdArrowDropright } from 'react-icons/io';
 
@@ -9,7 +9,7 @@ import { IoIosMan, IoIosWoman, IoMdArrowDropright } from 'react-icons/io';
 }; */
 
 export const GenderSelected = () => {
-  const { gender, setGender } = useCategory();
+  const { gender, setGender } = useFilter();
 
   // const [gender, setGender] = useState('mujer');
   const [isCollapsed, setIsCollapsed] = useState(false);

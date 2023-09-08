@@ -1,4 +1,4 @@
-import { useCategory, useFetcher } from '@/hooks';
+import { useFilter, useFetcher } from '@/hooks';
 import { IColor, IBrand } from '@/interfaces';
 import {
   IoIosCheckbox,
@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 export const BrandsItems = () => {
-  const { isBrandSelected, onBrandSelected } = useCategory();
+  const { isBrandSelected, onBrandSelected } = useFilter();
 
   return (
     <>
@@ -42,7 +42,7 @@ export const BrandsItems = () => {
 export const BrandsItem = () => {
   const router = useRouter();
   const path = usePathname();
-  const { gender, category } = useCategory();
+  const { gender, category } = useFilter();
 
   const [selectBrand, setSelectBrand] = useState<string[]>([]);
   const { data: brands } = useFetcher<IBrand[]>('/brands/all?limit=10');
@@ -59,7 +59,7 @@ export const BrandsItem = () => {
         : router.push(`/${gender}/${category.slug}`);
     } else {
       draft = draft.filter((resp) => brandSlug !== resp);
- 
+
       setSelectBrand(draft);
 
       draft.length !== 0

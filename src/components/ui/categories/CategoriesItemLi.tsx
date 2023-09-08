@@ -2,14 +2,14 @@ import Cookies from 'js-cookie';
 
 // import { useFetchSubcategoryByCategoryId, useFetchSubcategoryByCategoryIdPrueba } from '@/helpers';
 import { RadiaSelectIcon } from '../icons';
-import { useCategory, useFetcher } from '@/hooks';
+import { useFilter, useFetcher } from '@/hooks';
 import { ICategory, ISubcategory } from '@/interfaces';
 
 import styles from './Categories.module.css';
 import { useRouter } from 'next/navigation';
 
 export const CategoriesItemLi = () => {
-  const { gender, category, subcategory, setSubcategory } = useCategory();
+  const { gender, category, subcategory, setSubcategory } = useFilter();
   const router = useRouter();
 
   /*  const { subcategories, loading, isError } = useFetchSubcategoryByCategoryIdPrueba(

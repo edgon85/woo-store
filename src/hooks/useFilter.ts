@@ -1,7 +1,7 @@
-import { CategoryContext } from '@/context';
+import { FilterContext } from '@/context';
 import { useContext } from 'react';
 
-export const useCategory = () => {
+export const useFilter = () => {
   const {
     gender,
     clothesType,
@@ -16,7 +16,7 @@ export const useCategory = () => {
     setSubcategory,
     onCategorySelected,
     onBrandSelected,
-  } = useContext(CategoryContext);
+  } = useContext(FilterContext);
 
   return {
     gender,

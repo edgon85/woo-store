@@ -1,10 +1,10 @@
 import { FC, useEffect, useReducer } from 'react';
-import { CategoryContext, CategoryReducer } from './';
+import { FilterContext, FilterReducer } from './';
 import { ICategory, ISubcategory } from '@/interfaces';
 import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 
-export interface CategoryState {
+export interface FilterState {
   gender: string;
   clothesType: string;
   category: ICategory;
@@ -13,7 +13,7 @@ export interface CategoryState {
   isBrandSelected: boolean;
 }
 
-const CATEGORY_INITIAL_STATE: CategoryState = {
+const CATEGORY_INITIAL_STATE: FilterState = {
   gender: 'mujer',
   clothesType: 'ropa',
   category: {
@@ -30,8 +30,8 @@ type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
-export const CategoryProvider: FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer(CategoryReducer, CATEGORY_INITIAL_STATE);
+export const FilterProvider: FC<Props> = ({ children }) => {
+  const [state, dispatch] = useReducer(FilterReducer, CATEGORY_INITIAL_STATE);
   const path = usePathname();
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export const CategoryProvider: FC<Props> = ({ children }) => {
     if (!Cookies.get('category')) return;
 
     const cat = JSON.parse(Cookies.get('category')!);
-    dispatch({ type: '[Category] - category', payload: cat });
-    dispatch({ type: '[Category] - category selected' });
+    dispatch({ type: '[Filter] - category', payload: cat });
+    dispatch({ type: '[Filter] - category selected' });
   }, []);
 
   useEffect(() => {
@@ -61,29 +61,29 @@ export const CategoryProvider: FC<Props> = ({ children }) => {
     }
 
     const subCat = JSON.parse(Cookies.get('subcategory')!);
-    dispatch({ type: '[Category] - subcategory', payload: subCat });
+    dispatch({ type: '[Filter] - subcategory', payload: subCat });
   }, [path]);
 
   const setGender = (gender: string) =>
-    dispatch({ type: '[Category] - gender', payload: gender });
+    dispatch({ type: '[Filter] - gender', payload: gender });
 
   const setClothesType = (clothesType: string) =>
-    dispatch({ type: '[Category] - clothes type', payload: clothesType });
+    dispatch({ type: '[Filter] - clothes type', payload: clothesType });
 
   const setCategory = (category: ICategory) =>
-    dispatch({ type: '[Category] - category', payload: category });
+    dispatch({ type: '[Filter] - category', payload: category });
 
   const setSubcategory = (subcategory: ISubcategory) =>
-    dispatch({ type: '[Category] - subcategory', payload: subcategory });
+    dispatch({ type: '[Filter] - subcategory', payload: subcategory });
 
   const onCategorySelected = () =>
-    dispatch({ type: '[Category] - category selected' });
+    dispatch({ type: '[Filter] - category selected' });
 
   const onBrandSelected = () =>
-    dispatch({ type: '[Category] - Brand selected' });
+    dispatch({ type: '[Filter] - Brand selected' });
 
   return (
-    <CategoryContext.Provider
+    <FilterContext.Provider
       value={{
         ...state,
 
@@ -97,6 +97,6 @@ export const CategoryProvider: FC<Props> = ({ children }) => {
       }}
     >
       {children}
-    </CategoryContext.Provider>
+    </FilterContext.Provider>
   );
 };

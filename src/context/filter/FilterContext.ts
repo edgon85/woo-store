@@ -17,4 +17,4 @@ type ContextProps = {
   onBrandSelected: () => void;
 };
 
-export const CategoryContext = createContext<ContextProps>({} as ContextProps);
+export const FilterContext = createContext<ContextProps>({} as ContextProps);

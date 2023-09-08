@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { GenderSelected } from '../../dropdowns';
 
 import { ItemMegaMenu } from './ItemNavClothes';
-import { useCategory } from '@/hooks';
+import { useFilter } from '@/hooks';
 
 type MenuState = {
   [menuName: string]: boolean;
@@ -11,7 +11,7 @@ type MenuState = {
 
 export const NavClothesType = () => {
   // const [gender, setGender] = useState('mujer');
-  const { gender } = useCategory();
+  const { gender } = useFilter();
   const [menuState, setMenuState] = useState<MenuState>({
     isClothesMenuOpen: false,
     isShoesMenuOpen: false,

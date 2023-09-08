@@ -1,5 +1,5 @@
 // import { useFetchCategoryByGenderAndType } from '@/helpers';
-import { useCategory, useFetcher } from '@/hooks';
+import { useFilter, useFetcher } from '@/hooks';
 import { ICategory } from '@/interfaces';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
@@ -20,9 +20,9 @@ export const ItemMegaMenu = ({
   menuName,
 }: Props) => {
   const router = useRouter();
-  const { gender, setClothesType, setCategory } = useCategory();
+  const { gender, setClothesType, setCategory } = useFilter();
 
-  const { data: cat, isLoading } = useFetcher(
+  const { data: cat, isLoading } = useFetcher<ICategory[]>(
     `/categories?gender=${gender}&type=${itemName}`
   );
 
