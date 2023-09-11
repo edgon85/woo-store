@@ -1,15 +1,5 @@
 /* Estilos personalizados para el acordeón */
 
-.accordion .label {
-  /* border: 1px solid red; */
-  padding: 0;
-  margin: 0;
-  border-bottom: 0px;
-}
-.accordion .label:hover {
-  background-color: transparent;
-}
-
 
 .accordion input[type='checkbox'] {
   display: none;
@@ -50,5 +40,16 @@
 
 .accordion input[type='checkbox']:checked + label + div {
   display: block;
+}
+
+
+.accordion .label {
+  /* border: 1px solid red; */
+  padding: 0;
+  margin: 0;
+  border-bottom: 0px;
+}
+.accordion .label:hover {
+  background-color: transparent;
 }
 

@@ -1,6 +1,6 @@
 import { FC, useEffect, useReducer } from 'react';
 import { FilterContext, FilterReducer } from './';
-import { ICategory, ISubcategory } from '@/interfaces';
+import { Filter, ICategory, ISubcategory } from '@/interfaces';
 import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 
@@ -10,8 +10,11 @@ export interface FilterState {
   category: ICategory;
   subcategory: ISubcategory;
   brands: string[];
+  measurements: string[]
   isCategorySelected: boolean;
   isBrandSelected: boolean;
+  isMeasurementSelected: boolean;
+  filters: Filter[]
 }
 
 const CATEGORY_INITIAL_STATE: FilterState = {
@@ -25,7 +28,10 @@ const CATEGORY_INITIAL_STATE: FilterState = {
   subcategory: { id: '', title: '', slug: '' },
   isCategorySelected: false,
   isBrandSelected: false,
+  isMeasurementSelected: false,
   brands: [],
+  measurements: [],
+  filters: [],
 };
 
 type Props = {
@@ -83,8 +89,16 @@ export const FilterProvider: FC<Props> = ({ children }) => {
 
   const onBrandSelected = () => dispatch({ type: '[Filter] - Brand selected' });
 
+  const onMeasurementSelected = () => dispatch({ type: '[Filter] - Measurement selected' });
+
   const setBrands = (brands: string[]) => {
     dispatch({ type: '[Filter] - Brands', payload: brands });
+  };
+  const setMeasurements = (measurements: string[]) => {
+    dispatch({ type: '[Filter] - Measurement list', payload: measurements });
+  };
+  const setFilters = (filters: Filter[]) => {
+    dispatch({ type: '[Filter] - Filter list', payload: filters });
   };
 
   return (
@@ -99,7 +113,10 @@ export const FilterProvider: FC<Props> = ({ children }) => {
         setSubcategory,
         onCategorySelected,
         onBrandSelected,
-        setBrands
+        setBrands,
+        onMeasurementSelected,
+        setMeasurements,
+        setFilters
       }}
     >
       {children}

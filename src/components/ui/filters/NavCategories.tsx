@@ -1,95 +1,101 @@
 'use client';
 
+import { useFilter } from '@/hooks';
 import { CategoriesItem } from './CategoriesItem';
+import { MeasurementFilterItems } from './measurements/MeasurementFilterItems';
 import { BrandsItems } from './brands/BrandsItems';
-import styles from './Categories.module.css';
 
 export const NavCategories = () => {
+  const {
+    isCategorySelected,
+    onCategorySelected,
+    isBrandSelected,
+    onBrandSelected,
+    isMeasurementSelected,
+    onMeasurementSelected,
+  } = useFilter();
+
   return (
-    <div className="">
-      {/* <h2 className="text-2xl font-semibold mb-4">Categorías</h2> */}
-      <div className={styles.accordion}>
-        {/* <!-- Categoría 1 --> */}
-        <div>
-          <CategoriesItem />
-        </div>
-        {/* <!-- Marca --> */}
-
-        <div>
-          <BrandsItems />
-        </div>
-
-
-        {/* <!-- Talla--> */}
-        <input type="checkbox" id="measurement" className="hidden" />
-        <label htmlFor="measurement">Talla</label>
-        <div>
-          <ul className="pl-4">
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.1
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.2
-              </a>
-            </li>
-          </ul>
-        </div>
-        {/* <!-- Estado--> */}
-        <input type="checkbox" id="clothes-state" className="hidden" />
-        <label htmlFor="clothes-state">Estado</label>
-        <div>
-          <ul className="pl-4">
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.1
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.2
-              </a>
-            </li>
-          </ul>
-        </div>
-        {/* <!-- Color--> */}
-        <input type="checkbox" id="color" className="hidden" />
-        <label htmlFor="color">Color</label>
-        <div>
-          <ul className="pl-4">
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.1
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.2
-              </a>
-            </li>
-          </ul>
-        </div>
-        {/* <!-- Precio--> */}
-        <input type="checkbox" id="price" className="hidden" />
-        <label htmlFor="price">Precio</label>
-        <div>
-          <ul className="pl-4">
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.1
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-blue-500 hover:underline">
-                SubCategoría 2.2
-              </a>
-            </li>
-          </ul>
-        </div>
-        {/* <!-- Agrega más categorías si es necesario --> */}
-      </div>
+    <div className="p-4">
+      <ul className="space-y-2">
+        <MenuItem
+          title={'Subcategorías'}
+          items={<CategoriesItem />}
+          isOpen={isCategorySelected}
+          onClick={() => onCategorySelected()}
+        />
+        <MenuItem
+          title={'Marcas'}
+          items={
+            <div className="max-h-64 overflow-scroll">
+              <BrandsItems />
+            </div>
+          }
+          isOpen={isBrandSelected}
+          onClick={() => onBrandSelected()}
+        />
+        <MenuItem
+          title={'Tallas'}
+          items={
+            <div className="max-h-64 overflow-scroll">
+              <MeasurementFilterItems />
+            </div>
+          }
+          isOpen={isMeasurementSelected}
+          onClick={() => onMeasurementSelected()}
+        />
+      </ul>
     </div>
+  );
+};
+
+type Props = {
+  title: string;
+  items: JSX.Element | JSX.Element[];
+  isOpen: boolean;
+  onClick: () => void;
+};
+export const MenuItem = ({ title, items, isOpen, onClick }: Props) => {
+  return (
+    <li>
+      <button
+        onClick={onClick}
+        className="flex justify-between items-center w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 focus:outline-none"
+      >
+        <span>{title}</span>
+        {isOpen ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M5 15l7-7 7 7"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        )}
+      </button>
+      {isOpen && <ul className="">{items}</ul>}
+    </li>
   );
 };

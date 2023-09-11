@@ -1,4 +1,4 @@
-import { ICategory, ISubcategory } from '@/interfaces';
+import { Filter, ICategory, ISubcategory } from '@/interfaces';
 import { createContext } from 'react';
 
 type ContextProps = {
@@ -6,9 +6,12 @@ type ContextProps = {
   clothesType: string;
   category: ICategory;
   subcategory: ISubcategory;
+  brands: string[];
+  measurements: string[];
+  filters: Filter[];
   isCategorySelected: boolean;
   isBrandSelected: boolean;
-  brands: string[];
+  isMeasurementSelected: boolean;
 
   setGender: (gender: string) => void;
   setClothesType: (clothesType: string) => void;
@@ -16,7 +19,10 @@ type ContextProps = {
   setSubcategory: (subcategory: ISubcategory) => void;
   onCategorySelected: () => void;
   onBrandSelected: () => void;
+  onMeasurementSelected: () => void;
   setBrands: (brands: string[]) => void;
+  setMeasurements: (brands: string[]) => void;
+  setFilters: (filters: Filter[]) => void;
 };
 
 export const FilterContext = createContext<ContextProps>({} as ContextProps);
