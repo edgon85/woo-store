@@ -67,9 +67,8 @@ export const BrandsItems = () => {
           )
         : router.push(`/${gender}/${category.slug}${subCatPath}`);
     } else {
-      draft = draft.filter((resp) => newFilter === resp);
+      draft = draft.filter((resp) => newFilter.slug !== resp.slug);
 
-      console.log(draft);
       const slugs = draft.map((item) => item.slug);
       setFilters(draft);
 

@@ -4,6 +4,7 @@ import { useFilter } from '@/hooks';
 import { CategoriesItem } from './CategoriesItem';
 import { MeasurementFilterItems } from './measurements/MeasurementFilterItems';
 import { BrandsItems } from './brands/BrandsItems';
+import { ClothesStateFilter } from './clothesState/ClothesStateFilter';
 
 export const NavCategories = () => {
   const {
@@ -12,7 +13,9 @@ export const NavCategories = () => {
     isBrandSelected,
     onBrandSelected,
     isMeasurementSelected,
+    isClothesStateSelected,
     onMeasurementSelected,
+    onClothesStateSelected
   } = useFilter();
 
   return (
@@ -43,6 +46,16 @@ export const NavCategories = () => {
           }
           isOpen={isMeasurementSelected}
           onClick={() => onMeasurementSelected()}
+        />
+        <MenuItem
+          title={'Estado'}
+          items={
+            <div className="max-h-64 overflow-scroll">
+              <ClothesStateFilter />
+            </div>
+          }
+          isOpen={isClothesStateSelected}
+          onClick={() => onClothesStateSelected()}
         />
       </ul>
     </div>

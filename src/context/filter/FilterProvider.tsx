@@ -14,6 +14,7 @@ export interface FilterState {
   isCategorySelected: boolean;
   isBrandSelected: boolean;
   isMeasurementSelected: boolean;
+  isClothesStateSelected: boolean;
   filters: Filter[]
 }
 
@@ -29,6 +30,7 @@ const CATEGORY_INITIAL_STATE: FilterState = {
   isCategorySelected: false,
   isBrandSelected: false,
   isMeasurementSelected: false,
+  isClothesStateSelected: false,
   brands: [],
   measurements: [],
   filters: [],
@@ -91,6 +93,8 @@ export const FilterProvider: FC<Props> = ({ children }) => {
 
   const onMeasurementSelected = () => dispatch({ type: '[Filter] - Measurement selected' });
 
+  const onClothesStateSelected = () => dispatch({ type: '[Filter] - clothes state selected' });
+
   const setBrands = (brands: string[]) => {
     dispatch({ type: '[Filter] - Brands', payload: brands });
   };
@@ -116,7 +120,8 @@ export const FilterProvider: FC<Props> = ({ children }) => {
         setBrands,
         onMeasurementSelected,
         setMeasurements,
-        setFilters
+        setFilters,
+        onClothesStateSelected
       }}
     >
       {children}

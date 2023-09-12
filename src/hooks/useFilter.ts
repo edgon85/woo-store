@@ -13,6 +13,7 @@ export const useFilter = () => {
     isMeasurementSelected,
     measurements,
     filters,
+    isClothesStateSelected,
 
     setGender,
     setClothesType,
@@ -24,6 +25,7 @@ export const useFilter = () => {
     onCategorySelected,
     onBrandSelected,
     onMeasurementSelected,
+    onClothesStateSelected
   } = useContext(FilterContext);
 
   return {
@@ -34,6 +36,7 @@ export const useFilter = () => {
     brands,
     measurements,
     isCategorySelected,
+    isClothesStateSelected,
     isBrandSelected,
     isMeasurementSelected,
     filters,
@@ -48,6 +51,7 @@ export const useFilter = () => {
     onCategorySelected,
     onBrandSelected,
     onMeasurementSelected,
+    onClothesStateSelected,
     setFilters,
   };
 };
