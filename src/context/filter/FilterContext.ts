@@ -13,6 +13,7 @@ type ContextProps = {
   isBrandSelected: boolean;
   isMeasurementSelected: boolean;
   isClothesStateSelected: boolean;
+  isColorSelected: boolean;
 
   setGender: (gender: string) => void;
   setClothesType: (clothesType: string) => void;
@@ -20,6 +21,7 @@ type ContextProps = {
   setSubcategory: (subcategory: ISubcategory) => void;
   onCategorySelected: () => void;
   onBrandSelected: () => void;
+  onColorSelected: () => void;
   onMeasurementSelected: () => void;
   onClothesStateSelected: () => void;
   setBrands: (brands: string[]) => void;

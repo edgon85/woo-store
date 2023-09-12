@@ -1,14 +1,10 @@
 import { useFetcher, useFilter } from '@/hooks';
 import { useRouter } from 'next/navigation';
-import { Filter, IClothesState, IMeasurement } from '@/interfaces';
-import { measurementFormat } from '@/utils';
-import Input from '../../inputs/Input';
-import { RadiaSelectIcon } from '../../icons';
+import { Filter, IClothesState } from '@/interfaces';
 
 export const ClothesStateFilter = () => {
   const router = useRouter();
-  const { gender, category, subcategory, clothesType, filters, setFilters } =
-    useFilter();
+  const { gender, category, subcategory, filters, setFilters } = useFilter();
 
   const { data } = useFetcher<IClothesState[]>(`/clothes-state`);
 
@@ -60,7 +56,7 @@ export const ClothesStateFilter = () => {
               htmlFor={clothes.title}
               className="flex justify-between items-center cursor-pointer hover:text-darkPrimary uppercase"
             >
-              <span className='capitalize'>{clothes.title}</span>
+              <span className="capitalize">{clothes.title}</span>
               <input
                 name={clothes.title}
                 value={clothes.title}
@@ -79,58 +75,3 @@ export const ClothesStateFilter = () => {
     </>
   );
 };
-
-/* 
-
-  const handleMeasurementRadioChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-
-    const newFilter: Filter = {
-      slug: value.replace(/\s+/g, '-'),
-      title: value,
-      type: 'clothes-type',
-    };
-
-    setFilters([newFilter]);
-
-    const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
-    router.push(`/catalog/${gender}/${category.slug}${subCatPath}?filter`);
-  };
-
-  return (
-    <>
-      <div className="divide-y divide-gray-300">
-        {data.map((clothesState: IClothesState) => {
-          return (
-            <li key={clothesState.id} className="pl-1 pr-2 py-2">
-              <label
-                className="flex justify-between items-center"
-                key={clothesState.title}
-              >
-                <input
-                  id="clothesState.title"
-                  type="radio"
-                  name="selectedMeasurement"
-                  value={clothesState.title}
-                  className="hidden"
-                  //   checked={selectedFilters.selectedMeasurement === clothesState.slug}
-                  onChange={handleMeasurementRadioChange}
-                />
-                <span>{clothesState.title}</span>
-                {filters.some(
-                  (filter) => filter.title === clothesState.title
-                ) ? (
-                  <RadiaSelectIcon color="var(--primary)" size="16" />
-                ) : null}
-              </label>
-            </li>
-          );
-        })}
-      </div>
-    </>
-  );
-
-
-*/

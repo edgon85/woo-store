@@ -8,6 +8,7 @@ type CategoryActionType =
   | { type: '[Filter] - category selected' }
   | { type: '[Filter] - subcategory'; payload: ISubcategory }
   | { type: '[Filter] - Brand selected' }
+  | { type: '[Filter] - Color selected' }
   | { type: '[Filter] - clothes state selected' }
   | { type: '[Filter] - Brands'; payload: string[] }
   | { type: '[Filter] - Filter list'; payload: Filter[] }
@@ -61,6 +62,11 @@ export const FilterReducer = (
       return {
         ...state,
         isMeasurementSelected: !state.isMeasurementSelected,
+      };
+    case '[Filter] - Color selected':
+      return {
+        ...state,
+        isColorSelected: !state.isColorSelected,
       };
     case '[Filter] - clothes state selected':
       return {

@@ -5,6 +5,7 @@ import { CategoriesItem } from './CategoriesItem';
 import { MeasurementFilterItems } from './measurements/MeasurementFilterItems';
 import { BrandsItems } from './brands/BrandsItems';
 import { ClothesStateFilter } from './clothesState/ClothesStateFilter';
+import { ColorFilter } from './colors/ColorFilter';
 
 export const NavCategories = () => {
   const {
@@ -15,7 +16,9 @@ export const NavCategories = () => {
     isMeasurementSelected,
     isClothesStateSelected,
     onMeasurementSelected,
-    onClothesStateSelected
+    onClothesStateSelected,
+    isColorSelected,
+    onColorSelected,
   } = useFilter();
 
   return (
@@ -56,6 +59,16 @@ export const NavCategories = () => {
           }
           isOpen={isClothesStateSelected}
           onClick={() => onClothesStateSelected()}
+        />
+        <MenuItem
+          title={'Color'}
+          items={
+            <div className="max-h-64 overflow-scroll">
+              <ColorFilter />
+            </div>
+          }
+          isOpen={isColorSelected}
+          onClick={() => onColorSelected()}
         />
       </ul>
     </div>
