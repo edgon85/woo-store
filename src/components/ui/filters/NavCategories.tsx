@@ -6,6 +6,7 @@ import { MeasurementFilterItems } from './measurements/MeasurementFilterItems';
 import { BrandsItems } from './brands/BrandsItems';
 import { ClothesStateFilter } from './clothesState/ClothesStateFilter';
 import { ColorFilter } from './colors/ColorFilter';
+import { PriceFilter } from './price/PriceFilter';
 
 export const NavCategories = () => {
   const {
@@ -19,6 +20,8 @@ export const NavCategories = () => {
     onClothesStateSelected,
     isColorSelected,
     onColorSelected,
+    isPriceSelected,
+    onPriceSelected,
   } = useFilter();
 
   return (
@@ -69,6 +72,16 @@ export const NavCategories = () => {
           }
           isOpen={isColorSelected}
           onClick={() => onColorSelected()}
+        />
+        <MenuItem
+          title={'Precio'}
+          items={
+            <div className="">
+              <PriceFilter />
+            </div>
+          }
+          isOpen={isPriceSelected}
+          onClick={() => onPriceSelected()}
         />
       </ul>
     </div>

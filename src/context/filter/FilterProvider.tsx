@@ -10,13 +10,14 @@ export interface FilterState {
   category: ICategory;
   subcategory: ISubcategory;
   brands: string[];
-  measurements: string[]
+  measurements: string[];
   isCategorySelected: boolean;
   isBrandSelected: boolean;
   isMeasurementSelected: boolean;
   isClothesStateSelected: boolean;
+  isPriceSelected: boolean;
   isColorSelected: boolean;
-  filters: Filter[]
+  filters: Filter[];
 }
 
 const CATEGORY_INITIAL_STATE: FilterState = {
@@ -33,6 +34,7 @@ const CATEGORY_INITIAL_STATE: FilterState = {
   isMeasurementSelected: false,
   isClothesStateSelected: false,
   isColorSelected: false,
+  isPriceSelected: false,
   brands: [],
   measurements: [],
   filters: [],
@@ -92,12 +94,16 @@ export const FilterProvider: FC<Props> = ({ children }) => {
     dispatch({ type: '[Filter] - category selected' });
 
   const onBrandSelected = () => dispatch({ type: '[Filter] - Brand selected' });
-  
+
   const onColorSelected = () => dispatch({ type: '[Filter] - Color selected' });
 
-  const onMeasurementSelected = () => dispatch({ type: '[Filter] - Measurement selected' });
+  const onMeasurementSelected = () =>
+    dispatch({ type: '[Filter] - Measurement selected' });
 
-  const onClothesStateSelected = () => dispatch({ type: '[Filter] - clothes state selected' });
+  const onClothesStateSelected = () =>
+    dispatch({ type: '[Filter] - clothes state selected' });
+
+  const onPriceSelected = () => dispatch({ type: '[Filter] - Price selected' });
 
   const setBrands = (brands: string[]) => {
     dispatch({ type: '[Filter] - Brands', payload: brands });
@@ -126,7 +132,8 @@ export const FilterProvider: FC<Props> = ({ children }) => {
         setMeasurements,
         setFilters,
         onClothesStateSelected,
-        onColorSelected
+        onColorSelected,
+        onPriceSelected,
       }}
     >
       {children}

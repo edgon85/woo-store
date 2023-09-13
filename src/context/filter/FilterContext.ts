@@ -12,8 +12,10 @@ type ContextProps = {
   isCategorySelected: boolean;
   isBrandSelected: boolean;
   isMeasurementSelected: boolean;
+  isPriceSelected: boolean;
   isClothesStateSelected: boolean;
   isColorSelected: boolean;
+  
 
   setGender: (gender: string) => void;
   setClothesType: (clothesType: string) => void;
@@ -27,6 +29,7 @@ type ContextProps = {
   setBrands: (brands: string[]) => void;
   setMeasurements: (brands: string[]) => void;
   setFilters: (filters: Filter[]) => void;
+  onPriceSelected: () => void
 };
 
 export const FilterContext = createContext<ContextProps>({} as ContextProps);

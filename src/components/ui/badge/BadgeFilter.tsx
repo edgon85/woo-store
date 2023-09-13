@@ -40,6 +40,8 @@ export const BadgeFilter = ({ filterItem }: Props) => {
 
       case 'color':
         return (title = 'color: ');
+      case 'price':
+        return (title = 'Entre: ');
     }
   };
 
