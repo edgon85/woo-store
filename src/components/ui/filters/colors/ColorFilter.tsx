@@ -11,7 +11,7 @@ export const ColorFilter = () => {
 
   const handleChange = (colorItem: IColor, isChecked: boolean) => {
     const newFilter: Filter = {
-      slug: colorItem.name.replace(/\s+/g, '-'),
+      slug: colorItem.slug,
       title: colorItem.name,
       type: 'color',
     };
@@ -54,11 +54,11 @@ export const ColorFilter = () => {
         const codeColor = `#${color.codeColor}`;
         return (
           <li key={color.id}>
-            <label className="text-center cursor-pointer">
+            <label htmlFor={color.slug} className="text-center cursor-pointer">
               <div
                 className={`w-14 h-14  rounded-full mx-auto
                 ${
-                  filters.some((filter) => filter.title === color.name)
+                  filters.some((filter) => filter.slug === color.slug)
                     ? 'border border-red-950'
                     : ''
                 }`}
@@ -76,8 +76,11 @@ export const ColorFilter = () => {
                 value={color.name}
                 className="hidden"
                 type="checkbox"
-                id={color.codeColor}
+                id={color.slug}
                 onChange={(e) => handleChange(color, e.target.checked)}
+                checked={filters.some(
+                  (filter) => filter.slug === color.slug
+                )}
               />
             </label>
           </li>

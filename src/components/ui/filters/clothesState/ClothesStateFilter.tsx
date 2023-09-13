@@ -10,9 +10,9 @@ export const ClothesStateFilter = () => {
 
   const handleChange = (clothesState: IClothesState, isChecked: boolean) => {
     const newFilter: Filter = {
-      slug: clothesState.title.replace(/\s+/g, '-'),
+      slug: clothesState.slug,
       title: clothesState.title,
-      type: 'clothes-state',
+      type: 'clothesState',
     };
 
     let draft = structuredClone(filters);
@@ -53,7 +53,7 @@ export const ClothesStateFilter = () => {
         {data.map((clothes) => (
           <li key={clothes.id} className="pl-1 pr-2 py-2">
             <label
-              htmlFor={clothes.title}
+              htmlFor={clothes.slug}
               className="flex justify-between items-center cursor-pointer hover:text-darkPrimary uppercase"
             >
               <span className="capitalize">{clothes.title}</span>
@@ -62,10 +62,10 @@ export const ClothesStateFilter = () => {
                 value={clothes.title}
                 className="w-5 h-5 bg-primary text-primary cursor-pointer"
                 type="checkbox"
-                id={clothes.title}
+                id={clothes.slug}
                 onChange={(e) => handleChange(clothes, e.target.checked)}
                 checked={filters.some(
-                  (filter) => filter.title === clothes.title
+                  (filter) => filter.slug === clothes.slug
                 )}
               />
             </label>

@@ -1,8 +1,8 @@
-import { useModal } from '@/hooks';
+import { useFetcher, useModal } from '@/hooks';
 import { IClothesState } from '@/interfaces';
 import { IoIosCheckmark } from 'react-icons/io';
 
-const clothesStates: IClothesState[] = [
+/* const clothesStates: IClothesState[] = [
   {
     id: 1,
     title: 'Nuevo con etiquetas',
@@ -35,7 +35,9 @@ const clothesStates: IClothesState[] = [
     title: 'Satisfactorio',
     subtitle: 'Articulo bastante usado con defectos o desgaste',
   },
-];
+]; */
+
+
 
 type Props = {
   setClothesState: (state: IClothesState) => void;
@@ -43,6 +45,7 @@ type Props = {
 };
 
 export const ClothesState = ({ setClothesState, clothesSelected }: Props) => {
+  const { data } = useFetcher<IClothesState[]>(`/clothes-state`);
   const { onCloseModal } = useModal();
 
   const handleClick = (clothesState: IClothesState) => {
@@ -52,7 +55,7 @@ export const ClothesState = ({ setClothesState, clothesSelected }: Props) => {
 
   return (
     <ul>
-      {clothesStates.map((resp) => (
+      {data.map((resp) => (
         <li
           onClick={() => handleClick(resp)}
           className="flex justify-between items-center px-1 py-2 border-b cursor-pointer hover:bg-lightPrimary"

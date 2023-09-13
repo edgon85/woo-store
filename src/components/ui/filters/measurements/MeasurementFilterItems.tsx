@@ -22,7 +22,7 @@ export const MeasurementFilterItems = () => {
 
   const handleChange = (measurementSize: IMeasurement, isChecked: boolean) => {
     const newFilter: Filter = {
-      slug: measurementSize.size,
+      slug: measurementSize.slug,
       title: measurementSize.size,
       type: 'measurement',
     };
@@ -77,7 +77,7 @@ export const MeasurementFilterItems = () => {
                 id={measurement.slug}
                 onChange={(e) => handleChange(measurement, e.target.checked)}
                 checked={filters.some(
-                  (filter) => filter.slug === measurement.size
+                  (filter) => filter.slug === measurement.slug
                 )}
               />
             </label>

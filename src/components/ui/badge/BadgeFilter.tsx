@@ -8,15 +8,8 @@ type Props = {
 
 export const BadgeFilter = ({ filterItem }: Props) => {
   const router = useRouter();
-  const {
-    gender,
-    category,
-    // brands,
-    // setBrands,
-    filters,
-    setFilters,
-    subcategory,
-  } = useFilter();
+  const { gender, category, filters, setFilters, subcategory } = useFilter();
+  let title: string = '';
 
   const onHandlerClick = () => {
     const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
@@ -34,13 +27,29 @@ export const BadgeFilter = ({ filterItem }: Props) => {
       : router.push(`/${gender}/${category.slug}${subCatPath}`);
   };
 
+  const titleOption = (tupe: string) => {
+    switch (tupe) {
+      case 'brand':
+        return (title = 'Marca: ');
+
+      case 'measurement':
+        return (title = 'Talla: ');
+
+      case 'clothesState':
+        return (title = 'Estado: ');
+
+      case 'color':
+        return (title = 'color: ');
+    }
+  };
+
   return (
     <>
       <span
         id="badge-dismiss-green"
         className="inline-flex mb-1 items-center px-2 py-1 mr-2 text-sm font-medium text-white bg-primary rounded uppercase"
       >
-        {filterItem.title}
+        {` ${titleOption(filterItem.type)} ${filterItem.title}`}
         <button
           type="button"
           className="inline-flex items-center p-1 ml-2 text-sm text-white bg-transparent rounded-sm hover:bg-lightPrimary hover:text-darkPrimary"

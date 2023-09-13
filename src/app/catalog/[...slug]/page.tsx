@@ -3,20 +3,17 @@
 import { NavCategories } from '@/components';
 import { BadgeFilter } from '@/components/ui/badge/BadgeFilter';
 import { useFilter } from '@/hooks';
+import { generateFilterURL } from '@/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 export default function ExampleClientComponent() {
-  // const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { filters } = useFilter();
 
-  /*   const color = searchParams.get('color');
-  const brand = searchParams.get('brand');
-  const getAllBrands = searchParams.getAll('brand'); */
+  // Genera la URL concatenando los grupos
+  const url = generateFilterURL(filters);
 
 
-  
+  console.log(url);
   return (
     <div className="container main-wrapper pt-4 flex">
       <div className="w-full md:w-1/5 pr-4 hidden sm:block">
@@ -40,9 +37,61 @@ export default function ExampleClientComponent() {
 }
 
 /* 
+
+ // const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { filters } = useFilter();
+
+  const color = searchParams.get('color');
+  const brand = searchParams.get('brand');
+  const getAllBrands = searchParams.getAll('brand
+*/
+/* 
 construir esta ruta
 http://localhost:3000/shop/vestido?color=red,black,whithe&brand=adidas,american-eagle-outfitters
-
+[
+  {
+    "slug": "aeropostale",
+    "title": "aeropostale",
+    "type": "brand"
+  },
+  {
+    "slug": "7xl",
+    "title": "7xl",
+    "type": "measurement"
+  },
+  {
+    "slug": "nuevo-sin-etiquetas",
+    "title": "nuevo sin etiquetas",
+    "type": "clothes-state"
+  },
+  {
+    "slug": "amarillo",
+    "title": "amarillo",
+    "type": "color"
+  },
+  {
+    "slug": "aldo",
+    "title": "aldo",
+    "type": "brand"
+  },
+  {
+    "slug": "unica",
+    "title": "unica",
+    "type": "measurement"
+  },
+  {
+    "slug": "usado",
+    "title": "usado",
+    "type": "clothes-state"
+  },
+  {
+    "slug": "beige",
+    "title": "beige",
+    "type": "color"
+  }
+]
 */
 
 /* 

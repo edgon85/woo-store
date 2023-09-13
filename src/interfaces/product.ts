@@ -54,10 +54,12 @@ export interface IClothesState {
   id: number;
   title: string;
   subtitle?: string;
+  slug: string;
 }
 
 export interface IColor {
   id: number;
+  slug: string;
   name: string;
   codeColor: string;
 }
