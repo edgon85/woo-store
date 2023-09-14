@@ -1,6 +1,10 @@
 import { Filter } from '@/interfaces';
 
-export const generateFilterURL = (data: Filter[]) => {
+export const generateFilterURL = (
+  data: Filter[],
+  gender: string,
+  category: string
+) => {
   // Organiza los elementos en grupos
   const groups: Record<string, string[]> = {};
   const priceRanges: [number, number][] = [];
@@ -18,7 +22,7 @@ export const generateFilterURL = (data: Filter[]) => {
 
   // Genera la URL concatenando los grupos
   let url =
-    '/api/products?' +
+    `/products/filter?gender=${gender}&category=${category}&` +
     Object.entries(groups)
       .map(([type, slugs]) =>
         slugs.map((slug) => `${type}[]=${slug}`).join('&')

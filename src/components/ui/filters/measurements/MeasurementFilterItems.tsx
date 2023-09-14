@@ -24,7 +24,7 @@ export const MeasurementFilterItems = () => {
     const newFilter: Filter = {
       slug: measurementSize.slug,
       title: measurementSize.size,
-      type: 'measurement',
+      type: 'measurements',
     };
 
     let draft = structuredClone(filters);

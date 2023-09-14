@@ -4,3 +4,4 @@ export * from './navbar';
 export * from './modal';
 export * from './tabs';
 export * from './filters';
+export * from './badge';

@@ -13,7 +13,7 @@ export const ColorFilter = () => {
     const newFilter: Filter = {
       slug: colorItem.slug,
       title: colorItem.name,
-      type: 'color',
+      type: 'colors',
     };
 
     let draft = structuredClone(filters);

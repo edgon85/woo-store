@@ -47,7 +47,7 @@ export const BrandsItems = () => {
     const newFilter: Filter = {
       slug: brandFilter.slug,
       title: brandFilter.title,
-      type: 'brand',
+      type: 'brands',
     };
 
     let draft = structuredClone(filters);

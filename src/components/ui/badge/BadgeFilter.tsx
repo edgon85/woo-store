@@ -29,16 +29,16 @@ export const BadgeFilter = ({ filterItem }: Props) => {
 
   const titleOption = (tupe: string) => {
     switch (tupe) {
-      case 'brand':
+      case 'brands':
         return (title = 'Marca: ');
 
-      case 'measurement':
+      case 'measurements':
         return (title = 'Talla: ');
 
       case 'clothesState':
         return (title = 'Estado: ');
 
-      case 'color':
+      case 'colors':
         return (title = 'color: ');
       case 'price':
         return (title = 'Entre: ');

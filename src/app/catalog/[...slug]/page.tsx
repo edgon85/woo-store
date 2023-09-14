@@ -1,19 +1,25 @@
 'use client';
 
-import { NavCategories } from '@/components';
-import { BadgeFilter } from '@/components/ui/badge/BadgeFilter';
-import { useFilter } from '@/hooks';
+import Image from 'next/image';
+
+import { IProduct } from '@/interfaces';
 import { generateFilterURL } from '@/utils';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useAuth, useFetcher, useFilter } from '@/hooks';
+import {
+  Button,
+  NavCategories,
+  BadgeCleanFilters,
+  BadgeFilter,
+} from '@/components';
 
 export default function ExampleClientComponent() {
-  const { filters } = useFilter();
+  const { filters, gender, category } = useFilter();
+  const { user } = useAuth();
 
   // Genera la URL concatenando los grupos
-  const url = generateFilterURL(filters);
+  const url = generateFilterURL(filters, gender, category.slug);
+  const { data: products, isError } = useFetcher<IProduct[]>(url);
 
-
-  console.log(url);
   return (
     <div className="container main-wrapper pt-4 flex">
       <div className="w-full md:w-1/5 pr-4 hidden sm:block">
@@ -25,11 +31,43 @@ export default function ExampleClientComponent() {
           {filters.map((filter) => (
             <BadgeFilter key={filter.slug} filterItem={filter} />
           ))}
+          {filters.length > 0 ? <BadgeCleanFilters /> : null}
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <h2>Product 1</h2>
-          <h2>Product 2</h2>
-          <h2>Product 3</h2>
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className=" bg-white rounded-lg shadow-md  min-h-[400px]"
+            >
+              <div className="w-full min-h-[300px] mb-2 relative">
+                <Image
+                  src={product.images[0]}
+                  alt={`Imagen de ${product.title}`}
+                  fill
+                  className="rounded-md"
+                />
+              </div>
+              <div className="pl-2 pr-2 pb-2">
+                <h3 className="text-lg font-semibold">{product.title}</h3>
+                <p className="text-gray-600">Q{product.price}</p>
+                <p className="text-gray-500">
+                  {' '}
+                  <span>Talla: {product.measurement.size}</span> |{' '}
+                  <span>{product.clothesState.title}</span>
+                </p>
+                <p className="text-gray-500">{product.brand.title}</p>
+                {product.user?.id !== user?.id ? (
+                  <div className="mt-2">
+                    <Button label="Editar" type="button" outlined />
+                  </div>
+                ) : (
+                  <div className="mt-2">
+                    <Button label="Comprar" type="button" />
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
