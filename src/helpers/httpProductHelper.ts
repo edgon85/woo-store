@@ -31,7 +31,6 @@ export const getProductByGenderAndCategory = async (
 export const getProductsBySubcategory = async (subcategorySlug: string) => {
   const url = `${process.env.API_BASE_URL}/products/subcategory/${subcategorySlug}`;
 
-  console.log(url);
   const res = await fetch(url);
 
   if (!res.ok) {

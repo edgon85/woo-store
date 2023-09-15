@@ -1,4 +1,4 @@
-import { NavCategories, ProductCard } from '@/components';
+import { NavCategories, ProductCard, ProductCardPlain } from '@/components';
 import { getProductsBySubcategory } from '@/helpers';
 
 export default async function SubcategoryPage({

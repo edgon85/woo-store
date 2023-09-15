@@ -1,15 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-
 import { IProduct } from '@/interfaces';
 import { generateFilterURL } from '@/utils';
 import { useAuth, useFetcher, useFilter } from '@/hooks';
 import {
-  Button,
   NavCategories,
   BadgeCleanFilters,
   BadgeFilter,
+  ProductCard,
 } from '@/components';
 
 export default function ExampleClientComponent() {
@@ -35,38 +33,7 @@ export default function ExampleClientComponent() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => (
-            <div
-              key={product.id}
-              className=" bg-white rounded-lg shadow-md  min-h-[400px]"
-            >
-              <div className="w-full min-h-[300px] mb-2 relative">
-                <Image
-                  src={product.images[0]}
-                  alt={`Imagen de ${product.title}`}
-                  fill
-                  className="rounded-md"
-                />
-              </div>
-              <div className="pl-2 pr-2 pb-2">
-                <h3 className="text-lg font-semibold">{product.title}</h3>
-                <p className="text-gray-600">Q{product.price}</p>
-                <p className="text-gray-500">
-                  {' '}
-                  <span>Talla: {product.measurement.size}</span> |{' '}
-                  <span>{product.clothesState.title}</span>
-                </p>
-                <p className="text-gray-500">{product.brand.title}</p>
-                {product.user?.id !== user?.id ? (
-                  <div className="mt-2">
-                    <Button label="Editar" type="button" outlined />
-                  </div>
-                ) : (
-                  <div className="mt-2">
-                    <Button label="Comprar" type="button" />
-                  </div>
-                )}
-              </div>
-            </div>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
