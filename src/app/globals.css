@@ -45,3 +45,26 @@ body {
   /* border: 1px solid red; */
   margin: auto;
 }
+
+/* Estilo para las flechas cuando están deshabilitadas (prev o next) */
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 999999;
+  display: flex; /* Utiliza display flex para centrar verticalmente y horizontalmente */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  width: 40px; /* Ancho de las flechas */
+  height: 40px; /* Altura de las flechas */
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.custom-arrow:hover {
+  opacity: 1;
+}
+
+.custom-arrow-next {
+  position: absolute;
+  right: 0;
+}
