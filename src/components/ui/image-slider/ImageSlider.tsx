@@ -70,7 +70,7 @@ export const ImageSlider = ({ images }: Props) => {
     <div className="relative w-full max-w-lg mx-auto">
       <div {...handlers} className="">
         <div
-          className="relative w-full h-[500px] min-h-[700px] overflow-hidden"
+          className="relative w-full  min-h-[600px] overflow-hidden"
           onClick={() => setLightboxIsOpen(true)}
         >
           <Image
