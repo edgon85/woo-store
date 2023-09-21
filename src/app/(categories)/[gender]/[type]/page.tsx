@@ -1,4 +1,4 @@
-import { NavCategories, ProductCard, ProductCardPlain } from '@/components';
+import { NavCategories, ProductCard } from '@/components';
 import { getProductByGenderAndCategory } from '@/helpers';
 
 export default async function CategoriesPage({

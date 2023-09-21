@@ -29,8 +29,11 @@ export const RelatedProductsCard = () => {
         <Image
           src="https://via.placeholder.com/300"
           alt="Nombre del producto"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          style={{
+            objectFit: 'cover',
+          }}
         />
       </div>
 
