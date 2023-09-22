@@ -5,15 +5,17 @@ import {
   UserInfo,
   RelatedProducts,
 } from '@/components';
+import { getProductBySlug } from '@/helpers';
+import { IProduct } from '@/interfaces';
 
-const prodImages = [
-  'https://res.cloudinary.com/dc2vkibqq/image/upload/v1673066597/c972ndpuv9rhzgtuwl0o.webp',
-  'https://res.cloudinary.com/dc2vkibqq/image/upload/v1694979833/woo-products/i16n0hts782riztfhfww.jpg',
-  'https://res.cloudinary.com/dc2vkibqq/image/upload/v1694979833/woo-products/wxhe9a4ltkwumchkrb7v.jpg',
-  'https://res.cloudinary.com/dc2vkibqq/image/upload/v1694979833/woo-products/rlqrnb9ocnmexjkn8pne.jpg',
-];
+type Props = {
+  params: { slug: string };
+};
 
-export default function ProductDetailPage() {
+export default async function ProductDetailPage({ params: { slug } }: Props) {
+  const product: IProduct = await getProductBySlug(slug);
+
+  const { user } = product;
   return (
     <>
       <section className="main-wrapper flex flex-col sm:flex-row">
@@ -21,16 +23,16 @@ export default function ProductDetailPage() {
         <div className="w-full lg:w-3/4 p-2 ">
           {/* <LightBoxGallery images={prodImages} /> */}
           <div className="container mx-auto ">
-            <ImageSlider images={prodImages} />
+            <ImageSlider images={product.images} />
             <BtnActions />
           </div>
         </div>
 
         {/* <!-- Aside (Lado derecho en pantallas grandes) --> */}
         <aside className="w-full lg:w-2/5 p-2">
-          <ProductDetail />
+          <ProductDetail product={product} />
           <div className="mt-4">
-            <UserInfo />
+            <UserInfo userId={user?.id!} name={user?.fullName!} />
           </div>
         </aside>
       </section>

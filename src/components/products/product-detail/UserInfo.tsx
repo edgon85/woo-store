@@ -1,8 +1,14 @@
+import { IUser } from '@/interfaces';
 import Image from 'next/image';
 import React from 'react';
-import { BsArrowLeft, BsArrowRight, BsStarFill } from 'react-icons/bs';
+import { BsArrowRight, BsStarFill } from 'react-icons/bs';
 
-export const UserInfo = () => {
+type Props = {
+  userId: string;
+  name: string;
+};
+
+export const UserInfo = ({ userId, name }: Props) => {
   return (
     <section className="flex items-center p-4 bg-white rounded-lg shadow-md">
       <Image
@@ -14,7 +20,7 @@ export const UserInfo = () => {
       />
 
       <div className="flex-1 ml-4">
-        <h2 className="text-xl font-semibold">Nombre del usuario</h2>
+        <h2 className="text-xl font-semibold">{name}</h2>
 
         <div className="flex items-center mt-1">
           <BsStarFill color="gold" />

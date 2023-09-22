@@ -1,3 +1,5 @@
+import { IProduct } from '@/interfaces';
+
 export const getProductByUser = async (userId: string) => {
   const url = `${process.env.API_BASE_URL}/products/u/${userId}`;
 
@@ -41,17 +43,17 @@ export const getProductsBySubcategory = async (subcategorySlug: string) => {
   return res.json();
 };
 
-/* export const useFetchSubcategoryBySlug = (
-  subcategorySlug: string,
-  config: SWRConfiguration = {}
-) => {
-  const url = `http://localhost:5000/api/products/subcategory/${subcategorySlug}`;
+export const getProductBySlug = async (
+  productSlug: string
+): Promise<IProduct> => {
+  const url = `${process.env.API_BASE_URL}/products/${productSlug}`;
 
-  const { data, error, isLoading } = useSWR<ISubcategory[]>(url, config);
+  const resp = await fetch(url);
 
-  return {
-    subcategories: data || [],
-    loading: !error && !data,
-    isError: !error,
-  };
-}; */
+  if (!resp.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const data: IProduct = await resp.json();
+  return data;
+};

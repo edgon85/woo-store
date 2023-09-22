@@ -6,6 +6,7 @@ export interface IProduct {
   slug?: string;
   description: string;
   subcategory: ISubcategory;
+  category?: ICategory;
   price: number;
   images: string[];
   isFeatured?: boolean;
@@ -29,6 +30,7 @@ export interface ISubcategory {
   id: string;
   title: string;
   slug?: string;
+  category?: ICategory;
 }
 
 export interface IBrand {
