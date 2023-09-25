@@ -1,9 +1,11 @@
 'use client';
 
-import { Button, TooltipIcon } from '@/components/ui';
+import { Button, TooltipIcon } from '@/components';
 import { useAuth } from '@/hooks';
 import { ActionButton } from '../../product-card';
 import { IProduct } from '@/interfaces';
+
+import { BtnMakeOffer } from './BtnMakeOffer';
 
 type ActionsProps = {
   product: IProduct;
@@ -24,7 +26,7 @@ export const BtnActionsDetail = ({ product }: ActionsProps) => {
         productUser={product.user!}
         user={user!}
       />
-      <Button label="Hacer oferta" type="button" outlined />
+      <BtnMakeOffer product={product} />
       <Button label="Enviar mensaje" type="button" outlined />
     </section>
   );

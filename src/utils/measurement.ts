@@ -28,5 +28,5 @@ export const measurementFormat = (
     measurementFormat = `${size}`;
   }
 
-  return measurementFormat;
+  return measurementFormat.toUpperCase();
 };
