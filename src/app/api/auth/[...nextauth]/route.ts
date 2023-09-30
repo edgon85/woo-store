@@ -30,7 +30,7 @@ export const handler = NextAuth({
       },
       async authorize(credentials): Promise<any> {
         const authResponse = await fetch(
-          'http://localhost:5000/api/auth/login',
+          `${process.env.API_BASE_URL}/auth/login`,
           {
             method: 'POST',
             headers: {
@@ -68,7 +68,7 @@ export const handler = NextAuth({
     async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
-        console.log(account.type);
+        // console.log(account.type);
 
         switch (account.type) {
           case 'oauth':
@@ -78,7 +78,7 @@ export const handler = NextAuth({
             };
 
             const authResponse = await fetch(
-              'http://localhost:5000/api/auth/next-auth',
+              `${process.env.API_BASE_URL}/auth/next-auth`,
               {
                 method: 'POST',
                 headers: {

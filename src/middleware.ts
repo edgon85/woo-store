@@ -16,6 +16,10 @@ const isUserRoute = (pathname: string) => {
 };
 
 export async function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname.startsWith('/settings')) {
+    return NextResponse.redirect(new URL('/settings/profile', req.url));
+  }
+
   const session: any = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
@@ -49,6 +53,7 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
+    '/settings',
     '/products/create',
     '/profile/:path*',
     '/checkout/address',
