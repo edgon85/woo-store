@@ -38,3 +38,31 @@ export const updateProfile = async (token: string, profile: IProfile) => {
     };
   }
 };
+
+export const updatePhotoProfile = async (
+  profileId: string,
+  token: string,
+  photoUrl: string
+) => {
+  try {
+    const { data } = await wooApi.patch(
+      `profiles/${profileId}`,
+      { profileImage: photoUrl },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return {
+      message: 'ok',
+      data,
+    };
+  } catch (error: any) {
+    return {
+      message: error.response.data.message,
+      data: null,
+    };
+  }
+};

@@ -1,10 +1,10 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { FormData } from './ProfileForm';
+import { FormProfileData } from './ProfileForm';
 
 type Props = {
-  setValue: UseFormSetValue<FormData>;
-  register: UseFormRegister<FormData>;
-  errors: FieldErrors<FormData>;
+  setValue: UseFormSetValue<FormProfileData>;
+  register: UseFormRegister<FormProfileData>;
+  errors: FieldErrors<FormProfileData>;
 };
 
 export const PhoneSection = ({ setValue, register, errors }: Props) => {

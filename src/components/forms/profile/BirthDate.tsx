@@ -1,9 +1,9 @@
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-import { FormData } from './ProfileForm';
+import { FormProfileData } from './ProfileForm';
 
 type Props = {
-  setValue: UseFormSetValue<FormData>;
-  getValues: UseFormGetValues<FormData>;
+  setValue: UseFormSetValue<FormProfileData>;
+  getValues: UseFormGetValues<FormProfileData>;
 };
 
 export const BirthDate = ({ setValue, getValues }: Props) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
+import { Path, PathValue, useForm } from 'react-hook-form';
 import { LocationSection } from './LocationSection';
 import { ShowLocationInProfile } from './ShowLocationInProfile';
 import { BirthDate } from './BirthDate';
@@ -11,9 +11,9 @@ import { PhotoSection } from './PhotoSection';
 import { IProfile, IUser } from '@/interfaces';
 import { updateProfile } from '@/helpers';
 
-export type FormData = {
+export type FormProfileData = {
   id: string;
-  photo: string;
+  profileImage: string;
   biography: string;
   location: string;
   dateOfBirth: string;
@@ -33,12 +33,12 @@ export const ProfileForm = ({ profile, token }: Props) => {
     getValues,
     setValue,
     formState: { errors },
-  } = useForm<FormData>({ defaultValues: profile });
+  } = useForm<FormProfileData>({ defaultValues: profile });
 
   // console.log(profile);
-  const onHandleSubmit = async (formData: FormData) => {
+  const onHandleSubmit = async (FormProfileData: FormProfileData) => {
     // console.log(profile);
-    await updateProfile(token, { ...formData }).then((resp) => {
+    await updateProfile(token, { ...FormProfileData }).then((resp) => {
       /* if (resp.data === null) {
         throw new Error('Ocurrió un error');
       } */
@@ -51,7 +51,12 @@ export const ProfileForm = ({ profile, token }: Props) => {
     <form onSubmit={handleSubmit(onHandleSubmit)}>
       <div className="bg-white p-4 w-full">
         {/* <!-- Tu foto y botón --> */}
-        <PhotoSection />
+        <PhotoSection
+          profileId={profile.id}
+          token={token}
+          setValue={setValue}
+          getValues={getValues}
+        />
       </div>
       {/* <!-- Divider --> */}
       <hr className="" />

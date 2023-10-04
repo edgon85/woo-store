@@ -1,8 +1,8 @@
 import { UseFormRegister } from 'react-hook-form';
-import { FormData } from './ProfileForm';
+import { FormProfileData } from './ProfileForm';
 
 type Props = {
-  register: UseFormRegister<FormData>;
+  register: UseFormRegister<FormProfileData>;
 };
 
 export const BiographySection = ({ register }: Props) => {
