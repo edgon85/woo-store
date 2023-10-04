@@ -10,3 +10,12 @@ export interface IUser {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface IProfile {
+  id: string;
+  biography?: string;
+  profileImage?: string;
+  location?: string;
+  gender: string;
+  phone?: string;
+}
