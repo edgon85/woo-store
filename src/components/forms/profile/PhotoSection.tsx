@@ -21,8 +21,6 @@ export const PhotoSection = ({
   getValues,
 }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -50,11 +48,10 @@ export const PhotoSection = ({
         const { message } = data;
         await updatePhotoUrl(message);
 
-        setSuccessMessage('Imagen actualizada');
         setAlertType('success');
       } catch (error) {
         console.error('Error subiendo la imagen:', error);
-        setSuccessMessage('Error al actualizar la imagen');
+
         setAlertType('error');
       } finally {
         setModalOpen(false);
@@ -99,13 +96,6 @@ export const PhotoSection = ({
       <Modal open={isModalOpen} onClose={() => {}} center closeIcon={<></>}>
         <div className="w-8 h-8 border-t-4 border-primary border-solid rounded-full animate-spin"></div>
       </Modal>
-
-      {/* {showAlert && (
-        <AlertComponent
-          message="¡Tu imagen ha sido actualizada!"
-          onDismiss={() => setShowAlert(false)}
-        />
-      )} */}
 
       {alertType === 'success' && (
         <AlertComponent
