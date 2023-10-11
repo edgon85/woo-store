@@ -4,6 +4,7 @@ export interface IUser {
   fullName: string;
   token: string;
   password?: string;
+  username: string;
   role: string[];
   isActive: boolean;
 
@@ -19,3 +20,12 @@ export interface IProfile {
   gender: string;
   phone?: string;
 }
+
+export type LocalDataUser = {
+  id: string;
+  token: string;
+  email: string;
+  fullName: string;
+  username: string;
+  authType: string;
+};

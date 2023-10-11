@@ -1,9 +1,9 @@
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { FormData } from './ProfileForm';
+import { FormProfileData } from './ProfileForm';
 
 type Props = {
-    setValue: UseFormSetValue<FormData>;
-    register: UseFormRegister<FormData>;
+    setValue: UseFormSetValue<FormProfileData>;
+    register: UseFormRegister<FormProfileData>;
 };
 
 export const ShowLocationInProfile = ({ setValue, register }: Props) => {

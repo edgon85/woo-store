@@ -1,4 +1,4 @@
-import { IProfile } from '@/interfaces';
+import { IProfile, IUser } from '@/interfaces';
 import { wooApi } from '@/wooApi';
 
 export const getUserProfile = async (userId?: string, token?: string) => {
@@ -14,6 +14,35 @@ export const getUserProfile = async (userId?: string, token?: string) => {
     return error.response.data.message;
   }
 };
+
+/* ······································································· */
+
+type DataUser = {
+  fullName?: string;
+  username?: string;
+  email?: string;
+};
+
+export const updateUserData = async (userId: string, token: string, dataUser: DataUser) => {
+  try {
+    const { data } = await wooApi.patch(
+      `/auth/update/${userId}`,
+      { ...dataUser },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    return error.response.data.message;
+  }
+};
+
+/* ······································································· */
+
 export const updateProfile = async (token: string, profile: IProfile) => {
   try {
     const { id, ...toUpdate } = profile;
