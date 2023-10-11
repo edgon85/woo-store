@@ -37,7 +37,7 @@ export const NameSection = ({ userId, fullName, token }: Props) => {
 
   const onHandleSubmit = async (formData: FormName) => {
     try {
-      const data = await updateUserData(userId, token, {
+      const {data} = await updateUserData(userId, token, {
         fullName: formData.fullName,
       });
       setInitialValue(data.fullName);

@@ -21,7 +21,11 @@ export const AccountForm = ({ dataUser }: Props) => {
         userId={dataUser.id}
       />
       <hr />
-      <UsernameSection />
+      <UsernameSection
+        username={dataUser.username}
+        token={dataUser.token}
+        userId={dataUser.id}
+      />
       <hr />
       <EmailSection />
       <Divider />

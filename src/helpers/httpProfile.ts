@@ -35,9 +35,17 @@ export const updateUserData = async (userId: string, token: string, dataUser: Da
       }
     );
 
-    return data;
+    // return data;
+    return {
+      message: 'ok',
+      data, 
+    }
   } catch (error: any) {
-    return error.response.data.message;
+    // return error.response.data.message;
+    return {
+      message: error.response.data.message,
+      data: null
+    }
   }
 };
 
