@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 export default function ProfilePage() {
   const { user } = useAuth();
   const [profileData, setProfileData] = useState<IProfile | null>(null); // Asumiendo que IProfile es el tipo de tus datos de perfil.
+  const [fullName, setFullName] = useState<string>('');
 
   useEffect(() => {
     if (user) {
@@ -18,11 +19,18 @@ export default function ProfilePage() {
   const getProfile = async (user: IUser) => {
     const datos = await getUserProfile(user.id, user.token);
     setProfileData(datos.profile);
+    setFullName(datos.fullName);
   };
 
   if (profileData === null) {
     return <>Cargando....</>;
   }
 
-  return <ProfileForm profile={profileData!} token={user?.token!} />;
+  return (
+    <ProfileForm
+      profile={profileData!}
+      token={user?.token!}
+      fullName={fullName}
+    />
+  );
 }

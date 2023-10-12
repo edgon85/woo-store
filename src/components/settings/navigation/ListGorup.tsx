@@ -1,10 +1,12 @@
 import { ListItem, ListItemProps } from './ListItem';
 
 const navItems: ListItemProps[] = [
-  { href: '/settings/profile', label: 'Datos de perfil', isCurrent: true },
-  { href: '/settings/account', label: 'Ajustes de cuenta' },
-  { href: '#', label: 'Envíos' },
-  { href: '#', label: 'Download' },
+  { href: '/settings/profile', label: 'Datos de perfil' },
+  { href: '/settings/account', label: 'Ajustes de cuenta', },
+  { href: '/settings/shipments', label: 'Envíos' },
+  { href: '/settings/payments', label: 'Pagos' },
+  { href: '/settings/notification', label: 'Notificaciones' },
+  { href: '/settings/privacy', label: 'Ajustes de privacidad' },
 ];
 
 export const ListGroup = () => {

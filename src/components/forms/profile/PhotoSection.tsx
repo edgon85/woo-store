@@ -11,12 +11,14 @@ import { AlertComponent } from '@/components/ui';
 type Props = {
   setValue: UseFormSetValue<FormProfileData>;
   getValues: UseFormGetValues<FormProfileData>;
+  fullName: string;
   profileId: string;
   token: string;
 };
 export const PhotoSection = ({
   profileId,
   token,
+  fullName,
   setValue,
   getValues,
 }: Props) => {
@@ -24,6 +26,13 @@ export const PhotoSection = ({
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const iniciales = fullName
+    .split(' ')
+    .map((palabra) => palabra.charAt(0))
+    .join('')
+    .toUpperCase();
+
 
   const handleChoosePhotoClick = () => {
     fileInputRef.current?.click();
@@ -72,14 +81,17 @@ export const PhotoSection = ({
         <h3 className="text-base font-medium text-gray-700">Tu foto</h3>
         <div className="flex justify-center items-center">
           <div className="w-16 h-16 bg-gray-200 rounded-full mr-4">
-            {
-              getValues('profileImage') !== null
-              ?<picture>
-              <img src={getValues('profileImage')} alt="imagen de perfil" />
-                </picture>
-                : <><span>A</span></>
-            }
-            
+            {getValues('profileImage') !== null ? (
+              <picture>
+                <img src={getValues('profileImage')} alt="imagen de perfil" />
+              </picture>
+            ) : (
+              <>
+                <span className="w-16 h-16 flex justify-center items-center rounded-full bg-lightPrimary font-bold">
+                {iniciales}
+                </span>
+              </>
+            )}
           </div>
           <button
             onClick={handleChoosePhotoClick}

@@ -25,11 +25,12 @@ export type FormProfileData = {
 };
 
 type Props = {
+  fullName: string;
   profile: IProfile;
   token: string;
 };
 
-export const ProfileForm = ({ profile, token }: Props) => {
+export const ProfileForm = ({ profile, token, fullName }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
   const {
@@ -65,6 +66,7 @@ export const ProfileForm = ({ profile, token }: Props) => {
             token={token}
             setValue={setValue}
             getValues={getValues}
+            fullName={fullName}
           />
         </div>
         {/* <!-- Divider --> */}
