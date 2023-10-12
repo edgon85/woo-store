@@ -52,7 +52,7 @@ export const EmailSection = ({ userId, token, email, authType }: Props) => {
         setError('password', { type: 'manual', message: message });
         return;
       }
-      console.log(data);
+
       setInitialValue(data.email);
       setAlertType('success');
       setModalOpen(false);

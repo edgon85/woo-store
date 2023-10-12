@@ -34,8 +34,12 @@ export const AccountForm = ({ dataUser }: Props) => {
         authType={dataUser.authType}
       />
       <Divider />
-      <ResetPasswordSection />
-      <Divider />
+      {dataUser.authType === 'credentials' ? (
+        <>
+          <ResetPasswordSection />
+          <Divider />
+        </>
+      ) : null}
       <VacationModeSection />
       <Divider />
       <DeleteAccountSection />
