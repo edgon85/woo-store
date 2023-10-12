@@ -27,7 +27,12 @@ export const AccountForm = ({ dataUser }: Props) => {
         userId={dataUser.id}
       />
       <hr />
-      <EmailSection />
+      <EmailSection
+        email={dataUser.email}
+        token={dataUser.token}
+        userId={dataUser.id}
+        authType={dataUser.authType}
+      />
       <Divider />
       <ResetPasswordSection />
       <Divider />

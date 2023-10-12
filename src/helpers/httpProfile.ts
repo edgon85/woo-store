@@ -18,12 +18,17 @@ export const getUserProfile = async (userId?: string, token?: string) => {
 /* ······································································· */
 
 type DataUser = {
+  password?: string;
   fullName?: string;
   username?: string;
   email?: string;
 };
 
-export const updateUserData = async (userId: string, token: string, dataUser: DataUser) => {
+export const updateUserData = async (
+  userId: string,
+  token: string,
+  dataUser: DataUser
+) => {
   try {
     const { data } = await wooApi.patch(
       `/auth/update/${userId}`,
@@ -38,14 +43,14 @@ export const updateUserData = async (userId: string, token: string, dataUser: Da
     // return data;
     return {
       message: 'ok',
-      data, 
-    }
+      data,
+    };
   } catch (error: any) {
     // return error.response.data.message;
     return {
       message: error.response.data.message,
-      data: null
-    }
+      data: null,
+    };
   }
 };
 
