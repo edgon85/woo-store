@@ -5,9 +5,11 @@ export interface IUser {
   token: string;
   password?: string;
   username: string;
+  profileImage: string;
   role: string[];
   isActive: boolean;
 
+  location?: string;
   createdAt?: string;
   updatedAt?: string;
 }

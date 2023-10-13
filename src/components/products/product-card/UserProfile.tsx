@@ -1,20 +1,27 @@
 import { IUser } from '@/interfaces';
+import { InitialsProfile } from '@/utils';
 import Link from 'next/link';
 
 export const UserProfile = ({ user }: { user: IUser | null }) => {
   return (
     <div className="flex items-center p-2">
       <Link href={`/member/${user?.id}`}>
-        <picture>
-          <img
-            src={'https://via.placeholder.com/150'}
-            alt={`${user?.fullName || 'Usuario'} avatar`}
-            className="w-10 h-10 rounded-full"
-          />
-        </picture>
+        {user?.profileImage !== null ? (
+          <picture>
+            <img
+              src={user?.profileImage}
+              alt={`${user?.username || 'Usuario'} avatar`}
+              className="w-10 h-10 rounded-full"
+            />
+          </picture>
+        ) : (
+          <span className="w-10 h-10 flex justify-center items-center rounded-full bg-lightPrimary font-bold">
+            {InitialsProfile(user?.fullName)}
+          </span>
+        )}
       </Link>
       <Link href={`/member/${user?.id}`} className="ml-2 text-gray-800">
-        {user?.fullName || 'Nombre de Usuario'}
+        {user?.username || 'Nombre de Usuario'}
       </Link>
     </div>
   );

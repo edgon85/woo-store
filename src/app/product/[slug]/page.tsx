@@ -32,7 +32,12 @@ export default async function ProductDetailPage({ params: { slug } }: Props) {
         <aside className="w-full lg:w-2/5 p-2">
           <ProductDetail product={product} />
           <div className="mt-4">
-            <UserInfo userId={user?.id!} name={user?.fullName!} />
+            <UserInfo
+              name={user?.fullName!}
+              image={user?.profileImage!}
+              location={user?.location!}
+              username={user?.username!}
+            />
           </div>
         </aside>
       </section>
