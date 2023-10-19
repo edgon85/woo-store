@@ -23,7 +23,7 @@ export const UserInfo = ({ name, image, location, username }: Props) => {
           height={64}
         />
       ) : (
-        <div className="w-16 h-16 rounded-full bg-lightPrimary">
+        <div className="w-16 h-16 rounded-full bg-lightPrimary flex justify-center items-center">
           {InitialsProfile(name)}
         </div>
       )}
