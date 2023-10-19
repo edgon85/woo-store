@@ -58,7 +58,7 @@ export const DropdownAccount = () => {
             <DropdownItem
               title="Mi closet"
               icon={<HangerIcon />}
-              path={`/profile/${user?.id}`}
+              path={`/member/${user?.username}`}
               setIsCollapsed={setIsCollapsed}
             />
             <DropdownItem

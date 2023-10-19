@@ -30,7 +30,7 @@ export interface ISubcategory {
   id: string;
   title: string;
   slug?: string;
-  category?: ICategory;
+  // category?: ICategory;
 }
 
 export interface IBrand {

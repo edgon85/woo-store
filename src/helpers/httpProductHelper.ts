@@ -1,9 +1,9 @@
 import { IProduct } from '@/interfaces';
 
-export const getProductByUser = async (userId: string) => {
+export const getProductByUserIdOrUsername = async (userId: string) => {
   const url = `${process.env.API_BASE_URL}/products/u/${userId}`;
 
-  console.log(url);
+
   const res = await fetch(url);
 
   if (!res.ok) {
