@@ -5,7 +5,7 @@ import Link from 'next/link';
 export const UserProfile = ({ user }: { user: IUser | null }) => {
   return (
     <div className="flex items-center p-2">
-      <Link href={`/member/${user?.id}`}>
+      <Link href={`/member/${user?.username}`}>
         {user?.profileImage !== null ? (
           <picture>
             <img
@@ -20,7 +20,7 @@ export const UserProfile = ({ user }: { user: IUser | null }) => {
           </span>
         )}
       </Link>
-      <Link href={`/member/${user?.id}`} className="ml-2 text-gray-800">
+      <Link href={`/member/${user?.username}`} className="ml-2 text-gray-800">
         {user?.username || 'Nombre de Usuario'}
       </Link>
     </div>

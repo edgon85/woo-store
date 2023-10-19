@@ -59,14 +59,29 @@ export const DropdownAccount = () => {
               title="Mi closet"
               icon={<HangerIcon />}
               path={`/profile/${user?.id}`}
+              setIsCollapsed={setIsCollapsed}
             />
             <DropdownItem
               title="Mis pedidos"
               icon={<ClipboardDocumentIcon />}
+              setIsCollapsed={setIsCollapsed}
             />
-            <DropdownItem title="Mi balance" icon={<CurrencyIcon />} />
-            <DropdownItem title="Mis favoritos" icon={<HeartIcon />} />
-            <DropdownItem title="Configuración" icon={<SettingsIcon />} />
+            <DropdownItem
+              title="Mi balance"
+              icon={<CurrencyIcon />}
+              setIsCollapsed={setIsCollapsed}
+            />
+            <DropdownItem
+              title="Mis favoritos"
+              icon={<HeartIcon />}
+              setIsCollapsed={setIsCollapsed}
+            />
+            <DropdownItem
+              title="Configuración"
+              icon={<SettingsIcon />}
+              path="/settings/profile"
+              setIsCollapsed={setIsCollapsed}
+            />
           </ul>
           <div className="py-2">
             <button

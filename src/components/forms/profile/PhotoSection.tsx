@@ -33,7 +33,6 @@ export const PhotoSection = ({
     .join('')
     .toUpperCase();
 
-
   const handleChoosePhotoClick = () => {
     fileInputRef.current?.click();
   };
@@ -80,7 +79,7 @@ export const PhotoSection = ({
       <div className="flex justify-between items-center">
         <h3 className="text-base font-medium text-gray-700">Tu foto</h3>
         <div className="flex justify-center items-center">
-          <div className="w-16 h-16 bg-gray-200 rounded-full mr-4">
+          <div className="flex justify-center items-center overflow-hidden bg-gray-200 rounded-full mr-4">
             {getValues('profileImage') !== null ? (
               <picture>
                 <img src={getValues('profileImage')} alt="imagen de perfil" />
@@ -88,7 +87,7 @@ export const PhotoSection = ({
             ) : (
               <>
                 <span className="w-16 h-16 flex justify-center items-center rounded-full bg-lightPrimary font-bold">
-                {iniciales}
+                  {iniciales}
                 </span>
               </>
             )}

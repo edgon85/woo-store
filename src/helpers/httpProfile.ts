@@ -17,6 +17,24 @@ export const getUserProfile = async (userId?: string, token?: string) => {
 
 /* ······································································· */
 
+export const getUserPublicProfile = async (username: string) => {
+  try {
+    const { data } = await wooApi.get(`/profiles?u=${username}`);
+
+    return {
+      message: 'ok',
+      data,
+    };
+  } catch (error: any) {
+    return {
+      message: error.response.data.message,
+      data: null,
+    };
+  }
+};
+
+/* ······································································· */
+
 type DataUser = {
   password?: string;
   fullName?: string;
