@@ -20,7 +20,7 @@ export const ActionButton = ({
 
   const onHandleClick = () => {
     user?.id !== productUser?.id
-      ? router.push(`/checkout/address/${product.id}`)
+      ? router.push(`/checkout?transaction=${product.id}`)
       : router.push(`/product/edit/${product.id}`);
   };
 

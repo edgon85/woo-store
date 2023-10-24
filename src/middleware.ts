@@ -51,8 +51,9 @@ export const config = {
   matcher: [
     '/products/create',
     // '/profile/:path*',
-    '/checkout/address',
-    '/checkout/summary',
+    // '/checkout/address',
+    // '/checkout/summary',
+    '/checkout/:path*',
     '/admin/:path*',
     '/settings/:path*',
     '/api/admin/:path*',

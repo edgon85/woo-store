@@ -4,3 +4,4 @@ export * from './useModal';
 export * from './useUI';
 export * from './useFilter';
 export * from './useFetcher';
+export * from './useLoadingData';
