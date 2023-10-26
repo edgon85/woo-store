@@ -1,14 +1,21 @@
-import { wooApi } from '@/wooApi';
 import { useEffect, useState } from 'react';
 
+import { wooApi } from '@/wooApi';
+import { useAuth } from './useAuth';
+
 export const useLoadingData = (url: string, token?: string) => {
+  const { user } = useAuth();
+
   const [data, setData] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    fetchData(url, token!);
-  }, [url, token]);
+    if (!user?.token) {
+      return;
+    }
+    fetchData(url, user.token!);
+  }, [url, user]);
 
   const fetchData = async (url: string, token: string) => {
     try {

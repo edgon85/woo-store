@@ -23,6 +23,17 @@ export interface IProfile {
   phone?: string;
 }
 
+export interface IAddress {
+  fullName: string;
+  fullAddress: string;
+  city: string;
+  country: string;
+  phone: string;
+  label: string;
+  isPrimary: boolean;
+  user?: IUser;
+}
+
 export type LocalDataUser = {
   id: string;
   token: string;

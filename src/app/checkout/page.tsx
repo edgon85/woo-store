@@ -1,4 +1,19 @@
-'use client';
+import { AddressSection, OrderBreakdown } from '@/components';
+
+export default function CheckoutPage() {
+  return (
+    <div className="main-wrapper flex flex-col sm:flex-row">
+      <div className="w-full lg:w-3/4 p-2 ">
+        <AddressSection />
+      </div>
+      <div className="w-full lg:w-2/5 p-2">
+        <OrderBreakdown />
+      </div>
+    </div>
+  );
+}
+
+/* 'use client';
 
 import { useAuth, useLoadingData } from '@/hooks';
 import { redirect, useSearchParams } from 'next/navigation';
@@ -27,3 +42,4 @@ export default function CheckoutPage() {
     redirect(`/checkout/payment?transaction=${transaction_id}`);
   }
 }
+ */
