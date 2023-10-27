@@ -24,13 +24,14 @@ export interface IProfile {
 }
 
 export interface IAddress {
+  id?: string;
   fullName: string;
   fullAddress: string;
   city: string;
   country: string;
   phone: string;
   label: string;
-  isPrimary: boolean;
+  isPrimary?: boolean;
   user?: IUser;
 }
 

@@ -1,7 +1,7 @@
 import { Button, EditIcon, SpinnerIcon } from '@/components/ui';
-import { useCheckout, useCreateData } from '@/hooks';
+import { useCheckout, useUpdateData } from '@/hooks';
 import { IAddress } from '@/interfaces';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
 
@@ -41,11 +41,12 @@ type FormAddress = {
   isPrimary: boolean;
 };
 
-export const AddNewAddress = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const { createData, error } = useCreateData<IAddress>();
-  const { onSetShippingAddress } = useCheckout();
+export const CurrentAddress = () => {
+  const { address } = useCheckout();
+  const [isModalOpen, setOpenEditModal] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const { onSetShippingAddress } = useCheckout();
+  const { updateData, error } = useUpdateData<IAddress>();
 
   const {
     register,
@@ -54,37 +55,55 @@ export const AddNewAddress = () => {
 
     formState: { errors },
     reset,
-  } = useForm<FormAddress>();
+  } = useForm<FormAddress>({
+    defaultValues: {
+      fullName: address?.fullName,
+      fullAddress: address?.fullAddress,
+      city: address?.city,
+      country: address?.country,
+      phone: address?.phone,
+      label: address?.label,
+    },
+  });
 
   const onHandleSubmit = async (formData: FormAddress) => {
     setShowLoading(true);
-    const response = await createData('/shipping-address', { ...formData });
+
+    const response = await updateData(`/shipping-address/${address?.id}`, {
+      ...formData,
+    });
     if (response.data) {
       onSetShippingAddress(response.data);
       setShowLoading(false);
       closeModal();
     } else {
-      //   console.log('Error al crear la dirección', error);
       setShowLoading(false);
     }
   };
 
   const closeModal = () => {
     reset();
-    setModalOpen(false);
+    setOpenEditModal(false);
   };
+
   return (
     <>
       <div className="bg-white border p-6 rounded shadow-sm">
-        <h2 className="text-xl font-bold mb-2">Dirección</h2>
-
-        <div className="space-y-2 flex items-center gap-4">
-          <p className="text-lg">Agregar dirección</p>
-          <button onClick={() => setModalOpen(true)}>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold">Dirección</h2>
+          <button onClick={() => setOpenEditModal(true)}>
             <EditIcon />
           </button>
         </div>
+        <div className="space-y-2">
+          <p className="text-lg">{address?.fullName}</p>
+          <p>{address?.fullAddress}</p>
+          <p>
+            {address?.city}, {address?.country}
+          </p>
+        </div>
       </div>
+
       <Modal onClose={closeModal} open={isModalOpen} center>
         <form onSubmit={handleSubmit(onHandleSubmit)}>
           <div className="w-96 p-4 flex flex-col gap-2">
@@ -183,7 +202,7 @@ export const AddNewAddress = () => {
             {error && (
               <>
                 <span className="text-sm text-red-700">
-                  Error al crear la dirección intente mas tarde
+                  Error al editar la dirección intente mas tarde
                 </span>
               </>
             )}
