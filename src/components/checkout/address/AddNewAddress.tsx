@@ -1,5 +1,5 @@
-import { Button, EditIcon } from '@/components/ui';
-import { useCreateData } from '@/hooks';
+import { Button, EditIcon, SpinnerIcon } from '@/components/ui';
+import { useCheckout, useCreateData } from '@/hooks';
 import { IAddress } from '@/interfaces';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -42,30 +42,34 @@ type FormAddress = {
 
 export const AddNewAddress = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const { createData, loading, error } = useCreateData<IAddress>();
+  const { createData, error } = useCreateData<IAddress>();
+  const { onSetShippingAddress } = useCheckout();
+  const [showLoading, setShowLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     setValue,
-    setError,
+
     formState: { errors },
     reset,
-    watch,
   } = useForm<FormAddress>();
 
   const onHandleSubmit = async (formData: FormAddress) => {
-    // console.log(formData);
+    setShowLoading(true);
     const response = await createData('/shipping-address', { ...formData });
     if (response.data) {
-      console.log('Dirección creado con éxito', response.data);
+      onSetShippingAddress(response.data);
+      setShowLoading(false);
+      closeModal();
     } else {
-      console.log('Error al crear la dirección', error);
+      //   console.log('Error al crear la dirección', error);
+      setShowLoading(false);
     }
   };
 
   const closeModal = () => {
-    // reset();
+    reset();
     setModalOpen(false);
   };
   return (
@@ -165,8 +169,23 @@ export const AddNewAddress = () => {
               </p>
             )}
 
-            <Button label="Guardar" type="submit" />
-            {/* <Button label="Cancelar" type="button" outlined /> */}
+            {showLoading ? (
+              <>
+                <div className="flex justify-center items-center">
+                  <SpinnerIcon className="animate-spin" />
+                </div>
+              </>
+            ) : (
+              <Button label="Guardar" type="submit" />
+            )}
+
+            {error && (
+              <>
+                <span className="text-sm text-red-700">
+                  Error al crear la dirección intente mas tarde
+                </span>
+              </>
+            )}
           </div>
         </form>
       </Modal>

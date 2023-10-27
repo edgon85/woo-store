@@ -14,3 +14,4 @@ export * from './SettingsIcon';
 export * from './ShareIcon';
 export * from './UserIcon';
 export * from './RadiaSelectIcon';
+export * from './SpinnerIcon';
