@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui';
+import { useCheckout } from '@/hooks';
 import { IProduct, IUser } from '@/interfaces';
 import { useRouter } from 'next/navigation';
 
@@ -12,6 +13,7 @@ export const ActionButton = ({
   product: IProduct;
 }) => {
   const router = useRouter();
+  const { onAddCheckoutProduct } = useCheckout();
   let label = 'Editar';
 
   if (user === null || user?.id !== productUser?.id) {
@@ -19,9 +21,16 @@ export const ActionButton = ({
   }
 
   const onHandleClick = () => {
-    user?.id !== productUser?.id
+    if (user?.id !== productUser?.id) {
+      onAddCheckoutProduct(product);
+      router.push(`/checkout?transaction=${product.id}`);
+    } else {
+      router.push(`/product/edit/${product.id}`);
+    }
+
+    /* user?.id !== productUser?.id
       ? router.push(`/checkout?transaction=${product.id}`)
-      : router.push(`/product/edit/${product.id}`);
+      : router.push(`/product/edit/${product.id}`); */
   };
 
   return (

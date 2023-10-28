@@ -1,9 +1,29 @@
-import { AddressSection, OrderBreakdown } from '@/components';
+import { AddressSection, OrderBreakdown, ProductSection } from '@/components';
+import { getProductBySlug } from '@/helpers';
+import { redirect } from 'next/navigation';
 
-export default function CheckoutPage() {
+export default async function CheckoutPage({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const { transaction } = searchParams;
+
+  if (!transaction) {
+    throw redirect('/not-found');
+  }
+  const product = await getProductBySlug(`${transaction}`);
+
+  if (!product.available) {
+    return <p>Producto ya no esta disponible</p>;
+  }
+
   return (
     <div className="main-wrapper flex flex-col sm:flex-row">
-      <div className="w-full lg:w-3/4 p-2 ">
+      <div className="w-full lg:w-3/4 p-2 flex flex-col gap-2">
+        <ProductSection product={product} />
         <AddressSection />
       </div>
       <div className="w-full lg:w-2/5 p-2">

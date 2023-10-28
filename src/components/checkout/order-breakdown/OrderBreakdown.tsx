@@ -2,7 +2,7 @@ import { Divider } from '@/components/ui';
 
 export const OrderBreakdown = () => {
   return (
-    <section className="bg-white p-2">
+    <section className="bg-white border p-6 rounded shadow-sm">
       <h2>Desglose del pedido</h2>
       <Divider />
       <div className="flex flex-col gap-4">

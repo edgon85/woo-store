@@ -66,18 +66,6 @@ export interface IColor {
   codeColor: string;
 }
 
-export interface IProductPlain {
-  id: string;
-  slug: string;
-  title: string;
-  price: number;
-  isfeatured: boolean;
-  available: boolean;
-  user: string;
-  images: string[];
-  brand: string;
-  size: string;
-  state: string;
-  subcategory: string;
-  colores: string[];
+export interface ISubcategoryWithCategory extends ISubcategory {
+  category: ICategory;
 }

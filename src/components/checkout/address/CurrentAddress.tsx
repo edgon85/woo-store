@@ -90,7 +90,7 @@ export const CurrentAddress = () => {
     <>
       <div className="bg-white border p-6 rounded shadow-sm">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Dirección</h2>
+          <h2 className="text-xl text-gray-400">Dirección</h2>
           <button onClick={() => setOpenEditModal(true)}>
             <EditIcon />
           </button>

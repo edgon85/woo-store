@@ -1,19 +1,20 @@
 import { FC, useEffect, useReducer } from 'react';
 
-import { IAddress } from '@/interfaces';
+import { IAddress, IProduct } from '@/interfaces';
 import { CheckoutReducer, CheckoutContext } from './';
-import { useSession } from 'next-auth/react';
-import { useAuth, useCreateData, useLoadingData } from '@/hooks';
+import { useAuth } from '@/hooks';
 import { wooApi } from '@/wooApi';
 
 export interface CheckoutState {
   loadingAddress: boolean;
   address?: IAddress | null;
+  product: IProduct | null;
 }
 
 const CHECKOUT_INITIAL_STATE: CheckoutState = {
   loadingAddress: false,
   address: null,
+  product: null,
 };
 
 type Props = {
@@ -58,6 +59,12 @@ export const CheckoutProvider: FC<Props> = ({ children }) => {
   const onSetShippingAddress = (shippingAddress: IAddress) =>
     dispatch({ type: '[Checkout] - Add Address', payload: shippingAddress });
 
+  const onAddCheckoutProduct = (product: IProduct) =>
+    dispatch({
+      type: '[Checkout] - Add product',
+      payload: product,
+    });
+
   return (
     <CheckoutContext.Provider
       value={{
@@ -65,6 +72,7 @@ export const CheckoutProvider: FC<Props> = ({ children }) => {
 
         /* methods */
         onSetShippingAddress,
+        onAddCheckoutProduct,
       }}
     >
       {children}
