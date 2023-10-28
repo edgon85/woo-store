@@ -20,14 +20,15 @@ export async function middleware(req: NextRequest) {
     req,
     secret: process.env.NEXTAUTH_SECRET,
   });
-  // const role = req.headers.get("authorization");
-  // const { pathname } = req.nextUrl;
+
   const requestedPage = req.nextUrl.pathname;
   const url = req.nextUrl.clone();
+  const searchParams = new URLSearchParams(req.nextUrl.searchParams);
 
   if (!session) {
+    searchParams.set('p', requestedPage + req.nextUrl.search);
     url.pathname = `/auth/login`;
-    url.search = `p=${requestedPage}`;
+    url.search = searchParams.toString();
 
     return NextResponse.redirect(url);
   }
