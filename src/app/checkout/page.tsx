@@ -1,4 +1,9 @@
-import { AddressSection, OrderBreakdown, ProductSection } from '@/components';
+import {
+  AddressSection,
+  OrderBreakdown,
+  ParcelSection,
+  ProductSection,
+} from '@/components';
 import { getProductBySlug } from '@/helpers';
 import { redirect } from 'next/navigation';
 
@@ -25,6 +30,7 @@ export default async function CheckoutPage({
       <div className="w-full lg:w-3/4 p-2 flex flex-col gap-2">
         <ProductSection product={product} />
         <AddressSection />
+        <ParcelSection />
       </div>
       <div className="w-full lg:w-2/5 p-2">
         <OrderBreakdown />
