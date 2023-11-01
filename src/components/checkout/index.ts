@@ -1,4 +1,4 @@
 export * from './address/AddressSection';
 export * from './order-breakdown/OrderBreakdown';
-export * from './parcel/ParcelSection';
+export * from './parcel/PackageDeliverySection';
 export * from './ProductSection';

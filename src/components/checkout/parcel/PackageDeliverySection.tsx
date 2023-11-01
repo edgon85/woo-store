@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { BsCircleFill } from 'react-icons/bs';
 import { IoMdRadioButtonOff } from 'react-icons/io';
 
-export const ParcelSection = () => {
+export const PackageDeliverySection = () => {
   const [selectedOption, setSelectedOption] = useState();
 
   const { data, loading, errorMessage } = useLoadingData('/package-delivery');
