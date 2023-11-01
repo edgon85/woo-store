@@ -1,44 +1,33 @@
 'use client';
-import { RadiaSelectIcon } from '@/components/ui';
+import { RadiaSelectIcon, SpinnerIcon } from '@/components/ui';
+import { useFetcher, useLoadingData } from '@/hooks';
 import { useState } from 'react';
 import { BsCircleFill } from 'react-icons/bs';
 import { IoMdRadioButtonOff } from 'react-icons/io';
 
 export const ParcelSection = () => {
-  const [selectedOption, setSelectedOption] = useState(1);
+  const [selectedOption, setSelectedOption] = useState();
 
-  const options = [
-    {
-      id: 1,
-      name: 'Cargo expreso',
-      price: 'Q35.00',
-      originalPrice: 'Q35.00',
-      deliveryTime: '1-2 días hábiles',
-      logo: 'https://www.cargoexpreso.com/wp-content/uploads/2017/01/logo-4.png',
-    },
-    {
-      id: 2,
-      name: 'Guatex',
-      price: 'Q35.00',
-      originalPrice: 'Q35.00',
-      deliveryTime: '1-2 días hábiles',
-      logo: 'https://guatex.com/wp-content/uploads/2022/11/logo-guatex.svg',
-    },
-    {
-      id: 3,
-      name: 'Forza',
-      price: 'Q35.00',
-      originalPrice: 'Q35.00',
-      deliveryTime: '2-3 días hábiles',
-      logo: 'https://forzadelivery.com/wp-content/uploads/2022/03/forza-delivery-express-logo-white-md.png',
-    },
-  ];
+  const { data, loading, errorMessage } = useLoadingData('/package-delivery');
+
+  if (loading) {
+    return (
+      <div className="w-96 flex justify-center items-center">
+        <SpinnerIcon className="animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white border p-6 rounded shadow-sm">
       <h2 className="text-xl text-gray-400 mb-4">Paquetería</h2>
-      {options.map((option: any) => (
-        <div key={option.id} className={`mb-4 border rounded ${selectedOption === option.id && 'border-cerise-red-400'}`}>
+      {data?.map((option: any) => (
+        <div
+          key={option.id}
+          className={`mb-4 border rounded ${
+            selectedOption === option.id && 'border-cerise-red-400'
+          }`}
+        >
           <label className="flex items-center">
             <input
               type="radio"
@@ -63,7 +52,7 @@ export const ParcelSection = () => {
                 </div>
                 <div>
                   <span className="text-lg text-green-600 font-medium">
-                    {option.price}
+                    {option.originalPrice}
                   </span>
                   {/* {option.originalPrice && (
                     <span className="ml-2 line-through text-gray-500">
@@ -77,9 +66,12 @@ export const ParcelSection = () => {
               </div>
               <div>
                 {selectedOption === option.id ? (
-                  <RadiaSelectIcon className='text-cerise-red-500' size="24" />
+                  <RadiaSelectIcon className="text-cerise-red-500" size="24" />
                 ) : (
-                  <IoMdRadioButtonOff size={24} className='text-cerise-red-300'/>
+                  <IoMdRadioButtonOff
+                    size={24}
+                    className="text-cerise-red-300"
+                  />
                 )}
               </div>
             </div>
