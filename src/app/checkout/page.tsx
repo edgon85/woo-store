@@ -2,6 +2,7 @@ import {
   AddressSection,
   OrderBreakdown,
   PackageDeliverySection,
+  PaymentSelectSection,
   ProductSection,
 } from '@/components';
 import { getProductBySlug } from '@/helpers';
@@ -30,6 +31,7 @@ export default async function CheckoutPage({
       <div className="w-full lg:w-3/4 p-2 flex flex-col gap-2">
         <ProductSection product={product} />
         <AddressSection />
+        <PaymentSelectSection />
         <PackageDeliverySection />
       </div>
       <div className="w-full lg:w-2/5 p-2">
