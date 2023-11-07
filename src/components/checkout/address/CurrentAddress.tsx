@@ -1,7 +1,8 @@
+'use client';
 import { Button, EditIcon, SpinnerIcon } from '@/components/ui';
 import { useCheckout, useUpdateData } from '@/hooks';
 import { IAddress } from '@/interfaces';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
 
@@ -41,12 +42,21 @@ type FormAddress = {
   isPrimary: boolean;
 };
 
-export const CurrentAddress = () => {
-  const { address } = useCheckout();
+type Props = {
+  currentAddress: IAddress;
+};
+
+export const CurrentAddress = ({ currentAddress }: Props) => {
   const [isModalOpen, setOpenEditModal] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const { onSetShippingAddress } = useCheckout();
   const { updateData, error } = useUpdateData<IAddress>();
+
+/*   useEffect(() => {
+    onSetShippingAddress(currentAddress);
+  }, []); */
+
+  const { address } = useCheckout();
 
   const {
     register,

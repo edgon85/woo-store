@@ -4,6 +4,7 @@ import { IUser } from '@/interfaces';
 import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { userState } from '@/helpers';
+import Cookies from 'js-cookie';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -125,6 +126,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   const logout = () => {
     signOut();
+    Cookies.remove('token');
     redirect('/');
   };
 

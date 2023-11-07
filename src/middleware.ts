@@ -26,6 +26,7 @@ export async function middleware(req: NextRequest) {
   const searchParams = new URLSearchParams(req.nextUrl.searchParams);
 
   if (!session) {
+    req.cookies.delete('token');
     searchParams.set('p', requestedPage + req.nextUrl.search);
     url.pathname = `/auth/login`;
     url.search = searchParams.toString();
@@ -45,7 +46,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  response.cookies.set('token', session.user.token);
+
+  return response;
 }
 
 export const config = {

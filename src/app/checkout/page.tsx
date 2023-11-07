@@ -8,6 +8,9 @@ import {
 import { getProductBySlug } from '@/helpers';
 import { redirect } from 'next/navigation';
 
+import { cookies } from 'next/headers';
+import { fetchPackageDelivery } from '@/lib/data';
+
 export default async function CheckoutPage({
   params,
   searchParams,
@@ -16,11 +19,13 @@ export default async function CheckoutPage({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const { transaction } = searchParams;
+  const token = cookies().get('token')?.value;
 
   if (!transaction) {
     throw redirect('/not-found');
   }
   const product = await getProductBySlug(`${transaction}`);
+  const addresses = await fetchPackageDelivery(token!);
 
   if (!product.available) {
     return <p>Producto ya no esta disponible</p>;
@@ -30,7 +35,7 @@ export default async function CheckoutPage({
     <div className="main-wrapper flex flex-col sm:flex-row">
       <div className="w-full lg:w-3/4 p-2 flex flex-col gap-2">
         <ProductSection product={product} />
-        <AddressSection />
+        <AddressSection addresses={addresses} />
         <PaymentSelectSection />
         <PackageDeliverySection />
       </div>

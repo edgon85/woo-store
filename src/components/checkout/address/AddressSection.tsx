@@ -4,17 +4,24 @@ import { useCheckout } from '@/hooks';
 
 import { AddNewAddress } from './AddNewAddress';
 import { CurrentAddress } from './CurrentAddress';
+import { IAddress } from '@/interfaces';
 
-export const AddressSection = () => {
-  const { address, loadingAddress } = useCheckout();
+type Props = {
+  addresses: IAddress[];
+};
 
-  if (!loadingAddress) {
+export const AddressSection = ({ addresses }: Props) => {
+  // const { address, loadingAddress } = useCheckout();
+
+  /*   if (!loadingAddress) {
     return <p>cargando....</p>;
-  }
+  } */
 
-  if (address === null) {
+  if (addresses.length === 0) {
     return <AddNewAddress />;
   }
 
-  return <CurrentAddress />;
+  const current = addresses.find((address) => address.isPrimary);
+
+  return <CurrentAddress currentAddress={current!} />;
 };

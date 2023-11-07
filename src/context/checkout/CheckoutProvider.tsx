@@ -25,12 +25,12 @@ export const CheckoutProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(CheckoutReducer, CHECKOUT_INITIAL_STATE);
   // const { createData, loading, error } = useCreateData<IAddress>();
 
-  const { user } = useAuth();
+  /* const { user } = useAuth();
   useEffect(() => {
     loadAddresses(user?.token!);
-  }, [user?.token]);
+  }, [user?.token]); */
 
-  const loadAddresses = async (token: string) => {
+/*   const loadAddresses = async (token: string) => {
     try {
       const { data } = await wooApi.get<IAddress[]>('/shipping-address', {
         headers: {
@@ -54,7 +54,7 @@ export const CheckoutProvider: FC<Props> = ({ children }) => {
     } catch (error: any) {
       return error.response.data.message;
     }
-  };
+  }; */
 
   const onSetShippingAddress = (shippingAddress: IAddress) =>
     dispatch({ type: '[Checkout] - Add Address', payload: shippingAddress });

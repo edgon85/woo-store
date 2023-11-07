@@ -2,10 +2,17 @@
 
 import { useState } from 'react';
 
-export const PaymentSelectSection = () => {
-  const [selectedOption, setSelectedOption] = useState();
+type PaymentType = {
+  id: number;
+  logo: string;
+  name: string;
+  label: string;
+};
 
-  const options = [
+export const PaymentSelectSection = () => {
+  const [selectedOption, setSelectedOption] = useState<number>();
+
+  const options: PaymentType[] = [
     { id: 1, logo: '/credit_card.png', name: 'Tarjeta', label: '' },
     {
       id: 2,
@@ -26,10 +33,9 @@ export const PaymentSelectSection = () => {
       <h2 className="text-xl text-gray-400 mb-4">Método de pago</h2>
 
       <div className="flex gap-4">
-        {options.map((option: any) => (
-          <>
+        {options.map((option: PaymentType) => (
+          <div key={option.id}>
             <div
-              key={option.id}
               className={`mb-4 w-28 border rounded ${
                 selectedOption === option.id && 'border-cerise-red-400'
               }`}
@@ -38,7 +44,7 @@ export const PaymentSelectSection = () => {
                 <input
                   type="radio"
                   name="payment-method"
-                  onChange={() => setSelectedOption(option.id)}
+                  onChange={() => setSelectedOption(option?.id)}
                   checked={selectedOption === option.id}
                   className="hidden"
                 />
@@ -54,7 +60,7 @@ export const PaymentSelectSection = () => {
                 </div>
               </label>
             </div>
-          </>
+          </div>
         ))}
       </div>
       {selectedOption === 1 && <>Pago con tarjeta</>}
