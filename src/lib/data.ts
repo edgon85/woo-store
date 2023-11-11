@@ -1,4 +1,10 @@
-export async function fetchPackageDelivery(token: string) {
+'use server';
+import { unstable_noStore as noStore } from 'next/cache';
+import { cookies } from 'next/headers';
+
+export async function fetchPackageDelivery() {
+  noStore();
+  const token = cookies().get('token')?.value;
   const url = `${process.env.API_BASE_URL}/shipping-address`;
 
   const res = await fetch(url, {

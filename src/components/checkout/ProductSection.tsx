@@ -14,12 +14,19 @@ export const ProductSection = ({ product: productCheckout }: Props) => {
       <h2 className="text-xl text-gray-400 mb-4">Pedido</h2>
       <div className="flex justify-between">
         <div className="flex gap-4">
-          <Image
+          <picture>
+            <img
+              src={productCheckout?.images[0]!}
+              alt={productCheckout?.title!}
+              className="w-14 h-auto"
+            />
+          </picture>
+          {/*  <Image
             src={productCheckout?.images[0]!}
-            width={50}
-            height={50}
+            width="50"
+            height="50"
             alt={productCheckout?.title!}
-          />
+          /> */}
           <div className="flex flex-col">
             <h2 className="text-lg">{productCheckout?.title}</h2>
             <p className="flex gap-2">
