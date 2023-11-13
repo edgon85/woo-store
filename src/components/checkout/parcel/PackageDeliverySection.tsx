@@ -1,27 +1,21 @@
 'use client';
-import { RadiaSelectIcon, SpinnerIcon } from '@/components/ui';
-import { useFetcher, useLoadingData } from '@/hooks';
+
+import { RadiaSelectIcon } from '@/components/ui';
+import { IPackageDelivery } from '@/lib';
 import { useState } from 'react';
-import { BsCircleFill } from 'react-icons/bs';
 import { IoMdRadioButtonOff } from 'react-icons/io';
 
-export const PackageDeliverySection = () => {
+type Props = {
+  packagesDelivery: IPackageDelivery[];
+};
+
+export const PackageDeliverySection = ({ packagesDelivery }: Props) => {
   const [selectedOption, setSelectedOption] = useState();
-
-  const { data, loading, errorMessage } = useLoadingData('/package-delivery');
-
-  if (loading) {
-    return (
-      <div className="w-96 flex justify-center items-center">
-        <SpinnerIcon className="animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <div className="bg-white border p-6 rounded shadow-sm">
       <h2 className="text-xl text-gray-400 mb-4">Paquetería</h2>
-      {data?.map((option: any) => (
+      {packagesDelivery.map((option: any) => (
         <div
           key={option.id}
           className={`mb-4 border rounded ${

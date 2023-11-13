@@ -1,39 +1,27 @@
 'use client';
 
+import { IPaymentMethod } from '@/lib';
 import { useState } from 'react';
 
-type PaymentType = {
-  id: number;
-  logo: string;
-  name: string;
-  label: string;
+type Props = {
+  paymentMethods: IPaymentMethod[];
 };
 
-export const PaymentSelectSection = () => {
+export const PaymentSelectSection = ({ paymentMethods }: Props) => {
   const [selectedOption, setSelectedOption] = useState<number>();
+  const [label, setLabel] = useState('');
 
-  const options: PaymentType[] = [
-    { id: 1, logo: '/credit_card.png', name: 'Tarjeta', label: '' },
-    {
-      id: 2,
-      logo: '/payment_cash.png',
-      name: 'Efectivo',
-      label: 'paga al recibir el producto',
-    },
-    {
-      id: 3,
-      logo: '/payment_cash.png',
-      name: 'Transferencia',
-      label:
-        'Deberás hacer el pago dentro de las siguientes 48 horas, de lo contrario el código de pago caducará.',
-    },
-  ];
+  const onChangeInput = (option: IPaymentMethod) => {
+    setSelectedOption(option.id);
+    setLabel(option.label);
+  };
+
   return (
     <div className="bg-white border p-6 rounded shadow-sm">
       <h2 className="text-xl text-gray-400 mb-4">Método de pago</h2>
 
       <div className="flex gap-4">
-        {options.map((option: PaymentType) => (
+        {paymentMethods.map((option: IPaymentMethod) => (
           <div key={option.id}>
             <div
               className={`mb-4 w-28 border rounded ${
@@ -44,7 +32,7 @@ export const PaymentSelectSection = () => {
                 <input
                   type="radio"
                   name="payment-method"
-                  onChange={() => setSelectedOption(option?.id)}
+                  onChange={() => onChangeInput(option)}
                   checked={selectedOption === option.id}
                   className="hidden"
                 />
@@ -63,9 +51,9 @@ export const PaymentSelectSection = () => {
           </div>
         ))}
       </div>
-      {selectedOption === 1 && <>Pago con tarjeta</>}
-      {selectedOption === 2 && <>Pago contra entrega</>}
-      {selectedOption === 3 && <>Transferencia bancaria</>}
+      {selectedOption === 1 && <>{label}</>}
+      {selectedOption === 2 && <>{label}</>}
+      {selectedOption === 3 && <>{label}</>}
     </div>
   );
 };

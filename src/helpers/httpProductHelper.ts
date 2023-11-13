@@ -1,4 +1,4 @@
-import { IProduct } from '@/interfaces';
+
 
 export const getProductByUserIdOrUsername = async (userId: string) => {
   const url = `${process.env.API_BASE_URL}/products/u/${userId}`;
@@ -43,17 +43,3 @@ export const getProductsBySubcategory = async (subcategorySlug: string) => {
   return res.json();
 };
 
-export const getProductBySlug = async (
-  productSlug: string
-): Promise<IProduct> => {
-  const url = `${process.env.API_BASE_URL}/products/${productSlug}`;
-
-  const resp = await fetch(url);
-
-  if (!resp.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  const data: IProduct = await resp.json();
-  return data;
-};

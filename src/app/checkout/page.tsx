@@ -5,10 +5,14 @@ import {
   PaymentSelectSection,
   ProductSection,
 } from '@/components';
-import { getProductBySlug } from '@/helpers';
 import { redirect } from 'next/navigation';
 
-import { fetchPackageDelivery } from '@/lib/data';
+import {
+  fetchPackageDelivery,
+  fetchPaymentMethods,
+  fetchShippingAddress,
+  getProductBySlug,
+} from '@/lib';
 
 export default async function CheckoutPage({
   searchParams,
@@ -22,7 +26,9 @@ export default async function CheckoutPage({
     throw redirect('/not-found');
   }
   const product = await getProductBySlug(`${transaction}`);
-  const addresses = await fetchPackageDelivery();
+  const addresses = await fetchShippingAddress();
+  const paymentMethods = await fetchPaymentMethods();
+  const packagesDelivery = await fetchPackageDelivery();
 
   if (!product.available) {
     return <p>Producto ya no esta disponible</p>;
@@ -34,8 +40,8 @@ export default async function CheckoutPage({
         <ProductSection product={product} />
         <AddressSection addresses={addresses} />
 
-        <PaymentSelectSection />
-        <PackageDeliverySection />
+        <PaymentSelectSection paymentMethods={paymentMethods} />
+        <PackageDeliverySection packagesDelivery={packagesDelivery} />
       </div>
       <div className="w-full lg:w-2/5 p-2">
         <OrderBreakdown />
