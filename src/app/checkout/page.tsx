@@ -13,6 +13,7 @@ import {
   fetchShippingAddress,
   getProductBySlug,
 } from '@/lib';
+import { IAddress } from '@/interfaces';
 
 export default async function CheckoutPage({
   searchParams,
@@ -30,7 +31,7 @@ export default async function CheckoutPage({
   const paymentMethods = await fetchPaymentMethods();
   const packagesDelivery = await fetchPackageDelivery();
 
-  if (!product.available) {
+  if (product.status !== 'Available') {
     return <p>Producto ya no esta disponible</p>;
   }
 
@@ -44,7 +45,14 @@ export default async function CheckoutPage({
         <PackageDeliverySection packagesDelivery={packagesDelivery} />
       </div>
       <div className="w-full lg:w-2/5 p-2">
-        <OrderBreakdown />
+        <OrderBreakdown
+          product={product}
+          address={
+            addresses.length === 0
+              ? null
+              : addresses.find((address: IAddress) => address.isPrimary)
+          }
+        />
       </div>
     </div>
   );

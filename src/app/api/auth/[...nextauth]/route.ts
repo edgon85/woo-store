@@ -60,8 +60,8 @@ export const handler = NextAuth({
 
   session: {
     strategy: 'jwt',
-    maxAge: 86400, // 24 horas
-    updateAge: 82800, // 23 horas
+    maxAge: 172800, // 48 horas
+    updateAge: 169200, // 47 horas
   },
 
   callbacks: {

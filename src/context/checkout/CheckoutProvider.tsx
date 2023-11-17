@@ -2,19 +2,22 @@ import { FC, useEffect, useReducer } from 'react';
 
 import { IAddress, IProduct } from '@/interfaces';
 import { CheckoutReducer, CheckoutContext } from './';
-import { useAuth } from '@/hooks';
-import { wooApi } from '@/wooApi';
+import { IPackageDelivery, IPaymentMethod } from '@/lib';
 
 export interface CheckoutState {
-  loadingAddress: boolean;
+  serviceFee: number;
   address?: IAddress | null;
   product: IProduct | null;
+  paymentMethod: IPaymentMethod | null;
+  packageDelivery: IPackageDelivery | null;
 }
 
 const CHECKOUT_INITIAL_STATE: CheckoutState = {
-  loadingAddress: false,
+  serviceFee: 0,
   address: null,
   product: null,
+  paymentMethod: null,
+  packageDelivery: null,
 };
 
 type Props = {
@@ -25,12 +28,12 @@ export const CheckoutProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(CheckoutReducer, CHECKOUT_INITIAL_STATE);
   // const { createData, loading, error } = useCreateData<IAddress>();
 
-  /* const { user } = useAuth();
+  //  const { user } = useAuth();
   useEffect(() => {
-    loadAddresses(user?.token!);
-  }, [user?.token]); */
+    state.serviceFee = Number(process.env.SERVICE_FEE);
+  }, [state]);
 
-/*   const loadAddresses = async (token: string) => {
+  /*   const loadAddresses = async (token: string) => {
     try {
       const { data } = await wooApi.get<IAddress[]>('/shipping-address', {
         headers: {
@@ -65,6 +68,18 @@ export const CheckoutProvider: FC<Props> = ({ children }) => {
       payload: product,
     });
 
+  const onSetPaymentMethod = (paymentMethod: IPaymentMethod) =>
+    dispatch({
+      type: '[Checkout] - Add Payment Method',
+      payload: paymentMethod,
+    });
+
+  const onSetPackageDelivery = (packageDelivery: IPackageDelivery) =>
+    dispatch({
+      type: '[Checkout] - Add package delivery',
+      payload: packageDelivery,
+    });
+
   return (
     <CheckoutContext.Provider
       value={{
@@ -73,6 +88,8 @@ export const CheckoutProvider: FC<Props> = ({ children }) => {
         /* methods */
         onSetShippingAddress,
         onAddCheckoutProduct,
+        onSetPaymentMethod,
+        onSetPackageDelivery,
       }}
     >
       {children}

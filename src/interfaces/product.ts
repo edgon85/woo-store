@@ -10,7 +10,7 @@ export interface IProduct {
   price: number;
   images: string[];
   isFeatured?: boolean;
-  available: boolean;
+  status: string;
   colors: number[];
   brand: IBrand;
   measurement: IMeasurement;

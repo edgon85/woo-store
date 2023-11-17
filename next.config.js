@@ -26,6 +26,7 @@ const nextConfig = {
   },
   env: {
     API_BASE_URL: 'http://localhost:5000/api',
+    SERVICE_FEE: "12"
   },
 };
 

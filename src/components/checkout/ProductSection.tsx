@@ -1,6 +1,5 @@
 import { IProduct, ISubcategoryWithCategory } from '@/interfaces';
 import { measurementFormat } from '@/utils';
-import Image from 'next/image';
 
 type Props = {
   product: IProduct;

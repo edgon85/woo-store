@@ -1,6 +1,7 @@
 'use client';
 
 import { RadiaSelectIcon } from '@/components/ui';
+import { useCheckout } from '@/hooks';
 import { IPackageDelivery } from '@/lib';
 import { useState } from 'react';
 import { IoMdRadioButtonOff } from 'react-icons/io';
@@ -10,12 +11,18 @@ type Props = {
 };
 
 export const PackageDeliverySection = ({ packagesDelivery }: Props) => {
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState<number>();
+  const { onSetPackageDelivery } = useCheckout();
+
+  const onChangeOption = (option: IPackageDelivery) => {
+    setSelectedOption(option.id);
+    onSetPackageDelivery(option);
+  };
 
   return (
     <div className="bg-white border p-6 rounded shadow-sm">
       <h2 className="text-xl text-gray-400 mb-4">Paquetería</h2>
-      {packagesDelivery.map((option: any) => (
+      {packagesDelivery.map((option: IPackageDelivery) => (
         <div
           key={option.id}
           className={`mb-4 border rounded ${
@@ -26,7 +33,7 @@ export const PackageDeliverySection = ({ packagesDelivery }: Props) => {
             <input
               type="radio"
               name="deliveryOption"
-              onChange={() => setSelectedOption(option.id)}
+              onChange={() => onChangeOption(option)}
               checked={selectedOption === option.id}
               className="hidden"
             />

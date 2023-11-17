@@ -5,7 +5,7 @@ import {
   UserInfo,
   RelatedProducts,
 } from '@/components';
-import { getProductBySlug } from '@/helpers';
+import { getProductBySlug } from '@/lib';
 import { IProduct } from '@/interfaces';
 
 type Props = {
