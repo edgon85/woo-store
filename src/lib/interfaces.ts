@@ -1,3 +1,6 @@
+import { IAddress, IProduct, IUser } from '@/interfaces';
+import { OrderStatus } from './definitions';
+
 export interface IPaymentMethod {
   id: number;
   logo: string;
@@ -14,4 +17,14 @@ export interface IPackageDelivery {
   deliveryTime: string;
   logo: string;
   available: boolean;
+}
+
+export interface IOrder {
+  product: string;
+
+  shippingAddress: string;
+  paymentMethod: number;
+  amount: number;
+  orderStatus?: string;
+  packageDelivery: number;
 }

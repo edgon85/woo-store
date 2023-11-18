@@ -20,7 +20,7 @@ export const OrderBreakdown = ({ product, address }: Props) => {
     onSetShippingAddress,
     packageDelivery,
     serviceFee,
-    summary,
+    amount,
   } = useCheckout();
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const OrderBreakdown = ({ product, address }: Props) => {
         </div>
         <div className="flex justify-between items-center">
           <p>Total a pagar</p>
-          <p>Q{summary}.00</p>
+          <p>Q{amount}.00</p>
         </div>
       </div>
       <Divider />

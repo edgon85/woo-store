@@ -17,7 +17,7 @@ export const useCheckout = () => {
   const price = Number(productCheckout?.price);
   const delivery = Number(packageDelivery?.originalPrice) || 0;
   const service = Number(serviceFee);
-  const summary = price + delivery + service;
+  const amount = price + delivery + service;
 
   return {
     address,
@@ -25,7 +25,7 @@ export const useCheckout = () => {
     paymentMethod,
     productCheckout,
     packageDelivery,
-    summary,
+    amount,
 
     /* methods */
     onSetShippingAddress,
