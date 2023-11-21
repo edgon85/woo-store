@@ -2,7 +2,8 @@
 import { IProduct } from '@/interfaces';
 import { unstable_noStore as noStore } from 'next/cache';
 import { cookies } from 'next/headers';
-import { IPackageDelivery, IPaymentMethod } from './interfaces';
+import { IOrder, IPackageDelivery, IPaymentMethod } from './interfaces';
+import { TypeCreateOrder } from './definitions';
 
 /* ··········································································· */
 export const getProductBySlug = async (
@@ -85,5 +86,27 @@ export async function fetchPackageDelivery(): Promise<IPackageDelivery[]> {
   }
 
   const data: IPackageDelivery[] = await res.json();
+  return data;
+}
+
+/* ··········································································· */
+export async function fetchOrders(type: string): Promise<IOrder[]> {
+  noStore();
+  const token = cookies().get('token')?.value;
+  const url = `${process.env.API_BASE_URL}/orders?type=${type}`;
+
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const data: IOrder[] = await res.json();
   return data;
 }

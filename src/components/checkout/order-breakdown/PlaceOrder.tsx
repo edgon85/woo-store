@@ -1,7 +1,7 @@
 import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
 import { createOrder } from '@/helpers/httpOrderHelper';
 import { useAuth, useCheckout } from '@/hooks';
-import { IOrder } from '@/lib';
+import { TypeCreateOrder } from '@/lib';
 import { useEffect, useState } from 'react';
 
 export const PlaceOrder = () => {
@@ -45,7 +45,7 @@ export const PlaceOrder = () => {
       return;
     }
 
-    const newOrder: IOrder = {
+    const newOrder: TypeCreateOrder = {
       product: productCheckout?.id!,
       shippingAddress: address?.id!,
       paymentMethod: paymentMethod.id,

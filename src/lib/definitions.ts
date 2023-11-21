@@ -3,7 +3,16 @@ export enum OrderStatus {
   Pending = 'Pending',
   Confirmed = 'Confirmed',
   Shipped = 'Shipped',
-  OutForDelivery = 'Out for Delivery',
+  OutForDelivery = 'OutForDelivery',
   Delivered = 'Delivered',
   Completed = 'Completed',
 }
+
+export type TypeCreateOrder = {
+  product: string;
+  shippingAddress: string;
+  paymentMethod: number;
+  amount: number;
+  orderStatus?: string;
+  packageDelivery: number;
+};

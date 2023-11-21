@@ -64,6 +64,7 @@ export const DropdownAccount = () => {
             <DropdownItem
               title="Mis pedidos"
               icon={<ClipboardDocumentIcon />}
+              path={`/member/transactions/purchases`}
               setIsCollapsed={setIsCollapsed}
             />
             <DropdownItem

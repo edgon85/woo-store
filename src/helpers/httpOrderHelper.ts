@@ -1,7 +1,7 @@
-import { IOrder } from '@/lib';
+import { IOrder, TypeCreateOrder } from '@/lib';
 import { wooApi } from '@/wooApi';
 
-export const createOrder = async (order: IOrder, token: string) => {
+export const createOrder = async (order: TypeCreateOrder, token: string) => {
   try {
     const { data } = await wooApi.post(
       '/orders',

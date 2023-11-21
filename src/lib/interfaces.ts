@@ -20,11 +20,15 @@ export interface IPackageDelivery {
 }
 
 export interface IOrder {
-  product: string;
-
-  shippingAddress: string;
-  paymentMethod: number;
+  id: string;
+  product: IProduct;
+  shippingAddress: IAddress;
+  paymentMethod: IPaymentMethod;
   amount: number;
-  orderStatus?: string;
-  packageDelivery: number;
+  orderStatus?: OrderStatus;
+  packageDelivery: IPackageDelivery;
+  notes?: string;
+  orderDate: string;
+  buyer: IUser;
+  seller: IUser;
 }
