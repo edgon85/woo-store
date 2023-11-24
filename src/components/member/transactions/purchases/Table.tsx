@@ -1,6 +1,5 @@
-import TransactionStatus from '../TransactionStatus';
+import { TransactionStatus } from '../TransactionStatus';
 import { IOrder, formatCurrency, formatDateToLocal } from '@/lib';
-import Link from 'next/link';
 import { OrderDetailBtn } from './buttons';
 
 type Props = {
@@ -11,7 +10,7 @@ export const TablePurchases = ({ orders }: Props) => {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+        <div className="rounded-lg bg-cerise-red-50 shadow-sm p-2 md:pt-0">
           <div className="md:hidden">
             {orders?.map((order: IOrder) => (
               <div
@@ -53,7 +52,7 @@ export const TablePurchases = ({ orders }: Props) => {
             ))}
           </div>
           <table className="hidden min-w-full text-gray-900 md:table">
-            <thead className="rounded-lg text-left text-sm font-normal">
+            <thead className="rounded-lg text-left text-sm font-norma">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Producto

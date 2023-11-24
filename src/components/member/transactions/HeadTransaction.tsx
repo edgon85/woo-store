@@ -24,7 +24,7 @@ export const HeadTransaction = () => {
         <button
           className={`flex-grow py-2 px-4 text-sm font-semibold ${
             activeTab === 'purchases'
-              ? 'text-darkPrimary border-b-2 border-primary'
+              ? 'text-cerise-red-800 border-b-2 border-cerise-red-700'
               : ''
           }`}
           onClick={() => handleOnClick('purchases')}
@@ -34,7 +34,7 @@ export const HeadTransaction = () => {
         <button
           className={`flex-grow py-2 px-4 text-sm font-semibold ${
             activeTab === 'sales'
-              ? 'text-darkPrimary border-b-2 border-primary'
+              ? 'text-cerise-red-800 border-b-2 border-cerise-red-700'
               : ''
           }`}
           onClick={() => handleOnClick('sales')}

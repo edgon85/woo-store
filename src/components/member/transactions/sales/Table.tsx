@@ -1,6 +1,5 @@
-import TransactionStatus from '../TransactionStatus';
+import { TransactionStatus } from '../TransactionStatus';
 import { IOrder, formatCurrency, formatDateToLocal } from '@/lib';
-import Link from 'next/link';
 import { DownLoadGide, UpdateSale } from './buttons';
 
 type Props = {

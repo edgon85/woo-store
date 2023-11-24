@@ -110,3 +110,25 @@ export async function fetchOrders(type: string): Promise<IOrder[]> {
   const data: IOrder[] = await res.json();
   return data;
 }
+
+/* ··········································································· */
+export async function fetchOrderById(id: string): Promise<IOrder> {
+  noStore();
+  const token = cookies().get('token')?.value;
+  const url = `${process.env.API_BASE_URL}/orders/${id}`;
+
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const data: IOrder = await res.json();
+  return data;
+}

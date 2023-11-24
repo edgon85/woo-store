@@ -1,5 +1,5 @@
 import { IAddress, IProduct, IUser } from '@/interfaces';
-import { OrderStatus } from './definitions';
+import { OrderStatus, Summary } from './definitions';
 
 export interface IPaymentMethod {
   id: number;
@@ -25,10 +25,11 @@ export interface IOrder {
   shippingAddress: IAddress;
   paymentMethod: IPaymentMethod;
   amount: number;
-  orderStatus?: OrderStatus;
+  orderStatus: OrderStatus;
   packageDelivery: IPackageDelivery;
   notes?: string;
   orderDate: string;
   buyer: IUser;
   seller: IUser;
+  summary: Summary;
 }

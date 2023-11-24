@@ -14,7 +14,7 @@ export const EmptyTransaction = ({ label, subLabel, path, btnText }: Props) => {
       <p className="text-gray-600 mb-4">{subLabel}</p>
       <Link
         href={path}
-        className="text-white bg-primary hover:bg-pink-600 font-semibold py-2 px-4 rounded"
+        className="text-white bg-cerise-red-600 hover:bg-cerise-red-500 font-semibold py-2 px-4 rounded"
       >
         {btnText}
       </Link>
