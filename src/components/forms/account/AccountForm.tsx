@@ -1,5 +1,3 @@
-'use client';
-
 import { Divider } from '@/components/ui';
 import { NameSection } from './NameSection';
 import { UsernameSection } from './UsernameSection';
@@ -7,34 +5,25 @@ import { EmailSection } from './EmailSection';
 import { ResetPasswordSection } from './ResetPasswordSection';
 import { VacationModeSection } from './VacationModeSection';
 import { DeleteAccountSection } from './DeleteAccountSection';
-import { LocalDataUser } from '@/interfaces';
+import { IUser } from '@/interfaces';
 
 type Props = {
-  dataUser: LocalDataUser;
+  user: IUser;
 };
-export const AccountForm = ({ dataUser }: Props) => {
+export const AccountForm = ({ user }: Props) => {
   return (
     <>
-      <NameSection
-        fullName={dataUser.fullName}
-        token={dataUser.token}
-        userId={dataUser.id}
-      />
+      <NameSection fullName={user.fullName} userId={user.id} />
       <hr />
-      <UsernameSection
-        username={dataUser.username}
-        token={dataUser.token}
-        userId={dataUser.id}
-      />
+      <UsernameSection username={user.username} userId={user.id} />
       <hr />
       <EmailSection
-        email={dataUser.email}
-        token={dataUser.token}
-        userId={dataUser.id}
-        authType={dataUser.authType}
+        email={user.email}
+        userId={user.id}
+        authType={user.authType}
       />
       <Divider />
-      {dataUser.authType === 'credentials' ? (
+      {user.authType === 'credentials' ? (
         <>
           <ResetPasswordSection />
           <Divider />

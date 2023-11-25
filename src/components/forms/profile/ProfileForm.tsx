@@ -9,10 +9,11 @@ import { GenderSection } from './GenderSection';
 import { PhoneSection } from './PhoneSection';
 import { BiographySection } from './BiographySection';
 import { PhotoSection } from './PhotoSection';
-import { IProfile, IUser } from '@/interfaces';
-import { updateProfile } from '@/helpers';
+import { IProfile } from '@/interfaces';
+
 import Modal from 'react-responsive-modal';
-import { AlertComponent } from '@/components/ui';
+import { AlertComponent, SpinnerIcon } from '@/components/ui';
+import { revalidateData, updateProfile } from '@/actions';
 
 export type FormProfileData = {
   id: string;
@@ -27,10 +28,10 @@ export type FormProfileData = {
 type Props = {
   fullName: string;
   profile: IProfile;
-  token: string;
+  userId: string;
 };
 
-export const ProfileForm = ({ profile, token, fullName }: Props) => {
+export const ProfileForm = ({ profile, userId, fullName }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
   const {
@@ -42,16 +43,21 @@ export const ProfileForm = ({ profile, token, fullName }: Props) => {
   } = useForm<FormProfileData>({ defaultValues: profile });
 
   const onHandleSubmit = async (FormProfileData: FormProfileData) => {
-    // console.log(profile);
-
     setModalOpen(true);
-    try {
-      await updateProfile(token, { ...FormProfileData });
-      setAlertType('success');
-    } catch (error) {
-      console.error('Error al actualizar perfil:', error);
+    const { data, message, error } = await updateProfile({
+      ...FormProfileData,
+    });
+
+    if (data === null) {
+      console.error(message, error);
       setAlertType('error');
-    } finally {
+      setModalOpen(false);
+    } else {
+      setAlertType('success');
+      revalidateData(
+        `/settings/profile/${userId}`,
+        `/settings/profile/${userId}`
+      );
       setModalOpen(false);
     }
   };
@@ -62,8 +68,7 @@ export const ProfileForm = ({ profile, token, fullName }: Props) => {
         <div className="bg-white p-4 w-full">
           {/* <!-- Tu foto y botón --> */}
           <PhotoSection
-            profileId={profile.id}
-            token={token}
+            profile={profile}
             setValue={setValue}
             getValues={getValues}
             fullName={fullName}
@@ -98,7 +103,8 @@ export const ProfileForm = ({ profile, token, fullName }: Props) => {
         </div>
 
         <div className="bg-white p-4 w-full ">
-          <GenderSection setValue={setValue} getValues={getValues} />
+          <GenderSection value={getValues('gender')} setValue={setValue} />
+          {/* <GenderSection value={getValues('gender')} getValues={getValues} /> */}
         </div>
 
         <div className="bg-white p-4 w-full">
@@ -112,7 +118,7 @@ export const ProfileForm = ({ profile, token, fullName }: Props) => {
         <div className="mt-4 ">
           <button
             type="submit"
-            className="bg-primary hover:bg-darkPrimary text-white py-2 p-4 rounded"
+            className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white py-2 p-4 rounded"
           >
             Actualizar perfil
           </button>
@@ -120,7 +126,10 @@ export const ProfileForm = ({ profile, token, fullName }: Props) => {
       </form>
 
       <Modal open={isModalOpen} onClose={() => {}} center closeIcon={<></>}>
-        <div className="w-8 h-8 border-t-4 border-primary border-solid rounded-full animate-spin"></div>
+        {/* <div className="w-8 h-8 border-t-4 border-primary border-solid rounded-full animate-spin"></div> */}
+        <div className="flex justify-center items-center">
+          <SpinnerIcon className="animate-spin" />
+        </div>
       </Modal>
       {alertType === 'success' && (
         <AlertComponent

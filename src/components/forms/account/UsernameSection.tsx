@@ -1,5 +1,6 @@
-import { AlertComponent, Button } from '@/components/ui';
-import { updateUserData } from '@/helpers';
+'use client';
+import { revalidateData, updateUserData } from '@/actions';
+import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
@@ -10,49 +11,49 @@ type FormName = {
 
 type Props = {
   userId: string;
-  token: string;
   username: string;
 };
 
-export const UsernameSection = ({ userId, token, username }: Props) => {
+export const UsernameSection = ({ userId, username }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [initialValue, setInitialValue] = useState(username);
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
     reset,
     watch,
   } = useForm<FormName>({ defaultValues: { username: username } });
 
-  const currentFullName = watch('username', username);
+  const currentUsername = watch('username', username);
 
   useEffect(() => {
     setInitialValue(username);
   }, [username]);
 
   const onHandleSubmit = async (formData: FormName) => {
-    try {
-      const { data, message } = await updateUserData(userId, token, {
-        username: formData.username,
-      });
+    setLoading(true);
+    const { data, message, error } = await updateUserData({
+      id: userId,
+      username: formData.username,
+    });
 
-      if (message !== 'ok') {
-        setAlertType('error');
-        setError('username', { type: 'manual', message: message });
-        return;
-      }
-      console.log(data);
-      setInitialValue(data.username);
-      setAlertType('success');
-      setModalOpen(false);
-    } catch (error) {
-      console.error('Error al actualizar nombre:', error);
+    if (data === null) {
+      console.error(message, error);
       setAlertType('error');
+      setLoading(false);
+      return;
+    } else {
+      setAlertType('success');
+      setLoading(false);
       setModalOpen(false);
+      revalidateData(
+        `/settings/account/${userId}`,
+        `/settings/account/${userId}`
+      );
     }
   };
 
@@ -73,7 +74,7 @@ export const UsernameSection = ({ userId, token, username }: Props) => {
             <button
               type="submit"
               onClick={() => setModalOpen(true)}
-              className="border text-primary border-primary hover:bg-primary hover:text-white p-2 rounded-md "
+              className="border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50 p-2 rounded-md"
             >
               Cambiar
             </button>
@@ -97,11 +98,17 @@ export const UsernameSection = ({ userId, token, username }: Props) => {
                 {errors.username.message}
               </p>
             )}
-            <Button
-              type="submit"
-              label="Cambiar"
-              disabled={initialValue === currentFullName}
-            />
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <SpinnerIcon className="animate-spin" />
+              </div>
+            ) : (
+              <Button
+                type="submit"
+                label="Cambiar"
+                disabled={initialValue === currentUsername}
+              />
+            )}
           </div>
         </form>
       </Modal>

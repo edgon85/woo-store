@@ -27,6 +27,7 @@ export async function middleware(req: NextRequest) {
 
   if (!session) {
     req.cookies.delete('token');
+    req.cookies.delete('userId');
     searchParams.set('p', requestedPage + req.nextUrl.search);
     url.pathname = `/auth/login`;
     url.search = searchParams.toString();
@@ -48,6 +49,7 @@ export async function middleware(req: NextRequest) {
 
   const response = NextResponse.next();
   response.cookies.set('token', session.user.token);
+  response.cookies.set('userId', session.user.id);
 
   return response;
 }

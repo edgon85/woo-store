@@ -15,7 +15,7 @@ export const BirthDate = ({ setValue, getValues }: Props) => {
       <input
         type="date"
         className=" flex-1 w-full p-2 border rounded-md"
-        value={getValues('dateOfBirth') || ''}
+        defaultValue={getValues('dateOfBirth') || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setValue('dateOfBirth', e.target.value);
           //   console.log(e.target.value); // Aquí puedes manejar la fecha seleccionada

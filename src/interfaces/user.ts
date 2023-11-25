@@ -8,7 +8,8 @@ export interface IUser {
   profileImage: string;
   role: string[];
   isActive: boolean;
-
+  profile?: IProfile;
+  authType: string;
   location?: string;
   createdAt?: string;
   updatedAt?: string;

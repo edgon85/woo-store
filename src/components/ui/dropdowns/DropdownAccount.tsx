@@ -80,7 +80,7 @@ export const DropdownAccount = () => {
             <DropdownItem
               title="Configuración"
               icon={<SettingsIcon />}
-              path="/settings/profile"
+              path={`/settings/profile/${user?.id}`}
               setIsCollapsed={setIsCollapsed}
             />
           </ul>

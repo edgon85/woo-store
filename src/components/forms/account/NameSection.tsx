@@ -1,7 +1,6 @@
 'use client';
-import { AlertComponent, Button } from '@/components/ui';
-import { updateUserData } from '@/helpers';
-import { IProfile } from '@/interfaces';
+import { revalidateData, updateUserData } from '@/actions';
+import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -14,12 +13,12 @@ type FormName = {
 type Props = {
   userId: string;
   fullName: string;
-  token: string;
 };
 
-export const NameSection = ({ userId, fullName, token }: Props) => {
+export const NameSection = ({ userId, fullName }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [initialValue, setInitialValue] = useState(fullName);
   const {
@@ -36,17 +35,25 @@ export const NameSection = ({ userId, fullName, token }: Props) => {
   }, [fullName]);
 
   const onHandleSubmit = async (formData: FormName) => {
-    try {
-      const {data} = await updateUserData(userId, token, {
-        fullName: formData.fullName,
-      });
-      setInitialValue(data.fullName);
-      setAlertType('success');
-    } catch (error) {
-      console.error('Error al actualizar nombre:', error);
+    setLoading(true);
+    const { data, message, error } = await updateUserData({
+      id: userId,
+      fullName: formData.fullName,
+    });
+
+    if (data === null) {
+      console.error(message, error);
       setAlertType('error');
-    } finally {
+      setLoading(false);
+      return;
+    } else {
+      setAlertType('success');
+      setLoading(false);
       setModalOpen(false);
+      revalidateData(
+        `/settings/account/${userId}`,
+        `/settings/account/${userId}`
+      );
     }
   };
 
@@ -62,7 +69,7 @@ export const NameSection = ({ userId, fullName, token }: Props) => {
             <button
               type="submit"
               onClick={() => setModalOpen(true)}
-              className="border text-primary border-primary hover:bg-primary hover:text-white p-2 rounded-md "
+              className="border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50 p-2 rounded-md "
             >
               Cambiar
             </button>
@@ -81,11 +88,17 @@ export const NameSection = ({ userId, fullName, token }: Props) => {
               defaultValue={fullName}
               {...register('fullName', { required: true })}
             />
-            <Button
-              type="submit"
-              label="Cambiar"
-              disabled={initialValue === currentFullName}
-            />
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <SpinnerIcon className="animate-spin" />
+              </div>
+            ) : (
+              <Button
+                type="submit"
+                label="Cambiar"
+                disabled={initialValue === currentFullName}
+              />
+            )}
           </div>
         </form>
       </Modal>
@@ -106,12 +119,3 @@ export const NameSection = ({ userId, fullName, token }: Props) => {
     </>
   );
 };
-
-/* 
-<input
-          id="sobreMi"
-          type="text"
-          className=" flex-1 w-full p-2 border rounded-md resize-none"
-          placeholder="Nombre y apellido"
-        />
-*/

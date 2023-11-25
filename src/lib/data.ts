@@ -1,9 +1,30 @@
 'use server';
-import { IProduct } from '@/interfaces';
+import { IProduct, IUser } from '@/interfaces';
 import { unstable_noStore as noStore } from 'next/cache';
 import { cookies } from 'next/headers';
 import { IOrder, IPackageDelivery, IPaymentMethod } from './interfaces';
-import { TypeCreateOrder } from './definitions';
+
+/* ··········································································· */
+export const fetchUserProfile = async (userId: string): Promise<IUser> => {
+  noStore();
+  const token = cookies().get('token')?.value;
+  const url = `${process.env.API_BASE_URL}/profiles/user/${userId}`;
+
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const data: IUser = await res.json();
+  return data;
+};
 
 /* ··········································································· */
 export const getProductBySlug = async (

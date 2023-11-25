@@ -1,23 +1,21 @@
 import { wooLocalApi } from '@/wooApi';
 import { ChangeEvent, useRef, useState } from 'react';
-// import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 
-import { updatePhotoProfile } from '@/helpers';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { FormProfileData } from './ProfileForm';
 import Modal from 'react-responsive-modal';
-import { AlertComponent } from '@/components/ui';
+import { AlertComponent, SpinnerIcon } from '@/components/ui';
+import { updateProfile } from '@/actions';
+import { IProfile } from '@/interfaces';
 
 type Props = {
   setValue: UseFormSetValue<FormProfileData>;
   getValues: UseFormGetValues<FormProfileData>;
   fullName: string;
-  profileId: string;
-  token: string;
+  profile: IProfile;
 };
 export const PhotoSection = ({
-  profileId,
-  token,
+  profile,
   fullName,
   setValue,
   getValues,
@@ -52,9 +50,11 @@ export const PhotoSection = ({
       formData.set('file', file);
 
       try {
+        /* petición a api local para subir imagen a cloudinary*/
         const { data } = await wooLocalApi.post('/profile/upload', formData);
-        const { message } = data;
-        await updatePhotoUrl(message);
+        const { message: pathCloudinary } = data; //
+        console.log();
+        await updatePhotoUrl(pathCloudinary);
 
         setAlertType('success');
       } catch (error) {
@@ -68,9 +68,8 @@ export const PhotoSection = ({
   };
 
   const updatePhotoUrl = async (urlToUpdate: string) => {
-    await updatePhotoProfile(profileId, token, urlToUpdate).then((resp) => {
+    await updateProfile(profile, true, urlToUpdate).then((_) => {
       setValue('profileImage', urlToUpdate, { shouldValidate: true });
-      // console.log(resp);
     });
   };
 
@@ -82,7 +81,11 @@ export const PhotoSection = ({
           <div className="flex justify-center items-center overflow-hidden bg-gray-200 rounded-full mr-4">
             {getValues('profileImage') !== null ? (
               <picture>
-                <img src={getValues('profileImage')} alt="imagen de perfil" />
+                <img
+                  className="w-16 h-16 "
+                  src={getValues('profileImage')}
+                  alt="imagen de perfil"
+                />
               </picture>
             ) : (
               <>
@@ -95,7 +98,7 @@ export const PhotoSection = ({
           <button
             onClick={handleChoosePhotoClick}
             type="button"
-            className="border border-primary text-primary hover:bg-gray-200 px-4 py-2 rounded"
+            className="border border-cerise-red-600 text-cerise-red-600 hover:bg-cerise-red-50 px-4 py-2 rounded"
           >
             Elegir foto
           </button>
@@ -110,7 +113,10 @@ export const PhotoSection = ({
         </div>
       </div>
       <Modal open={isModalOpen} onClose={() => {}} center closeIcon={<></>}>
-        <div className="w-8 h-8 border-t-4 border-primary border-solid rounded-full animate-spin"></div>
+        {/* <div className="w-8 h-8 border-t-4 border-primary border-solid rounded-full animate-spin"></div> */}
+        <div className="flex justify-center items-center">
+          <SpinnerIcon className="animate-spin" />
+        </div>
       </Modal>
 
       {alertType === 'success' && (

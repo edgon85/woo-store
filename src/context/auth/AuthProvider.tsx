@@ -127,6 +127,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const logout = () => {
     signOut();
     Cookies.remove('token');
+    Cookies.remove('userId');
     redirect('/');
   };
 

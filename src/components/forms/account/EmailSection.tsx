@@ -1,5 +1,6 @@
-import { AlertComponent, Button } from '@/components/ui';
-import { updateUserData } from '@/helpers';
+'use client';
+import { updateUserData } from '@/actions';
+import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
 import { useAuth } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,15 +13,15 @@ type FormName = {
 
 type Props = {
   userId: string;
-  token: string;
   email: string;
   authType: string;
 };
 
-export const EmailSection = ({ userId, token, email, authType }: Props) => {
+export const EmailSection = ({ userId, email, authType }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
   const [initialValue, setInitialValue] = useState(email);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { logout } = useAuth();
 
@@ -33,34 +34,29 @@ export const EmailSection = ({ userId, token, email, authType }: Props) => {
     watch,
   } = useForm<FormName>({ defaultValues: { email } });
 
-  const currentFullName = watch('email', email);
+  const currentEmail = watch('email', email);
 
   useEffect(() => {
     setInitialValue(email);
   }, [email]);
 
   const onHandleSubmit = async (formData: FormName) => {
-    try {
-      const { data, message } = await updateUserData(userId, token, {
-        email: formData.email,
-        password: formData.password,
-      });
+    setLoading(true);
+    const { data, message, error } = await updateUserData({
+      id: userId,
+      email: formData.email,
+      password: formData.password,
+    });
 
-      if (message !== 'ok') {
-        setAlertType('error');
-        console.log(message);
-        setError('password', { type: 'manual', message: message });
-        return;
-      }
-
-      setInitialValue(data.email);
-      setAlertType('success');
-      setModalOpen(false);
-      logout();
-    } catch (error) {
-      console.error('Error al actualizar nombre:', error);
+    if (data === null) {
+      console.error(message, error);
       setAlertType('error');
-      setModalOpen(false);
+      setLoading(false);
+      return;
+    } else {
+      setAlertType('success');
+      setLoading(false);
+      logout();
     }
   };
 
@@ -86,7 +82,7 @@ export const EmailSection = ({ userId, token, email, authType }: Props) => {
               <button
                 type="submit"
                 onClick={() => setModalOpen(true)}
-                className="border text-primary border-primary hover:bg-primary hover:text-white p-2 rounded-md "
+                className="border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50 p-2 rounded-md"
               >
                 Cambiar
               </button>
@@ -122,11 +118,17 @@ export const EmailSection = ({ userId, token, email, authType }: Props) => {
                 {errors.password.message}
               </p>
             )}
-            <Button
-              type="submit"
-              label="Cambiar"
-              disabled={initialValue === currentFullName}
-            />
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <SpinnerIcon className="animate-spin" />
+              </div>
+            ) : (
+              <Button
+                type="submit"
+                label="Cambiar"
+                disabled={initialValue === currentEmail}
+              />
+            )}
           </div>
         </form>
       </Modal>
