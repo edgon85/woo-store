@@ -16,7 +16,7 @@ export const HeadTransaction = () => {
 
   const handleOnClick = (tab: string) => {
     setActiveTab(tab);
-    router.push(`/member/transactions/${tab}`);
+    router.push(`/settings/transactions/${tab}`);
   };
   return (
     <div className="px-4 lg:px-0 main-wrapper pt-4 pb-4">
