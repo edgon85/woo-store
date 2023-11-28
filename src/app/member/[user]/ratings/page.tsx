@@ -1,7 +1,13 @@
+import { EmptyTransaction } from '@/components';
+
 export default function UserRatingsPage() {
   return (
-    <div>
-      <p>Rating Products</p>
-    </div>
+    <EmptyTransaction
+      label="¡Aun no Favoritos!"
+      subLabel="¡Tus productos favoritos se mostraran aquí ."
+      path="/products/create"
+      btnText="Subir prenda"
+      btnShow={false}
+    />
   );
 }

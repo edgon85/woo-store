@@ -1,3 +1,4 @@
+'use client'
 import { Button, Divider } from '@/components/ui';
 import { IProduct } from '@/interfaces';
 import { useState } from 'react';

@@ -27,6 +27,20 @@ export const fetchUserProfile = async (userId: string): Promise<IUser> => {
 };
 
 /* ··········································································· */
+export const fetchPublicProfile = async (username: string) => {
+  const url = `${process.env.API_BASE_URL}/profiles?u=${username}`;
+
+  const resp = await fetch(url);
+
+  if (!resp.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const data = await resp.json();
+  return data;
+};
+
+/* ··········································································· */
 export const getProductBySlug = async (
   productSlug: string
 ): Promise<IProduct> => {

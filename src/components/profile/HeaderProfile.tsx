@@ -1,7 +1,8 @@
-'use client';
-import { useAuth } from '@/hooks';
-import { Button, EditIcon, ShareIcon, UserIcon } from '../ui';
+'use server';
+import { UserIcon } from '../ui';
 import Link from 'next/link';
+import { fetchPublicProfile } from '@/lib';
+import { cookies } from 'next/headers';
 
 interface LocalProfile {
   id: string;
@@ -13,49 +14,62 @@ interface LocalProfile {
 }
 
 type Props = {
-  userData: LocalProfile;
+  username: string;
 };
 
-export const HeaderProfile = ({ userData }: Props) => {
-  const { user } = useAuth();
+export async function HeaderProfile({ username }: Props) {
+  const userData = (await fetchPublicProfile(username)) as LocalProfile;
+
+  const currentUserId = cookies().get('userId')?.value;
+
+  /* TODO: obtener el rating */
 
   return (
-    <header className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center">
-      <div className="profile flex flex-row  gap-4 pt-2 pb-2">
-        <div className="w-12 h-12 flex justify-center items-center border rounded-full overflow-hidden">
-          {userData?.profileImage !== null ? (
-            <picture>
-              <img
-                src={userData?.profileImage}
-                alt=""
-                className="object-cover w-full h-full rounded"
-              />
-            </picture>
-          ) : (
-            <div className=" text-red-700">
-              <UserIcon />
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <h2 className="font-bold text-lg">{userData?.username}</h2>
-          <p>★★★☆☆</p>
-          {user?.username === userData.username ? (
-            <Link
-              className='p-2 text-center rounded text-primary border border-primary text-sm'
-              href={`/settings/profile`}>Editar</Link>
-          ) : null}
-        </div>
+    <header className="flex gap-2 md:gap-4 py-4">
+      <div className="w-12 h-12 md:w-24 md:h-24 flex justify-center items-center rounded-full overflow-hidden">
+        {userData?.profileImage !== null ? (
+          <picture>
+            <img
+              src={userData?.profileImage}
+              alt={`foto de perfil de ${userData.fullName}`}
+              className="object-cover w-full h-full rounded"
+            />
+          </picture>
+        ) : (
+          <div className=" text-red-700">
+            <UserIcon />
+          </div>
+        )}
       </div>
-      <div className="min-w-[200px]">
-        <Button
-          type="button"
-          label="Compartir"
-          outlined={true}
-          icon={ShareIcon}
-        />
+      <div className="w-full flex flex-col">
+        <div className="flex justify-between">
+          <div className="flex flex-col gap-1 items-start">
+            <h2 className="font-bold text-lg">{userData.username}</h2>
+            {/* TODO: Render rating */}
+            {/* <p>★★★☆☆</p> */}
+            <p>Aun no tiene valoraciones</p>
+            {currentUserId === userData.id && (
+              <Link
+                href="/settings/profile"
+                className="px-2 py-1 rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50"
+              >
+                Editar
+              </Link>
+            )}
+          </div>
+          <div className="flex flex-col md:flex-row gap-4 md:items-start">
+            <button className="px-4 py-2 md:min-w-[100px] rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50 font-bold ">
+              Seguir
+            </button>
+            <button className="px-4 py-2 md:min-w-[100px] font-bold rounded bg-cerise-red-600 text-white hover:bg-cerise-red-500">
+              Compartir
+            </button>
+          </div>
+        </div>
+        <div className="pt-2 md:pt-4">
+          <p className="whitespace-pre-wrap">{userData.biography}</p>
+        </div>
       </div>
     </header>
   );
-};
+}

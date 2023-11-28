@@ -1,6 +1,7 @@
-import { ProductCard } from '@/components';
+import { EmptyTransaction, ProductCard } from '@/components';
 import { getProductByUserIdOrUsername } from '@/helpers';
 import { IProduct } from '@/interfaces';
+import { cookies } from 'next/headers';
 
 export default async function UserMemberPage({
   params: { user },
@@ -8,12 +9,16 @@ export default async function UserMemberPage({
   params: { user: string };
 }) {
   const products: IProduct[] = await getProductByUserIdOrUsername(user);
+  const currentUserId = cookies().get('userId')?.value;
 
   if (products.length === 0) {
     return (
-      <div className="flex justify-center items-center mt-4">
-        <p>aun no tiene productos</p>
-      </div>
+      <EmptyTransaction
+        label="¡Aun no tienes Productos!"
+        subLabel="¡Consigue tu primera venta! Cuantas más prendas publiques, más oportunidades de vender."
+        path="/products/create"
+        btnText="Subir prenda"
+      />
     );
   }
 
@@ -21,7 +26,11 @@ export default async function UserMemberPage({
     <section className="mt-4">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            currentUserId={currentUserId || ''}
+          />
         ))}
       </div>
     </section>

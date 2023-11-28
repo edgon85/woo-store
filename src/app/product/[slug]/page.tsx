@@ -7,6 +7,7 @@ import {
 } from '@/components';
 import { getProductBySlug } from '@/lib';
 import { IProduct } from '@/interfaces';
+import { cookies } from 'next/headers';
 
 type Props = {
   params: { slug: string };
@@ -14,6 +15,7 @@ type Props = {
 
 export default async function ProductDetailPage({ params: { slug } }: Props) {
   const product: IProduct = await getProductBySlug(slug);
+  const currentUserId = cookies().get('userId')?.value;
 
   const { user } = product;
   return (
@@ -30,7 +32,7 @@ export default async function ProductDetailPage({ params: { slug } }: Props) {
 
         {/* <!-- Aside (Lado derecho en pantallas grandes) --> */}
         <aside className="w-full lg:w-2/5 p-2">
-          <ProductDetail product={product} />
+          <ProductDetail product={product} currentUserId={ currentUserId || ''} />
           <div className="mt-4">
             <UserInfo
               name={user?.fullName!}

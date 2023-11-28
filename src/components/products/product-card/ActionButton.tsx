@@ -1,46 +1,25 @@
-import { Button } from '@/components/ui';
-import { useCheckout } from '@/hooks';
-import { IProduct, IUser } from '@/interfaces';
-import { useRouter } from 'next/navigation';
+import { IProduct } from '@/interfaces';
+import Link from 'next/link';
 
 export const ActionButton = ({
-  user,
-  productUser,
   product,
+  currentUserId,
 }: {
-  user: IUser | null;
-  productUser: IUser | null;
   product: IProduct;
+  currentUserId: string;
 }) => {
-  const router = useRouter();
-  const { onAddCheckoutProduct } = useCheckout();
-  let label = 'Editar';
-
-  if (user === null || user?.id !== productUser?.id) {
-    label = 'Comprar';
-  }
-
-  const onHandleClick = () => {
-    if (user?.id !== productUser?.id) {
-      onAddCheckoutProduct(product);
-      router.push(`/checkout?transaction=${product.id}`);
-    } else {
-      router.push(`/product/edit/${product.id}`);
-    }
-
-    /* user?.id !== productUser?.id
-      ? router.push(`/checkout?transaction=${product.id}`)
-      : router.push(`/product/edit/${product.id}`); */
-  };
-
   return (
-    <div className="mt-2">
-      <Button
-        onClick={onHandleClick}
-        label={label}
-        type="button"
-        outlined={label === 'Editar'}
-      />
+    <div className="mt-2 w-full">
+      {currentUserId !== product.user?.id ? (
+        <Link
+          className="bg-cerise-red-600 text-white rounded flex justify-center items-center px-4 py-2"
+          href={`/checkout?transaction=${product.id}`}
+        >
+          Comprar
+        </Link>
+      ) : (
+        <Link href={`/product/edit/${product.id}`}>Editar</Link>
+      )}
     </div>
   );
 };
