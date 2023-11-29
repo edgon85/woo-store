@@ -167,3 +167,18 @@ export async function fetchOrderById(id: string): Promise<IOrder> {
   const data: IOrder = await res.json();
   return data;
 }
+
+/* ··········································································· */
+export async function fetchData(path: string) {
+  noStore(); /* TODO:Eliminar */
+
+  const url = `${process.env.API_BASE_URL}${path}`;
+
+  const resp = await fetch(url);
+
+  if (!resp.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return await resp.json();
+}
