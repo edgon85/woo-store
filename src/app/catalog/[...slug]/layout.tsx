@@ -9,11 +9,17 @@ export default function Layout({
 }) {
   const { slug } = params;
 
+  console.log(params);
+
   return (
     <div className="container main-wrapper pt-4 flex">
       {/* <!-- Sección de Categorías (Lado Izquierdo) --> */}
       <div className="w-full md:w-1/5 pr-4 hidden sm:block">
-        <NavCategories gender={slug[0]} category={slug[1]} />
+        <NavCategories
+          gender={slug[0]}
+          clothesType={slug[1]}
+          category={slug[2]}
+        />
       </div>
 
       {/* <!-- Sección de Cuadrícula de 4 Columnas (Lado Derecho) --> */}

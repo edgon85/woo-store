@@ -5,16 +5,22 @@ export default function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: { gender: string; category: string; subcategory: string };
+  params: {
+    gender: string;
+    category: string;
+    subcategory: string;
+    clothesType: string;
+  };
 }) {
-
-  
-
   return (
     <div className="container main-wrapper pt-4 flex">
       {/* <!-- Sección de Categorías (Lado Izquierdo) --> */}
       <div className="w-full md:w-1/5 pr-4 hidden sm:block">
-        <NavCategories gender={params.gender} category={params.category} />
+        <NavCategories
+          gender={params.gender}
+          category={params.category}
+          clothesType={params.clothesType}
+        />
       </div>
 
       {/* <!-- Sección de Cuadrícula de 4 Columnas (Lado Derecho) --> */}

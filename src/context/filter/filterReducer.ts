@@ -5,16 +5,10 @@ type CategoryActionType =
   | { type: '[Filter] - gender'; payload: string }
   | { type: '[Filter] - clothes type'; payload: string }
   | { type: '[Filter] - category'; payload: ICategory }
-  | { type: '[Filter] - category selected' }
   | { type: '[Filter] - subcategory'; payload: ISubcategory }
-  | { type: '[Filter] - Brand selected' }
-  | { type: '[Filter] - Color selected' }
-  | { type: '[Filter] - clothes state selected' }
-  | { type: '[Filter] - Price selected' }
   | { type: '[Filter] - Brands'; payload: string[] }
   | { type: '[Filter] - Filter list'; payload: Filter[] }
-  | { type: '[Filter] - Measurement list'; payload: string[] }
-  | { type: '[Filter] - Measurement selected' };
+  | { type: '[Filter] - Measurement list'; payload: string[] };
 
 export const FilterReducer = (
   state: FilterState,
@@ -44,40 +38,10 @@ export const FilterReducer = (
         brands: state.subcategory.id === '' ? [] : [...state.brands],
         subcategory: { ...action.payload },
       };
-    case '[Filter] - category selected':
-      return {
-        ...state,
-        isCategorySelected: !state.isCategorySelected,
-      };
-    case '[Filter] - Brand selected':
-      return {
-        ...state,
-        isBrandSelected: !state.isBrandSelected,
-      };
     case '[Filter] - Brands':
       return {
         ...state,
         brands: [...action.payload],
-      };
-    case '[Filter] - Measurement selected':
-      return {
-        ...state,
-        isMeasurementSelected: !state.isMeasurementSelected,
-      };
-    case '[Filter] - Color selected':
-      return {
-        ...state,
-        isColorSelected: !state.isColorSelected,
-      };
-    case '[Filter] - clothes state selected':
-      return {
-        ...state,
-        isClothesStateSelected: !state.isClothesStateSelected,
-      };
-    case '[Filter] - Price selected':
-      return {
-        ...state,
-        isPriceSelected: !state.isPriceSelected,
       };
     case '[Filter] - Measurement list':
       return {

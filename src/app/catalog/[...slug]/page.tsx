@@ -23,7 +23,7 @@ export default function ExampleClientComponent() {
   const currentUserId = Cookies.get('userId');
 
   // Genera la URL concatenando los grupos
-  const url = generateFilterURL(filters, gender, category.slug);
+  const url = generateFilterURL(filters);
   const { data: products, isError } = useFetcher<IProduct[]>(url);
 
   return (

@@ -1,25 +1,18 @@
-'use client'
-import { useFetcher, useFilter } from '@/hooks';
-import { useRouter } from 'next/navigation';
-import { Filter, IBrand, IMeasurement } from '@/interfaces';
-import { measurementFormat } from '@/utils';
+'use client';
+import { useFilter } from '@/hooks';
+import { usePathname, useRouter } from 'next/navigation';
+import { Filter, IMeasurement } from '@/interfaces';
+import { generateFilterURL, measurementFormat } from '@/utils';
+import { useEffect } from 'react';
 
-export const MeasurementFilterItems = () => {
-  const router = useRouter();
-  const {
-    gender,
-    category,
-    subcategory,
-    clothesType,
-    // measurements,
-    // setMeasurements,
-    filters,
-    setFilters,
-  } = useFilter();
+type Props = {
+  measurements: IMeasurement[];
+};
 
-  const { data } = useFetcher<IMeasurement[]>(
-    `/measurements?gender=${gender}&type=${clothesType}`
-  );
+export const MeasurementFilterItems = ({ measurements }: Props) => {
+  const pathName = usePathname();
+  const { replace } = useRouter();
+  const { category, filters, setFilters } = useFilter();
 
   const handleChange = (measurementSize: IMeasurement, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -29,41 +22,25 @@ export const MeasurementFilterItems = () => {
     };
 
     let draft = structuredClone(filters);
-    const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
 
     if (isChecked) {
       draft.push(newFilter);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters([...draft]);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters(draft);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     }
   };
+
+  useEffect(() => {
+    const url = generateFilterURL(filters);
+    replace(`${pathName}${url}`);
+  }, [filters, pathName, replace]);
 
   return (
     <>
       <div className="divide-y divide-gray-300">
-        {data.map((measurement) => (
+        {measurements.map((measurement) => (
           <li key={measurement.id} className="pl-1 pr-2 py-2">
             <label
               htmlFor={measurement.slug}

@@ -6,17 +6,26 @@ import { ColorFilter } from './colors/ColorFilter';
 import { PriceFilter } from './price/PriceFilter';
 import { MenuItem } from './NavItems';
 import { fetchData } from '@/lib';
-import { ISubcategory } from '@/interfaces';
+import { IMeasurement, ISubcategory } from '@/interfaces';
 import { SubcategoriesItems } from './CategoriesItem';
 
 type Props = {
   gender: string;
   category: string;
+  clothesType: string;
 };
-export const NavCategories = async ({ gender, category }: Props) => {
+export const NavCategories = async ({
+  gender,
+  category,
+  clothesType,
+}: Props) => {
   const subcategories = (await fetchData(
     `/subcategories/${gender}/${category}`
   )) as ISubcategory[];
+
+  const measurements = (await fetchData(
+    `/measurements?gender=${gender}&type=${clothesType}`
+  )) as IMeasurement[];
 
   return (
     <div className="p-4">
@@ -33,14 +42,14 @@ export const NavCategories = async ({ gender, category }: Props) => {
             </div>
           }
         /> */}
-     {/*    <MenuItem
+        <MenuItem
           title={'Tallas'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <MeasurementFilterItems />
+              <MeasurementFilterItems measurements={measurements} />
             </div>
           }
-        /> */}
+        />
         {/*  <MenuItem
           title={'Estado'}
           items={
