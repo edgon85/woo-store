@@ -25,23 +25,23 @@ export const NavCategories = async ({ gender, category }: Props) => {
           title={'Subcategorías'}
           items={<SubcategoriesItems subcategories={subcategories} />}
         />
-        {/*        <MenuItem
+        {/*  <MenuItem
           title={'Marcas'}
           items={
             <div className="max-h-64 overflow-scroll">
               <BrandsItems />
             </div>
           }
-        />
-        <MenuItem
+        /> */}
+     {/*    <MenuItem
           title={'Tallas'}
           items={
             <div className="max-h-64 overflow-scroll">
               <MeasurementFilterItems />
             </div>
           }
-        />
-        <MenuItem
+        /> */}
+        {/*  <MenuItem
           title={'Estado'}
           items={
             <div className="max-h-64 overflow-scroll">

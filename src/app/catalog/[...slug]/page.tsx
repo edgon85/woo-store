@@ -3,12 +3,7 @@
 import { IProduct } from '@/interfaces';
 import { generateFilterURL } from '@/utils';
 import { useFetcher, useFilter } from '@/hooks';
-import {
-  NavCategories,
-  BadgeCleanFilters,
-  BadgeFilter,
-  ProductCard,
-} from '@/components';
+import { BadgeCleanFilters, BadgeFilter, ProductCard } from '@/components';
 import Cookies from 'js-cookie';
 
 /* export default function ExampleClientComponent({
@@ -32,28 +27,21 @@ export default function ExampleClientComponent() {
   const { data: products, isError } = useFetcher<IProduct[]>(url);
 
   return (
-    <div className="container main-wrapper pt-4 flex">
-      <div className="w-full md:w-1/5 pr-4 hidden sm:block">
-        <NavCategories />
+    <div>
+      <div className="border py-2 overflow-scroll">
+        {filters.map((filter) => (
+          <BadgeFilter key={filter.slug} filterItem={filter} />
+        ))}
+        {filters.length > 0 ? <BadgeCleanFilters /> : null}
       </div>
-
-      <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2">
-        <div className="border py-2 overflow-scroll">
-          <p>filtros</p>
-          {filters.map((filter) => (
-            <BadgeFilter key={filter.slug} filterItem={filter} />
-          ))}
-          {filters.length > 0 ? <BadgeCleanFilters /> : null}
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              currentUserId={currentUserId || ''}
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            currentUserId={currentUserId || ''}
+          />
+        ))}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 type Props = {
   isCollapsed: boolean;
   itemName: string;
-  gender: string;
+  clothesType: string;
   toggleMenu: (title: string) => void;
   menuName: string;
 };
@@ -15,7 +15,7 @@ type Props = {
 export const ItemMegaMenu = ({
   isCollapsed,
   itemName,
-  // gender,
+  clothesType,
   toggleMenu,
   menuName,
 }: Props) => {
@@ -42,7 +42,7 @@ export const ItemMegaMenu = ({
     toggleMenu(menuName);
     setClothesType(itemName);
     setCategory(category);
-    router.push(`/${gender}/${category.slug}`);
+    router.push(`/${gender}/${clothesType}/${category.slug}`);
   };
 
   return (

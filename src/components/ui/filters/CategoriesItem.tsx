@@ -2,18 +2,18 @@
 import { ISubcategory } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { RadiaSelectIcon } from '../icons';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 type Props = {
   subcategories: ISubcategory[];
 };
 
 export const SubcategoriesItems = ({ subcategories }: Props) => {
-  // Estado para rastrear la Subcategoría seleccionada
-  const { gender, category, subcategory } = useParams();
-
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
   const router = useRouter();
+
+  const params = useParams();
+  const { gender, clothesType, category, subcategory } = params;
 
   useEffect(() => {
     if (subcategory === undefined) {
@@ -26,7 +26,7 @@ export const SubcategoriesItems = ({ subcategories }: Props) => {
   // Función para manejar el clic en una Subcategoría
   const handleSubcategoryClick = (subSlug: string) => {
     setSelectedSubcategory(subSlug);
-    router.push(`/${gender}/${category}/${subSlug}`);
+    router.push(`/${gender}/${clothesType}/${category}/${subSlug}`);
   };
   return (
     <>

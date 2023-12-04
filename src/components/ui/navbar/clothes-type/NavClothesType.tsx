@@ -77,7 +77,7 @@ export const NavClothesType = () => {
               toggleMenu={toggleMenu}
               isCollapsed={menuState.isClothesMenuOpen}
               itemName="ropa"
-              gender={gender}
+              clothesType="ropa"
               menuName="isClothesMenuOpen"
             />
           </li>
@@ -93,7 +93,7 @@ export const NavClothesType = () => {
               toggleMenu={toggleMenu}
               isCollapsed={menuState.isShoesMenuOpen}
               itemName="zapatos"
-              gender={gender}
+              clothesType="zapatos"
               menuName="isShoesMenuOpen"
             />
           </li>
@@ -109,7 +109,7 @@ export const NavClothesType = () => {
               toggleMenu={toggleMenu}
               isCollapsed={menuState.isAccessoriesMenuOpen}
               itemName="accesorios"
-              gender={gender}
+              clothesType="accesorios"
               menuName="isAccessoriesMenuOpen"
             />
           </li>

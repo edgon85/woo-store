@@ -1,3 +1,4 @@
+'use client'
 import { useFetcher, useFilter } from '@/hooks';
 import { useRouter } from 'next/navigation';
 import { Filter, IBrand, IMeasurement } from '@/interfaces';

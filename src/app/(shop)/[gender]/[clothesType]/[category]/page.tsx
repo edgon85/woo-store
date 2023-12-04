@@ -1,5 +1,4 @@
 import { ProductCard } from '@/components';
-import { getProductByGenderAndCategory } from '@/helpers';
 import { fetchData } from '@/lib';
 import { cookies } from 'next/headers';
 
