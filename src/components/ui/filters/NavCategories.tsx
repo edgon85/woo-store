@@ -6,7 +6,13 @@ import { ColorFilter } from './colors/ColorFilter';
 import { PriceFilter } from './price/PriceFilter';
 import { MenuItem } from './NavItems';
 import { fetchData } from '@/lib';
-import { IMeasurement, ISubcategory } from '@/interfaces';
+import {
+  IBrand,
+  IClothesState,
+  IColor,
+  IMeasurement,
+  ISubcategory,
+} from '@/interfaces';
 import { SubcategoriesItems } from './CategoriesItem';
 
 type Props = {
@@ -27,6 +33,11 @@ export const NavCategories = async ({
     `/measurements?gender=${gender}&type=${clothesType}`
   )) as IMeasurement[];
 
+  const brands = (await fetchData(`/brands/all?limit=15`)) as IBrand[];
+
+  const clothesStates = (await fetchData(`/clothes-state`)) as IClothesState[];
+  const colors = (await fetchData(`/colors`)) as IColor[];
+
   return (
     <div className="p-4">
       <ul className="space-y-2">
@@ -34,14 +45,14 @@ export const NavCategories = async ({
           title={'Subcategorías'}
           items={<SubcategoriesItems subcategories={subcategories} />}
         />
-        {/*  <MenuItem
+        <MenuItem
           title={'Marcas'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <BrandsItems />
+              <BrandsItems brands={brands} />
             </div>
           }
-        /> */}
+        />
         <MenuItem
           title={'Tallas'}
           items={
@@ -50,11 +61,11 @@ export const NavCategories = async ({
             </div>
           }
         />
-        {/*  <MenuItem
+        <MenuItem
           title={'Estado'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ClothesStateFilter />
+              <ClothesStateFilter clothesStates={clothesStates} />
             </div>
           }
         />
@@ -62,7 +73,7 @@ export const NavCategories = async ({
           title={'Color'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ColorFilter />
+              <ColorFilter colors={colors} />
             </div>
           }
         />
@@ -73,7 +84,7 @@ export const NavCategories = async ({
               <PriceFilter />
             </div>
           }
-        /> */}
+        />
       </ul>
     </div>
   );

@@ -1,34 +1,32 @@
-import { useFetcher, useFilter } from '@/hooks';
-import { useRouter } from 'next/navigation';
+'use client';
+import { useFilter } from '@/hooks';
+import { usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Filter, IBrand } from '@/interfaces';
 import { getBrandData } from '@/helpers';
 import { useDebounce } from '@/hooks/useDebounce';
+import { generateFilterURL } from '@/utils';
 
-export const BrandsItems = () => {
-  const router = useRouter();
-  const {
-    gender,
-    category,
-    // brands,
-    // setBrands,
-    filters,
-    setFilters,
-    subcategory,
-  } = useFilter();
+type Props = {
+  brands: IBrand[];
+};
+
+export const BrandsItems = ({ brands }: Props) => {
+  const pathName = usePathname();
+  const { replace } = useRouter();
+
+  const { filters, setFilters } = useFilter();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<IBrand[]>([]);
   const { debounceValue: debounceSearch } = useDebounce(searchQuery, 500);
 
-  const { data } = useFetcher<IBrand[]>('/brands/all?limit=10');
-
   useEffect(() => {
     if (searchQuery === '') {
-      setSearchResults(data);
+      setSearchResults(brands);
     } else {
       performSearch(debounceSearch);
     }
-  }, [data, debounceSearch, searchQuery]);
+  }, [brands, debounceSearch, searchQuery]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -36,10 +34,8 @@ export const BrandsItems = () => {
   };
 
   const performSearch = async (query: string) => {
-    // setLoading(true);
     await getBrandData(query).then((data) => {
       setSearchResults(data);
-      // setLoading(false);
     });
   };
 
@@ -51,36 +47,20 @@ export const BrandsItems = () => {
     };
 
     let draft = structuredClone(filters);
-    const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
 
     if (isChecked) {
       draft.push(newFilter);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters([...draft]);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters(draft);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     }
   };
+
+  useEffect(() => {
+    const url = generateFilterURL(filters);
+    replace(`${pathName}${url}`);
+  }, [filters, pathName, replace]);
 
   return (
     <>

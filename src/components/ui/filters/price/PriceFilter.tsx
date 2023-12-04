@@ -1,8 +1,11 @@
+'use client';
 import { useForm } from 'react-hook-form';
 import { Button } from '../../buttons';
 import { Filter } from '@/interfaces';
 import { useFilter } from '@/hooks';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { generateFilterURL } from '@/utils';
 
 type FormData = {
   min: number;
@@ -10,9 +13,9 @@ type FormData = {
 };
 
 export const PriceFilter = () => {
-  const router = useRouter();
-  const { gender, category, subcategory, clothesType, filters, setFilters } =
-    useFilter();
+  const pathName = usePathname();
+  const { replace } = useRouter();
+  const { filters, setFilters } = useFilter();
 
   const {
     register,
@@ -21,7 +24,6 @@ export const PriceFilter = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
   const onSubmit = (data: FormData) => {
     const minPrice = Number(data.min);
     const maxPrice = Number(data.max);
@@ -42,17 +44,14 @@ export const PriceFilter = () => {
     };
 
     const draft = filters.filter((item) => item.type !== 'price');
-    const slugs = draft.map((item) => item.slug);
-    setFilters([...draft, newFilter]);
 
-    // draft.length !== 0  ?
-    router.push(
-      `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-        ...slugs,
-      ].join(',')}`
-    );
-    // : router.push(`/${gender}/${category.slug}${subCatPath}`);
+    setFilters([...draft, newFilter]);
   };
+
+  useEffect(() => {
+    const url = generateFilterURL(filters);
+    replace(`${pathName}${url}`);
+  }, [filters, pathName, replace]);
 
   return (
     <>

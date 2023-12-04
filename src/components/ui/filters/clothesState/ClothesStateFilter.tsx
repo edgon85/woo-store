@@ -1,12 +1,18 @@
+'use client';
 import { useFetcher, useFilter } from '@/hooks';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Filter, IClothesState } from '@/interfaces';
+import { useEffect } from 'react';
+import { generateFilterURL } from '@/utils';
 
-export const ClothesStateFilter = () => {
-  const router = useRouter();
-  const { gender, category, subcategory, filters, setFilters } = useFilter();
+type Props = {
+  clothesStates: IClothesState[];
+};
 
-  const { data } = useFetcher<IClothesState[]>(`/clothes-state`);
+export const ClothesStateFilter = ({ clothesStates }: Props) => {
+  const pathName = usePathname();
+  const { replace } = useRouter();
+  const { filters, setFilters } = useFilter();
 
   const handleChange = (clothesState: IClothesState, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -16,41 +22,25 @@ export const ClothesStateFilter = () => {
     };
 
     let draft = structuredClone(filters);
-    const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
 
     if (isChecked) {
       draft.push(newFilter);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters([...draft]);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters(draft);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     }
   };
+
+  useEffect(() => {
+    const url = generateFilterURL(filters);
+    replace(`${pathName}${url}`);
+  }, [filters, pathName, replace]);
 
   return (
     <>
       <div className="divide-y divide-gray-300">
-        {data.map((clothes) => (
+        {clothesStates.map((clothes) => (
           <li key={clothes.id} className="pl-1 pr-2 py-2">
             <label
               htmlFor={clothes.slug}
@@ -64,9 +54,7 @@ export const ClothesStateFilter = () => {
                 type="checkbox"
                 id={clothes.slug}
                 onChange={(e) => handleChange(clothes, e.target.checked)}
-                checked={filters.some(
-                  (filter) => filter.slug === clothes.slug
-                )}
+                checked={filters.some((filter) => filter.slug === clothes.slug)}
               />
             </label>
           </li>

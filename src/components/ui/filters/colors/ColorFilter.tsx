@@ -1,13 +1,20 @@
+'use client';
 import { useFetcher, useFilter } from '@/hooks';
 import { Filter, IColor } from '@/interfaces';
-import { useRouter } from 'next/navigation';
+import { generateFilterURL } from '@/utils';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export const ColorFilter = () => {
-  const router = useRouter();
-  const { gender, category, subcategory, clothesType, filters, setFilters } =
-    useFilter();
+type Props = {
+  colors: IColor[];
+};
 
-  const { data } = useFetcher<IColor[]>(`/colors`);
+export const ColorFilter = ({ colors }: Props) => {
+  const pathName = usePathname();
+  const { replace } = useRouter();
+  const { filters, setFilters } = useFilter();
+
+  // const { data } = useFetcher<IColor[]>(`/colors`);
 
   const handleChange = (colorItem: IColor, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -17,40 +24,24 @@ export const ColorFilter = () => {
     };
 
     let draft = structuredClone(filters);
-    const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
 
     if (isChecked) {
       draft.push(newFilter);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters([...draft]);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
-
-      const slugs = draft.map((item) => item.slug);
       setFilters(draft);
-
-      draft.length !== 0
-        ? router.push(
-            `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-              ...slugs,
-            ].join(',')}`
-          )
-        : router.push(`/${gender}/${category.slug}${subCatPath}`);
     }
   };
 
+  useEffect(() => {
+    const url = generateFilterURL(filters);
+    replace(`${pathName}${url}`);
+  }, [filters, pathName, replace]);
+
   return (
     <div className="grid grid-cols-3 gap-4 p-2">
-      {data.map((color) => {
+      {colors.map((color) => {
         const codeColor = `#${color.codeColor}`;
         return (
           <li key={color.id}>
@@ -78,9 +69,7 @@ export const ColorFilter = () => {
                 type="checkbox"
                 id={color.slug}
                 onChange={(e) => handleChange(color, e.target.checked)}
-                checked={filters.some(
-                  (filter) => filter.slug === color.slug
-                )}
+                checked={filters.some((filter) => filter.slug === color.slug)}
               />
             </label>
           </li>
