@@ -1,17 +1,22 @@
+'use client'
 import { useFilter } from '@/hooks';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+import { generateFilterURL } from '@/utils';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export const BadgeCleanFilters = () => {
-  const router = useRouter();
-  const { setFilters, gender, category, subcategory } = useFilter();
-
-  const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
+  const pathName = usePathname();
+  const { replace } = useRouter();
+  const { setFilters, filters } = useFilter();
 
   const handleClick = () => {
     setFilters([]);
-    router.push(`/${gender}/${category.slug}${subCatPath}`);
   };
+
+  useEffect(() => {
+    const url = generateFilterURL(filters);
+    replace(`${pathName}${url}`);
+  }, [filters, pathName, replace]);
 
   return (
     <span

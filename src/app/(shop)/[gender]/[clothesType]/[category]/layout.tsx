@@ -25,9 +25,7 @@ export default function Layout({
 
       {/* <!-- Sección de Cuadrícula de 4 Columnas (Lado Derecho) --> */}
       <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   );

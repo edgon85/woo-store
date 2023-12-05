@@ -1,31 +1,43 @@
+'use client';
 import { useFilter } from '@/hooks';
 import { Filter } from '@/interfaces';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { BadgeCleanFilters } from './BadgeCleanFilters';
+import { useEffect } from 'react';
+import { generateFilterURL } from '@/utils';
+
+export const BadgeFilterList = () => {
+  const { filters } = useFilter();
+
+  return (
+    <div className="border py-2 overflow-scroll">
+      {filters.map((filter) => (
+        <BadgeFilter key={filter.slug} filterItem={filter} />
+      ))}
+      {filters.length > 0 ? <BadgeCleanFilters /> : null}
+    </div>
+  );
+};
 
 type Props = {
   filterItem: Filter;
 };
 
 export const BadgeFilter = ({ filterItem }: Props) => {
-  const router = useRouter();
-  const { gender, category, filters, setFilters, subcategory } = useFilter();
+  const pathName = usePathname();
+  const { replace } = useRouter();
+  const { filters, setFilters } = useFilter();
   let title: string = '';
 
   const onHandlerClick = () => {
-    const subCatPath = subcategory.id !== '' ? `/${subcategory.slug}` : '';
-
     const draft = filters.filter((resp) => filterItem !== resp);
-    const slugs = draft.map((item) => item.slug);
     setFilters(draft);
-
-    draft.length !== 0
-      ? router.push(
-          `/catalog/${gender}/${category.slug}${subCatPath}?filter=${[
-            ...slugs,
-          ].join(',')}`
-        )
-      : router.push(`/${gender}/${category.slug}${subCatPath}`);
   };
+
+  useEffect(() => {
+    const url = generateFilterURL(filters);
+    replace(`${pathName}${url}`);
+  }, [filters, pathName, replace]);
 
   const titleOption = (tupe: string) => {
     switch (tupe) {
