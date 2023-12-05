@@ -3,11 +3,29 @@ import { useFilter } from '@/hooks';
 import { Filter } from '@/interfaces';
 import { usePathname, useRouter } from 'next/navigation';
 import { BadgeCleanFilters } from './BadgeCleanFilters';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { generateFilterURL } from '@/utils';
 
 export const BadgeFilterList = () => {
-  const { filters } = useFilter();
+  const { filters, setFilters } = useFilter();
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      const currentUrl = window.location.href;
+      const searchParams = new URL(currentUrl).search;
+
+      if (searchParams) {
+        const newFilters = parseSearchParams(searchParams);
+
+        if (JSON.stringify(filters) !== JSON.stringify(newFilters)) {
+          setFilters(newFilters);
+        }
+      }
+
+      setIsInitialized(true);
+    }
+  }, [filters, setFilters, isInitialized]);
 
   return (
     <div className="border py-2 overflow-scroll">
@@ -91,4 +109,43 @@ export const BadgeFilter = ({ filterItem }: Props) => {
       </span>
     </>
   );
+};
+
+interface SearchParamItem {
+  slug: string;
+  title: string;
+  type: string;
+  priceRange?: [number, number];
+}
+
+const parseSearchParams = (searchParams: string): SearchParamItem[] => {
+  const params = new URLSearchParams(searchParams);
+  const result: SearchParamItem[] = [];
+
+  let minPrice: number | null = null;
+  let maxPrice: number | null = null;
+
+  params.forEach((value, key) => {
+    if (key === 'minPrice') {
+      minPrice = parseInt(value, 10);
+    } else if (key === 'maxPrice') {
+      maxPrice = parseInt(value, 10);
+    } else {
+      const type = key.endsWith('[]') ? key.slice(0, -2) : key;
+      const title = value.replace(/-/g, ' ').replace('m', '&'); // Ajusta el título para 'h&m'
+      result.push({ slug: value, title, type });
+    }
+  });
+
+  // Agregar el rango de precios si existe
+  if (minPrice !== null && maxPrice !== null) {
+    result.push({
+      slug: `${minPrice}-${maxPrice}`,
+      title: `Q${minPrice}-Q${maxPrice}`,
+      type: 'price',
+      priceRange: [minPrice, maxPrice],
+    });
+  }
+
+  return result;
 };
