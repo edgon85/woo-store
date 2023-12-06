@@ -16,7 +16,8 @@
   border-radius: 1.5rem;
   overflow: hidden;
   flex: 1;
-  min-width: 41.875rem;
+  width: 22rem;
+  /* min-width: 41.875rem; */
 }
 
 .navbarContent {
@@ -46,6 +47,7 @@
 }
 
 .select-content {
+  width: 5rem;
   block-size: 44px;
   background-color: #f6f9fc;
   display: flex;
@@ -75,4 +77,10 @@
     /* border: 1px solid red; */
     display: flex;
     gap: .5rem;
+  }
+
+  @media screen  and (min-width: 1000px){
+    .navbarSearch {
+     width: 40rem;
+    }
   }

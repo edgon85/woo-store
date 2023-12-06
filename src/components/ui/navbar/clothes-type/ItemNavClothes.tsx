@@ -1,4 +1,3 @@
-// import { useFetchCategoryByGenderAndType } from '@/helpers';
 import { useFilter, useFetcher } from '@/hooks';
 import { ICategory } from '@/interfaces';
 import Cookies from 'js-cookie';

@@ -1,17 +1,13 @@
 'use client';
 
 import { useFilter } from '@/hooks';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoIosMan, IoIosWoman, IoMdArrowDropright } from 'react-icons/io';
-
-/* type Props = {
-  selectGender: (gender: string) => void;
-}; */
 
 export const GenderSelected = () => {
   const { gender, setGender } = useFilter();
 
-  // const [gender, setGender] = useState('mujer');
+
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

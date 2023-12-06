@@ -18,9 +18,9 @@ const CATEGORY_INITIAL_STATE: FilterState = {
   gender: 'mujer',
   clothesType: 'ropa',
   category: {
-    id: '59f36816-035b-44cb-bc32-30dd85a7cc14',
+    id: '',
     title: '',
-    slug: 'vestidos',
+    slug: '',
   },
   subcategory: { id: '', title: '', slug: '' },
   brands: [],

@@ -9,7 +9,7 @@ export const Navbar = () => {
     <nav className="px-4 lg:px-0 bg-white">
       <div className="main-wrapper">
         <div className="flex justify-between items-center h-20">
-          <div className="burgerIcon lg:hidden">
+          <div className="burgerIcon md:hidden">
             <MenuIcon />
           </div>
           <div className="logo cursor-pointer">
@@ -18,7 +18,7 @@ export const Navbar = () => {
             </Link>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="flex-1  hidden md:flex justify-center items-center">
             <NavbarSearch />
           </div>
 
