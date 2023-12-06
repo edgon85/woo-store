@@ -1,7 +1,7 @@
 'use client';
 
 import { BtnCircle } from '../buttons';
-import { DropdownAccount } from '../dropdowns';
+import { DropdownAccount, GenderSelected } from '../dropdowns';
 import { BellIcon, SearchIcon } from '../icons';
 import Link from 'next/link';
 import { useAuth } from '@/hooks';
@@ -24,7 +24,8 @@ export const NavbarActions = () => {
         </Link>
       )}
       <div className=" md:hidden">
-        <BtnCircle icon={<SearchIcon />} />
+        {/* <BtnCircle icon={<SearchIcon />} /> */}
+        {/* <GenderSelected /> */}
       </div>
 
       {isLoggedIn && (

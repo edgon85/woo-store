@@ -5,6 +5,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Roboto } from 'next/font/google';
 import { Providers } from './providers';
 import { NavClothesType, Navbar } from '@/components';
+import Sidebar from '@/components/ui/navbar/sidebar/Sidebar';
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -28,6 +29,7 @@ export default function RootLayout({
         <Providers>
           <div>
             <Navbar />
+            <Sidebar />
             <NavClothesType />
             {children}
           </div>

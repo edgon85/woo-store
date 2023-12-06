@@ -3,7 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 export const NavbarSearch = () => {
   return (
-    <form className="w-96 lg:w-[500px] border rounded-full overflow-hidden pr-1 bg-white">
+    <form className="w-96 lg:w-[500px] border rounded-md overflow-hidden pr-1 bg-white">
       <div className=" flex">
         <div className="flex-1 relative">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

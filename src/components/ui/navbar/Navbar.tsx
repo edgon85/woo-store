@@ -3,14 +3,16 @@ import logo from '../../../../public/logo2.svg';
 import { NavbarSearch, NavbarActions } from './';
 import { MenuIcon } from '../icons';
 import Link from 'next/link';
+import Sidebar from './sidebar/Sidebar';
+import { GenderSelected } from '../dropdowns';
 
 export const Navbar = () => {
   return (
-    <nav className="px-4 lg:px-0 bg-white">
+    <nav className="px-4 lg:px-0 bg-white shadow-sm md:shadow-none">
       <div className="main-wrapper">
         <div className="flex justify-between items-center h-20">
           <div className="burgerIcon md:hidden">
-            <MenuIcon />
+            <GenderSelected />
           </div>
           <div className="logo cursor-pointer">
             <Link href="/">
@@ -26,6 +28,9 @@ export const Navbar = () => {
             <NavbarActions />
           </div>
         </div>
+      </div>
+      <div className="md:hidden flex justify-center pb-2">
+        <NavbarSearch />
       </div>
     </nav>
   );

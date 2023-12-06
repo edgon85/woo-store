@@ -36,7 +36,7 @@ export const GenderSelected = () => {
     <div className="relative flex flex-col" ref={ref}>
       <button
         onClick={() => setIsCollapsed((prev) => !prev)}
-        className="border w-44 hover:bg-gray-300 text-black font-medium text-sm p-2.5 text-center inline-flex items-center"
+        className="border rounded w-32 md:w-44 hover:bg-gray-300 text-black font-medium text-sm p-2.5 text-center inline-flex items-center"
         type="button"
       >
         <span className="flex w-full justify-between gap-1 items-center capitalize">
@@ -46,7 +46,7 @@ export const GenderSelected = () => {
       </button>
 
       {isCollapsed && (
-        <div className="z-10 absolute top-12 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
+        <div className="z-10 absolute top-12 bg-white divide-y divide-gray-100 rounded shadow w-32 md:w-44">
           <ul
             className="py-2 text-sm text-gray-700"
             aria-labelledby="dropdownDividerButton"
