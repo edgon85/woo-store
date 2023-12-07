@@ -1,7 +1,9 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const Sidebar = () => {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -43,9 +45,19 @@ const Sidebar = () => {
       <div
         className={`fixed h-screen w-3/4 bg-white transition-all duration-300 ease-in-out ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
-        } right-0`}
+        } right-0 md:hidden overflow-y-scroll`}
       >
-        <ul className="mt-8 ml-4 space-y-2">
+        <ul className="mt-8 mx-4 space-y-2">
+          <li>
+            <button
+              onClick={() => router.push('/products/create')}
+              type="button"
+              className='bg-cerise-red-600 text-white w-full font-medium text-sm px-5 py-2.5 rounded'
+              >
+              {/* className="focus:outline-none text-white bg-[var(--primary)] hover:bg-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 " */}
+              VENDER AHORA
+            </button>
+          </li>
           <li className="pl-2">Marca</li>
           <ul className="ml-2">
             <li>Marca 1</li>
@@ -59,6 +71,92 @@ const Sidebar = () => {
           <li className="pl-2">Tallas</li>
           <ul className="ml-2">
             <li>Talla 1</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
+            <li>Talla 2</li>
             <li>Talla 2</li>
           </ul>
         </ul>

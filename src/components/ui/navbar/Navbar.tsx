@@ -24,7 +24,7 @@ export const Navbar = () => {
             <NavbarSearch />
           </div>
 
-          <div className="">
+          <div className="mr-10">
             <NavbarActions />
           </div>
         </div>
