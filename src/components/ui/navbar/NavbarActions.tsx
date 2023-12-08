@@ -1,8 +1,8 @@
 'use client';
 
 import { BtnCircle } from '../buttons';
-import { DropdownAccount, GenderSelected } from '../dropdowns';
-import { BellIcon, SearchIcon } from '../icons';
+import { DropdownAccount } from '../dropdowns';
+import { BellIcon } from '../icons';
 import Link from 'next/link';
 import { useAuth } from '@/hooks';
 import { usePathname, useRouter } from 'next/navigation';
@@ -23,10 +23,7 @@ export const NavbarActions = () => {
           Inicia sesión | Regístrate
         </Link>
       )}
-      <div className=" md:hidden">
-        {/* <BtnCircle icon={<SearchIcon />} /> */}
-        {/* <GenderSelected /> */}
-      </div>
+      <div className=" md:hidden"></div>
 
       {isLoggedIn && (
         <>

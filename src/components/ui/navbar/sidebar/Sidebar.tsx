@@ -1,13 +1,19 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useSidebar } from '@/stores';
+import { ButtonCellNow } from './ButtonCellNow';
+import { ButtonRegister } from './ButtonRegister';
+
+import { useAuth } from '@/hooks';
+import { MenuItem } from '../../filters/NavItems';
+import { ClothesList } from './clothes/ClothesList';
 
 const Sidebar = () => {
-  const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const menuOpen = useSidebar((state) => state.sidebarOpen);
+  const setMenuOpen = useSidebar((state) => state.onSidebarOpen);
+  const { user } = useAuth();
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen();
   };
 
   return (
@@ -45,28 +51,29 @@ const Sidebar = () => {
       <div
         className={`fixed h-screen w-3/4 bg-white transition-all duration-300 ease-in-out ${
           menuOpen ? 'translate-x-0' : 'translate-x-full'
-        } right-0 md:hidden overflow-y-scroll`}
+        } right-0 md:hidden overflow-y-scroll z-50`}
       >
         <ul className="mt-8 mx-4 space-y-2">
           <li>
-            <button
-              onClick={() => router.push('/products/create')}
-              type="button"
-              className='bg-cerise-red-600 text-white w-full font-medium text-sm px-5 py-2.5 rounded'
-              >
-              {/* className="focus:outline-none text-white bg-[var(--primary)] hover:bg-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 " */}
-              VENDER AHORA
-            </button>
+            <ButtonCellNow />
           </li>
-          <li className="pl-2">Marca</li>
-          <ul className="ml-2">
-            <li>Marca 1</li>
-            <li>Marca 2</li>
-          </ul>
-          <li className="pl-2">Colores</li>
-          <ul className="ml-2">
-            <li>Rojo</li>
-            <li>Verde</li>
+          {!user && (
+            <li className="mt-2">
+              <ButtonRegister />
+            </li>
+          )}
+
+          <li className="">Categorías</li>
+          <ul className="">
+            <MenuItem title={'Ropa'} items={<ClothesList itemName="ropa" />} />
+            <MenuItem
+              title={'Zapatos'}
+              items={<ClothesList itemName="zapatos" />}
+            />
+            <MenuItem
+              title={'Accesorios'}
+              items={<ClothesList itemName="accesorios" />}
+            />
           </ul>
           <li className="pl-2">Tallas</li>
           <ul className="ml-2">
