@@ -1,12 +1,12 @@
 'use client';
 
-import { useFilter } from '@/hooks';
+import { usePersonalPreferencesStore } from '@/stores';
 import { useEffect, useRef, useState } from 'react';
 import { IoIosMan, IoIosWoman, IoMdArrowDropright } from 'react-icons/io';
 
 export const GenderSelected = () => {
-  const { gender, setGender } = useFilter();
-
+  const gender = usePersonalPreferencesStore((state) => state.gender);
+  const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);

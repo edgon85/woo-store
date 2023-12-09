@@ -1,13 +1,16 @@
 'use client';
-import { useFilter } from '@/hooks';
+
 import { Filter } from '@/interfaces';
 import { usePathname, useRouter } from 'next/navigation';
 import { BadgeCleanFilters } from './BadgeCleanFilters';
 import { useEffect, useState } from 'react';
 import { generateFilterURL } from '@/utils';
+import { useFilterStore } from '@/stores';
 
 export const BadgeFilterList = () => {
-  const { filters, setFilters } = useFilter();
+  const filters = useFilterStore((state) => state.filters);
+  const setFilters = useFilterStore((state) => state.setFilters);
+
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -44,7 +47,8 @@ type Props = {
 export const BadgeFilter = ({ filterItem }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
-  const { filters, setFilters } = useFilter();
+  const filters = useFilterStore((state) => state.filters);
+  const setFilters = useFilterStore((state) => state.setFilters);
   let title: string = '';
 
   const onHandlerClick = () => {

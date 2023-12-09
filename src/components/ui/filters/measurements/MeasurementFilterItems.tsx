@@ -1,9 +1,10 @@
 'use client';
-import { useFilter } from '@/hooks';
+
 import { usePathname, useRouter } from 'next/navigation';
 import { Filter, IMeasurement } from '@/interfaces';
 import { generateFilterURL, measurementFormat } from '@/utils';
 import { useEffect } from 'react';
+import { useFilterStore } from '@/stores';
 
 type Props = {
   measurements: IMeasurement[];
@@ -12,7 +13,9 @@ type Props = {
 export const MeasurementFilterItems = ({ measurements }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
-  const { category, filters, setFilters } = useFilter();
+
+  const filters = useFilterStore((state) => state.filters);
+  const setFilters = useFilterStore((state) => state.setFilters);
 
   const handleChange = (measurementSize: IMeasurement, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -46,7 +49,8 @@ export const MeasurementFilterItems = ({ measurements }: Props) => {
               htmlFor={measurement.slug}
               className="flex justify-between items-center cursor-pointer hover:text-darkPrimary uppercase"
             >
-              <span>{measurementFormat(category.title, measurement)}</span>
+              {/* TODO: <span>{measurementFormat(category.title, measurement)}</span> */}
+              <span>{measurement.size}</span>
               <input
                 name={measurement.size}
                 value={measurement.slug}

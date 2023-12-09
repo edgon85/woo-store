@@ -66,7 +66,7 @@ export const ListClothesType = () => {
         <ItemMegaMenu
           toggleMenu={toggleMenu}
           isCollapsed={menuState.isClothesMenuOpen}
-          itemName="ropa"
+          // itemName="ropa"
           clothesType="ropa"
           menuName="isClothesMenuOpen"
         />
@@ -82,7 +82,7 @@ export const ListClothesType = () => {
         <ItemMegaMenu
           toggleMenu={toggleMenu}
           isCollapsed={menuState.isShoesMenuOpen}
-          itemName="zapatos"
+          // itemName="zapatos"
           clothesType="zapatos"
           menuName="isShoesMenuOpen"
         />
@@ -98,7 +98,7 @@ export const ListClothesType = () => {
         <ItemMegaMenu
           toggleMenu={toggleMenu}
           isCollapsed={menuState.isAccessoriesMenuOpen}
-          itemName="accesorios"
+          // itemName="accesorios"
           clothesType="accesorios"
           menuName="isAccessoriesMenuOpen"
         />

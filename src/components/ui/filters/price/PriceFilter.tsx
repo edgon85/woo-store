@@ -2,10 +2,10 @@
 import { useForm } from 'react-hook-form';
 import { Button } from '../../buttons';
 import { Filter } from '@/interfaces';
-import { useFilter } from '@/hooks';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { generateFilterURL } from '@/utils';
+import { useFilterStore } from '@/stores';
 
 type FormData = {
   min: number;
@@ -15,7 +15,9 @@ type FormData = {
 export const PriceFilter = () => {
   const pathName = usePathname();
   const { replace } = useRouter();
-  const { filters, setFilters } = useFilter();
+
+  const filters = useFilterStore((state) => state.filters);
+  const setFilters = useFilterStore((state) => state.setFilters);
 
   const {
     register,

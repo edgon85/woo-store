@@ -1,6 +1,7 @@
 'use client';
-import { useFetcher, useFilter } from '@/hooks';
+
 import { Filter, IColor } from '@/interfaces';
+import { useFilterStore } from '@/stores';
 import { generateFilterURL } from '@/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -12,9 +13,9 @@ type Props = {
 export const ColorFilter = ({ colors }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
-  const { filters, setFilters } = useFilter();
 
-  // const { data } = useFetcher<IColor[]>(`/colors`);
+  const filters = useFilterStore((state) => state.filters);
+  const setFilters = useFilterStore((state) => state.setFilters);
 
   const handleChange = (colorItem: IColor, isChecked: boolean) => {
     const newFilter: Filter = {

@@ -1,12 +1,12 @@
 'use client';
-import { useFilter } from '@/hooks';
+
+import { useFilterStore } from '@/stores';
 import { usePathname, useRouter } from 'next/navigation';
 
 export const BadgeCleanFilters = () => {
   const pathName = usePathname();
   const { replace } = useRouter();
-  const { setFilters } = useFilter();
-
+  const setFilters = useFilterStore((state) => state.setFilters);
   const handleClick = () => {
     setFilters([]);
     replace(`${pathName}`);

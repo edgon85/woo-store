@@ -1,9 +1,10 @@
 'use client';
-import { useFetcher, useFilter } from '@/hooks';
+
 import { usePathname, useRouter } from 'next/navigation';
 import { Filter, IClothesState } from '@/interfaces';
 import { useEffect } from 'react';
 import { generateFilterURL } from '@/utils';
+import { useFilterStore } from '@/stores';
 
 type Props = {
   clothesStates: IClothesState[];
@@ -12,7 +13,8 @@ type Props = {
 export const ClothesStateFilter = ({ clothesStates }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
-  const { filters, setFilters } = useFilter();
+  const filters = useFilterStore((state) => state.filters);
+  const setFilters = useFilterStore((state) => state.setFilters);
 
   const handleChange = (clothesState: IClothesState, isChecked: boolean) => {
     const newFilter: Filter = {

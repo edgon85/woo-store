@@ -1,4 +1,4 @@
-import { useFilter } from '@/hooks';
+
 import { MeasurementFilterItems } from './measurements/MeasurementFilterItems';
 import { BrandsItems } from './brands/BrandsItems';
 import { ClothesStateFilter } from './clothesState/ClothesStateFilter';

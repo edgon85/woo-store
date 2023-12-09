@@ -1,11 +1,10 @@
-import { useFilter, useFetcher } from '@/hooks';
+import { useFetcher } from '@/hooks';
 import { ICategory } from '@/interfaces';
-import Cookies from 'js-cookie';
+import { usePersonalPreferencesStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 
 type Props = {
   isCollapsed: boolean;
-  itemName: string;
   clothesType: string;
   toggleMenu: (title: string) => void;
   menuName: string;
@@ -13,16 +12,18 @@ type Props = {
 
 export const ItemMegaMenu = ({
   isCollapsed,
-  itemName,
   clothesType,
   toggleMenu,
   menuName,
 }: Props) => {
   const router = useRouter();
-  const { gender, setClothesType, setCategory } = useFilter();
+  const gender = usePersonalPreferencesStore((state) => state.gender);
+  const setClothesType = usePersonalPreferencesStore(
+    (state) => state.setClothesType
+  );
 
   const { data: cat, isLoading } = useFetcher<ICategory[]>(
-    `/categories?gender=${gender}&type=${itemName}`
+    `/categories?gender=${gender}&type=${clothesType}`
   );
 
   const columns = 3; // Cambia esto al número de columnas que desees (en este caso, 3)
@@ -37,10 +38,9 @@ export const ItemMegaMenu = ({
   }
 
   const handleOnclick = (category: ICategory) => {
-    Cookies.set('category', JSON.stringify(category));
     toggleMenu(menuName);
-    setClothesType(itemName);
-    setCategory(category);
+    setClothesType(clothesType);
+
     router.push(`/${gender}/${clothesType}/${category.slug}`);
   };
 

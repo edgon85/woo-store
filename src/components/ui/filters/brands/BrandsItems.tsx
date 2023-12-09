@@ -1,11 +1,12 @@
 'use client';
-import { useFilter } from '@/hooks';
+
 import { usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Filter, IBrand } from '@/interfaces';
 import { getBrandData } from '@/helpers';
 import { useDebounce } from '@/hooks/useDebounce';
 import { generateFilterURL } from '@/utils';
+import { useFilterStore } from '@/stores';
 
 type Props = {
   brands: IBrand[];
@@ -15,7 +16,9 @@ export const BrandsItems = ({ brands }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
 
-  const { filters, setFilters } = useFilter();
+  const filters = useFilterStore((state) => state.filters);
+  const setFilters = useFilterStore((state) => state.setFilters);
+
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<IBrand[]>([]);
   const { debounceValue: debounceSearch } = useDebounce(searchQuery, 500);
