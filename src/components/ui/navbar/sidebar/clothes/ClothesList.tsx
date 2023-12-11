@@ -4,18 +4,16 @@ import { usePersonalPreferencesStore, useSidebar } from '@/stores';
 import { useRouter } from 'next/navigation';
 
 type Props = {
-  itemName: string;
+  articleType: string;
 };
 
-export const ClothesList = ({ itemName }: Props) => {
-
+export const ClothesList = ({ articleType }: Props) => {
   const gender = usePersonalPreferencesStore((state) => state.gender);
-  const clothesType = usePersonalPreferencesStore((state) => state.clothesType);
   const router = useRouter();
   const sidebarMenu = useSidebar((state) => state.onSidebarOpen);
 
   const { data: categories } = useFetcher<ICategory[]>(
-    `/categories?gender=${gender}&type=${itemName}`
+    `/categories?gender=${gender}&type=${articleType}`
   );
 
   return (
@@ -25,7 +23,8 @@ export const ClothesList = ({ itemName }: Props) => {
           <button
             className="py-2 pl-2 capitalize"
             onClick={() => {
-              router.push(`/${gender}/${clothesType}/${category.slug}`);
+              console.log(articleType);
+              router.push(`/${gender}/${articleType}/${category.slug}`);
               sidebarMenu();
             }}
           >

@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
 type Props = {
   title: string;
   items: JSX.Element | JSX.Element[];
-//   isOpen: boolean;
-//   onClick: () => void;
+  //   isOpen: boolean;
+  //   onClick: () => void;
 };
 export const MenuItem = ({ title, items }: Props) => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <li>
       <button

@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  AuthProvider,
-  ModalProvider,
-  FilterProvider,
-  CheckoutProvider,
-} from '@/context';
+import { AuthProvider, ModalProvider, CheckoutProvider } from '@/context';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
 
@@ -24,9 +19,7 @@ export function Providers({ children }: Props) {
       <SessionProvider>
         <AuthProvider>
           <CheckoutProvider>
-            <FilterProvider>
-              <ModalProvider>{children}</ModalProvider>
-            </FilterProvider>
+            <ModalProvider>{children}</ModalProvider>
           </CheckoutProvider>
         </AuthProvider>
       </SessionProvider>
