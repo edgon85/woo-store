@@ -4,18 +4,23 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Filter, IMeasurement } from '@/interfaces';
 import { generateFilterURL, measurementFormat } from '@/utils';
 import { useEffect } from 'react';
-import { useFilterStore } from '@/stores';
+import { useFilterStore, useSidebar } from '@/stores';
 
 type Props = {
   measurements: IMeasurement[];
+  isMovil?: boolean;
 };
 
-export const MeasurementFilterItems = ({ measurements }: Props) => {
+export const MeasurementFilterItems = ({
+  measurements,
+  isMovil = false,
+}: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
 
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
 
   const handleChange = (measurementSize: IMeasurement, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -29,6 +34,9 @@ export const MeasurementFilterItems = ({ measurements }: Props) => {
     if (isChecked) {
       draft.push(newFilter);
       setFilters([...draft]);
+      if (isMovil) {
+        menuFilter();
+      }
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
       setFilters(draft);

@@ -63,7 +63,10 @@ export const NavCategories = async ({
           title={'Tallas'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <MeasurementFilterItems measurements={measurements} />
+              <MeasurementFilterItems
+                measurements={measurements}
+                isMovil={isMovil}
+              />
             </div>
           }
         />
