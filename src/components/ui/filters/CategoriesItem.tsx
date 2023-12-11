@@ -3,13 +3,19 @@ import { ISubcategory } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { RadiaSelectIcon } from '../icons';
 import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useSidebar } from '@/stores';
 
 type Props = {
   subcategories: ISubcategory[];
+  isMovil?: boolean;
 };
 
-export const SubcategoriesItems = ({ subcategories }: Props) => {
+export const SubcategoriesItems = ({
+  subcategories,
+  isMovil = false,
+}: Props) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
   const router = useRouter();
 
   const params = useParams();
@@ -27,6 +33,9 @@ export const SubcategoriesItems = ({ subcategories }: Props) => {
   const handleSubcategoryClick = (subSlug: string) => {
     setSelectedSubcategory(subSlug);
     router.push(`/${gender}/${clothesType}/${category}/${subSlug}`);
+    if (isMovil) {
+      menuFilter();
+    }
   };
   return (
     <>

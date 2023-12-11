@@ -1,4 +1,5 @@
-import { NavCategories } from '@/components';
+import { ButtonFilter, NavCategories } from '@/components';
+import { SidebarFilter } from '@/components/ui';
 
 export default function Layout({
   children,
@@ -25,8 +26,19 @@ export default function Layout({
 
       {/* <!-- Sección de Cuadrícula de 4 Columnas (Lado Derecho) --> */}
       <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2">
+        <ButtonFilter />
         {children}
       </div>
+      <SidebarFilter
+        filters={
+          <NavCategories
+            gender={params.gender}
+            category={params.category}
+            clothesType={params.clothesType}
+            isMovil={true}
+          />
+        }
+      />
     </div>
   );
 }

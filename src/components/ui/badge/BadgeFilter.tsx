@@ -31,7 +31,7 @@ export const BadgeFilterList = () => {
   }, [filters, setFilters, isInitialized]);
 
   return (
-    <div className="border py-2 overflow-scroll">
+    <div className="py-2 overflow-scroll">
       {filters.map((filter) => (
         <BadgeFilter key={filter.slug} filterItem={filter} />
       ))}
@@ -83,12 +83,12 @@ export const BadgeFilter = ({ filterItem }: Props) => {
     <>
       <span
         id="badge-dismiss-green"
-        className="inline-flex mb-1 items-center px-2 py-1 mr-2 text-sm font-medium text-white bg-primary rounded uppercase"
+        className="inline-flex mb-1 items-center px-2 py-1 mr-2 text-xs md:text-sm font-normal md:font-medium text-white bg-cerise-red-600 rounded uppercase"
       >
         {` ${titleOption(filterItem.type)} ${filterItem.title}`}
         <button
           type="button"
-          className="inline-flex items-center p-1 ml-2 text-sm text-white bg-transparent rounded-sm hover:bg-lightPrimary hover:text-darkPrimary"
+          className="inline-flex items-center p-1 ml-2 text-xs md:text-sm text-white bg-transparent rounded-sm hover:bg-cerise-red-200 hover:text-cerise-red-700"
           data-dismiss-target="#badge-dismiss-green"
           aria-label="Remove"
           onClick={onHandlerClick}

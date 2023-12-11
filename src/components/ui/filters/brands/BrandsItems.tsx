@@ -6,16 +6,18 @@ import { Filter, IBrand } from '@/interfaces';
 import { getBrandData } from '@/helpers';
 import { useDebounce } from '@/hooks/useDebounce';
 import { generateFilterURL } from '@/utils';
-import { useFilterStore } from '@/stores';
+import { useFilterStore, useSidebar } from '@/stores';
 
 type Props = {
   brands: IBrand[];
+  isMovil?: boolean;
 };
 
-export const BrandsItems = ({ brands }: Props) => {
+export const BrandsItems = ({ brands, isMovil = false }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
 
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
 
@@ -54,6 +56,9 @@ export const BrandsItems = ({ brands }: Props) => {
     if (isChecked) {
       draft.push(newFilter);
       setFilters([...draft]);
+      if (isMovil) {
+        menuFilter();
+      }
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
       setFilters(draft);

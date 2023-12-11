@@ -5,16 +5,21 @@ import { Filter } from '@/interfaces';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { generateFilterURL } from '@/utils';
-import { useFilterStore } from '@/stores';
+import { useFilterStore, useSidebar } from '@/stores';
 
 type FormData = {
   min: number;
   max: number;
 };
 
-export const PriceFilter = () => {
+type Props = {
+  isMovil?: boolean;
+};
+
+export const PriceFilter = ({ isMovil = false }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
 
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
@@ -48,6 +53,10 @@ export const PriceFilter = () => {
     const draft = filters.filter((item) => item.type !== 'price');
 
     setFilters([...draft, newFilter]);
+
+    if (isMovil) {
+      menuFilter();
+    }
   };
 
   useEffect(() => {

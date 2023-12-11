@@ -4,17 +4,22 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Filter, IClothesState } from '@/interfaces';
 import { useEffect } from 'react';
 import { generateFilterURL } from '@/utils';
-import { useFilterStore } from '@/stores';
+import { useFilterStore, useSidebar } from '@/stores';
 
 type Props = {
   clothesStates: IClothesState[];
+  isMovil?: boolean;
 };
 
-export const ClothesStateFilter = ({ clothesStates }: Props) => {
+export const ClothesStateFilter = ({
+  clothesStates,
+  isMovil = false,
+}: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
 
   const handleChange = (clothesState: IClothesState, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -28,6 +33,9 @@ export const ClothesStateFilter = ({ clothesStates }: Props) => {
     if (isChecked) {
       draft.push(newFilter);
       setFilters([...draft]);
+      if (isMovil) {
+        menuFilter();
+      }
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
       setFilters(draft);

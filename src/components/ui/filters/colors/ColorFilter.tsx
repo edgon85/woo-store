@@ -1,21 +1,23 @@
 'use client';
 
 import { Filter, IColor } from '@/interfaces';
-import { useFilterStore } from '@/stores';
+import { useFilterStore, useSidebar } from '@/stores';
 import { generateFilterURL } from '@/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 type Props = {
   colors: IColor[];
+  isMovil?: boolean;
 };
 
-export const ColorFilter = ({ colors }: Props) => {
+export const ColorFilter = ({ colors, isMovil = false }: Props) => {
   const pathName = usePathname();
   const { replace } = useRouter();
 
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
 
   const handleChange = (colorItem: IColor, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -29,6 +31,9 @@ export const ColorFilter = ({ colors }: Props) => {
     if (isChecked) {
       draft.push(newFilter);
       setFilters([...draft]);
+      if (isMovil) {
+        menuFilter();
+      }
     } else {
       draft = draft.filter((resp) => newFilter.slug !== resp.slug);
       setFilters(draft);

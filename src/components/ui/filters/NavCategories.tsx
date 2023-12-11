@@ -1,4 +1,3 @@
-
 import { MeasurementFilterItems } from './measurements/MeasurementFilterItems';
 import { BrandsItems } from './brands/BrandsItems';
 import { ClothesStateFilter } from './clothesState/ClothesStateFilter';
@@ -19,11 +18,13 @@ type Props = {
   gender: string;
   category: string;
   clothesType: string;
+  isMovil?: boolean;
 };
 export const NavCategories = async ({
   gender,
   category,
   clothesType,
+  isMovil,
 }: Props) => {
   const subcategories = (await fetchData(
     `/subcategories/${gender}/${category}`
@@ -43,13 +44,18 @@ export const NavCategories = async ({
       <ul className="space-y-2">
         <MenuItem
           title={'Subcategorías'}
-          items={<SubcategoriesItems subcategories={subcategories} />}
+          items={
+            <SubcategoriesItems
+              subcategories={subcategories}
+              isMovil={isMovil}
+            />
+          }
         />
         <MenuItem
           title={'Marcas'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <BrandsItems brands={brands} />
+              <BrandsItems brands={brands} isMovil={isMovil} />
             </div>
           }
         />
@@ -65,7 +71,10 @@ export const NavCategories = async ({
           title={'Estado'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ClothesStateFilter clothesStates={clothesStates} />
+              <ClothesStateFilter
+                clothesStates={clothesStates}
+                isMovil={isMovil}
+              />
             </div>
           }
         />
@@ -73,7 +82,7 @@ export const NavCategories = async ({
           title={'Color'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ColorFilter colors={colors} />
+              <ColorFilter colors={colors} isMovil={isMovil} />
             </div>
           }
         />
@@ -81,7 +90,7 @@ export const NavCategories = async ({
           title={'Precio'}
           items={
             <div className="">
-              <PriceFilter />
+              <PriceFilter isMovil={isMovil} />
             </div>
           }
         />
