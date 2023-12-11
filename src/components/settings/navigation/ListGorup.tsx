@@ -1,6 +1,12 @@
 import { ListItem, ListItemProps } from './ListItem';
 
-export const ListGroup = ({ userId }: { userId: string }) => {
+export const ListGroup = ({
+  userId,
+  isMovil,
+}: {
+  userId: string;
+  isMovil?: boolean;
+}) => {
   const navItems: ListItemProps[] = [
     {
       id: 'profile',
@@ -34,7 +40,7 @@ export const ListGroup = ({ userId }: { userId: string }) => {
   return (
     <nav className="w-full text-base font-medium">
       {navItems.map((item) => (
-        <ListItem key={item.id} {...item} />
+        <ListItem key={item.id} {...item} isMovil={isMovil} />
       ))}
     </nav>
   );

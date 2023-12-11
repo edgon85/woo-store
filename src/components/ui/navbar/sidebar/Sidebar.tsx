@@ -8,6 +8,8 @@ import { MenuItem } from '../../filters/NavItems';
 import { ClothesList } from './clothes/ClothesList';
 import { BsArrowRight } from 'react-icons/bs';
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { ListGroup } from '@/components/settings/navigation/ListGorup';
 
 const Sidebar = () => {
   const menuOpen = useSidebar((state) => state.sidebarOpen);
@@ -90,8 +92,8 @@ const Sidebar = () => {
             </li>
           )}
 
-          <li className="">Categorías</li>
-          <ul className="">
+          <li className="text-center text-lg font-semibold">Categorías</li>
+          <ul>
             <MenuItem
               title={'Ropa'}
               items={<ClothesList articleType="ropa" />}
@@ -105,97 +107,14 @@ const Sidebar = () => {
               items={<ClothesList articleType="accesorios" />}
             />
           </ul>
-          <li className="pl-2">Tallas</li>
-          <ul className="ml-2">
-            {/*  <li>Talla 1</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>nachos</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Talla 2</li>
-            <li>Ultimo</li> */}
-          </ul>
+          {user && (
+            <>
+              <li className="text-center text-lg font-semibold">Ajustes</li>
+              <ul>
+                <ListGroup userId={user?.id!} isMovil={true} />
+              </ul>
+            </>
+          )}
         </ul>
       </div>
     </>
