@@ -1,6 +1,7 @@
 import { createBrand } from '@/helpers/httpHelper';
-import { useAuth, useModal } from '@/hooks';
+import { useAuth } from '@/hooks';
 import { IBrand } from '@/interfaces';
+import { useModalStore } from '@/stores';
 import { BsPlusCircle } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 
@@ -11,7 +12,7 @@ type Props = {
 };
 
 export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
-  const { onCloseModal } = useModal();
+  const closeModal = useModalStore((state) => state.closeModal);
   const { user } = useAuth();
 
   const handleOnclick = () => {
@@ -37,7 +38,7 @@ export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
       if (result.isConfirmed) {
         setBrand(result.value);
         setSearchQuery('');
-        onCloseModal();
+        closeModal();
         Swal.fire({
           title: `${result.value.title} creado`,
         });
