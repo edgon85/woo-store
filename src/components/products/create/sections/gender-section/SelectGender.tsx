@@ -1,17 +1,15 @@
-import { useModal } from '@/hooks';
+import { useCreateProductStore, useModalStore } from '@/stores';
 import { IoIosCheckmark } from 'react-icons/io';
 
-type Props = {
-  setGender: (gender: string) => void;
-  gender: string;
-};
+export const SelectGender = () => {
+  const gender = useCreateProductStore((state) => state.gender);
+  const setGender = useCreateProductStore((state) => state.setGender);
 
-export const SelectGender = ({ setGender, gender }: Props) => {
-  const { onCloseModal } = useModal();
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const handleOnclick = (value: string) => {
     setGender(value);
-    onCloseModal();
+    closeModal();
   };
   return (
     <div className="flex flex-col">

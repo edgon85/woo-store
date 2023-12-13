@@ -2,20 +2,18 @@
 
 import { SearchIcon } from '@/components/ui';
 import { getBrandData } from '@/helpers/httpHelper';
-import { useModal } from '@/hooks';
 import { useDebounce } from '@/hooks/useDebounce';
 import { IBrand } from '@/interfaces';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IoIosCheckmark } from 'react-icons/io';
 import { CreateBrand } from './CreateBrand';
+import { useCreateProductStore, useModalStore } from '@/stores';
 
-type Props = {
-  setBrand: (brand: IBrand) => void;
-  branSelectedId: number;
-};
+export const BrandSelect = () => {
+  const closeModal = useModalStore((state) => state.closeModal);
+  const setBrand = useCreateProductStore((state) => state.setBrand);
+  const selectedBrand = useCreateProductStore((state) => state.brand);
 
-export const BrandSelect = ({ setBrand, branSelectedId }: Props) => {
-  const { onCloseModal } = useModal();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<IBrand[]>([]);
   const [loading, setLoading] = useState(false);
@@ -28,8 +26,8 @@ export const BrandSelect = ({ setBrand, branSelectedId }: Props) => {
 
   const handleClick = (brand: IBrand) => {
     setBrand(brand);
-    setSearchQuery("");
-    onCloseModal();
+    setSearchQuery('');
+    closeModal();
   };
 
   const handleOnchange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -64,17 +62,23 @@ export const BrandSelect = ({ setBrand, branSelectedId }: Props) => {
           <SearchIcon color="var(--divider)" />
         )}
       </div>
-      {searchResults.length === 0 ? <CreateBrand name={searchQuery} setBrand={setBrand} setSearchQuery={setSearchQuery}/> : null}
+      {searchResults.length === 0 ? (
+        <CreateBrand
+          name={searchQuery}
+          setBrand={setBrand}
+          setSearchQuery={setSearchQuery}
+        />
+      ) : null}
       {searchResults.map((brand: IBrand) => (
         <div
           onClick={() => handleClick(brand)}
           key={brand.id}
           className={`flex justify-between items-center 
-          ${branSelectedId === brand.id ? 'text-darkPrimary' : 'text-black'}
+          ${selectedBrand?.id === brand.id ? 'text-darkPrimary' : 'text-black'}
               border-b py-4 cursor-pointer`}
         >
-          <span>{brand.title}</span>
-          {branSelectedId === brand.id ? (
+          <span className="capitalize">{brand.title}</span>
+          {selectedBrand?.id === brand.id ? (
             <IoIosCheckmark size={24} color="var(--primary)" />
           ) : null}
         </div>

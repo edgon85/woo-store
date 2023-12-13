@@ -1,24 +1,16 @@
-// import { colors } from '@/assets/data';
 import { Button } from '@/components/ui';
-import { getAllColors } from '@/helpers/httpHelper';
-import { useModal } from '@/hooks';
+import { useFetcher, useModal } from '@/hooks';
 import { IColor } from '@/interfaces';
-import { useEffect, useState } from 'react';
+import { useCreateProductStore, useModalStore } from '@/stores';
+import { useState } from 'react';
 
-
-type Props = {
-  setColor: (color: IColor[]) => void;
-  colorSelect: IColor[];
-};
-
-export const ColorSelect = ({ setColor, colorSelect }: Props) => {
+export const ColorSelect = () => {
   const [selectColor, setSelectColor] = useState<IColor[]>([]);
-  const [colors, setColors] = useState<IColor[]>([]);
-  const { onCloseModal } = useModal();
+  const setColor = useCreateProductStore((store) => store.setColors);
 
-  useEffect(() => {
-    fetchColors();
-  }, []);
+  const closeModal = useModalStore((state) => state.closeModal);
+
+  const { data: colors } = useFetcher<IColor[]>('/colors');
 
   const handleChange = (color: IColor, isChecked: boolean) => {
     let draft = structuredClone(selectColor);
@@ -32,11 +24,6 @@ export const ColorSelect = ({ setColor, colorSelect }: Props) => {
 
       setSelectColor(draft);
     }
-  };
-
-  const fetchColors = async () => {
-    const  data = await getAllColors();
-    setColors(data);
   };
 
   return (
@@ -104,7 +91,7 @@ export const ColorSelect = ({ setColor, colorSelect }: Props) => {
           label={'Listo'}
           onClick={() => {
             setColor(selectColor);
-            onCloseModal();
+            closeModal();
           }}
         />
       </footer>

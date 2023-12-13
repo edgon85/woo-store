@@ -1,16 +1,14 @@
-import { useModal } from '@/hooks';
+import { useCreateProductStore, useModalStore } from '@/stores';
 import { IoIosCheckmark } from 'react-icons/io';
 
-type Props = {
-  setClothesType: (type: string) => void;
-  clothesType: string;
-};
-export const SelectClothesType = ({ clothesType, setClothesType }: Props) => {
-  const { onCloseModal } = useModal();
+export const SelectClothesType = () => {
+  const closeModal = useModalStore((state) => state.closeModal);
+  const clothesType = useCreateProductStore((state) => state.clothesType);
+  const setClothesType = useCreateProductStore((state) => state.setClothesType);
 
   const handleOnclick = (value: string) => {
     setClothesType(value);
-    onCloseModal();
+    closeModal();
   };
   return (
     <div className="flex flex-col">
