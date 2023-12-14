@@ -1,4 +1,5 @@
 export * from './auth/auth.store';
+export * from './checkout.store';
 export * from './create-product.store';
 export * from './filters.store';
 export * from './modal.store';

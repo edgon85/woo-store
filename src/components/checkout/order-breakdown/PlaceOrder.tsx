@@ -1,7 +1,8 @@
 import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
 import { createOrder } from '@/helpers/httpOrderHelper';
-import { useAuth, useCheckout } from '@/hooks';
+import { useAuth } from '@/hooks';
 import { TypeCreateOrder } from '@/lib';
+import { useCheckoutStore } from '@/stores';
 import { useEffect, useState } from 'react';
 
 export const PlaceOrder = () => {
@@ -11,14 +12,12 @@ export const PlaceOrder = () => {
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
 
   const { user } = useAuth();
-  const {
-    productCheckout,
-    serviceFee,
-    paymentMethod,
-    packageDelivery,
-    address,
-    amount,
-  } = useCheckout();
+
+  const productCheckout = useCheckoutStore((state) => state.product);
+  const paymentMethod = useCheckoutStore((state) => state.paymentMethod);
+  const packageDelivery = useCheckoutStore((state) => state.packageDelivery);
+  const address = useCheckoutStore((state) => state.address);
+  const amount = useCheckoutStore((state) => state.computed.amount);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -99,7 +98,7 @@ export const PlaceOrder = () => {
       {alertType === 'error' && (
         <AlertComponent
           type="error"
-          message="Ocurrió un error al al crear la ordern."
+          message="Ocurrió un error al al crear la orden."
           onDismiss={() => setAlertType('')}
         />
       )}

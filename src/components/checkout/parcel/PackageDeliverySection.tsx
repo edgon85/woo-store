@@ -1,8 +1,8 @@
 'use client';
 
 import { RadiaSelectIcon } from '@/components/ui';
-import { useCheckout } from '@/hooks';
 import { IPackageDelivery } from '@/lib';
+import { useCheckoutStore } from '@/stores';
 import { useState } from 'react';
 import { IoMdRadioButtonOff } from 'react-icons/io';
 
@@ -12,11 +12,13 @@ type Props = {
 
 export const PackageDeliverySection = ({ packagesDelivery }: Props) => {
   const [selectedOption, setSelectedOption] = useState<number>();
-  const { onSetPackageDelivery } = useCheckout();
+  const setPackageDelivery = useCheckoutStore(
+    (state) => state.setPackageDelivery
+  );
 
   const onChangeOption = (option: IPackageDelivery) => {
     setSelectedOption(option.id);
-    onSetPackageDelivery(option);
+    setPackageDelivery(option);
   };
 
   return (

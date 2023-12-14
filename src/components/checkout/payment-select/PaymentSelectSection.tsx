@@ -1,7 +1,7 @@
 'use client';
 
-import { useCheckout } from '@/hooks';
 import { IPaymentMethod } from '@/lib';
+import { useCheckoutStore } from '@/stores';
 import { useState } from 'react';
 
 type Props = {
@@ -11,10 +11,10 @@ type Props = {
 export const PaymentSelectSection = ({ paymentMethods }: Props) => {
   const [selectedOption, setSelectedOption] = useState<number>();
   const [label, setLabel] = useState('');
-  const { onSetPaymentMethod } = useCheckout();
+  const setPaymentMethod = useCheckoutStore((state) => state.setPaymentMethod);
 
   const onChangeInput = (option: IPaymentMethod) => {
-    onSetPaymentMethod(option);
+    setPaymentMethod(option);
     setSelectedOption(option.id);
     setLabel(option.label);
   };
