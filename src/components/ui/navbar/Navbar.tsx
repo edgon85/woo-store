@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import logo from '../../../../public/logo2.svg';
 import { NavbarSearch, NavbarActions } from './';
-import { MenuIcon } from '../icons';
 import Link from 'next/link';
-import Sidebar from './sidebar/Sidebar';
 import { GenderSelected } from '../dropdowns';
 
 export const Navbar = () => {
@@ -24,7 +22,7 @@ export const Navbar = () => {
             <NavbarSearch />
           </div>
 
-          <div className="mr-10">
+          <div className="">
             <NavbarActions />
           </div>
         </div>

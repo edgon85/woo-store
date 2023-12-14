@@ -26,6 +26,7 @@ export const ImageComponent = ({ src, alt, prodSlug }: Props) => {
           style={{
             objectFit: 'cover',
           }}
+          priority={false}
         />
       </div>
     </Link>
