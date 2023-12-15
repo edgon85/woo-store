@@ -5,7 +5,6 @@ export * from './tabs';
 export * from './filters';
 export * from './badge';
 export * from './light-box-gallery';
-export * from './image-slider';
 export * from './tooltip';
 export * from './Divider';
 export * from './alert';
