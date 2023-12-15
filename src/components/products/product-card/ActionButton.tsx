@@ -12,7 +12,7 @@ export const ActionButton = ({
     <div className="mt-2 w-full">
       {currentUserId !== product.user?.id ? (
         <Link
-          className="bg-cerise-red-600 text-white rounded flex justify-center items-center px-4 py-2"
+          className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white text-sm rounded flex justify-center items-center px-4 py-2"
           href={`/checkout?transaction=${product.id}`}
         >
           Comprar

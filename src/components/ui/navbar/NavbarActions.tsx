@@ -21,7 +21,7 @@ export const NavbarActions = () => {
         <Link
           href={`/auth/login?p=${path}`}
           type="button"
-          className="hidden md:flex focus:outline-none text-white bg-cerise-red-600 hover:bg-cerise-red-500 font-medium rounded-lg text-sm px-5 py-2.5"
+          className="hidden md:flex focus:outline-none text-white bg-cerise-red-600 hover:bg-cerise-red-500 font-medium rounded text-sm px-5 py-2.5"
         >
           Inicia sesión | Regístrate
         </Link>

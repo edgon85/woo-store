@@ -13,14 +13,14 @@ type Props = {
 
 export const UserInfo = ({ name, image, location, username }: Props) => {
   return (
-    <section className="flex items-center p-4 bg-white rounded-lg shadow-md">
+    <section className="flex items-center p-2 md:p-4 bg-white md:rounded md:shadow">
       {image !== null ? (
         <Image
-          className="w-16 h-16 rounded-full "
           src={image}
           alt="foto de perfil"
           width={64}
           height={64}
+          className="w-16 h-16 rounded-full object-fill"
         />
       ) : (
         <div className="w-16 h-16 rounded-full bg-lightPrimary flex justify-center items-center">

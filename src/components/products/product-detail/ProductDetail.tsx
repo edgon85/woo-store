@@ -38,7 +38,7 @@ export const ProductDetail = ({ product, currentUserId }: Props) => {
   } = product;
 
   return (
-    <div className="bg-white p-4 rounded shadow-md">
+    <div className="bg-white p-2 md:p-4 md:rounded md:shadow">
       <section>
         <h1 className="text-lg font-bold capitalize">{title}</h1>
         <p className="text-lg font-semibold">Q{price}</p>

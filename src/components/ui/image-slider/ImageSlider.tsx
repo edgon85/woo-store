@@ -49,7 +49,7 @@ export const ImageSlider = ({ images }: Props) => {
       className={`custom-arrow custom-arrow-prev${hasPrev ? '' : ' disabled'}`}
       onClick={clickHandler}
     >
-      &#9664; {/* Flecha hacia la izquierda */}
+      &#9664;
     </div>
   );
 
@@ -62,7 +62,7 @@ export const ImageSlider = ({ images }: Props) => {
       className={`custom-arrow custom-arrow-next${hasNext ? '' : ' disabled'}`}
       onClick={clickHandler}
     >
-      &#9654; {/* Flecha hacia la derecha */}
+      &#9654; 
     </div>
   );
 
@@ -78,7 +78,6 @@ export const ImageSlider = ({ images }: Props) => {
             alt="Slider"
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            // className="transition-transform duration-500 ease-in-out transform scale-100 hover:scale-105"
             style={{
               objectFit: 'contain',
             }}
@@ -111,7 +110,6 @@ export const ImageSlider = ({ images }: Props) => {
           useKeyboardArrows={true}
           renderArrowPrev={renderCustomArrowPrev}
           renderArrowNext={renderCustomArrowNext}
-          // showArrows={ false}
         >
           {images.map((image, index) => {
             return (

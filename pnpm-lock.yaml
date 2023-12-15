@@ -68,6 +68,9 @@ dependencies:
   react-swipeable:
     specifier: 7.0.1
     version: 7.0.1(react@18.2.0)
+  swiper:
+    specifier: 11.0.5
+    version: 11.0.5
   swr:
     specifier: 2.2.2
     version: 2.2.2(react@18.2.0)
@@ -2770,6 +2773,11 @@ packages:
   /sweetalert2@11.7.20:
     resolution: {integrity: sha512-GdU1TkiLpGGC0mcPV8bKmS7G0MR7caxambPkEU8zyepRSNR9EaEvIjNhX5QNkL0VFVzHbI3l12NtuEklkJ0D4Q==}
     dev: true
+
+  /swiper@11.0.5:
+    resolution: {integrity: sha512-rhCwupqSyRnWrtNzWzemnBLMoyYuoDgGgspAm/8iBD3jCvAWycPLH4Z3TB0O5520DHLzMx94yUMH/B9Efpa48w==}
+    engines: {node: '>= 4.7.0'}
+    dev: false
 
   /swr@2.2.2(react@18.2.0):
     resolution: {integrity: sha512-CbR41AoMD4TQBQw9ic3GTXspgfM9Y8Mdhb5Ob4uIKXhWqnRLItwA5fpGvB7SmSw3+zEjb0PdhiEumtUvYoQ+bQ==}

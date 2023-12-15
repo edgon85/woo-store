@@ -20,7 +20,12 @@ export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
       </div>
       <ActionButton product={product} currentUserId={currentUserId} />
       <BtnMakeOffer product={product} />
-      <Button label="Enviar mensaje" type="button" outlined />
+      <button
+        className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
+        // onClick={onOpenModal}
+      >
+        Enviar mensaje
+      </button>
     </section>
   );
 };

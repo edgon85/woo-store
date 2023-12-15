@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Button, Divider } from '@/components/ui';
 import { IProduct } from '@/interfaces';
 import { useState } from 'react';
@@ -31,14 +31,15 @@ export const BtnMakeOffer = ({ product }: Props) => {
 
   return (
     <div>
-      <Button
-        label="Hacer oferta"
-        type="button"
-        outlined
+      <button
+        className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
         onClick={onOpenModal}
-      />
+      >
+        Hacer oferta
+      </button>
+
       <Modal open={open} onClose={onCloseModal} center>
-        <section className="w-96">
+        <section className="md:w-96">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="text-center text-lg font-semibold">Hacer oferta</h2>
             <Divider />
