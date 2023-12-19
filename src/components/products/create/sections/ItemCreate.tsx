@@ -12,7 +12,7 @@ type Props = {
 export const ItemCreate = ({ title, value, icon: Icon, onClick, uppercase }: Props) => {
   return (
     <div
-      className="flex justify-between items-center w-full border-b border-divider/50 py-4 px-4 md:px-0 cursor-pointer"
+      className="flex justify-between items-center w-full md:border-b border-divider/50 py-4 px-4 md:px-0 cursor-pointer"
       onClick={onClick}
     >
       <p className="flex gap-2 items-center">

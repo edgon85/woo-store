@@ -6,6 +6,7 @@ import {
   IMeasurement,
   ISubcategory,
 } from '@/interfaces';
+import { IPackageDelivery } from '@/lib';
 import { create } from 'zustand';
 
 type CreateProductState = {
@@ -18,6 +19,7 @@ type CreateProductState = {
   clothesState: IClothesState | null;
   colors: IColor[];
   price: number;
+  packageDeliveries: IPackageDelivery[];
 
   setGender: (value: string) => void;
   setClothesType: (value: string) => void;
@@ -28,6 +30,7 @@ type CreateProductState = {
   setClothesState: (clothesState: IClothesState) => void;
   setColors: (colors: IColor[]) => void;
   setPrice: (price: number) => void;
+  setPackageDeliveries: (packageDelivery: IPackageDelivery[]) => void;
 };
 
 export const useCreateProductStore = create<CreateProductState>()((set) => ({
@@ -40,6 +43,7 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
   clothesState: null,
   colors: [],
   price: 0,
+  packageDeliveries: [],
 
   //onSetGender: (value: string) => set((state) => ({ gender: value })),
   setGender: (value: string) => set((state) => ({ gender: value })),
@@ -54,4 +58,6 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
     set((state) => ({ clothesState: value })),
   setColors: (value: IColor[]) => set((state) => ({ colors: value })),
   setPrice: (value: number) => set((state) => ({ price: value })),
+  setPackageDeliveries: (value: IPackageDelivery[]) =>
+    set((state) => ({ packageDeliveries: value })),
 }));

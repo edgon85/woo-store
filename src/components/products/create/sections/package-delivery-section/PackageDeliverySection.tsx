@@ -1,0 +1,35 @@
+import { TbTruckDelivery } from 'react-icons/tb';
+
+import { useCreateProductStore, useModalStore } from '@/stores';
+import { ItemCreate } from '../ItemCreate';
+import { PackageDeliverySelect } from './PackageDeliverySelect';
+import { IPackageDelivery } from '@/lib';
+
+type Props = {
+  data: IPackageDelivery[];
+};
+
+export const PackageDeliverySection = ({ data }: Props) => {
+  const packageDeliveries = useCreateProductStore(
+    (state) => state.packageDeliveries
+  );
+  const openModal = useModalStore((state) => state.openModal);
+
+  return (
+    <ItemCreate
+      title="Paquetería para enviar el producto"
+      icon={TbTruckDelivery}
+      value={packageDeliveries.map((item) => item.name).join(', ')}
+      onClick={() =>
+        openModal(
+          <div className=" w-72 md:w-96 p-4">
+            <p className="text-center my-4 font-semibold">
+              Seleccione paqueterías para enviar su prenda
+            </p>
+            <PackageDeliverySelect data={data} />
+          </div>
+        )
+      }
+    />
+  );
+};

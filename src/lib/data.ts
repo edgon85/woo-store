@@ -103,10 +103,13 @@ export async function fetchPaymentMethods(): Promise<IPaymentMethod[]> {
 }
 
 /* ··········································································· */
-export async function fetchPackageDelivery(): Promise<IPackageDelivery[]> {
+export async function fetchPackageDelivery(
+  ids: number[]
+): Promise<IPackageDelivery[]> {
   noStore();
   const token = cookies().get('token')?.value;
-  const url = `${process.env.API_BASE_URL}/package-delivery`;
+  const queryString = `?ids=${ids.join(',')}`;
+  const url = `${process.env.API_BASE_URL}/package-delivery${queryString}`;
 
   const res = await fetch(url, {
     method: 'GET',
@@ -117,6 +120,7 @@ export async function fetchPackageDelivery(): Promise<IPackageDelivery[]> {
   });
 
   if (!res.ok) {
+    console.log(res);
     throw new Error('Failed to fetch data');
   }
 

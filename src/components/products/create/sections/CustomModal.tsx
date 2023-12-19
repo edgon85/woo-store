@@ -1,5 +1,6 @@
 import { useModalStore } from '@/stores';
 import Modal from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
 
 export const CustomModal = () => {
   const { isOpen, bodyContent, closeModal } = useModalStore();

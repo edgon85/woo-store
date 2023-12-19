@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui';
-import { useFetcher, useModal } from '@/hooks';
+import { useFetcher } from '@/hooks';
 import { IColor } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { useState } from 'react';

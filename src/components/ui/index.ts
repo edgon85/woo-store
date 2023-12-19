@@ -8,3 +8,5 @@ export * from './light-box-gallery';
 export * from './tooltip';
 export * from './Divider';
 export * from './alert';
+
+export * from './skeletons'

@@ -25,9 +25,21 @@ import {
   ClothesStateSection,
   ColorsSection,
   PriceSection,
+  PackageDeliverySection,
 } from './sections';
+import { IPackageDelivery } from '@/lib';
 
-export const CreateProduct = () => {
+export type FormInputs = {
+  title: string;
+  description: string;
+  gender: string;
+};
+
+type Props = {
+  packageDeliveriesData: IPackageDelivery[];
+};
+
+export const CreateProduct = ({ packageDeliveriesData }: Props) => {
   const { user } = useAuth();
   const router = useRouter();
 
@@ -38,7 +50,6 @@ export const CreateProduct = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       title: '',
-      description: '',
     },
   });
 
@@ -51,6 +62,9 @@ export const CreateProduct = () => {
   const clothesState = useCreateProductStore((state) => state.clothesState);
   const color = useCreateProductStore((state) => state.colors);
   const price = useCreateProductStore((state) => state.price);
+  const packagesDeliveries = useCreateProductStore(
+    (state) => state.packageDeliveries
+  );
 
   const onHandleSubmit: SubmitHandler<FieldValues> = (data) => {
     const newProduct: IProduct = {
@@ -68,6 +82,7 @@ export const CreateProduct = () => {
       measurement: measurement!,
       clothesState: clothesState!,
       status: 'Available',
+      packageDelivery: [],
     };
 
     onCreateNewProduct(newProduct, user!.token);
@@ -135,11 +150,12 @@ export const CreateProduct = () => {
             {/* ····························································· */}
             <ColorsSection />
             {/* ····························································· */}
+            <PackageDeliverySection data={packageDeliveriesData} />
           </div>
         )}
 
         {/* ····························································· */}
-        {color.length !== 0 ? <PriceSection /> : null}
+        {packagesDeliveries.length !== 0 ? <PriceSection /> : null}
         {/* ····························································· */}
 
         {price !== 0 ? (

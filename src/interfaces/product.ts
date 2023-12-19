@@ -1,3 +1,4 @@
+import { IPackageDelivery } from '@/lib';
 import { IUser } from './user';
 
 export interface IProduct {
@@ -12,9 +13,11 @@ export interface IProduct {
   isFeatured?: boolean;
   status: string;
   colors: number[];
+  packageDelivery: number[];
   brand: IBrand;
   measurement: IMeasurement;
   clothesState: IClothesState;
+
   user?: IUser;
   createdAt?: Date;
   updatedAt?: Date;

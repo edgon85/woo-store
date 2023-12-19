@@ -26,10 +26,11 @@ export default async function CheckoutPage({
   if (!transaction) {
     throw redirect('/not-found');
   }
+
   const product = await getProductBySlug(`${transaction}`);
   const addresses = await fetchShippingAddress();
   const paymentMethods = await fetchPaymentMethods();
-  const packagesDelivery = await fetchPackageDelivery();
+  // const packagesDelivery = await fetchPackageDelivery();
 
   if (product.status !== 'Available') {
     return <p>Producto ya no esta disponible</p>;
@@ -42,7 +43,9 @@ export default async function CheckoutPage({
         <AddressSection addresses={addresses} />
 
         <PaymentSelectSection paymentMethods={paymentMethods} />
-        <PackageDeliverySection packagesDelivery={packagesDelivery} />
+        <PackageDeliverySection
+          packagesDeliveriesIds={product.packageDelivery}
+        />
       </div>
       <div className="w-full lg:w-2/5 p-2">
         <OrderBreakdown
