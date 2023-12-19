@@ -1,13 +1,19 @@
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { IoIosCheckmark } from 'react-icons/io';
+type Props = {
+  clothesType: string;
+  onClothesTypeChange: (value: string) => void
+}
 
-export const SelectClothesType = () => {
+
+
+export const SelectClothesType = ({clothesType, onClothesTypeChange}: Props) => {
   const closeModal = useModalStore((state) => state.closeModal);
-  const clothesType = useCreateProductStore((state) => state.clothesType);
-  const setClothesType = useCreateProductStore((state) => state.setClothesType);
+/*   const clothesType = useCreateProductStore((state) => state.clothesType);
+  const setClothesType = useCreateProductStore((state) => state.setClothesType); */
 
   const handleOnclick = (value: string) => {
-    setClothesType(value);
+    onClothesTypeChange(value);
     closeModal();
   };
   return (

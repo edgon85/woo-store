@@ -1,8 +1,9 @@
 import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import { FormInputs } from '../CreateProduct';
 
 type Props = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<FormInputs>;
+  errors: FieldErrors<FormInputs>;
 };
 
 export const TitleSection = ({ register, errors }: Props) => {

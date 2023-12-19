@@ -2,8 +2,16 @@ import { ItemCreate } from '../ItemCreate';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { SelectClothesType } from './SelectClothesType';
 
-export const ClothesTypeSection = () => {
-  const clothesType = useCreateProductStore((state) => state.clothesType);
+type Props = {
+  clothesType: string;
+  onClothesTypeChange: (value: string) => void;
+};
+
+export const ClothesTypeSection = ({
+  clothesType,
+  onClothesTypeChange,
+}: Props) => {
+  // const clothesType = useCreateProductStore((state) => state.clothesType);
   const openModal = useModalStore((state) => state.openModal);
 
   return (
@@ -13,7 +21,10 @@ export const ClothesTypeSection = () => {
       onClick={() =>
         openModal(
           <div className=" w-72 md:w-96 p-4">
-            <SelectClothesType />
+            <SelectClothesType
+              clothesType={clothesType}
+              onClothesTypeChange={onClothesTypeChange}
+            />
           </div>
         )
       }

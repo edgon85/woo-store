@@ -1,14 +1,20 @@
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { IoIosCheckmark } from 'react-icons/io';
 
-export const SelectGender = () => {
-  const gender = useCreateProductStore((state) => state.gender);
-  const setGender = useCreateProductStore((state) => state.setGender);
+type Props = {
+  gender: string;
+  onGenderChange: (value: string) => void;
+};
+
+export const SelectGender = ({ gender, onGenderChange }: Props) => {
+  // const gender = useCreateProductStore((state) => state.gender);
+  // const setGender = useCreateProductStore((state) => state.setGender);
 
   const closeModal = useModalStore((state) => state.closeModal);
 
   const handleOnclick = (value: string) => {
-    setGender(value);
+    // setGender(value);
+    onGenderChange(value);
     closeModal();
   };
   return (

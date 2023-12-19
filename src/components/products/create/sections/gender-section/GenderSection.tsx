@@ -2,8 +2,13 @@ import { useCreateProductStore, useModalStore } from '@/stores';
 import { ItemCreate } from '../ItemCreate';
 import { SelectGender } from './SelectGender';
 
-export const GenderSection = () => {
-  const gender = useCreateProductStore((state) => state.gender);
+type Props = {
+  gender: string;
+  onGenderChange: (value: string) => void;
+};
+
+export const GenderSection = ({ gender, onGenderChange }: Props) => {
+  // const gender = useCreateProductStore((state) => state.gender);
   const openModal = useModalStore((state) => state.openModal);
 
   return (
@@ -13,7 +18,7 @@ export const GenderSection = () => {
       onClick={() =>
         openModal(
           <div className=" w-72 md:w-96 p-4">
-            <SelectGender  />
+            <SelectGender gender={gender} onGenderChange={onGenderChange} />
           </div>
         )
       }

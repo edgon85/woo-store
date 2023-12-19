@@ -3,9 +3,13 @@ import { ICategory } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { IoIosCheckmark } from 'react-icons/io';
 
-export const SelectCategory = () => {
-  const gender = useCreateProductStore((state) => state.gender);
-  const clothesType = useCreateProductStore((state) => state.clothesType);
+
+type Props = {
+  gender: string
+  clothesType: string;
+}
+
+export const SelectCategory = ({ gender, clothesType }: Props ) => {
   const setCategory = useCreateProductStore((state) => state.setCategory);
   const category = useCreateProductStore((state) => state.category);
 

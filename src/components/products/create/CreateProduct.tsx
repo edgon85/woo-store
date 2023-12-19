@@ -33,6 +33,7 @@ export type FormInputs = {
   title: string;
   description: string;
   gender: string;
+  clothesType: string;
 };
 
 type Props = {
@@ -47,14 +48,20 @@ export const CreateProduct = ({ packageDeliveriesData }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
+    setValue,
+    getValues,
+    watch,
+  } = useForm<FormInputs>({
     defaultValues: {
       title: '',
+      description: '',
+      gender: '',
+      clothesType: '',
     },
   });
 
-  const gender = useCreateProductStore((state) => state.gender);
-  const clothesType = useCreateProductStore((state) => state.clothesType);
+  // const gender = useCreateProductStore((state) => state.gender);
+  // const clothesType = useCreateProductStore((state) => state.clothesType);
   const category = useCreateProductStore((state) => state.category);
   const subcategory = useCreateProductStore((state) => state.subcategory);
   const brand = useCreateProductStore((state) => state.brand);
@@ -82,7 +89,7 @@ export const CreateProduct = ({ packageDeliveriesData }: Props) => {
       measurement: measurement!,
       clothesState: clothesState!,
       status: 'Available',
-      packageDelivery: [],
+      packageDelivery: [...packagesDeliveries.map((resp) => resp.id)],
     };
 
     onCreateNewProduct(newProduct, user!.token);
@@ -118,6 +125,12 @@ export const CreateProduct = ({ packageDeliveriesData }: Props) => {
     });
   };
 
+  const onGenderChange = (value: string) => setValue('gender', value);
+  const onClothesTypeChange = (value: string) => setValue('clothesType', value);
+
+  watch('gender');
+  watch('clothesType');
+
   return (
     <div className="w-full max-w-2xl px-2 md:px-0">
       <h2 className="text-2xl font-extrabold mb-4">Subir articulo nuevo</h2>
@@ -128,11 +141,24 @@ export const CreateProduct = ({ packageDeliveriesData }: Props) => {
         </div>
 
         <div className="bg-white rounded-lg shadow sm:p-6 md:p-8 mt-4">
-          <GenderSection />
+          <GenderSection
+            gender={getValues('gender')}
+            onGenderChange={onGenderChange}
+          />
           {/* ····························································· */}
-          {gender && <ClothesTypeSection />}
+          {getValues('gender') && (
+            <ClothesTypeSection
+              clothesType={getValues('clothesType')}
+              onClothesTypeChange={onClothesTypeChange}
+            />
+          )}
           {/* ····························································· */}
-          {clothesType && <CategorySection />}
+          {getValues('clothesType') && (
+            <CategorySection
+              gender={getValues('gender')}
+              clothesType={getValues('clothesType')}
+            />
+          )}
           {/* ····························································· */}
           {category && <SubcategorySection />}
         </div>
@@ -142,7 +168,7 @@ export const CreateProduct = ({ packageDeliveriesData }: Props) => {
             {/* ····························································· */}
             <BrandSection />
             {/* ····························································· */}
-            {category && clothesType !== 'accesorios' ? (
+            {category && getValues('clothesType') !== 'accesorios' ? (
               <MeasurementSection />
             ) : null}
             {/* ····························································· */}
