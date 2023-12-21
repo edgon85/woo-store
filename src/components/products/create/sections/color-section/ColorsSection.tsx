@@ -2,8 +2,13 @@ import { ItemCreate } from '../ItemCreate';
 import { BsDropletHalf } from 'react-icons/bs';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { ColorSelect } from './ColorSelect';
+import { IColor } from '@/interfaces';
 
-export const ColorsSection = () => {
+type Props = {
+  colors: IColor[];
+};
+
+export const ColorsSection = ({ colors }: Props) => {
   const color = useCreateProductStore((state) => state.colors);
   const openModal = useModalStore((state) => state.openModal);
 
@@ -19,7 +24,7 @@ export const ColorsSection = () => {
       onClick={() =>
         openModal(
           <div className=" w-72 md:w-96 p-4">
-            <ColorSelect />
+            <ColorSelect colors={colors} />
           </div>
         )
       }

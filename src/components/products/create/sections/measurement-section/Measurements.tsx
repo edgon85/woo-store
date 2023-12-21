@@ -1,12 +1,15 @@
-import { useFetcher, useModal } from '@/hooks';
+import { useFetcher } from '@/hooks';
 import { IMeasurement } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
 
-export const Measurements = () => {
+type Props = {
+  gender: string;
+  clothesType: string;
+};
+
+export const Measurements = ({ gender, clothesType }: Props) => {
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const gender = useCreateProductStore((state) => state.gender);
-  const clothesType = useCreateProductStore((state) => state.clothesType);
   const category = useCreateProductStore((state) => state.category);
   const setMeasurements = useCreateProductStore(
     (state) => state.setMeasurement

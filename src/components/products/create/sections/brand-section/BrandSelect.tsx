@@ -1,21 +1,26 @@
 'use client';
-
-import { SearchIcon } from '@/components/ui';
-import { getBrandData } from '@/helpers/httpHelper';
-import { useDebounce } from '@/hooks/useDebounce';
-import { IBrand } from '@/interfaces';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { IoIosCheckmark } from 'react-icons/io';
+import clsx from 'clsx';
+
+import { SearchIcon } from '@/components/ui';
+import { useDebounce } from '@/hooks/useDebounce';
+import { IBrand } from '@/interfaces';
 import { CreateBrand } from './CreateBrand';
 import { useCreateProductStore, useModalStore } from '@/stores';
+import { getBrands } from '@/actions';
 
-export const BrandSelect = () => {
+type Props = {
+  brands: IBrand[];
+};
+
+export const BrandSelect = ({ brands }: Props) => {
   const closeModal = useModalStore((state) => state.closeModal);
   const setBrand = useCreateProductStore((state) => state.setBrand);
   const selectedBrand = useCreateProductStore((state) => state.brand);
 
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<IBrand[]>([]);
+  const [searchResults, setSearchResults] = useState<IBrand[]>(brands);
   const [loading, setLoading] = useState(false);
 
   const { debounceValue: debounceSearch } = useDebounce(searchQuery, 500);
@@ -37,10 +42,9 @@ export const BrandSelect = () => {
 
   const performSearch = async (query: string) => {
     setLoading(true);
-    await getBrandData(query).then((data) => {
-      setSearchResults(data);
-      setLoading(false);
-    });
+    const searchBrands = await getBrands(query);
+    setSearchResults(searchBrands);
+    setLoading(false);
   };
 
   return (
@@ -56,7 +60,10 @@ export const BrandSelect = () => {
         />
         {loading ? (
           <>
-            <span>...</span>
+            <div className="animate-pulse flex w-full h-52">
+              <span>h-2</span>
+              <span>h-2</span>
+            </div>
           </>
         ) : (
           <SearchIcon color="var(--divider)" />
@@ -73,13 +80,16 @@ export const BrandSelect = () => {
         <div
           onClick={() => handleClick(brand)}
           key={brand.id}
-          className={`flex justify-between items-center 
-          ${selectedBrand?.id === brand.id ? 'text-darkPrimary' : 'text-black'}
-              border-b py-4 cursor-pointer`}
+          className={clsx(
+            'flex justify-between items-center border-b py-4 cursor-pointer',
+            {
+              'text-cerise-red-600': selectedBrand?.id === brand.id,
+            }
+          )}
         >
           <span className="capitalize">{brand.title}</span>
           {selectedBrand?.id === brand.id ? (
-            <IoIosCheckmark size={24} color="var(--primary)" />
+            <IoIosCheckmark size={24} className="text-cerise-red-600" />
           ) : null}
         </div>
       ))}

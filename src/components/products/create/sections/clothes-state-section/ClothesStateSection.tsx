@@ -2,9 +2,13 @@ import { ItemCreate } from '../ItemCreate';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { ClothesState } from './ClothesState';
+import { IClothesState } from '@/interfaces';
 
+type Props = {
+  clothingConditionList: IClothesState[];
+};
 
-export const ClothesStateSection = () => {
+export const ClothesStateSection = ({ clothingConditionList }: Props) => {
   const clothesState = useCreateProductStore((state) => state.clothesState);
   const openModal = useModalStore((state) => state.openModal);
 
@@ -16,7 +20,7 @@ export const ClothesStateSection = () => {
       onClick={() =>
         openModal(
           <div className=" w-72 md:w-96 p-4">
-            <ClothesState />
+            <ClothesState clothingConditionList={clothingConditionList} />
           </div>
         )
       }

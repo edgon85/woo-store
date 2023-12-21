@@ -1,16 +1,18 @@
 import { Button } from '@/components/ui';
-import { useFetcher } from '@/hooks';
 import { IColor } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
+import clsx from 'clsx';
 import { useState } from 'react';
 
-export const ColorSelect = () => {
+type Props = {
+  colors: IColor[];
+};
+
+export const ColorSelect = ({ colors }: Props) => {
   const [selectColor, setSelectColor] = useState<IColor[]>([]);
   const setColor = useCreateProductStore((store) => store.setColors);
 
   const closeModal = useModalStore((state) => state.closeModal);
-
-  const { data: colors } = useFetcher<IColor[]>('/colors');
 
   const handleChange = (color: IColor, isChecked: boolean) => {
     let draft = structuredClone(selectColor);
@@ -46,8 +48,6 @@ export const ColorSelect = () => {
       )}
 
       {colors.map((color) => {
-        const codeColor = `#${color.codeColor}`;
-
         return (
           <label
             className="flex justify-between items-center py-4 border-b cursor-pointer"
@@ -58,16 +58,19 @@ export const ColorSelect = () => {
               <span
                 className={`inline-block w-7 h-7 rounded-full border mr-4`}
                 style={{
-                  background: `${
-                    codeColor === 'multicolor'
-                      ? 'radial-gradient(red, orange, #ff0, pink, black, #00f, purple, red)'
-                      : codeColor
-                  }`,
+                  backgroundColor:
+                    color.codeColor !== 'multicolor'
+                      ? `#${color.codeColor}`
+                      : undefined,
+                  backgroundImage:
+                    color.codeColor === 'multicolor'
+                      ? 'linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)'
+                      : undefined,
                 }}
               ></span>
               {color.name}
             </div>
-            {/* <GrCheckbox size={24} lightingColor={'red'} /> */}
+
             <input
               disabled={
                 selectColor.length >= 2 &&

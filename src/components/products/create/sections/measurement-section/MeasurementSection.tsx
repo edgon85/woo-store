@@ -1,17 +1,17 @@
-
 import { ItemCreate } from '../ItemCreate';
 import { TbRulerMeasure } from 'react-icons/tb';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { Measurements, formatMeasurementString } from './Measurements';
 
+type Props = {
+  gender: string;
+  clothesType: string;
+};
 
-export const MeasurementSection = () => {
-  const gender = useCreateProductStore((state) => state.gender);
-  const clothesType = useCreateProductStore((state) => state.clothesType);
+export const MeasurementSection = ({ gender, clothesType }: Props) => {
   const category = useCreateProductStore((state) => state.category);
-    const measurement = useCreateProductStore((state) => state.measurement);
-    const openModal = useModalStore((state) => state.openModal);
-
+  const measurement = useCreateProductStore((state) => state.measurement);
+  const openModal = useModalStore((state) => state.openModal);
 
   return (
     <ItemCreate
@@ -27,7 +27,7 @@ export const MeasurementSection = () => {
       onClick={() =>
         openModal(
           <div className=" w-72 md:w-96 p-4">
-            <Measurements/>
+            <Measurements gender={gender} clothesType={clothesType} />
           </div>
         )
       }

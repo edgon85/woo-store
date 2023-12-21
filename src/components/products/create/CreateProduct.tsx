@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth } from '@/hooks';
-import { IProduct } from '@/interfaces';
+import { IBrand, IClothesState, IColor, IProduct } from '@/interfaces';
 
 import { Button } from '../../ui';
 
@@ -38,9 +38,17 @@ export type FormInputs = {
 
 type Props = {
   packageDeliveriesData: IPackageDelivery[];
+  brands: IBrand[];
+  clothingConditionList: IClothesState[];
+  colors: IColor[]
 };
 
-export const CreateProduct = ({ packageDeliveriesData }: Props) => {
+export const CreateProduct = ({
+  packageDeliveriesData,
+  brands,
+  clothingConditionList,
+  colors
+}: Props) => {
   const { user } = useAuth();
   const router = useRouter();
 
@@ -166,15 +174,20 @@ export const CreateProduct = ({ packageDeliveriesData }: Props) => {
         {subcategory && (
           <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
             {/* ····························································· */}
-            <BrandSection />
+            <BrandSection brands={brands} />
             {/* ····························································· */}
             {category && getValues('clothesType') !== 'accesorios' ? (
-              <MeasurementSection />
+              <MeasurementSection
+                gender={getValues('gender')}
+                clothesType={getValues('clothesType')}
+              />
             ) : null}
             {/* ····························································· */}
-            <ClothesStateSection />
+            <ClothesStateSection
+              clothingConditionList={clothingConditionList}
+            />
             {/* ····························································· */}
-            <ColorsSection />
+            <ColorsSection colors={ colors } />
             {/* ····························································· */}
             <PackageDeliverySection data={packageDeliveriesData} />
           </div>

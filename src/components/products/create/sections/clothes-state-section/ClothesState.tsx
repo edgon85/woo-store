@@ -3,13 +3,17 @@ import { IClothesState } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { IoIosCheckmark } from 'react-icons/io';
 
-export const ClothesState = () => {
+type Props = {
+  clothingConditionList: IClothesState[];
+};
+
+export const ClothesState = ({ clothingConditionList }: Props) => {
   const setClothesState = useCreateProductStore(
     (state) => state.setClothesState
   );
   const clotheState = useCreateProductStore((state) => state.clothesState);
 
-  const { data } = useFetcher<IClothesState[]>(`/clothes-state`);
+  // const { data } = useFetcher<IClothesState[]>(`/clothes-state`);
   const closeModal = useModalStore((state) => state.closeModal);
 
   const handleClick = (clothesState: IClothesState) => {
@@ -19,7 +23,7 @@ export const ClothesState = () => {
 
   return (
     <ul>
-      {data.map((resp) => (
+      {clothingConditionList.map((resp) => (
         <li
           onClick={() => handleClick(resp)}
           className="flex justify-between items-center px-1 py-2 border-b cursor-pointer hover:bg-lightPrimary"
