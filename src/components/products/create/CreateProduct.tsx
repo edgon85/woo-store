@@ -26,6 +26,7 @@ import {
   ColorsSection,
   PriceSection,
   PackageDeliverySection,
+  ImageSection,
 } from './sections';
 import { IPackageDelivery } from '@/lib';
 
@@ -34,20 +35,22 @@ export type FormInputs = {
   description: string;
   gender: string;
   clothesType: string;
+
+  images?: FileList;
 };
 
 type Props = {
   packageDeliveriesData: IPackageDelivery[];
   brands: IBrand[];
   clothingConditionList: IClothesState[];
-  colors: IColor[]
+  colors: IColor[];
 };
 
 export const CreateProduct = ({
   packageDeliveriesData,
   brands,
   clothingConditionList,
-  colors
+  colors,
 }: Props) => {
   const { user } = useAuth();
   const router = useRouter();
@@ -65,6 +68,8 @@ export const CreateProduct = ({
       description: '',
       gender: '',
       clothesType: '',
+
+      images: undefined,
     },
   });
 
@@ -81,8 +86,8 @@ export const CreateProduct = ({
     (state) => state.packageDeliveries
   );
 
-  const onHandleSubmit: SubmitHandler<FieldValues> = (data) => {
-    const newProduct: IProduct = {
+  const onHandleSubmit: SubmitHandler<FormInputs> = (data) => {
+    /* const newProduct: IProduct = {
       images: [
         'https://picsum.photos/400/600',
         'https://picsum.photos/400/600',
@@ -98,9 +103,11 @@ export const CreateProduct = ({
       clothesState: clothesState!,
       status: 'Available',
       packageDelivery: [...packagesDeliveries.map((resp) => resp.id)],
-    };
+    }; */
 
-    onCreateNewProduct(newProduct, user!.token);
+    console.log(data.images);
+
+    // onCreateNewProduct(newProduct, user!.token);
   };
 
   const onCreateNewProduct = async (product: IProduct, token: string) => {
@@ -143,6 +150,10 @@ export const CreateProduct = ({
     <div className="w-full max-w-2xl px-2 md:px-0">
       <h2 className="text-2xl font-extrabold mb-4">Subir articulo nuevo</h2>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
+          <ImageSection errors={errors} setValue={setValue} />
+        </div>
+
         <div className="bg-white border rounded shadow  p-6 md:p-8 ">
           <TitleSection register={register} errors={errors} />
           <DescriptionSection register={register} errors={errors} />
@@ -187,7 +198,7 @@ export const CreateProduct = ({
               clothingConditionList={clothingConditionList}
             />
             {/* ····························································· */}
-            <ColorsSection colors={ colors } />
+            <ColorsSection colors={colors} />
             {/* ····························································· */}
             <PackageDeliverySection data={packageDeliveriesData} />
           </div>

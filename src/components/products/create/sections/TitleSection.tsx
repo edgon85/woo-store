@@ -11,7 +11,7 @@ export const TitleSection = ({ register, errors }: Props) => {
     <div className="relative z-0 w-full mb-6 group">
       <label
         htmlFor="title"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900 "
       >
         Título
       </label>
@@ -24,7 +24,7 @@ export const TitleSection = ({ register, errors }: Props) => {
         {...register('title', { required: true })}
       />
       {errors.title && (
-        <span className="mt-2 text-sm text-red-600 dark:text-red-500">
+        <span className="mt-2 text-sm text-red-600">
           Este campo es requerido *
         </span>
       )}

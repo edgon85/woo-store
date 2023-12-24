@@ -21,7 +21,7 @@ export default async function CreateProductPage() {
   const brandsData = await getBrands(''); */
 
   return (
-    <div className="main-wrapper border flex justify-center border-red-100 pt-8 pb-8">
+    <div className="main-wrapper flex justify-center pt-8 pb-8">
       <CreateProduct
         packageDeliveriesData={packageDeliveriesData}
         brands={brandsData}
