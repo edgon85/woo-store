@@ -12,7 +12,7 @@ type Props = {
 
 export const ImageSection = ({ errors, setValue }: Props) => {
   const [thumbnails, setThumbnails] = useState<Set<string>>(new Set());
-
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // Estado para los archivos seleccionados
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,8 +34,16 @@ export const ImageSection = ({ errors, setValue }: Props) => {
             (prevThumbnails) => new Set([...prevThumbnails, imageUrl])
           );
         };
+
         reader.readAsDataURL(file);
       });
+
+      setSelectedFiles((prevSelectedFiles) => [
+        ...prevSelectedFiles,
+        ...imageFiles,
+      ]);
+
+      setValue('images', [...selectedFiles, ...imageFiles]);
     }
   };
 
@@ -46,11 +54,37 @@ export const ImageSection = ({ errors, setValue }: Props) => {
   };
 
   const removeThumbnail = (thumbnailUrl: string) => {
+    // console.log(thumbnailUrl)
     const updatedThumbnails = Array.from(thumbnails).filter(
       (url) => url !== thumbnailUrl
     );
     setThumbnails(new Set(updatedThumbnails));
+
+    // Encontrar el archivo correspondiente al thumbnail eliminado y removerlo de selectedFiles
+    const updatedFiles = selectedFiles.filter((file) => {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        console.log(e.target?.result === thumbnailUrl);
+        if (e.target?.result === thumbnailUrl) {
+          return false; // No agregar este archivo a updatedFiles
+        }
+        return true; // Mantener este archivo en updatedFiles
+      };
+      reader.readAsDataURL(file);
+      return true; // Mantener este archivo en updatedFiles si hay algún problema con la comparación
+    });
+    setSelectedFiles(updatedFiles);
+
+    // Actualizar el valor de 'images' usando setValue después de eliminar la miniatura
+    setValue('images', updatedFiles);
   };
+
+  /* const removeThumbnail = (thumbnailUrl: string) => {
+    const updatedThumbnails = Array.from(thumbnails).filter(
+      (url) => url !== thumbnailUrl
+    );
+    setThumbnails(new Set(updatedThumbnails));
+  }; */
 
   return (
     <>
@@ -91,7 +125,6 @@ export const ImageSection = ({ errors, setValue }: Props) => {
           className="hidden"
           multiple
           accept="image/png, image/jpeg, image/avif"
-          // {...register('images')}
           ref={fileInputRef}
           onChange={handleFileChange}
         />
@@ -133,4 +166,15 @@ export const ImageSection = ({ errors, setValue }: Props) => {
       )}
     </>
   );
+};
+const convertDataURIToFile = (dataURI: string, fileName: string): File => {
+  const byteString = atob(dataURI.split(',')[1]);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  return new File([ab], fileName, { type: 'image/jpeg' }); // Change the type accordingly if needed
 };

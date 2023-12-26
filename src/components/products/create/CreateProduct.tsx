@@ -36,7 +36,7 @@ export type FormInputs = {
   gender: string;
   clothesType: string;
 
-  images?: FileList;
+  images?: File[];
 };
 
 type Props = {
