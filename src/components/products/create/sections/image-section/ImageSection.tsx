@@ -10,8 +10,15 @@ type Props = {
   setValue: UseFormSetValue<FormInputs>;
 };
 
+type ThumbnailInfo = {
+  imageUrl: string;
+  file: File;
+};
+
 export const ImageSection = ({ errors, setValue }: Props) => {
-  const [thumbnails, setThumbnails] = useState<Set<string>>(new Set());
+  // const [thumbnails, setThumbnails] = useState<Set<string>>(new Set());
+  const [thumbnails, setThumbnails] = useState<ThumbnailInfo[]>([]);
+
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // Estado para los archivos seleccionados
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -21,7 +28,7 @@ export const ImageSection = ({ errors, setValue }: Props) => {
     if (files) {
       const imageFiles: File[] = Array.from(files);
 
-      if (thumbnails.size + imageFiles.length > 10) {
+      if (thumbnails.length + imageFiles.length > 10) {
         alert('No puedes agregar más de 10 imágenes en total.');
         return;
       }
@@ -30,11 +37,19 @@ export const ImageSection = ({ errors, setValue }: Props) => {
         const reader = new FileReader();
         reader.onload = (e: ProgressEvent<FileReader>) => {
           const imageUrl = e.target?.result as string;
-          setThumbnails(
-            (prevThumbnails) => new Set([...prevThumbnails, imageUrl])
-          );
-        };
 
+          // Verificar si la miniatura ya está en la lista antes de agregarla
+          const thumbnailExists = thumbnails.some(
+            (thumbnail) => thumbnail.imageUrl === imageUrl
+          );
+
+          if (!thumbnailExists) {
+            setThumbnails((prevThumbnails) => [
+              ...prevThumbnails,
+              { imageUrl, file }, // Agregar la miniatura solo si no existe en la lista
+            ]);
+          }
+        };
         reader.readAsDataURL(file);
       });
 
@@ -53,32 +68,26 @@ export const ImageSection = ({ errors, setValue }: Props) => {
     }
   };
 
-  const removeThumbnail = (thumbnailUrl: string) => {
-    // console.log(thumbnailUrl)
-    const updatedThumbnails = Array.from(thumbnails).filter(
-      (url) => url !== thumbnailUrl
+  const removeThumbnail = (thumbnailInfo: ThumbnailInfo) => {
+    const { imageUrl, file } = thumbnailInfo;
+
+    const updatedThumbnails = thumbnails.filter(
+      (thumbnail) => thumbnail.imageUrl !== imageUrl
     );
-    setThumbnails(new Set(updatedThumbnails));
+    setThumbnails(updatedThumbnails);
 
-    // Encontrar el archivo correspondiente al thumbnail eliminado y removerlo de selectedFiles
-    const updatedFiles = selectedFiles.filter((file) => {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        console.log(e.target?.result === thumbnailUrl);
-        if (e.target?.result === thumbnailUrl) {
-          return false; // No agregar este archivo a updatedFiles
-        }
-        return true; // Mantener este archivo en updatedFiles
-      };
-      reader.readAsDataURL(file);
-      return true; // Mantener este archivo en updatedFiles si hay algún problema con la comparación
-    });
-    setSelectedFiles(updatedFiles);
+    const updatedFiles = selectedFiles.filter(
+      (selectedFile) => selectedFile !== file
+    );
 
-    // Actualizar el valor de 'images' usando setValue después de eliminar la miniatura
-    setValue('images', updatedFiles);
+    setSelectedFiles((prevSelectedFiles) => [...updatedFiles]);
+
+    /*    console.log({updatedFiles})
+    console.log({selectedFiles}); */
+    setValue('images', [...updatedFiles]);
   };
 
+  // console.log({selectedFiles})
   /* const removeThumbnail = (thumbnailUrl: string) => {
     const updatedThumbnails = Array.from(thumbnails).filter(
       (url) => url !== thumbnailUrl
@@ -89,7 +98,7 @@ export const ImageSection = ({ errors, setValue }: Props) => {
   return (
     <>
       <div className="flex items-center justify-center w-full">
-        {thumbnails.size === 0 && (
+        {thumbnails.length === 0 && (
           <div
             onClick={addMoreImages}
             className="flex flex-col items-center justify-center w-full h-52 md:h-64 border-2 border-cerise-red-300 border-dashed rounded-lg cursor-pointer bg-cerise-red-50"
@@ -129,12 +138,12 @@ export const ImageSection = ({ errors, setValue }: Props) => {
           onChange={handleFileChange}
         />
       </div>
-      {thumbnails.size > 0 && (
+      {thumbnails.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 border-2 border-cerise-red-300 border-dashed rounded-lg p-2">
           {[...thumbnails].map((thumbnail, index) => (
-            <picture key={thumbnail} className="relative">
+            <picture key={thumbnail.imageUrl} className="relative">
               <img
-                src={thumbnail}
+                src={thumbnail.imageUrl}
                 alt={`Thumbnail ${index}`}
                 className="thumbnail mr-2 mb-2"
                 style={{ width: '100px', height: '100px', objectFit: 'cover' }}
@@ -150,7 +159,7 @@ export const ImageSection = ({ errors, setValue }: Props) => {
             </picture>
           ))}
 
-          {thumbnails.size < 10 && (
+          {thumbnails.length < 10 && (
             <button
               onClick={addMoreImages}
               type="button"
@@ -158,7 +167,7 @@ export const ImageSection = ({ errors, setValue }: Props) => {
             >
               <FaPlus size={24} className="text-cerise-red-700" />
               <p className="text-xs text-gray-500">
-                (Quedan {10 - thumbnails.size})
+                (Quedan {10 - thumbnails.length})
               </p>
             </button>
           )}
