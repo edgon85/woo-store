@@ -51,6 +51,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
           return; // Si el usuario no está definido, salimos de la función aquí
         }
 
+        Cookies.set('userId', currentUser.id);
         dispatch({ type: '[Auth] - Login', payload: currentUser });
       };
 

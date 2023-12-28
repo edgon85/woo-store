@@ -114,6 +114,31 @@ export async function updateProfile(
   }
 }
 /* ······································································· */
+
+export async function checkImageAvailable(
+  profileImage: string
+): Promise<string | null> {
+  let urlImage: string | null = null;
+
+  await fetch(profileImage, {
+    method: 'HEAD',
+  })
+    .then((resp) => {
+      if (resp.ok) {
+        urlImage = profileImage;
+      } else {
+        console.error('La imagen no está disponible');
+        urlImage = null;
+      }
+    })
+    .catch((error) => {
+      console.error('Error al verificar la imagen');
+    });
+
+  return urlImage;
+}
+
+/* ······································································· */
 type DataUser = {
   id: string;
   fullName?: string;

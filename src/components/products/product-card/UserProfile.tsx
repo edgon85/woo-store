@@ -1,22 +1,26 @@
+import { checkImageAvailable } from '@/actions';
 import { IUser } from '@/interfaces';
 import { InitialsProfile } from '@/utils';
 import Link from 'next/link';
 
-export const UserProfile = ({ user }: { user: IUser | null }) => {
+export const UserProfile = async ({ user }: { user: IUser | null }) => {
+  const { profileImage } = user!;
+  const imageUrl = await checkImageAvailable(profileImage);
+
   return (
     <div className="flex items-center p-2">
       <Link href={`/member/${user?.username}`}>
-        {user?.profileImage !== null ? (
+        {imageUrl !== null ? (
           <picture>
             <img
-              src={user?.profileImage}
+              src={imageUrl}
               alt={`${user?.username || 'Usuario'} avatar`}
               className="w-10 h-10 rounded-full"
             />
           </picture>
         ) : (
-          <span className="w-10 h-10 flex justify-center items-center rounded-full bg-lightPrimary font-bold">
-            {InitialsProfile(user?.fullName)}
+          <span className="w-10 h-10 flex justify-center items-center rounded-full bg-cerise-red-400 font-bold text-white">
+            {InitialsProfile(user?.fullName!)}
           </span>
         )}
       </Link>

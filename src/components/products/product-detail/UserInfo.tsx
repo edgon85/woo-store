@@ -1,3 +1,4 @@
+import { checkImageAvailable } from '@/actions';
 import { InitialsProfile } from '@/utils';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,19 +12,22 @@ type Props = {
   username: string;
 };
 
-export const UserInfo = ({ name, image, location, username }: Props) => {
+export const UserInfo = async ({ name, image, location, username }: Props) => {
+  const imageUrl = await checkImageAvailable(image);
+
   return (
     <section className="flex items-center p-2 md:p-4 bg-white md:rounded md:shadow">
-      {image !== null ? (
+      {imageUrl !== null ? (
         <Image
-          src={image}
+          src={imageUrl}
           alt="foto de perfil"
           width={64}
           height={64}
           className="w-16 h-16 rounded-full object-fill"
+          priority={true}
         />
       ) : (
-        <div className="w-16 h-16 rounded-full bg-lightPrimary flex justify-center items-center">
+        <div className="w-16 h-16 flex justify-center items-center rounded-full bg-cerise-red-500 font-bold text-white">
           {InitialsProfile(name)}
         </div>
       )}

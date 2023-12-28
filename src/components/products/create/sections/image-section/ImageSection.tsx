@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { FaPlus } from 'react-icons/fa';
 
@@ -6,6 +6,7 @@ import { FormInputs } from '../../CreateProduct';
 import { CloseIcon } from '@/components/ui';
 
 type Props = {
+  register: UseFormRegister<FormInputs>;
   errors: FieldErrors<FormInputs>;
   setValue: UseFormSetValue<FormInputs>;
 };
@@ -15,11 +16,10 @@ type ThumbnailInfo = {
   file: File;
 };
 
-export const ImageSection = ({ errors, setValue }: Props) => {
-  // const [thumbnails, setThumbnails] = useState<Set<string>>(new Set());
+export const ImageSection = ({ register, errors, setValue }: Props) => {
   const [thumbnails, setThumbnails] = useState<ThumbnailInfo[]>([]);
 
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // Estado para los archivos seleccionados
+  const [selectedFiles, setSelectedFiles] = useState<Set<File>>(new Set());
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -33,32 +33,42 @@ export const ImageSection = ({ errors, setValue }: Props) => {
         return;
       }
 
+      const uniqueFiles: Set<File> = new Set(selectedFiles);
+
       imageFiles.forEach((file) => {
         const reader = new FileReader();
         reader.onload = (e: ProgressEvent<FileReader>) => {
           const imageUrl = e.target?.result as string;
 
-          // Verificar si la miniatura ya está en la lista antes de agregarla
           const thumbnailExists = thumbnails.some(
             (thumbnail) => thumbnail.imageUrl === imageUrl
           );
 
           if (!thumbnailExists) {
+            const thumbnailInfo: ThumbnailInfo = { imageUrl, file };
             setThumbnails((prevThumbnails) => [
               ...prevThumbnails,
-              { imageUrl, file }, // Agregar la miniatura solo si no existe en la lista
+              thumbnailInfo,
             ]);
+          }
+
+          const fileExists = Array.from(uniqueFiles).some(
+            (existingFile) =>
+              existingFile.name === file.name && existingFile.size === file.size
+          );
+
+          if (!fileExists) {
+            uniqueFiles.add(file);
           }
         };
         reader.readAsDataURL(file);
       });
 
-      setSelectedFiles((prevSelectedFiles) => [
-        ...prevSelectedFiles,
-        ...imageFiles,
-      ]);
+      setSelectedFiles(uniqueFiles);
 
-      setValue('images', [...selectedFiles, ...imageFiles]);
+      setValue('images', [...selectedFiles, ...imageFiles], {
+        shouldValidate: true,
+      });
     }
   };
 
@@ -76,24 +86,17 @@ export const ImageSection = ({ errors, setValue }: Props) => {
     );
     setThumbnails(updatedThumbnails);
 
-    const updatedFiles = selectedFiles.filter(
-      (selectedFile) => selectedFile !== file
-    );
+    const updatedFiles = new Set<File>(selectedFiles);
+    updatedFiles.delete(file);
+    setSelectedFiles(updatedFiles);
 
-    setSelectedFiles((prevSelectedFiles) => [...updatedFiles]);
-
-    /*    console.log({updatedFiles})
-    console.log({selectedFiles}); */
-    setValue('images', [...updatedFiles]);
+    setValue('images', Array.from(updatedFiles), { shouldValidate: true });
   };
 
-  // console.log({selectedFiles})
-  /* const removeThumbnail = (thumbnailUrl: string) => {
-    const updatedThumbnails = Array.from(thumbnails).filter(
-      (url) => url !== thumbnailUrl
-    );
-    setThumbnails(new Set(updatedThumbnails));
-  }; */
+  const validateImageFiles = (files: File[]) => {
+    // Esta función valida el número mínimo de archivos requeridos
+    return files && files.length >= 2;
+  };
 
   return (
     <>
@@ -134,6 +137,9 @@ export const ImageSection = ({ errors, setValue }: Props) => {
           className="hidden"
           multiple
           accept="image/png, image/jpeg, image/avif"
+          {...register('images', {
+            required: 'Imágenes son requeridas',
+          })}
           ref={fileInputRef}
           onChange={handleFileChange}
         />
@@ -173,17 +179,11 @@ export const ImageSection = ({ errors, setValue }: Props) => {
           )}
         </div>
       )}
+      {errors.images && (
+        <p className="text-cerise-red-800 text-xs py-1">
+          {errors.images.message}
+        </p>
+      )}
     </>
   );
-};
-const convertDataURIToFile = (dataURI: string, fileName: string): File => {
-  const byteString = atob(dataURI.split(',')[1]);
-  const ab = new ArrayBuffer(byteString.length);
-  const ia = new Uint8Array(ab);
-
-  for (let i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-
-  return new File([ab], fileName, { type: 'image/jpeg' }); // Change the type accordingly if needed
 };

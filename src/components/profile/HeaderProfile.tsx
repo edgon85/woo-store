@@ -3,6 +3,7 @@ import { UserIcon } from '../ui';
 import Link from 'next/link';
 import { fetchPublicProfile } from '@/lib';
 import { cookies } from 'next/headers';
+import { checkImageAvailable } from '@/actions';
 
 interface LocalProfile {
   id: string;
@@ -21,24 +22,25 @@ export async function HeaderProfile({ username }: Props) {
   const userData = (await fetchPublicProfile(username)) as LocalProfile;
 
   const currentUserId = cookies().get('userId')?.value;
+  const imageUrl = await checkImageAvailable(userData?.profileImage);
 
   /* TODO: obtener el rating */
 
   return (
     <header className="flex gap-2 md:gap-4 py-4">
       <div className="w-12 h-12 md:w-24 md:h-24 flex justify-center items-center rounded-full overflow-hidden">
-        {userData?.profileImage !== null ? (
+        {imageUrl !== null ? (
           <picture>
             <img
-              src={userData?.profileImage}
+              src={imageUrl}
               alt={`foto de perfil de ${userData.fullName}`}
               className="object-cover w-full h-full rounded"
             />
           </picture>
         ) : (
-          <div className=" text-red-700">
+          <span className="w-16 h-16 flex justify-center items-center rounded-full bg-cerise-red-400 font-bold text-white">
             <UserIcon />
-          </div>
+          </span>
         )}
       </div>
       <div className="w-full flex flex-col">

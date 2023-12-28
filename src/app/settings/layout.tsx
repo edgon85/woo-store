@@ -1,4 +1,5 @@
-import { ListGroup } from '@/components/settings/navigation/ListGorup';
+
+import { ListGroup } from '@/components';
 import { cookies } from 'next/headers';
 
 export default function SettingsLayout({

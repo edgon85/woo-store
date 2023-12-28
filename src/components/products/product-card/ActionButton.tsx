@@ -18,7 +18,12 @@ export const ActionButton = ({
           Comprar
         </Link>
       ) : (
-        <Link href={`/product/edit/${product.id}`}>Editar</Link>
+        <Link
+          className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
+          href={`/product/edit/${product.id}`}
+        >
+          Editar
+        </Link>
       )}
     </div>
   );

@@ -31,6 +31,7 @@ type CreateProductState = {
   setColors: (colors: IColor[]) => void;
   setPrice: (price: number) => void;
   setPackageDeliveries: (packageDelivery: IPackageDelivery[]) => void;
+  resetStore: () => void;
 };
 
 export const useCreateProductStore = create<CreateProductState>()((set) => ({
@@ -60,4 +61,18 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
   setPrice: (value: number) => set((state) => ({ price: value })),
   setPackageDeliveries: (value: IPackageDelivery[]) =>
     set((state) => ({ packageDeliveries: value })),
+
+  resetStore: () =>
+    set((state) => ({
+      gender: '',
+      clothesType: '',
+      category: null,
+      subcategory: null,
+      brand: null,
+      measurement: null,
+      clothesState: null,
+      colors: [],
+      price: 0,
+      packageDeliveries: [],
+    })),
 }));

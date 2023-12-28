@@ -1,17 +1,15 @@
 'use client';
 
-import { useAuth } from '@/hooks';
-import { IBrand, IClothesState, IColor, IProduct } from '@/interfaces';
-
-import { Button } from '../../ui';
-
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-
-import { createProduct } from '@/helpers/httpHelper';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { IBrand, IClothesState, IColor, IProduct } from '@/interfaces';
 import { useCreateProductStore } from '@/stores';
+import { createProduct } from '@/actions';
+import { IPackageDelivery } from '@/lib';
+
+import { Button } from '../../ui';
 import {
   CustomModal,
   ClothesTypeSection,
@@ -28,7 +26,6 @@ import {
   PackageDeliverySection,
   ImageSection,
 } from './sections';
-import { IPackageDelivery } from '@/lib';
 
 export type FormInputs = {
   title: string;
@@ -36,7 +33,7 @@ export type FormInputs = {
   gender: string;
   clothesType: string;
 
-  images?: File[];
+  images: File[];
 };
 
 type Props = {
@@ -52,7 +49,6 @@ export const CreateProduct = ({
   clothingConditionList,
   colors,
 }: Props) => {
-  const { user } = useAuth();
   const router = useRouter();
 
   const {
@@ -60,6 +56,7 @@ export const CreateProduct = ({
     handleSubmit,
     formState: { errors },
     setValue,
+    setError,
     getValues,
     watch,
   } = useForm<FormInputs>({
@@ -69,12 +66,10 @@ export const CreateProduct = ({
       gender: '',
       clothesType: '',
 
-      images: undefined,
+      images: [],
     },
   });
 
-  // const gender = useCreateProductStore((state) => state.gender);
-  // const clothesType = useCreateProductStore((state) => state.clothesType);
   const category = useCreateProductStore((state) => state.category);
   const subcategory = useCreateProductStore((state) => state.subcategory);
   const brand = useCreateProductStore((state) => state.brand);
@@ -85,13 +80,24 @@ export const CreateProduct = ({
   const packagesDeliveries = useCreateProductStore(
     (state) => state.packageDeliveries
   );
+  const resetStore = useCreateProductStore((state) => state.resetStore);
 
-  const onHandleSubmit: SubmitHandler<FormInputs> = (data) => {
-    /* const newProduct: IProduct = {
-      images: [
-        'https://picsum.photos/400/600',
-        'https://picsum.photos/400/600',
-      ],
+  const onHandleSubmit: SubmitHandler<FormInputs> = async (
+    data: FormInputs
+  ) => {
+    const formData = new FormData();
+
+    if (data.images.length < 2) {
+      setError('images', { message: 'seleccione mínimo 2 imágenes' });
+      return;
+    }
+
+    data.images.forEach((image) => {
+      formData.append('images', image);
+    });
+
+    const newProduct: IProduct = {
+      images: [],
       title: data.title,
       description: data.description,
       subcategory: subcategory!,
@@ -103,39 +109,50 @@ export const CreateProduct = ({
       clothesState: clothesState!,
       status: 'Available',
       packageDelivery: [...packagesDeliveries.map((resp) => resp.id)],
-    }; */
+    };
 
-    console.log(data.images);
-
-    // onCreateNewProduct(newProduct, user!.token);
+    // console.log(data.images);
+    await onCreateNewProduct(newProduct, formData);
   };
 
-  const onCreateNewProduct = async (product: IProduct, token: string) => {
+  const onCreateNewProduct = async (
+    product: IProduct,
+    formImagesData: FormData
+  ) => {
     Swal.fire({
       title: '¿Estás seguro?',
       html: `Se va a crear un nuevo producto`,
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Sí, crear',
       cancelButtonText: 'Cancelar',
       showLoaderOnConfirm: true,
+
       preConfirm: async () => {
-        const { message, data } = await createProduct(product, token);
-        if (message !== 'ok') {
+        const { ok, message, data } = await createProduct(
+          product,
+          formImagesData
+        );
+        if (!ok) {
           Swal.showValidationMessage(`error: ${message}`);
           return;
         }
 
         return data;
       },
-      allowOutsideClick: () => !Swal.isLoading(),
+      allowOutsideClick: () => {
+        const popup = Swal.getPopup() as HTMLElement;
+        popup.classList.remove('swal2-show');
+        return !Swal.isLoading();
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
           title: `${result.value.title} creado`,
           icon: 'success',
         });
-        router.replace(`/profile/${user?.id}`);
+        resetStore();
+        router.replace(`/member/${result.value.user.username}`);
       }
     });
   };
@@ -151,7 +168,11 @@ export const CreateProduct = ({
       <h2 className="text-2xl font-extrabold mb-4">Subir articulo nuevo</h2>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
-          <ImageSection errors={errors} setValue={setValue} />
+          <ImageSection
+            register={register}
+            errors={errors}
+            setValue={setValue}
+          />
         </div>
 
         <div className="bg-white border rounded shadow  p-6 md:p-8 ">

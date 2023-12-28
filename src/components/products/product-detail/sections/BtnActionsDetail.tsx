@@ -19,13 +19,17 @@ export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
         <TooltipIcon />
       </div>
       <ActionButton product={product} currentUserId={currentUserId} />
-      <BtnMakeOffer product={product} />
-      <button
-        className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
-        // onClick={onOpenModal}
-      >
-        Enviar mensaje
-      </button>
+      {currentUserId !== product.user?.id && (
+        <>
+          <BtnMakeOffer product={product} />
+          <button
+            className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
+            // onClick={onOpenModal}
+          >
+            Enviar mensaje
+          </button>
+        </>
+      )}
     </section>
   );
 };
