@@ -35,19 +35,19 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
         if (!isValidUser) {
           console.log('su sesión expiró');
-          signOut();
+          logout();
           return; // Si la sesión expiró, salimos de la función aquí
         }
 
         if (!currentUser?.isActive) {
           console.log('usuario inactivo, comuníquese con un administrador');
-          signOut();
+          logout();
           return; // Si el usuario no está activo, salimos de la función aquí
         }
 
         if (currentUser === undefined) {
           console.log('usuario no definido');
-          signOut();
+          logout();
           return; // Si el usuario no está definido, salimos de la función aquí
         }
 
@@ -126,9 +126,9 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   };
 
   const logout = () => {
-    signOut();
     Cookies.remove('token');
     Cookies.remove('userId');
+    signOut();
     redirect('/');
   };
 
