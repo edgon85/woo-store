@@ -28,7 +28,6 @@ export const PriceSection = () => {
     <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
       <div className="relative z-0 w-full mb-6 group p-4 md:p-0">
         <label
-          htmlFor="price"
           className="block mb-2 text-sm font-medium text-gray-900"
         >
           Precio de venta{' '}
@@ -47,4 +46,3 @@ export const PriceSection = () => {
     </div>
   );
 };
-

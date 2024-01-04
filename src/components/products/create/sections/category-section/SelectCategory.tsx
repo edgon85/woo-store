@@ -11,6 +11,7 @@ type Props = {
 
 export const SelectCategory = ({ gender, clothesType }: Props ) => {
   const setCategory = useCreateProductStore((state) => state.setCategory);
+  const setSubcategory = useCreateProductStore((state) => state.setSubcategory);
   const category = useCreateProductStore((state) => state.category);
 
   const closeModal = useModalStore((state) => state.closeModal);
@@ -21,6 +22,7 @@ export const SelectCategory = ({ gender, clothesType }: Props ) => {
 
   const handleOnclick = (category: ICategory) => {
     setCategory(category);
+    setSubcategory(null)
     closeModal();
   };
 

@@ -61,10 +61,11 @@ export async function createProduct(
     if (!resp.ok) {
       throw new Error('Failed to fetch data');
     }
+    const data = await resp.json();
 
     return {
       ok: true,
-      data: resp.json(),
+      data,
     };
   } catch (error) {
     return {

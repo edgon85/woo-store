@@ -104,11 +104,11 @@ export const CreateProduct = ({
       brand: brand!,
       price: price,
       slug: '',
-      colors: [...color.map((col) => col.id)],
+      colors: [...color.map((col) => col)],
       measurement: measurement!,
       clothesState: clothesState!,
       status: 'Available',
-      packageDelivery: [...packagesDeliveries.map((resp) => resp.id)],
+      packageDelivery: [...packagesDeliveries.map((resp) => resp)],
     };
 
     // console.log(data.images);

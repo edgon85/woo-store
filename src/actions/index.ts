@@ -4,6 +4,7 @@ export { default as getUser } from './getUser';
 
 /* products */
 export * from './products/create-product';
+export * from './products/update-product';
 
 /* brands */
 export * from './brands/get-brands';

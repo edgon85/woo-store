@@ -12,8 +12,8 @@ export interface IProduct {
   images: string[];
   isFeatured?: boolean;
   status: string;
-  colors: number[];
-  packageDelivery: number[];
+  colors: IColor[];
+  packageDelivery: IPackageDelivery[];
   brand: IBrand;
   measurement: IMeasurement;
   clothesState: IClothesState;

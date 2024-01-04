@@ -24,7 +24,7 @@ type CreateProductState = {
   setGender: (value: string) => void;
   setClothesType: (value: string) => void;
   setCategory: (category: ICategory) => void;
-  setSubcategory: (subcategory: ISubcategory) => void;
+  setSubcategory: (subcategory: ISubcategory | null) => void;
   setBrand: (brand: IBrand) => void;
   setMeasurement: (measurement: IMeasurement) => void;
   setClothesState: (clothesState: IClothesState) => void;
@@ -49,8 +49,8 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
   //onSetGender: (value: string) => set((state) => ({ gender: value })),
   setGender: (value: string) => set((state) => ({ gender: value })),
   setClothesType: (value: string) => set((state) => ({ clothesType: value })),
-  setCategory: (value: ICategory) => set((state) => ({ category: value })),
-  setSubcategory: (value: ISubcategory) =>
+  setCategory: (value: ICategory ) => set((state) => ({ category: value })),
+  setSubcategory: (value: ISubcategory | null ) =>
     set((state) => ({ subcategory: value })),
   setBrand: (value: IBrand) => set((state) => ({ brand: value })),
   setMeasurement: (value: IMeasurement) =>
