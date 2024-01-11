@@ -5,6 +5,7 @@ export { default as getUser } from './getUser';
 /* products */
 export * from './products/create-product';
 export * from './products/update-product';
+export * from './products/delete-image';
 
 /* brands */
 export * from './brands/get-brands';

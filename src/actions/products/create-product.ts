@@ -3,6 +3,8 @@ import { cookies } from 'next/headers';
 import { IPackageDelivery } from '../../lib/interfaces';
 import { IProduct } from '@/interfaces';
 
+import { revalidatePath } from 'next/cache';
+
 import { v2 as cloudinary } from 'cloudinary';
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
@@ -74,6 +76,47 @@ export async function createProduct(
     };
   }
 }
+
+export const addImagesByProductId = async (dataToUpdate: FormData) => {
+  const token = cookies().get('token')?.value;
+  const productId = dataToUpdate.get('productId');
+  const files = dataToUpdate.getAll('images') as File[];
+  const url = `${process.env.API_BASE_URL}/products/${productId}/images`;
+
+  try {
+    const cloudinaryImages = await uploadImages(files);
+    if (!cloudinaryImages) {
+      throw new Error('No se pudo cargar las imágenes, no se sube el producto');
+    }
+
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        images: cloudinaryImages,
+      }),
+    });
+
+    if (!resp.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    const data = await resp.json();
+
+    revalidatePath(`/product/edit/${productId}`);
+    return {
+      ok: true,
+      data,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      message: 'no se pudo crear, revisar los logs',
+    };
+  }
+};
 
 const uploadImages = async (images: File[]) => {
   try {

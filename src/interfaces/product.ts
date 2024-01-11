@@ -69,6 +69,12 @@ export interface IColor {
   codeColor: string;
 }
 
+export interface ProductImage {
+  id: number;
+  url: string;
+  productId: string;
+}
+
 export interface ISubcategoryWithCategory extends ISubcategory {
   category: ICategory;
 }

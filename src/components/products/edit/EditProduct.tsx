@@ -1,8 +1,15 @@
 'use client';
-import { IBrand, IClothesState, IColor, IProduct } from '@/interfaces';
+import {
+  IBrand,
+  IClothesState,
+  IColor,
+  IProduct,
+  ProductImage,
+} from '@/interfaces';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   DescriptionSection,
+  EditImagesSection,
   EditTitleSection,
   StatusSection,
 } from './sections';
@@ -23,7 +30,7 @@ import { updateProduct } from '@/actions';
 import { AlertComponent } from '@/components/ui';
 
 type Props = {
-  product: IProduct;
+  product: IProduct & { ProductImage?: ProductImage[] };
   packageDeliveriesData: IPackageDelivery[];
   brands: IBrand[];
   clothingConditionList: IClothesState[];
@@ -137,6 +144,9 @@ export const EditProduct = ({
     <div className="w-full max-w-2xl px-2 md:px-0">
       <h2 className="text-2xl font-extrabold mb-4">Editar articulo</h2>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
+          <EditImagesSection product={product} />
+        </div>
         <div className="bg-white border rounded shadow  p-6 md:p-8 ">
           <EditTitleSection register={register} errors={errors} />
           <DescriptionSection register={register} errors={errors} />
