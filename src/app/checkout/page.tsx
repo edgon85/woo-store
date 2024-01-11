@@ -8,7 +8,6 @@ import {
 import { redirect } from 'next/navigation';
 
 import {
-  fetchPackageDelivery,
   fetchPaymentMethods,
   fetchShippingAddress,
   getProductBySlug,
@@ -30,7 +29,6 @@ export default async function CheckoutPage({
   const product = await getProductBySlug(`${transaction}`);
   const addresses = await fetchShippingAddress();
   const paymentMethods = await fetchPaymentMethods();
-  // const packagesDelivery = await fetchPackageDelivery();
 
   if (product.status !== 'Available') {
     return <p>Producto ya no esta disponible</p>;
@@ -44,7 +42,7 @@ export default async function CheckoutPage({
 
         <PaymentSelectSection paymentMethods={paymentMethods} />
         <PackageDeliverySection
-          packagesDeliveriesIds={product.packageDelivery}
+          packagesDeliveriesIds={product.packageDelivery.map((item) => item.id)}
         />
       </div>
       <div className="w-full lg:w-2/5 p-2">

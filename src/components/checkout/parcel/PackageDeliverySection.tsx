@@ -1,7 +1,7 @@
 'use client';
 
 import { PackageDeliverySkeleton, RadiaSelectIcon } from '@/components/ui';
-import { IPackageDelivery, fetchPackageDelivery } from '@/lib';
+import { IPackageDelivery, fetchPackageDelivery, formatCurrency } from '@/lib';
 import { useCheckoutStore } from '@/stores';
 import { useEffect, useState } from 'react';
 import { IoMdRadioButtonOff } from 'react-icons/io';
@@ -19,6 +19,7 @@ export const PackageDeliverySection = ({ packagesDeliveriesIds }: Props) => {
 
   useEffect(() => {
     getPackageDeliveries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getPackageDeliveries = async () => {
@@ -78,7 +79,7 @@ export const PackageDeliverySection = ({ packagesDeliveriesIds }: Props) => {
                     </div>
                     <div>
                       <span className="text-lg text-green-600 font-medium">
-                        {option.originalPrice}
+                        {formatCurrency(+option.originalPrice * 100)}
                       </span>
                       {/* {option.originalPrice && (
                     <span className="ml-2 line-through text-gray-500">

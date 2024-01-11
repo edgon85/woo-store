@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
 import { useCreateProductStore } from '@/stores';
+import { formatCurrency } from '@/lib';
 
 export const PriceSection = () => {
   const [value, setValue] = useState<string>('');
@@ -31,7 +32,7 @@ export const PriceSection = () => {
           className="block mb-2 text-sm font-medium text-gray-900"
         >
           Precio de venta{' '}
-          {value && <span>Q{formatNumberWithCommas(value)}</span>}
+          {value && <span>Q {formatNumberWithCommas(value)}</span>}
         </label>
 
         <input

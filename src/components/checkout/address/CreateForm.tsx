@@ -7,6 +7,7 @@ import { Button, EditIcon, SpinnerIcon } from '@/components/ui';
 import Modal from 'react-responsive-modal';
 import { useSearchParams } from 'next/navigation';
 import { createAddress, revalidateData } from '@/actions/actions';
+import { useCheckoutStore } from '@/stores';
 
 type FormAddress = {
   id: string;
@@ -22,6 +23,9 @@ type FormAddress = {
 export const CreateFormAddress = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  const setShippingAddress = useCheckoutStore(
+    (state) => state.setShippingAddress
+  );
 
   const [error, setError] = useState<string | null>(null);
 
@@ -45,6 +49,7 @@ export const CreateFormAddress = () => {
       setShowLoading(false);
       return;
     } else {
+      setShippingAddress(data.data);
       await revalidateData(
         `/checkout?transaction=${params}`,
         `/checkout?transaction=${params}`
@@ -140,7 +145,7 @@ export const CreateFormAddress = () => {
               id="reference"
               type="text"
               className=" flex-1 w-full p-2 border rounded-md resize-none mb-4"
-              placeholder="numero de teléfono"
+              placeholder="ej: casa amarilla frente al parque infantil"
               {...register('label')}
             />
             {errors.label && (

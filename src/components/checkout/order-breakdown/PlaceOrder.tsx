@@ -3,6 +3,7 @@ import { createOrder } from '@/helpers/httpOrderHelper';
 import { useAuth } from '@/hooks';
 import { TypeCreateOrder } from '@/lib';
 import { useCheckoutStore } from '@/stores';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const PlaceOrder = () => {
@@ -12,6 +13,7 @@ export const PlaceOrder = () => {
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
 
   const { user } = useAuth();
+  const router = useRouter();
 
   const productCheckout = useCheckoutStore((state) => state.product);
   const paymentMethod = useCheckoutStore((state) => state.paymentMethod);
@@ -32,6 +34,12 @@ export const PlaceOrder = () => {
   }, [error]);
 
   const onHandleClick = async () => {
+    if (address === null) {
+      setError(true);
+      setMessage('Agregue una dirección de entrega');
+      return;
+    }
+
     if (paymentMethod === null) {
       setError(true);
       setMessage('Seleccione método de pago');
@@ -57,14 +65,16 @@ export const PlaceOrder = () => {
     const { message } = await createOrder(newOrder, user?.token!);
 
     if (message !== 'ok') {
-      setError(message);
       setAlertType('error');
       setShowLoading(false);
+      setError(message);
       console.log(message);
       return;
     } else {
       setAlertType('success');
       setShowLoading(false);
+
+      router.replace('settings/transactions/purchases')
     }
   };
 

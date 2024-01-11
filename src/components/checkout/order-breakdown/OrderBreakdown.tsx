@@ -6,6 +6,7 @@ import { IAddress, IProduct } from '@/interfaces';
 import { useEffect } from 'react';
 import { PlaceOrder } from './PlaceOrder';
 import { useCheckoutStore } from '@/stores';
+import { formatCurrency } from '@/lib';
 
 type Props = {
   product: IProduct;
@@ -39,24 +40,24 @@ export const OrderBreakdown = ({ product, address }: Props) => {
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <p>Precio</p>
-          <p>Q{price}.00</p>
+          <p>{formatCurrency(price * 100)}</p>
         </div>
         <div className="flex justify-between items-center">
           <p>Envío</p>
           {packageDelivery === null ? (
             <p>seleccione envío</p>
           ) : (
-            <p>Q{packageDelivery?.originalPrice}.00</p>
+            <p>{formatCurrency(+packageDelivery?.originalPrice * 100)}</p>
           )}
         </div>
         <div className="flex justify-between items-center">
           <p>Tarifa de servicio</p>
-          <p>Q{serviceFee}.00</p>
+          <p>{formatCurrency(serviceFee * 100)}</p>
         </div>
         {packageDelivery !== null && (
           <div className="flex justify-between items-center">
             <p>Total a pagar</p>
-            <p>Q{amount}.00</p>
+            <p>{formatCurrency(amount * 100)}</p>
           </div>
         )}
       </div>

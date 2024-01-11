@@ -27,7 +27,7 @@ export async function createAddress(data: IAddress) {
   }
 
   return {
-    data: response.json(),
+    data: await response.json(),
     message: 'ok',
   };
 }
@@ -55,7 +55,7 @@ export async function updateAddress(id: string, data: IAddress) {
   }
 
   return {
-    data: response.json(),
+    data: await response.json(),
     message: 'ok',
   };
 }

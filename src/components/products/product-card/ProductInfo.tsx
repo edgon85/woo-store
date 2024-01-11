@@ -1,4 +1,5 @@
 import { IProduct } from '@/interfaces';
+import { formatCurrency } from '@/lib';
 import Link from 'next/link';
 
 export const ProductInfo = ({
@@ -11,7 +12,7 @@ export const ProductInfo = ({
 }: IProduct) => (
   <Link href={`/product/${slug}`}>
     <h3 className="text-lg font-semibold capitalize">{title}</h3>
-    <p className="text-gray-600">Q{price}</p>
+    <p className="text-gray-600">{formatCurrency(price * 100)}</p>
     <p className="text-gray-500 capitalize">
       <span>Talla: {measurement.size}</span> | <span>{clothesState.title}</span>
     </p>
