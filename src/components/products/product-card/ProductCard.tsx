@@ -3,18 +3,21 @@ import { ImageComponent } from './ImageComponent';
 import { UserProfile } from './UserProfile';
 import { ProductInfo } from './ProductInfo';
 import { ActionButton } from './ActionButton';
+import { checkImageAvailable } from '@/actions';
 
 type Props = {
   product: IProduct;
   currentUserId: string;
 };
 
-export const ProductCard = ({ product, currentUserId }: Props) => {
+export const ProductCard = async ({ product, currentUserId }: Props) => {
+  const imageUrl = await checkImageAvailable(product.images[0]);
+
   return (
     <div className="bg-white rounded-lg shadow-md min-h-[400px]">
       <UserProfile user={product.user!} />
       <ImageComponent
-        src={product.images[0]}
+        src={imageUrl ?? '/empty-image.svg'}
         alt={`Imagen de ${product.title}`}
         prodSlug={product.slug!}
       />

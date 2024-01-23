@@ -1,9 +1,12 @@
 import { TransactionStatus } from '@/components';
 import { IOrder, fetchOrderById, formatCurrency } from '@/lib';
+import { translateOrderStatus } from '@/utils';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const order = await fetchOrderById(params.id);
 
+  // TODO: Colocar numero de rastreo
+  
   return (
     <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto mt-4">
       <div className="flex justify-between items-start">
@@ -65,7 +68,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </p>
             <p>
               <span className="font-bold">Estado de la orden: </span>{' '}
-              {order.orderStatus}
+              {translateOrderStatus(order.orderStatus)}
             </p>
             <p>
               <span className="font-bold">No. de rastreo: </span>{' '}

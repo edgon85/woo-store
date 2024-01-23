@@ -1,4 +1,5 @@
 import { BadgeFilterList, ProductCard } from '@/components';
+import { IProduct } from '@/interfaces';
 import { fetchData } from '@/lib';
 import { buildQueryString } from '@/utils';
 import { cookies } from 'next/headers';
@@ -18,7 +19,22 @@ export default async function CategoriesPage({
     ? `/products/filter?gender=${gender}&category=${category}&${queryString}`
     : `/products?gender=${gender}&category=${category}`;
 
-  const products = await fetchData(url);
+  const products = (await fetchData(url)) as IProduct[];
+
+  if (products.length === 0) {
+    return (
+      <div className="w-full mt-10 md:mt-10 flex flex-col justify-center items-center">
+        <picture>
+          <img
+            src="/blank_canvas.svg"
+            alt="Imagen de no hay productos disponibles"
+            className="max-w-80"
+          />
+        </picture>
+        <p className="text-lg">Aun no hay productos disponibles</p>
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useReducer } from 'react';
+import { FC, use, useEffect, useReducer } from 'react';
 import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
 import { signOut, useSession } from 'next-auth/react';
@@ -59,18 +59,13 @@ export const AuthProvider: FC<Props> = ({ children }) => {
       checkUserStateAndAct();
     }
   }, [status, data]);
-  /*   useEffect(() => {
-    if (status === 'authenticated') {
-      const currentUser = data.user as IUser;
 
-      if (!currentUser?.isActive || currentUser === undefined) {
-        console.log('usuario inactivo, comuníquese con un administrador');
-        signOut();
-      }
-
-      dispatch({ type: '[Auth] - Login', payload: currentUser });
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      Cookies.remove('token');
+      Cookies.remove('userId');
     }
-  }, [status, data]); */
+  }, [status]);
 
   const registerUser = async (
     fullName: string,
