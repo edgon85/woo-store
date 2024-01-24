@@ -34,7 +34,9 @@ export async function HeaderProfile({ username }: Props) {
             <img
               src={imageUrl}
               alt={`foto de perfil de ${userData.fullName}`}
-              className="object-cover w-full h-full rounded"
+              className="object-cover w-24 h-24 rounded"
+              loading="lazy"
+
             />
           </picture>
         ) : (

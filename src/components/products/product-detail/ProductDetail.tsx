@@ -4,6 +4,7 @@ import { BsCheck2Circle, BsDropletHalf } from 'react-icons/bs';
 import { IoMdPricetags } from 'react-icons/io';
 import { TbCategory, TbRulerMeasure } from 'react-icons/tb';
 import { BtnActionsDetail } from './sections/BtnActionsDetail';
+import { formatCurrency } from '@/lib';
 
 type ListItemProps = {
   icon: React.ReactNode;
@@ -41,7 +42,7 @@ export const ProductDetail = ({ product, currentUserId }: Props) => {
     <div className="bg-white p-2 md:p-4 md:rounded md:shadow">
       <section>
         <h1 className="text-lg font-bold capitalize">{title}</h1>
-        <p className="text-lg font-semibold">Q{price}</p>
+        <p className="text-lg font-semibold">{formatCurrency(price * 100)}</p>
       </section>
       <section className="py-2">
         <h2 className="text-lg font-bold">Descripción</h2>
