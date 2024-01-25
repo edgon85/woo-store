@@ -5,7 +5,6 @@ import {
   getColors,
 } from '@/actions';
 import { CreateProduct } from '@/components';
-import { IPackageDelivery } from '@/lib';
 
 export default async function CreateProductPage() {
   const [packageDeliveriesData, brandsData, clothingConditionData, colorsData] =
@@ -15,10 +14,6 @@ export default async function CreateProductPage() {
       getClothingCondition(),
       getColors(),
     ]);
-  /*  const packageDeliveriesData =
-    (await fetchPackageDeliveries()) as IPackageDelivery[];
-
-  const brandsData = await getBrands(''); */
 
   return (
     <div className="main-wrapper flex justify-center pt-8 pb-8">

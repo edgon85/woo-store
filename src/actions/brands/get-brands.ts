@@ -8,7 +8,7 @@ export async function getBrands(filter: string): Promise<IBrand[]> {
     const url =
       filter !== ''
         ? `${process.env.API_BASE_URL}/brands?f=${filter}`
-        : `${process.env.API_BASE_URL}/brands/all?offset=0&limit=30`;
+        : `${process.env.API_BASE_URL}/brands/all`;
 
     const resp = await fetch(url, {
       method: 'GET',

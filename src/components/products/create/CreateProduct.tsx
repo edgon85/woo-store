@@ -2,7 +2,7 @@
 
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Control, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 
 import { IBrand, IClothesState, IColor, IProduct } from '@/interfaces';
 import { useCreateProductStore } from '@/stores';
@@ -26,6 +26,7 @@ import {
   PackageDeliverySection,
   ImageSection,
 } from './sections';
+import { useEffect } from 'react';
 
 export type FormInputs = {
   title: string;
@@ -54,7 +55,7 @@ export const CreateProduct = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     setValue,
     setError,
     getValues,
@@ -69,6 +70,32 @@ export const CreateProduct = ({
       images: [],
     },
   });
+
+  function FirstNameWatched({ control }: { control: Control<FormInputs> }) {
+    const firstName = useWatch({
+      control,
+      name: 'title', // without supply name will watch the entire form, or ['firstName', 'lastName'] to watch both
+      defaultValue: 'default', // default value before the render
+    });
+  }
+
+  const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    if (isDirty || Object.values(FirstNameWatched).some(Boolean)) {
+      const message =
+        '¿Estás seguro de que quieres abandonar la página? Tu información no guardada se perderá.';
+      event.returnValue = message;
+      return message;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDirty, FirstNameWatched]);
 
   const category = useCreateProductStore((state) => state.category);
   const subcategory = useCreateProductStore((state) => state.subcategory);
@@ -159,6 +186,11 @@ export const CreateProduct = ({
 
   const onGenderChange = (value: string) => setValue('gender', value);
   const onClothesTypeChange = (value: string) => setValue('clothesType', value);
+
+  useEffect(() => {
+    resetStore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   watch('gender');
   watch('clothesType');
