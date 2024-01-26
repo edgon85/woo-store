@@ -1,4 +1,4 @@
-import { createBrand } from '@/helpers/httpHelper';
+import { createBrand } from '@/actions';
 import { useAuth } from '@/hooks';
 import { IBrand } from '@/interfaces';
 import { useModalStore } from '@/stores';
@@ -25,7 +25,7 @@ export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
       cancelButtonText: 'Cancelar',
       showLoaderOnConfirm: true,
       preConfirm: async () => {
-        const { message, data } = await createBrand(name, user?.token!);
+        const { message, data } = await createBrand(name);
         if (message !== 'ok') {
           Swal.showValidationMessage(`error: ${message}`);
           return;

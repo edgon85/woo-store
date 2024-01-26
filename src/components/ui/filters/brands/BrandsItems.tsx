@@ -3,10 +3,10 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Filter, IBrand } from '@/interfaces';
-import { getBrandData } from '@/helpers';
 import { useDebounce } from '@/hooks/useDebounce';
 import { generateFilterURL } from '@/utils';
 import { useFilterStore, useSidebar } from '@/stores';
+import { getBrands } from '@/actions';
 
 type Props = {
   brands: IBrand[];
@@ -39,7 +39,7 @@ export const BrandsItems = ({ brands, isMovil = false }: Props) => {
   };
 
   const performSearch = async (query: string) => {
-    await getBrandData(query).then((data) => {
+    await getBrands(query).then((data) => {
       setSearchResults(data);
     });
   };

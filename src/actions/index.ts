@@ -9,6 +9,7 @@ export * from './products/delete-image';
 
 /* brands */
 export * from './brands/get-brands';
+export * from './brands/create-brand';
 
 /* clothing condition */
 export * from './clothing-condition/get-clothing-condition';

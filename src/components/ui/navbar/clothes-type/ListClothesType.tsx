@@ -13,6 +13,7 @@ export const ListClothesType = () => {
     isAccessoriesMenuOpen: false,
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const menuRefs: { [menuName: string]: React.RefObject<HTMLLIElement> } = {
     isClothesMenuOpen: useRef(null),
     isShoesMenuOpen: useRef(null),

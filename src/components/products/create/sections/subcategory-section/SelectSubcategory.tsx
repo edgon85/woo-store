@@ -1,4 +1,4 @@
-import { useFetcher, useModal } from '@/hooks';
+import { useFetcher } from '@/hooks';
 import { ISubcategory } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { IoIosCheckmark } from 'react-icons/io';

@@ -1,20 +1,7 @@
-import formidable, { IncomingForm } from 'formidable';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextRequest, NextResponse } from 'next/server';
-import { NextApiRequest } from 'next';
-import { Readable } from 'stream';
 
 cloudinary.config(process.env.CLOUDINARY_URL || '');
-
-/* type Data = {
-  message: string;
-};
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}; */
 
 export async function POST(request: NextRequest) {
   const data = await request.formData();
@@ -48,7 +35,8 @@ export async function POST(request: NextRequest) {
     ], */
   });
   console.log(secure_url);
-  return Response.json({ message: secure_url });
+  // return Response.json({ message: secure_url });
+  return NextResponse.json({ message: secure_url });
 }
 
 function getImageMimeType(buffer: Buffer): string | null {

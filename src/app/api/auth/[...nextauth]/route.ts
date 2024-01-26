@@ -3,7 +3,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import FacebookProvider from 'next-auth/providers/facebook';
 
-export const handler = NextAuth({
+const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -28,7 +28,7 @@ export const handler = NextAuth({
           placeholder: 'Contraseña',
         },
       },
-      async authorize(credentials): Promise<any> {
+      async authorize(credentials) {
         const authResponse = await fetch(
           `${process.env.API_BASE_URL}/auth/login`,
           {
@@ -110,7 +110,7 @@ export const handler = NextAuth({
       return token;
     },
 
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user = token.user!;
 
       return session;

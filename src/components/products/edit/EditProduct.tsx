@@ -37,7 +37,7 @@ type Props = {
   colors: IColor[];
 };
 
-export type FormInputs = {
+export type FormEditInputs = {
   title: string;
   description: string;
   gender: string;
@@ -99,7 +99,7 @@ export const EditProduct = ({
     setError,
     getValues,
     watch,
-  } = useForm<FormInputs>({
+  } = useForm<FormEditInputs>({
     defaultValues: {
       title,
       description,
@@ -121,8 +121,8 @@ export const EditProduct = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onHandleSubmit: SubmitHandler<FormInputs> = async (
-    data: FormInputs
+  const onHandleSubmit: SubmitHandler<FormEditInputs> = async (
+    data: FormEditInputs
   ) => {
     const dataToUpdate = {
       title: data.title,
