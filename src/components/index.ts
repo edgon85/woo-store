@@ -1,7 +1,9 @@
 export * from './ui';
 export * from './forms';
-export * from './products'
-export * from './profile'
-export * from './checkout'
-export * from './member'
-export * from './settings'
+export * from './products';
+export * from './profile';
+export * from './checkout';
+export * from './member';
+export * from './settings';
+
+export * from './main/Banner';
