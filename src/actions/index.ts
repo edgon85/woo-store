@@ -18,4 +18,4 @@ export * from './clothing-condition/get-clothing-condition';
 /* Colors */
 export * from './colors/get-colors';
 
-export * from './categories/get-categories';
+export * from './products/get-product-by-gender-category';

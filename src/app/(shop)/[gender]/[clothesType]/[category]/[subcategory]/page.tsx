@@ -1,4 +1,8 @@
-import { BadgeFilterList, ProductCard } from '@/components';
+import {
+  getProductByGenderAndCategory,
+  getProductBySubcategory,
+} from '@/actions';
+import { BadgeFilterList, Pagination, ProductCard } from '@/components';
 import { fetchData } from '@/lib';
 import { buildQueryString } from '@/utils';
 import { cookies } from 'next/headers';
@@ -19,16 +23,33 @@ export default async function SubcategoryPage({
 
   const queryString = buildQueryString(searchParams);
 
-  const url = queryString
-    ? `/products/filter?gender=${gender}&subcategory=${subcategory}&${queryString}`
-    : `/products/subcategory/${subcategory}`;
+  const data = await getProductBySubcategory({
+    take: 15,
+    gender,
+    subcategory,
+    queryString,
+  });
+  const { products, totalPage } = data;
 
-  const products = await fetchData(url);
+  if (products.length === 0) {
+    return (
+      <div className="w-full mt-10 md:mt-10 flex flex-col justify-center items-center">
+        <picture>
+          <img
+            src="/blank_canvas.svg"
+            alt="Imagen de no hay productos disponibles"
+            className="max-w-80"
+          />
+        </picture>
+        <p className="text-lg">Aun no hay productos disponibles</p>
+      </div>
+    );
+  }
 
   return (
     <>
       {queryString && <BadgeFilterList />}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[500]">
         {products.map((product: any) => (
           <ProductCard
             key={product.id}
@@ -37,6 +58,7 @@ export default async function SubcategoryPage({
           />
         ))}
       </div>
+      <Pagination totalPages={totalPage} />
     </>
   );
 }

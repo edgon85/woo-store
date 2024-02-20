@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers';
 import { unstable_noStore as noStore } from 'next/cache';
 
-type PaginationOptions = {
+/* type PaginationOptions = {
   page?: number;
   take?: number;
   path: string;
@@ -22,10 +22,6 @@ export async function getProductByGenderAndCategory({
     (page - 1) * take
   }`;
 
-  // Agregar el parámetro de búsqueda si se proporciona un valor no vacío para query
-  /*   if (query.trim() !== '') {
-    url += `&search=${encodeURIComponent(query)}`;
-  } */
 
   try {
     const resp = await fetch(url, {
@@ -49,3 +45,4 @@ export async function getProductByGenderAndCategory({
     return { ok: false, message: 'ocurrió un error vea los logs' };
   }
 }
+ */

@@ -1,5 +1,5 @@
 import { getProductByGenderAndCategory } from '@/actions';
-import { BadgeFilterList, ProductCard } from '@/components';
+import { BadgeFilterList, Pagination, ProductCard } from '@/components';
 import { buildQueryString } from '@/utils';
 import { cookies } from 'next/headers';
 
@@ -18,8 +18,8 @@ export default async function CategoriesPage({
     ? `/products/filter?gender=${gender}&category=${category}&${queryString}`
     : `/products?gender=${gender}&category=${category}`;
 
-  const data = (await getProductByGenderAndCategory({ path: url }));
-  const {products} = data
+  const data = await getProductByGenderAndCategory({ path: url, take: 15 });
+  const { products, totalPage } = data;
 
   if (products.length === 0) {
     return (
@@ -39,7 +39,7 @@ export default async function CategoriesPage({
   return (
     <div>
       {queryString && <BadgeFilterList />}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[500]">
         {products.map((product: any) => (
           <ProductCard
             key={product.id}
@@ -48,6 +48,7 @@ export default async function CategoriesPage({
           />
         ))}
       </div>
+      <Pagination totalPages={totalPage} />
     </div>
   );
 }
