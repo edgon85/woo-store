@@ -1,5 +1,6 @@
+import { getProductByUserIdOrUsername } from '@/actions/products/get-products';
 import { EmptyTransaction, ProductCard } from '@/components';
-import { getProductByUserIdOrUsername } from '@/helpers';
+
 import { IProduct } from '@/interfaces';
 import { cookies } from 'next/headers';
 

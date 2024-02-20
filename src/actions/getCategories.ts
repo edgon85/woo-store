@@ -1,4 +1,4 @@
-import { wooApi } from '@/wooApi';
+/* import { wooApi } from '@/wooApi';
 
 export const getCategories = async (gender: string, type: string) => {
   try {
@@ -25,3 +25,4 @@ export const getSubcategories = async (categoryId: string) => {
     console.log(error);
   }
 };
+ */

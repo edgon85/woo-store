@@ -7,3 +7,4 @@ export * from './member';
 export * from './settings';
 
 export * from './main/Banner';
+export * from './main/featured/Featured';

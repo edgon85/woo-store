@@ -1,3 +1,4 @@
+'use server';
 import { MeasurementFilterItems } from './measurements/MeasurementFilterItems';
 import { BrandsItems } from './brands/BrandsItems';
 import { ClothesStateFilter } from './clothesState/ClothesStateFilter';
@@ -5,13 +6,7 @@ import { ColorFilter } from './colors/ColorFilter';
 import { PriceFilter } from './price/PriceFilter';
 import { MenuItem } from './NavItems';
 import { fetchData } from '@/lib';
-import {
-  IBrand,
-  IClothesState,
-  IColor,
-  IMeasurement,
-  ISubcategory,
-} from '@/interfaces';
+
 import { SubcategoriesItems } from './CategoriesItem';
 
 type Props = {
@@ -26,18 +21,14 @@ export const NavCategories = async ({
   clothesType,
   isMovil,
 }: Props) => {
-  const subcategories = (await fetchData(
-    `/subcategories/${gender}/${category}`
-  )) as ISubcategory[];
-
-  const measurements = (await fetchData(
-    `/measurements?gender=${gender}&type=${clothesType}`
-  )) as IMeasurement[];
-
-  const brands = (await fetchData(`/brands/all?limit=15`)) as IBrand[];
-
-  const clothesStates = (await fetchData(`/clothes-state`)) as IClothesState[];
-  const colors = (await fetchData(`/colors`)) as IColor[];
+  const [subcategories, measurements, brands, clothesStates, colors] =
+    await Promise.all([
+      fetchData(`/subcategories/${gender}/${category}`),
+      fetchData(`/measurements?gender=${gender}&type=${clothesType}`),
+      fetchData(`/brands/all?take=15`),
+      fetchData(`/clothes-state`),
+      fetchData(`/colors`),
+    ]);
 
   return (
     <div className="p-4">

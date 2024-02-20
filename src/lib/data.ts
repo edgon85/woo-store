@@ -174,15 +174,19 @@ export async function fetchOrderById(id: string): Promise<IOrder> {
 
 /* ··········································································· */
 export async function fetchData(path: string) {
-  noStore(); /* TODO:Eliminar */
-
   const url = `${process.env.API_BASE_URL}${path}`;
 
-  const resp = await fetch(url);
+  try {
+    const resp = await fetch(url);
 
-  if (!resp.ok) {
-    throw new Error('Failed to fetch data');
+    if (!resp.ok) {
+      const errorData = await resp.json(); // Obtener el mensaje de error como JSON
+      throw new Error(errorData.message || 'Error al hacer fetch data');
+    }
+
+    return await resp.json();
+  } catch (error: any) {
+    console.log(error.message);
+    return { ok: false, message: 'ocurrió un error vea los logs' };
   }
-
-  return await resp.json();
 }

@@ -1,6 +1,5 @@
+import { getProductByGenderAndCategory } from '@/actions';
 import { BadgeFilterList, ProductCard } from '@/components';
-import { IProduct } from '@/interfaces';
-import { fetchData } from '@/lib';
 import { buildQueryString } from '@/utils';
 import { cookies } from 'next/headers';
 
@@ -19,7 +18,8 @@ export default async function CategoriesPage({
     ? `/products/filter?gender=${gender}&category=${category}&${queryString}`
     : `/products?gender=${gender}&category=${category}`;
 
-  const products = (await fetchData(url)) as IProduct[];
+  const data = (await getProductByGenderAndCategory({ path: url }));
+  const {products} = data
 
   if (products.length === 0) {
     return (

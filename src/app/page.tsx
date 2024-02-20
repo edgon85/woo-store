@@ -1,6 +1,12 @@
-import { BannerDesktop, BannerMovil } from '@/components';
+import { getFeaturedProducts } from '@/actions';
+import { BannerDesktop, BannerMovil, FeaturedArticles } from '@/components';
+import { cookies } from 'next/headers';
 
-export default function Home() {
+export default async function Home() {
+  // const currentUserId = cookies().get('userId')?.value;
+  const { data } = await getFeaturedProducts({});
+
+
   return (
     <main>
       {/* Mostrar BannerDesktop en dispositivos grandes (mayores o iguales a md) */}
@@ -12,6 +18,10 @@ export default function Home() {
       <div className="md:hidden">
         <BannerMovil />
       </div>
+
+      <article className='main-wrapper'>
+        <FeaturedArticles products={data.products} />
+      </article>
     </main>
   );
 }
