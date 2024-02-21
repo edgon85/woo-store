@@ -1,4 +1,5 @@
 export * from './ui';
+export * from './ui/footer/Footer';
 export * from './forms';
 export * from './products';
 export * from './profile';

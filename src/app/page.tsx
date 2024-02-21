@@ -1,11 +1,9 @@
 import { getFeaturedProducts } from '@/actions';
 import { BannerDesktop, BannerMovil, FeaturedArticles } from '@/components';
-import { cookies } from 'next/headers';
 
 export default async function Home() {
   // const currentUserId = cookies().get('userId')?.value;
   const { data } = await getFeaturedProducts({});
-
 
   return (
     <main>
@@ -19,7 +17,7 @@ export default async function Home() {
         <BannerMovil />
       </div>
 
-      <article className='main-wrapper'>
+      <article className="main-wrapper">
         <FeaturedArticles products={data.products} />
       </article>
     </main>

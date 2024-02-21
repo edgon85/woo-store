@@ -2,7 +2,7 @@ import './globals.css';
 
 import { Roboto } from 'next/font/google';
 import { Providers } from './providers';
-import { NavClothesType, Navbar } from '@/components';
+import { Footer, NavClothesType, Navbar } from '@/components';
 import Sidebar from '@/components/ui/navbar/sidebar/Sidebar';
 
 const roboto = Roboto({
@@ -31,6 +31,8 @@ export default function RootLayout({
             <Sidebar />
             {children}
           </div>
+
+          <Footer />
         </Providers>
       </body>
     </html>
