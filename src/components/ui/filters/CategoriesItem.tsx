@@ -2,8 +2,9 @@
 import { ISubcategory } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { RadiaSelectIcon } from '../icons';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSidebar } from '@/stores';
+import clsx from 'clsx';
 
 type Props = {
   subcategories: ISubcategory[];
@@ -31,8 +32,13 @@ export const SubcategoriesItems = ({
 
   // Función para manejar el clic en una Subcategoría
   const handleSubcategoryClick = (subSlug: string) => {
-    setSelectedSubcategory(subSlug);
-    router.push(`/${gender}/${clothesType}/${category}/${subSlug}`);
+    if (selectedSubcategory === subSlug) {
+      setSelectedSubcategory('');
+      router.push(`/${gender}/${clothesType}/${category}`);
+    } else {
+      setSelectedSubcategory(subSlug);
+      router.push(`/${gender}/${clothesType}/${category}/${subSlug}`);
+    }
     if (isMovil) {
       menuFilter();
     }
@@ -49,11 +55,16 @@ export const SubcategoriesItems = ({
             >
               <label
                 htmlFor={sub.slug}
-                className="flex justify-between items-center cursor-pointer hover:text-darkPrimary capitalize"
+                className={clsx(
+                  'flex justify-between items-center cursor-pointer hover:text-cerise-red-500 capitalize',
+                  {
+                    'text-cerise-red-600': sub.slug == selectedSubcategory,
+                  }
+                )}
               >
                 <span>{sub.title}</span>
                 {sub.slug == selectedSubcategory ? (
-                  <RadiaSelectIcon color="var(--primary)" size="16" />
+                  <RadiaSelectIcon size="16" className="text-cerise-red-600" />
                 ) : null}
               </label>
             </li>
