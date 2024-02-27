@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import Cookies from 'js-cookie';
 
 interface PersonalPreferencesState {
   gender: string;
@@ -9,11 +10,23 @@ interface PersonalPreferencesState {
 }
 
 export const usePersonalPreferencesStore = create<PersonalPreferencesState>()(
-  (set) => ({
-    gender: 'mujer',
-    clothesType: 'ropa',
+  (set) => {
+    Cookies.set('gender', 'mujer');
+    Cookies.set('clothesType', 'ropa');
+    return {
+      gender: 'mujer',
+      clothesType: 'ropa',
 
-    onSetGender: (value: string) => set((state) => ({ gender: value })),
-    setClothesType: (value: string) => set((state) => ({ clothesType: value })),
-  })
+      onSetGender: (value: string) =>
+        set((state) => {
+          Cookies.set('gender', value);
+          return { gender: value };
+        }),
+      setClothesType: (value: string) =>
+        set((state) => {
+          Cookies.set('clothesType', value);
+          return { clothesType: value };
+        }),
+    };
+  }
 );

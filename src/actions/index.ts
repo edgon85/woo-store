@@ -19,3 +19,5 @@ export * from './clothing-condition/get-clothing-condition';
 export * from './colors/get-colors';
 
 export * from './products/get-product-by-gender-category';
+
+export * from './search/search-product';
