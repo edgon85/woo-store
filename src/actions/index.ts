@@ -7,6 +7,7 @@ export * from './products/create-product';
 export * from './products/update-product';
 export * from './products/delete-image';
 export * from './products/get-featured-products';
+export * from './products/get-related-products';
 
 /* brands */
 export * from './brands/get-brands';

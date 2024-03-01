@@ -19,9 +19,10 @@ export default async function ProductDetailPage({ params: { slug } }: Props) {
   const currentUserId = cookies().get('userId')?.value;
 
   const { user } = product;
+
   return (
     <>
-      <section className="main-wrapper mt-0 md:mt-4 grid grid-cols-1 md:grid-cols-3">
+      <section className="main-wrapper mt-0 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
         {/* Slideshow */}
         <div className="col-span-1 md:col-span-2 ">
           {/* Desktop */}
@@ -64,7 +65,10 @@ export default async function ProductDetailPage({ params: { slug } }: Props) {
         </div>
       </section>
       <section className="main-wrapper">
-        <RelatedProducts />
+        <RelatedProducts
+          productSlug={product.slug!}
+          currentUserId={currentUserId || ''}
+        />
       </section>
     </>
   );

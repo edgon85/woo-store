@@ -35,7 +35,7 @@ export async function createProduct(
 ) {
   const token = cookies().get('token')?.value;
   const url = `${process.env.API_BASE_URL}/products`;
-  const { images, slug, ...restProduct } = product;
+  const { images, slug, packageDelivery, ...restProduct } = product;
 
   // Proceso de carga y guardado de imágenes
   // Recorrer las imágenes y guardarlas
@@ -56,12 +56,14 @@ export async function createProduct(
       },
       body: JSON.stringify({
         ...restProduct,
+        packageDelivery: [...packageDelivery.map((resp) => resp.id)],
         images: cloudinaryImages,
       }),
     });
 
     if (!resp.ok) {
-      throw new Error('Failed to fetch data');
+      const errorData = await resp.json(); // Obtener el mensaje de error como JSON
+      throw new Error(errorData.message || 'Error al hacer fetch data');
     }
     const data = await resp.json();
 
@@ -69,11 +71,9 @@ export async function createProduct(
       ok: true,
       data,
     };
-  } catch (error) {
-    return {
-      ok: false,
-      message: 'no se pudo crear, revisar los logs',
-    };
+  } catch (error: any) {
+    console.log(error.message);
+    return { ok: false, message: 'ocurrió un error vea los logs' };
   }
 }
 
