@@ -1,13 +1,48 @@
-import { EmptyTransaction } from '@/components';
+import { getFavoritesByUser } from '@/actions';
+import { EmptyTransaction, Pagination, ProductCard } from '@/components';
+import { cookies } from 'next/headers';
 
-export default function UserRatingsPage() {
+type Props = {
+  params: { user: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function UserRatingsPage({ params, searchParams }: Props) {
+  const currentUserId = cookies().get('userId')?.value;
+  const { page } = searchParams;
+
+  const data = await getFavoritesByUser({
+    username: params.user.trim(),
+    take: 8,
+    page: Number(page) || 1,
+  });
+
+  const { totalPage, favorites } = data;
+
+  if (favorites.length === 0) {
+    return (
+      <EmptyTransaction
+        label="¡Aun no tiene Favoritos!"
+        subLabel="¡Tus productos favoritos se mostraran aquí."
+        path="/products/create"
+        btnText="Subir prenda"
+        btnShow={false}
+      />
+    );
+  }
+
   return (
-    <EmptyTransaction
-      label="¡Aun no Favoritos!"
-      subLabel="¡Tus productos favoritos se mostraran aquí ."
-      path="/products/create"
-      btnText="Subir prenda"
-      btnShow={false}
-    />
+    <>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[500] py-4">
+        {favorites.map((favorite: any) => (
+          <ProductCard
+            key={favorite.id}
+            product={favorite.product}
+            currentUserId={currentUserId || ''}
+          />
+        ))}
+      </div>
+      {totalPage > 1 && <Pagination totalPages={totalPage} />}
+    </>
   );
 }

@@ -22,3 +22,8 @@ export * from './colors/get-colors';
 export * from './products/get-product-by-gender-category';
 
 export * from './search/search-product';
+
+export * from './favorites/check-is-favorite';
+export * from './favorites/delete-to-favorites';
+export * from './favorites/add-to-favorites';
+export * from './favorites/get-favorites-by-user';

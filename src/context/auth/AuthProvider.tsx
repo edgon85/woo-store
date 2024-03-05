@@ -52,6 +52,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
         }
 
         Cookies.set('userId', currentUser.id);
+        Cookies.set('token', currentUser.token);
         dispatch({ type: '[Auth] - Login', payload: currentUser });
       };
 
