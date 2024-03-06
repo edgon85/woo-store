@@ -6,11 +6,14 @@ import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsHeart, BsHeartFill, BsShare } from 'react-icons/bs';
+import { ShareButton } from './share/ShareButton';
 type Props = {
   productId: string;
+  productName: string;
+  productPrice: number;
 };
 
-export const BtnActions = ({ productId }: Props) => {
+export const BtnActions = ({ productId, productName, productPrice }: Props) => {
   const path = usePathname();
   const { user, isLoggedIn } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
@@ -69,10 +72,11 @@ export const BtnActions = ({ productId }: Props) => {
         </button>
       )}
 
-      <button className="flex justify-center items-center gap-2">
+      {/* <button className="flex justify-center items-center gap-2">
         <BsShare className="text-cerise-red-600" size={24} />{' '}
         <span>Compartir</span>
-      </button>
+      </button> */}
+      <ShareButton productName={productName} productPrice={productPrice} />
     </div>
   );
 };

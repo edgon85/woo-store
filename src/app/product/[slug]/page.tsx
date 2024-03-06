@@ -39,7 +39,11 @@ export default async function ProductDetailPage({ params: { slug } }: Props) {
           />
 
           <div className="block md:hidden">
-            <BtnActions productId={product.id!} />
+            <BtnActions
+              productId={product.id!}
+              productName={product.title}
+              productPrice={product.price}
+            />
           </div>
         </div>
 
@@ -51,7 +55,11 @@ export default async function ProductDetailPage({ params: { slug } }: Props) {
           />
 
           <div className="hidden md:block">
-            <BtnActions productId={product.id!} />
+            <BtnActions
+              productId={product.id!}
+              productName={product.title}
+              productPrice={product.price}
+            />
           </div>
 
           <div className="mt-4">
