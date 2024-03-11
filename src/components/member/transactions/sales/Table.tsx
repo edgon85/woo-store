@@ -113,8 +113,11 @@ export const TableSales = ({ orders }: Props) => {
                     </td>
                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                       <div className="flex justify-end gap-3">
+                        <DownLoadGide
+                          urlGuidePdf={order.guideUrl}
+                          prodSlug={order.product.slug!}
+                        />
                         <UpdateSale id={order.id} />
-                        <DownLoadGide id={order.id} />
                       </div>
                     </td>
                   </tr>

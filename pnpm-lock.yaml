@@ -32,6 +32,9 @@ dependencies:
   eslint-config-next:
     specifier: 14.0.2
     version: 14.0.2(eslint@8.42.0)(typescript@5.1.3)
+  file-saver:
+    specifier: 2.0.5
+    version: 2.0.5
   formidable:
     specifier: 3.5.1
     version: 3.5.1
@@ -85,6 +88,9 @@ dependencies:
     version: 4.4.7(@types/react@18.2.12)(react@18.2.0)
 
 devDependencies:
+  '@types/file-saver':
+    specifier: 2.0.7
+    version: 2.0.7
   '@types/formidable':
     specifier: 3.4.3
     version: 3.4.3
@@ -342,6 +348,10 @@ packages:
     dependencies:
       tslib: 2.6.2
     dev: false
+
+  /@types/file-saver@2.0.7:
+    resolution: {integrity: sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==}
+    dev: true
 
   /@types/formidable@3.4.3:
     resolution: {integrity: sha512-FRB5KNIYgCLDvw/ho7daBVqdQRG9Ptk1tMlZ2B5ibAjxDfXFkO6fJaP+ojmS8ljqmnC5If9u24WdWcVPaN3thg==}
@@ -1366,6 +1376,10 @@ packages:
     engines: {node: ^10.12.0 || >=12.0.0}
     dependencies:
       flat-cache: 3.0.4
+    dev: false
+
+  /file-saver@2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
     dev: false
 
   /fill-range@7.0.1:

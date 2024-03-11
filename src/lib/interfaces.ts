@@ -32,4 +32,5 @@ export interface IOrder {
   buyer: IUser;
   seller: IUser;
   summary: Summary;
+  guideUrl: string; // Nuevo campo para almacenar la URL del PDF de la guía
 }

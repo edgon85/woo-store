@@ -27,3 +27,5 @@ export * from './favorites/check-is-favorite';
 export * from './favorites/delete-to-favorites';
 export * from './favorites/add-to-favorites';
 export * from './favorites/get-favorites-by-user';
+
+export * from './orders/get-order-by-id';
