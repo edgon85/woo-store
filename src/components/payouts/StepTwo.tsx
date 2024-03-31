@@ -2,23 +2,29 @@
 
 import { useAuth } from '@/hooks';
 import { usePayoutStore } from '@/stores';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { AccountType } from './step-two/AccountType';
 import { FormPersonal } from './step-two/FormPersonal';
 import { FormBusiness } from './step-two/FormBusiness';
 import clsx from 'clsx';
 
 export const StepTwo = () => {
-  const bankAccountHolder = usePayoutStore((store) => store.bankAccountHolder);
-  const accountType = usePayoutStore((store) => store.accountType);
+  const [currentStep, bankAccountHolder, accountType, ownerAccountName] =
+    usePayoutStore((store) => [
+      store.currentStep,
+      store.bankAccountHolder,
+      store.accountType,
+      store.onSetBankAccountHolder,
+      store.ownerAccountName,
+    ]);
+
+  const setCurrentStep = usePayoutStore((state) => state.setCurrentStep);
+  const setOwnerAccountName = usePayoutStore(
+    (state) => state.onSetOwnerAccountName
+  );
   const setBankAccountHolder = usePayoutStore(
     (store) => store.onSetBankAccountHolder
   );
-  const [currentStep, setCurrentStep] = usePayoutStore((state) => [
-    state.currentStep,
-    state.setCurrentStep,
-  ]);
-  const ownerAccountName = usePayoutStore((store) => store.ownerAccountName);
 
   const { user } = useAuth();
 
@@ -32,10 +38,12 @@ export const StepTwo = () => {
 
   const isNextDisabled =
     bankAccountHolder === '' ||
-    (bankAccountHolder === 'new-owner' &&
-      (!accountType ||
-        !ownerAccountName.firstName ||
-        !ownerAccountName.lastName));
+    (bankAccountHolder === 'new-owner' && (!accountType || !ownerAccountName));
+
+  const selectAccountHolder = (e: ChangeEvent<HTMLSelectElement>) => {
+    setBankAccountHolder(e.target.value);
+    setOwnerAccountName(user?.fullName!);
+  };
 
   return (
     <div className="min-h-[500px] flex flex-col justify-between">
@@ -50,8 +58,9 @@ export const StepTwo = () => {
 
         <form className="mt-4">
           <select
+            value={bankAccountHolder}
             className="border rounded p-4 w-full"
-            onChange={(e) => setBankAccountHolder(e.target.value)}
+            onChange={selectAccountHolder}
           >
             <option value="">-- Seleccione una opción --</option>
             <option value="owner">{user?.fullName}</option>

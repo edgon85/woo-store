@@ -1,4 +1,4 @@
-import { AddPayout, StepOne, StepTwo } from '@/components';
+import { AddPayout, StepOne, StepThree, StepTwo } from '@/components';
 
 const steps = [
   <>
@@ -8,7 +8,7 @@ const steps = [
     <StepTwo />
   </>,
   <>
-    <h2>paso 3</h2>
+   < StepThree />
   </>,
 ];
 

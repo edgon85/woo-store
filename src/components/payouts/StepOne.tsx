@@ -5,6 +5,7 @@ import { CiBank, CiWallet } from 'react-icons/ci';
 import { RadiaSelectIcon } from '../ui';
 
 import { usePayoutStore } from '@/stores';
+import Link from 'next/link';
 
 export const StepOne = () => {
   const payoutType = usePayoutStore((store) => store.payoutType);
@@ -43,7 +44,7 @@ export const StepOne = () => {
             </div>
           </div>
         </div>
-        <div
+        {/*   <div
           className={clsx('border w-5/12 rounded-md mt-4 cursor-pointer', {
             'border-cerise-red-600': payoutType === 'fri',
           })}
@@ -61,10 +62,18 @@ export const StepOne = () => {
               )}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <Link
+          href={'/settings/payments/payout-methods'}
+          className={clsx(
+            'bg-cerise-red-600  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+          )}
+        >
+          Cancelar
+        </Link>
         <button
           onClick={nextStep}
           disabled={!payoutType}

@@ -1,6 +1,7 @@
 'use client';
 import { usePayoutStore } from '@/stores';
 import { ChangeEvent, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 export const FormPersonal = () => {
   const [firstName, setFirstName] = useState('');
@@ -9,21 +10,16 @@ export const FormPersonal = () => {
     (store) => store.onSetOwnerAccountName
   );
 
-  const handleFirstNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-    setOwnerAccountName(e.target.value, '');
-  };
+  const handleFirstNameChange = useDebouncedCallback((term: string) => {
+    setFirstName(term);
+    setOwnerAccountName(term);
+  }, 500);
 
-  const handleLastNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-    setOwnerAccountName(firstName, e.target.value);
-  };
-
-  // Cuando el formulario se envíe, asigna los valores al estado
-  /* const handleSubmit = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setOwnerAccountName(`${firstName} ${lastName}`);
-  }; */
+  const handleLastNameChange = useDebouncedCallback((term: string) => {
+    setLastName(term);
+    const fullName = `${firstName} ${term}`;
+    setOwnerAccountName(fullName);
+  }, 500);
 
   return (
     <form className="mt-4">
@@ -40,8 +36,7 @@ export const FormPersonal = () => {
             id="first_name"
             type="text"
             className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            value={firstName}
-            onChange={handleFirstNameChange}
+            onChange={(e) => handleFirstNameChange(e.target.value)}
           />
         </div>
 
@@ -56,8 +51,7 @@ export const FormPersonal = () => {
             id="first_name"
             type="text"
             className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            value={lastName}
-            onChange={handleLastNameChange}
+            onChange={(e) => handleLastNameChange(e.target.value)}
           />
         </div>
       </div>
