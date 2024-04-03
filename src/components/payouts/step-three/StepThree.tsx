@@ -3,8 +3,13 @@ import { usePayoutStore } from '@/stores';
 import clsx from 'clsx';
 
 import { FormAccountNumber, SelectAccountTypeBank, SelectBank } from './';
+import Swal from 'sweetalert2';
+import { addPayoutMethod } from '@/actions';
+import { useRouter } from 'next/navigation';
 
 export const StepThree = () => {
+  const router = useRouter();
+
   const [
     currentStep,
     setCurrentStep,
@@ -63,9 +68,44 @@ export const StepThree = () => {
 
       // Aquí enviar dataToSend al servidor
       console.log('Enviando datos al servidor:', dataToSend);
+
+      Swal.fire({
+        title: 'Se creara la cuenta',
+        //text: `${ownerAccountName} - ${bank} - ${accountNumber}`,
+        icon: 'info',
+        html: `<span>${ownerAccountName}</span></br>
+        <span>${bank} - ${accountTypeBank}</span></br><span>${accountNumber}</span>`,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, Agregar!',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+
+        preConfirm: async () => {
+          const { ok, message } = await addPayoutMethod(dataToSend);
+
+          if (!ok) {
+            Swal.showValidationMessage(`error: ${message}`);
+            return;
+          }
+
+          return 'todo ok';
+        },
+        allowOutsideClick: () => {
+          const popup = Swal.getPopup() as HTMLElement;
+          popup.classList.remove('swal2-show');
+          return !Swal.isLoading();
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          if (result.value === 'todo ok') {
+            router.replace('/settings/payments/payout-methods');
+          }
+        }
+      });
     } else {
-      // Mostrar mensaje de error porque hay campos vacíos
-      console.log('Falta completar uno o más campos.');
+      console.log('Ocurrió un error.');
     }
   };
 
