@@ -1,5 +1,6 @@
 import { PayoutMethod } from '@/interfaces';
 import { CiBank } from 'react-icons/ci';
+import { BtnEditPayout } from './buttons/BtnEditPayout';
 
 type Props = {
   payouts: PayoutMethod[];
@@ -9,13 +10,13 @@ export const ListOfPayouts = ({ payouts }: Props) => {
   return (
     <>
       {payouts.map((payout) => {
-        const ultimosCuatroDigitos = payout.accountNumber.slice(-4);
+        const lastFourDigits = payout.accountNumber.slice(-4);
         const numeroOculto =
-          '·'.repeat(payout.accountNumber.length - 4) + ultimosCuatroDigitos;
+          '·'.repeat(payout.accountNumber.length - 4) + lastFourDigits;
         return (
           <div
             key={payout.id}
-            className="py-4 px-2 w-6/12 flex justify-between items-center"
+            className="py-4 px-2 w-full md:w-6/12 flex justify-between items-center"
           >
             <div className="flex gap-2">
               <CiBank size={24} />
@@ -32,9 +33,18 @@ export const ListOfPayouts = ({ payouts }: Props) => {
                   {payout.bank} <span>{numeroOculto}</span>
                 </p>
                 <p className="capitalize">{payout.ownerAccountName}</p>
+                {!payout.isVerified && (
+                  <span className="text-xs text-cerise-red-800">
+                    Pendiente de verificar
+                  </span>
+                )}
               </div>
             </div>
-            <button className="border border-black px-4 py-2 rounded hover:bg-cerise-red-300">Editar</button>
+            {/* <button className="border border-black px-4 py-2 rounded hover:bg-cerise-red-300">
+              Editar
+            </button> */}
+
+            <BtnEditPayout payoutMethod={payout} />
           </div>
         );
       })}

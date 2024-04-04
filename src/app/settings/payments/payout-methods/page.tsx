@@ -11,7 +11,7 @@ export default async function PayoutMethodsPage() {
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-lg font-bold">Cómo recibes los cobros</h2>
-      <p className="w-6/12">
+      <p className="w-full md:w-6/12">
         Puedes enviar tu dinero a una o más formas de cobro. Para administrar
         las formas cobro o asignar un contribuyente, utiliza el menú para editar
         cada caso

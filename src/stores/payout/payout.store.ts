@@ -21,6 +21,7 @@ interface PayoutState {
   setAccountNumber: (value: string) => void;
   resetStepOne: () => void;
   resetStepTwo: () => void;
+  resetAll: () => void;
 }
 
 export const usePayoutStore = create<PayoutState>()((set) => ({
@@ -60,5 +61,18 @@ export const usePayoutStore = create<PayoutState>()((set) => ({
       bankAccountHolder: '',
       accountType: '',
       ownerAccountName: '',
+    })),
+
+  resetAll: () =>
+    set((_) => ({
+      currentStep: 0,
+      payoutType: '',
+      bankAccountHolder: '',
+      accountType: 'personal',
+
+      ownerAccountName: '',
+      bank: '',
+      accountTypeBank: '',
+      accountNumber: '',
     })),
 }));

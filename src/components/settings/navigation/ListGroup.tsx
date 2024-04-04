@@ -24,13 +24,13 @@ export const ListGroup = ({
       label: 'Mis pedidos',
     },
     { id: 'sales', href: '/settings/transactions/sales', label: 'Mis ventas' },
-    {
+   /*  {
       id: 'payments',
       href: '/settings/payments',
       label: 'pagos',
-    },
+    }, */
     {
-      id: 'payouts',
+      id: 'payout-methods',
       href: '/settings/payments/payout-methods',
       label: 'Cobros',
     },

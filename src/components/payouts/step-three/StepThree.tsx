@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 export const StepThree = () => {
   const router = useRouter();
 
+  const resetAll = usePayoutStore((store) => store.resetAll);
   const [
     currentStep,
     setCurrentStep,
@@ -38,15 +39,6 @@ export const StepThree = () => {
 
   const onHandleClick = () => {
     // Verificar si hay campos vacíos
-    const dataToSend = {
-      payoutType,
-      bank,
-      accountTypeBank,
-      bankAccountHolder,
-      accountType,
-      ownerAccountName,
-      accountNumber,
-    };
 
     if (
       bank !== '' &&
@@ -65,9 +57,6 @@ export const StepThree = () => {
         ownerAccountName,
         accountNumber,
       };
-
-      // Aquí enviar dataToSend al servidor
-      console.log('Enviando datos al servidor:', dataToSend);
 
       Swal.fire({
         title: 'Se creara la cuenta',
@@ -100,6 +89,7 @@ export const StepThree = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           if (result.value === 'todo ok') {
+            resetAll();
             router.replace('/settings/payments/payout-methods');
           }
         }

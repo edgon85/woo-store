@@ -32,3 +32,5 @@ export * from './orders/get-order-by-id';
 
 export * from './payout-methods/get-payout-method';
 export * from './payout-methods/create-method';
+export * from './payout-methods/update-isDefault';
+export * from './payout-methods/delete-method';
