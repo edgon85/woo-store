@@ -5,8 +5,13 @@ import { translateOrderStatus } from '@/utils';
 export default async function Page({ params }: { params: { id: string } }) {
   const order = await fetchOrderById(params.id);
 
+  const uuid = order.id;
+  const partes = uuid.split('-');
+  const ultimaParte = partes[partes.length - 1];
+
   // TODO: Colocar numero de rastreo
-  
+
+  console.log(order);
   return (
     <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto mt-4">
       <div className="flex justify-between items-start">
@@ -14,7 +19,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <h1 className="text-2xl font-bold text-gray-700">
             Detalle de la orden
           </h1>
-          <p className="text-gray-500">Order ID: {order.id}</p>
+          <p className="text-gray-500">Order ID: {ultimaParte}</p>
           <p className="text-gray-500">
             {new Date(order.orderDate).toLocaleDateString()}
           </p>
@@ -72,7 +77,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </p>
             <p>
               <span className="font-bold">No. de rastreo: </span>{' '}
-              {'9361289677008863403613	'}
+              {order.notes ? order.notes : '-'}
             </p>
           </div>
         </div>

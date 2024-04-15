@@ -78,6 +78,7 @@ export const DropdownAccount = () => {
                 <DropdownItem
                   title="Mi balance"
                   icon={<CurrencyIcon />}
+                  path={`/settings/balance`}
                   setIsCollapsed={setIsCollapsed}
                 />
                 <DropdownItem

@@ -24,7 +24,8 @@ export const ListGroup = ({
       label: 'Mis pedidos',
     },
     { id: 'sales', href: '/settings/transactions/sales', label: 'Mis ventas' },
-   /*  {
+    { id: 'balance', href: '/settings/balance', label: 'Mi balance' },
+    /*  {
       id: 'payments',
       href: '/settings/payments',
       label: 'pagos',

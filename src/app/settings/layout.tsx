@@ -1,4 +1,3 @@
-
 import { ListGroup } from '@/components';
 import { cookies } from 'next/headers';
 
@@ -15,7 +14,7 @@ export default function SettingsLayout({
         <ListGroup userId={userId!} />
       </div>
 
-      <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2">
+      <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2 min-h-[70vh]">
         {children}
       </div>
     </div>

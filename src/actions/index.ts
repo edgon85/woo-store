@@ -29,6 +29,7 @@ export * from './favorites/add-to-favorites';
 export * from './favorites/get-favorites-by-user';
 
 export * from './orders/get-order-by-id';
+export * from './orders/get-order-no-paid';
 
 export * from './payout-methods/get-payout-method';
 export * from './payout-methods/create-method';

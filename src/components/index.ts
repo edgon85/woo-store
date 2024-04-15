@@ -11,3 +11,6 @@ export * from './main/Banner';
 export * from './main/featured/Featured';
 
 export * from './payouts';
+
+export * from './balance/table-no-paid';
+export * from './balance/table-paid';

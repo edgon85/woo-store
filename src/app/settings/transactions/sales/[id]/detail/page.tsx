@@ -10,6 +10,9 @@ type Props = {
 export default async function Page({ params }: Props) {
   const { data } = await getOrderById(params.id);
 
+  const uuid = data.id;
+  const partes = uuid.split('-');
+  const ultimaParte = partes[partes.length - 1];
   return (
     <main>
       <p>Detalle de la orden</p>
@@ -17,7 +20,7 @@ export default async function Page({ params }: Props) {
       <div className="border bg-white p-2">
         <div className="flex justify-between">
           <p>
-            <span className="text-base">Orden id:</span> {data.id}
+            <span className="text-base">Orden id:</span> {ultimaParte}
           </p>
           <DownLoadGide
             prodSlug={data.product.slug}
