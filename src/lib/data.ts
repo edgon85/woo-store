@@ -151,8 +151,8 @@ export async function fetchOrders(type: string): Promise<IOrder[]> {
 }
 
 /* ··········································································· */
-export async function fetchOrderById(id: string): Promise<IOrder> {
-  noStore();
+/*export async function fetchOrderById(id: string): Promise<IOrder> {
+   noStore();
   const token = cookies().get('token')?.value;
   const url = `${process.env.API_BASE_URL}/orders/${id}`;
 
@@ -170,7 +170,7 @@ export async function fetchOrderById(id: string): Promise<IOrder> {
 
   const data: IOrder = await res.json();
   return data;
-}
+} */
 
 /* ··········································································· */
 export async function fetchData(path: string) {

@@ -1,5 +1,6 @@
+import { fetchOrderById } from '@/actions';
 import { TransactionStatus } from '@/components';
-import { IOrder, fetchOrderById, formatCurrency } from '@/lib';
+import { formatCurrency } from '@/lib';
 import { translateOrderStatus } from '@/utils';
 
 export default async function Page({ params }: { params: { id: string } }) {

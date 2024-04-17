@@ -28,6 +28,7 @@ export * from './favorites/delete-to-favorites';
 export * from './favorites/add-to-favorites';
 export * from './favorites/get-favorites-by-user';
 
+export * from './orders/create-order';
 export * from './orders/get-order-by-id';
 export * from './orders/get-order-no-paid';
 

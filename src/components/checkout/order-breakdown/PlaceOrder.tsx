@@ -1,3 +1,4 @@
+import { createNewOrder } from '@/actions';
 import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
 import { createOrder } from '@/helpers/httpOrderHelper';
 import { useAuth } from '@/hooks';
@@ -62,19 +63,20 @@ export const PlaceOrder = () => {
 
     setShowLoading(true);
 
-    const { message } = await createOrder(newOrder, user?.token!);
+    const { message, ok, data } = await createNewOrder(newOrder);
 
-    if (message !== 'ok') {
+    console.log(data)
+    if (!ok) {
       setAlertType('error');
       setShowLoading(false);
-      setError(message);
+      setError(true);
       console.log(message);
       return;
     } else {
       setAlertType('success');
       setShowLoading(false);
 
-      router.replace('settings/transactions/purchases')
+      router.replace('checkout/confirm/21254875');
     }
   };
 
