@@ -18,3 +18,10 @@ export const formatDateToLocal = (
   const formatter = new Intl.DateTimeFormat(locale, options);
   return formatter.format(date);
 };
+
+export const uuIiMyFormat = (uuId: string) => {
+  const partes = uuId.split('-');
+  const ultimaParte = partes[partes.length - 1];
+
+  return ultimaParte;
+};
