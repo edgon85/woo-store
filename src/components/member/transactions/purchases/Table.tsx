@@ -1,13 +1,22 @@
+'use client';
 import { TransactionStatus } from '../TransactionStatus';
 import { IOrder, formatCurrency, formatDateToLocal, uuIiMyFormat } from '@/lib';
 import { SlLocationPin } from 'react-icons/sl';
 import Link from 'next/link';
+import { redirect, useRouter } from 'next/navigation';
 
 type Props = {
   orders: IOrder[];
 };
 
 export const TablePurchases = ({ orders }: Props) => {
+  const router = useRouter();
+
+  const onClickHelp = (id: string) => {
+    console.log(id);
+    router.push(`/claim/open?reason=product_not_received&transaction=${id}`);
+  };
+
   return (
     <>
       {orders?.map((order: IOrder) => {
@@ -80,7 +89,10 @@ export const TablePurchases = ({ orders }: Props) => {
               <button className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white">
                 Escribir al vendedor
               </button>
-              <button className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white">
+              <button
+                onClick={() => onClickHelp(order.id)}
+                className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
+              >
                 Necesito ayuda
               </button>
               <Link
