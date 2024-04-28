@@ -59,11 +59,11 @@ export const config = {
     '/products/create',
     '/product/edit/:path*',
     '/member/transactions/:path*',
-    // '/checkout/address',
     // '/checkout/summary',
     '/checkout/:path*',
     '/admin/:path*',
     '/settings/:path*',
+    '/claim/:path*',
     '/api/admin/:path*',
   ],
 };

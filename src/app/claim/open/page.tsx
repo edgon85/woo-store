@@ -1,5 +1,5 @@
-import { fetchOrderById } from '@/actions';
-import { Accordion } from '@/components/claim/Accordion';
+import { checkImageAvailable, fetchOrderById } from '@/actions';
+import { AccordionComponent } from '@/components/claim/Accordion';
 import { formatCurrency } from '@/lib';
 import { redirect } from 'next/navigation';
 
@@ -15,7 +15,8 @@ export default async function ClaimOpenPage({ searchParams }: Props) {
 
   const order = await fetchOrderById(transaction.toString());
 
-  const images = order.product.images.map((image: any) => image);
+  const imageUrl = await checkImageAvailable(order.product.images[0]);
+
   const { product, summary } = order;
 
   return (
@@ -24,16 +25,23 @@ export default async function ClaimOpenPage({ searchParams }: Props) {
         <h2 className="mb-4 text-base font-semibold">Necesito ayuda</h2>
         <div className="flex gap-2">
           <picture>
-            <img src={images[0]} alt={product.title} width={200} />
+            <img
+              src={imageUrl ?? '/empty-image.svg'}
+              alt={product.title}
+              width={200}
+            />
           </picture>
           <div>
-            <p>{product.title}</p>
-            <p>{formatCurrency(summary.total * 100)}</p>
+            <p className="text-lg font-semibold">{product.title}</p>
+            <p className="text-base">{formatCurrency(summary.total * 100)}</p>
           </div>
         </div>
       </div>
 
-      <Accordion />
+      <div className="mt-4">
+        <p className="mb-4">¿Cómo podemos ayudarte?</p>
+        <AccordionComponent order={order!} />
+      </div>
     </div>
   );
 }

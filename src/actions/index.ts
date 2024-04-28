@@ -31,6 +31,7 @@ export * from './favorites/get-favorites-by-user';
 export * from './orders/create-order';
 export * from './orders/get-order-by-id';
 export * from './orders/get-order-no-paid';
+export * from './orders/create-claim';
 
 export * from './payout-methods/get-payout-method';
 export * from './payout-methods/create-method';
