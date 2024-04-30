@@ -94,8 +94,6 @@ export const AccordionComponent = ({ order }: Props) => {
             Ya recibiste el producto
           </AccordionHeader>
 
-          {/* TODO: no mostrar si ya un reclamo  */}
-
           {order.claim ? (
             <AccordionBody className="leading-6 border-t pt-2 pb-2">
               <p>

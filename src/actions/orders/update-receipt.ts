@@ -1,23 +1,20 @@
 'use server';
+
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export async function createNewClaim(
-  reason: string,
-  info: string,
-  order: string
-) {
+export async function updateConfirmReceipt(orderId: string) {
   const token = cookies().get('token')?.value;
-  const url = `${process.env.API_BASE_URL}/returns`;
+  const url = `${process.env.API_BASE_URL}/orders/confirm-received/${orderId}`;
 
   try {
     const resp = await fetch(url, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ reason, info, order }),
+      body: JSON.stringify({ received: true }),
     });
 
     if (!resp.ok) {
@@ -27,8 +24,7 @@ export async function createNewClaim(
 
     const data = await resp.json();
 
-    revalidatePath(`/settings/transactions/purchases`);
-
+    revalidatePath('/settings/transactions/purchases');
     return {
       ok: true,
       data,

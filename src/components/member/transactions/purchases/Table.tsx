@@ -1,9 +1,16 @@
 'use client';
 import { TransactionStatus } from '../TransactionStatus';
-import { IOrder, formatCurrency, formatDateToLocal, uuIiMyFormat } from '@/lib';
+import {
+  IOrder,
+  OrderStatus,
+  formatCurrency,
+  formatDateToLocal,
+  uuIiMyFormat,
+} from '@/lib';
 import { SlLocationPin } from 'react-icons/sl';
 import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
+import { BtnConfirmReceipt } from './BtnConfirmReceipt';
 
 type Props = {
   orders: IOrder[];
@@ -91,23 +98,36 @@ export const TablePurchases = ({ orders }: Props) => {
                   <span>{order.notes ? order.notes : '-'}</span>
                 </p>
               </div>
-              <div className="flex flex-col gap-4 items-center">
+              <div className="flex flex-col gap-2 items-center">
                 <button className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white">
                   Escribir al vendedor
                 </button>
-                <button
-                  onClick={() => onClickHelp(order.id)}
-                  className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
-                >
-                  Necesito ayuda
-                </button>
-                <Link
-                  href={''}
-                  className="flex gap-1 justify-center items-center underline"
-                >
-                  <SlLocationPin size={18} />
-                  Ver en Guatex
-                </Link>
+
+                {order.orderStatus === OrderStatus.Delivered &&
+                !order.received &&
+                !order.claim ? (
+                  <BtnConfirmReceipt orderId={order.id} />
+                ) : null}
+
+                {!order.received && (
+                  <button
+                    onClick={() => onClickHelp(order.id)}
+                    className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
+                  >
+                    Necesito ayuda
+                  </button>
+                )}
+
+                {order.orderStatus !== OrderStatus.Delivered &&
+                order.orderStatus !== OrderStatus.Completed ? (
+                  <Link
+                    href={''}
+                    className="flex gap-1 justify-center items-center underline"
+                  >
+                    <SlLocationPin size={18} />
+                    Ver en Guatex
+                  </Link>
+                ) : null}
               </div>
             </div>
           </div>

@@ -28,10 +28,12 @@ export * from './favorites/delete-to-favorites';
 export * from './favorites/add-to-favorites';
 export * from './favorites/get-favorites-by-user';
 
+/* Orders */
 export * from './orders/create-order';
 export * from './orders/get-order-by-id';
 export * from './orders/get-order-no-paid';
 export * from './orders/create-claim';
+export * from './orders/update-receipt';
 
 export * from './payout-methods/get-payout-method';
 export * from './payout-methods/create-method';
