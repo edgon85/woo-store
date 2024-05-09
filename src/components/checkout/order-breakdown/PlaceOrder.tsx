@@ -65,7 +65,7 @@ export const PlaceOrder = () => {
 
     const { message, ok, data } = await createNewOrder(newOrder);
 
-    console.log(data)
+    console.log(data);
     if (!ok) {
       setAlertType('error');
       setShowLoading(false);
@@ -76,7 +76,7 @@ export const PlaceOrder = () => {
       setAlertType('success');
       setShowLoading(false);
 
-      router.replace('checkout/confirm/21254875');
+      router.replace(`checkout/confirm/${data.id}`);
     }
   };
 

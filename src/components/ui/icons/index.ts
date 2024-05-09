@@ -15,3 +15,5 @@ export * from './ShareIcon';
 export * from './UserIcon';
 export * from './RadiaSelectIcon';
 export * from './SpinnerIcon';
+export * from './FillStar';
+export * from './EmptyStar';

@@ -10,8 +10,10 @@ export default async function ConfirmCheckoutPage({ params }: Props) {
   const partes = uuid.split('-');
   const ultimaParte = partes[partes.length - 1];
 
+  console.log(params.id);
   const order = await fetchOrderById(params.id);
   const { product, summary, packageDelivery, buyer } = order;
+
   return (
     <div className="w-full md:w-1/2 md:m-auto min-h-[70vh] flex flex-col items-center gap-8 mt-4 pt-4 pb-4 px-2 md:px-0">
       <picture>

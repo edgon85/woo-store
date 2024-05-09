@@ -39,3 +39,5 @@ export * from './payout-methods/get-payout-method';
 export * from './payout-methods/create-method';
 export * from './payout-methods/update-isDefault';
 export * from './payout-methods/delete-method';
+
+export * from './ratings/post-rating';
