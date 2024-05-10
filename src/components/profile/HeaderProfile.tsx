@@ -1,9 +1,10 @@
 'use server';
-import { UserIcon } from '../ui';
+import { EmptyStar, FillStar, UserIcon } from '../ui';
 import Link from 'next/link';
 import { fetchPublicProfile } from '@/lib';
 import { cookies } from 'next/headers';
-import { checkImageAvailable } from '@/actions';
+import { checkImageAvailable, getRatingByUsername } from '@/actions';
+import { RatingComponent } from './RatingComponent';
 
 interface LocalProfile {
   id: string;
@@ -20,11 +21,12 @@ type Props = {
 
 export async function HeaderProfile({ username }: Props) {
   const userData = (await fetchPublicProfile(username)) as LocalProfile;
-
+  const ratingUser = await getRatingByUsername(username);
   const currentUserId = cookies().get('userId')?.value;
   const imageUrl = await checkImageAvailable(userData?.profileImage);
 
   /* TODO: obtener el rating */
+  const { ok, message, data } = ratingUser;
 
   return (
     <header className="flex gap-2 md:gap-4 py-4">
@@ -36,7 +38,6 @@ export async function HeaderProfile({ username }: Props) {
               alt={`foto de perfil de ${userData.fullName}`}
               className="object-cover w-24 h-24 rounded"
               loading="lazy"
-
             />
           </picture>
         ) : (
@@ -49,9 +50,10 @@ export async function HeaderProfile({ username }: Props) {
         <div className="flex justify-between">
           <div className="flex flex-col gap-1 items-start">
             <h2 className="font-bold text-lg">{userData.username}</h2>
-            {/* TODO: Render rating */}
-            {/* <p>★★★☆☆</p> */}
-            <p>Aun no tiene valoraciones</p>
+
+            <RatingComponent data={data} message={message} />
+
+            {/* {ok ? <p>★★★☆☆</p> : <p>{message}</p>} */}
             {currentUserId === userData.id && (
               <Link
                 href="/settings/profile"

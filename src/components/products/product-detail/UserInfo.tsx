@@ -1,4 +1,4 @@
-import { checkImageAvailable } from '@/actions';
+import { checkImageAvailable, getRatingByUsername } from '@/actions';
 import { InitialsProfile } from '@/utils';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,6 +14,8 @@ type Props = {
 
 export const UserInfo = async ({ name, image, location, username }: Props) => {
   const imageUrl = await checkImageAvailable(image);
+
+  const { data, ok, message } = await getRatingByUsername(username);
 
   return (
     <section className="flex items-center p-2 md:p-4 bg-white md:rounded md:shadow">
@@ -36,8 +38,14 @@ export const UserInfo = async ({ name, image, location, username }: Props) => {
         <h2 className="text-xl font-semibold">{name}</h2>
 
         <div className="flex items-center mt-1">
-          <BsStarFill color="gold" />
-          (4.3)
+          {!data ? (
+            <span>{message}</span>
+          ) : (
+            <p className="flex gap-1">
+              <BsStarFill className="text-cerise-red-600" /> (
+              {data.overallAverage})
+            </p>
+          )}
         </div>
         <p className="mt-1 text-sm text-gray-500">{location || ''}</p>
       </div>
