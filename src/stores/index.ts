@@ -7,3 +7,4 @@ export * from './navbar/sidebar.store';
 export * from './personal-preferences/personal-preferences.store';
 export * from './payout/payout.store';
 export * from './payout/payout.store';
+export * from './inbox/inbox.store';

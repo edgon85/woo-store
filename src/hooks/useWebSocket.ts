@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Manager, Socket } from 'socket.io-client';
 import Cookies from 'js-cookie';
 
@@ -12,7 +12,6 @@ const useWebSocket = (url: string) => {
 
   const [messages, setMessages] = useState<IMessages[]>([]);
   const [connectionStatus, setConnectionStatus] = useState('disconnected');
-  // const [clients, setClients] = useState<string[]>([] as string[]);
   const socketRef = useRef<Socket | null>(null);
 
   const connect = useCallback(() => {
@@ -32,10 +31,6 @@ const useWebSocket = (url: string) => {
       setConnectionStatus('disconnected');
     });
 
-    /*  socket.on('clients-updated', (clients: string[]) => {
-      setClients(clients);
-    }); */
-
     socketRef.current.on('message-from-server', (payload: IMessages) => {
       console.log(payload);
       setMessages((prevMessages) => [...prevMessages, payload]);
@@ -44,25 +39,50 @@ const useWebSocket = (url: string) => {
     return () => {
       socket.off('connect');
       socket.off('disconnect');
-      socket.off('clients-updated');
       socket.off('message-from-server');
       socket.close();
     };
   }, [myToken, url]);
 
-  const sendMessage = (message: string) => {
+  const joinChat = useCallback((chatId: number) => {
+    if (socketRef.current) {
+      socketRef.current.emit('join-chat', { chatId });
+    }
+  }, []);
+
+  const leaveChat = useCallback((chatId: number) => {
+    if (socketRef.current) {
+      socketRef.current.emit('leave-chat', { chatId });
+    }
+  }, []);
+
+  const sendMessage = useCallback(
+    (content: string, userId: string, recipientId: string) => {
+      if (socketRef.current) {
+        socketRef.current.emit('message-from-client', {
+          content,
+          userId,
+          recipientId,
+        });
+      }
+    },
+    []
+  );
+  /* const sendMessage = (message: string) => {
     if (socketRef.current) {
       socketRef.current.emit('message-from-client', {
         message,
       });
     }
-  };
+  }; */
 
   return {
     connect,
     connectionStatus,
     sendMessage,
     messages,
+    joinChat,
+    leaveChat,
   };
 };
 

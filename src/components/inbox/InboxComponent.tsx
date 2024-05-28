@@ -6,13 +6,23 @@ import { GoArrowLeft } from 'react-icons/go';
 
 import { ChatList } from './ChatList';
 import Link from 'next/link';
+import { IProfile } from '@/interfaces';
+import { useEffect, useState } from 'react';
+import { useInboxStore } from '@/stores';
+import { ChatWindow } from './ChatWindow';
 
 type FormMessageData = {
   message: string;
 };
 
-export const InboxComponent = () => {
-  /*  const { connectionStatus, sendMessage, messages, connect } = useWebSocket(
+type Props = {
+  currentId: string;
+  recipientId: string;
+  username: string;
+};
+
+export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
+  /*   const { connectionStatus, sendMessage, messages, connect } = useWebSocket(
     process.env.API_BASE_URL!
   );
   const { register, handleSubmit } = useForm<FormMessageData>({
@@ -25,30 +35,65 @@ export const InboxComponent = () => {
     sendMessage(data.message);
   }; */
 
+  const { connect, connectionStatus } = useWebSocket('http://localhost:5000');
+  const { selectedChatId, chats } = useInboxStore();
+
+  useEffect(() => {
+    connect();
+  }, [connect]);
+
   return (
-    <div className='px-4 md:px-0"'>
+    <div className="flex h-screen">
+      <div className="w-1/3 border-r border-gray-300">
+        <ChatList />
+      </div>
+      <div className="w-2/3 flex flex-col">
+        <div className="p-4 border-b border-gray-300">
+          <h1 className="text-xl font-semibold">Estado: {connectionStatus}</h1>
+        </div>
+        <div className="flex-1">
+          {selectedChatId ? (
+            <ChatWindow
+              currentId={recipientId}
+              recipientId={currentId}
+              username={username}
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full text-gray-500">
+              Selecciona un chat para comenzar
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* 
+
+ <div className='px-4 md:px-0"'>
       <div className="container mx-auto shadow-lg rounded-lg mt-4">
-        {/* <!-- headaer --> */}
+        {/* <!-- headaer --> * /}
         <div className="px-5 py-5 flex justify-between items-center bg-white border-b-2">
           <Link href={'/inbox'} className="font-semibold text-2xl ">
             <GoArrowLeft className=" md:hidden" />
           </Link>
           <div className="w-1/2">
-            <p>Luis1994</p>
+            <p>{username}</p>
           </div>
           {/* <div className="h-12 w-12 p-2 bg-yellow-500 rounded-full text-white font-semibold flex items-center justify-center">
            
-          </div> */}
+          </div> * /}
         </div>
-        {/* <!-- end header --> */}
-        {/* <!-- Chatting --> */}
+        {/* <!-- end header --> * /}
+        {/* <!-- Chatting --> * /}
         <div className="flex flex-row justify-between bg-white h-[60vh]">
-          {/* <!-- chat list --> */}
+          {/* <!-- chat list --> * /}
           <div className=" hidden md:flex flex-col w-full md:w-2/5  border-r-2 overflow-y-auto">
             <ChatList />
           </div>
-          {/* <!-- end chat list --> */}
-          {/* <!-- message --> */}
+          {/* <!-- end chat list --> * /}
+          {/* <!-- message --> * /}
           <div className="w-full px-5 flex flex-col justify-between overflow-y-auto">
             <div className="flex flex-col mt-5">
               <div className="flex justify-end mb-4">
@@ -91,12 +136,11 @@ export const InboxComponent = () => {
               />
             </div>
           </div>
-          {/* <!-- end message --> */}
+          {/* <!-- end message --> * /}
         </div>
       </div>
     </div>
-  );
-};
+*/
 /* 
 
  <button onClick={connect}>Conectar</button>

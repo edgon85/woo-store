@@ -1,6 +1,7 @@
 export * from './actions';
 // export * from './getCategories';
-export { default as getUser } from './getUser';
+// export { default as getUser } from './getUser';
+export * from './getUser';
 
 /* products */
 export * from './products/create-product';
