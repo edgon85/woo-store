@@ -12,7 +12,7 @@ export default async function InboxPage({
 }: Props) {
   const user = await getUserProfile(username);
 
-  console.log(user);
+  // console.log(user);
   return (
     <div className="main-wrapper min-h-[70vh]">
       <InboxComponent

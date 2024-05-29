@@ -1,19 +1,14 @@
 'use client';
 
-import useWebSocket, { IMessages } from '@/hooks/useWebSocket';
-import { useForm } from 'react-hook-form';
+import useWebSocket from '@/hooks/useWebSocket';
 import { GoArrowLeft } from 'react-icons/go';
 
 import { ChatList } from './ChatList';
 import Link from 'next/link';
-import { IProfile } from '@/interfaces';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInboxStore } from '@/stores';
 import { ChatWindow } from './ChatWindow';
-
-type FormMessageData = {
-  message: string;
-};
+import { ChatInput } from './ChatInput';
 
 type Props = {
   currentId: string;
@@ -35,7 +30,7 @@ export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
     sendMessage(data.message);
   }; */
 
-  const { connect, connectionStatus } = useWebSocket('http://localhost:5000');
+  const { connect } = useWebSocket('http://localhost:5000');
   const { selectedChatId, chats } = useInboxStore();
 
   useEffect(() => {
@@ -43,7 +38,45 @@ export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
   }, [connect]);
 
   return (
-    <div className="flex h-screen">
+    <div className='px-4 md:px-0"'>
+      <div className="container mx-auto shadow-lg rounded-lg mt-4">
+        <div className="px-5 py-5 flex justify-between items-center bg-white border-b-2">
+          <Link href={'/inbox'} className="font-semibold text-2xl ">
+            <GoArrowLeft className=" md:hidden" />
+          </Link>
+          <div className="w-1/2">
+            <p>{username}</p>
+          </div>
+        </div>
+
+        <div className="flex flex-row justify-between bg-white h-[60vh]">
+          <div className=" hidden md:flex flex-col w-full md:w-2/5  border-r-2 overflow-y-auto">
+            <ChatList />
+          </div>
+
+          <div className="w-full px-5 flex flex-col justify-between">
+            <div className="flex flex-col mt-5 h-full overflow-y-auto">
+              {selectedChatId ? (
+                <ChatWindow />
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  Selecciona un chat para comenzar
+                </div>
+              )}
+            </div>
+            <div className="py-5">
+              <ChatInput currentId={recipientId} recipientId={currentId} />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* 
+ <div className="flex h-screen">
       <div className="w-1/3 border-r border-gray-300">
         <ChatList />
       </div>
@@ -66,8 +99,7 @@ export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+*/
 
 /* 
 

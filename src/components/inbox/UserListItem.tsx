@@ -1,16 +1,25 @@
-import { IUser } from '@/interfaces';
-import { IChat } from '@/stores';
-import Link from 'next/link';
+'use client';
+import { IChat, useInboxStore } from '@/stores';
+import { formatDateToLocal } from '@/utils';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   chat: IChat;
 };
 
 export const UserListItem = ({ chat }: Props) => {
+  const { selectChat } = useInboxStore();
+  const router = useRouter();
+  const onHandleClick = () => {
+    selectChat(chat.id);
+    router.push(`/inbox/${chat.id}?username=${chat.username}`);
+  };
+
   return (
-    <Link
-      href={`/inbox/${chat.id}?username=${chat.username}`}
-      className="flex flex-row py-4 px-2 justify-center items-center border-b-2 cursor-pointer"
+    <button
+      // href={`/inbox/${chat.id}?username=${chat.username}`}
+      onClick={onHandleClick}
+      className="flex flex-row py-4 px-2 border-b-2 cursor-pointer"
     >
       <div className="w-1/4">
         <picture>
@@ -21,11 +30,13 @@ export const UserListItem = ({ chat }: Props) => {
           />
         </picture>
       </div>
-      <div className="w-full">
+      <div className="flex  flex-col justify-start items-start">
         <div className="text-lg font-semibold">{chat.username}</div>
-        <span className="text-gray-500">Pick me at 9:00 Am</span>
+        <span className="text-gray-500">
+          {formatDateToLocal(chat.timestamp)}
+        </span>
       </div>
-    </Link>
+    </button>
   );
 };
 

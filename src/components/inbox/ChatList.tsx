@@ -1,4 +1,5 @@
-import { IChat, useInboxStore } from '@/stores';
+'use client'
+import { useInboxStore } from '@/stores';
 import { UserListItem } from './UserListItem';
 
 export const ChatList = () => {
@@ -9,7 +10,7 @@ export const ChatList = () => {
         <h3>Mensajes</h3>
       </div>
 
-      {chats.map((chat) => (
+      {/* {chats.map((chat) => (
         <div
           key={chat.id}
           className={`chat-item ${
@@ -20,10 +21,10 @@ export const ChatList = () => {
           <div className="chat-name">{chat.fullName}</div>
           <div className="last-message">{chat.lastMessage}</div>
         </div>
-      ))}
-      {/* {chats.map((chat) => {
-        // return <UserListItem key={chat.id} chat={chat} />;
-      })} */}
+      ))} */}
+      {chats.map((chat) => {
+        return <UserListItem key={chat.id} chat={chat} />;
+      })}
     </>
   );
 };
