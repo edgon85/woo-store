@@ -1,5 +1,6 @@
 import useWebSocket from '@/hooks/useWebSocket';
 import { useInboxStore } from '@/stores';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Props = {
@@ -14,23 +15,32 @@ type MessageFormInput = {
 export const ChatInput = ({ currentId, recipientId }: Props) => {
   const { selectedChatId, chats, addMessage } = useInboxStore();
   const chat = chats.find((chat) => chat.id === selectedChatId);
-  const { sendMessage } = useWebSocket('http://localhost:5000'); // Reemplaza 'user-id' con el ID real del usuario
+  const { connect, sendMessage, connectionStatus } = useWebSocket(); // Reemplaza 'user-id' con el ID real del usuario
 
   const { register, handleSubmit, reset } = useForm<MessageFormInput>({
     defaultValues: { messageContent: '' },
   });
 
+  useEffect(() => {
+    if (connectionStatus === 'disconnected') {
+      connect();
+    }
+
+  }, [connect, connectionStatus]);
+
   const onSubmit: SubmitHandler<MessageFormInput> = ({ messageContent }) => {
+    console.log(connectionStatus);
+
     if (messageContent && chat) {
-      const message = {
+      const newMessage = {
         // id: 'uuidv4()',
         content: messageContent,
         senderId: currentId, // Reemplaza con el ID real del usuario
         recipientId: chat.participants.find((id) => id !== recipientId) || '', // Reemplaza con el ID real del destinatario
         timestamp: new Date().toISOString(),
       };
-      sendMessage(messageContent, 'user-id', 'recipient-id');
-      addMessage(chat.id, message);
+      sendMessage(messageContent, recipientId);
+      addMessage(chat.id, newMessage);
       reset();
     }
   };

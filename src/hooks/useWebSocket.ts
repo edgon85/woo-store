@@ -1,21 +1,18 @@
 import { useCallback, useRef, useState } from 'react';
 import { Manager, Socket } from 'socket.io-client';
 import Cookies from 'js-cookie';
+import { IMessages } from '@/interfaces';
 
-export interface IMessages {
-  fullName: string;
-  message: string;
-}
-
-const useWebSocket = (url: string) => {
+// const useWebSocket = (url: string) => {
+const useWebSocket = () => {
   const myToken = Cookies.get('token') || '';
 
   const [messages, setMessages] = useState<IMessages[]>([]);
   const [connectionStatus, setConnectionStatus] = useState('disconnected');
   const socketRef = useRef<Socket | null>(null);
 
-  const connect = useCallback(() => {
-    const manager = new Manager(url, {
+  const connect = () => {
+    const manager = new Manager(process.env.API_BASE_URL!, {
       extraHeaders: {
         authentication: myToken,
       },
@@ -42,36 +39,23 @@ const useWebSocket = (url: string) => {
       socket.off('message-from-server');
       socket.close();
     };
-  }, [myToken, url]);
+  };
 
-  const joinChat = useCallback((chatId: number) => {
-    if (socketRef.current) {
-      socketRef.current.emit('join-chat', { chatId });
-    }
-  }, []);
-
-  const leaveChat = useCallback((chatId: number) => {
-    if (socketRef.current) {
-      socketRef.current.emit('leave-chat', { chatId });
-    }
-  }, []);
-
-  const sendMessage = useCallback(
-    (content: string, userId: string, recipientId: string) => {
-      if (socketRef.current) {
-        socketRef.current.emit('message-from-client', {
-          content,
-          userId,
-          recipientId,
-        });
-      }
-    },
-    []
-  );
-  /* const sendMessage = (message: string) => {
+  const sendMessage = useCallback((content: string, recipientId: string) => {
     if (socketRef.current) {
       socketRef.current.emit('message-from-client', {
-        message,
+        content,
+        recipientId,
+      });
+    }
+  }, []);
+
+  /*  const sendMessage = (content: string, recipientId: string) => {
+    console.log(content, recipientId);
+    if (socketRef.current) {
+      socketRef.current.emit('message-from-client', {
+        content,
+        recipientId,
       });
     }
   }; */
@@ -81,8 +65,6 @@ const useWebSocket = (url: string) => {
     connectionStatus,
     sendMessage,
     messages,
-    joinChat,
-    leaveChat,
   };
 };
 

@@ -30,12 +30,17 @@ export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
     sendMessage(data.message);
   }; */
 
-  const { connect } = useWebSocket('http://localhost:5000');
-  const { selectedChatId, chats } = useInboxStore();
+  const { connect, connectionStatus } = useWebSocket();
+  const { selectedChatId } = useInboxStore();
 
-  useEffect(() => {
+  /*  useEffect(() => {
     connect();
-  }, [connect]);
+  }, [connect]); */
+  useEffect(() => {
+    if (connectionStatus === 'disconnected') {
+      connect();
+    }
+  }, [connect, connectionStatus]);
 
   return (
     <div className='px-4 md:px-0"'>
@@ -68,7 +73,6 @@ export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
               <ChatInput currentId={recipientId} recipientId={currentId} />
             </div>
           </div>
-
         </div>
       </div>
     </div>
