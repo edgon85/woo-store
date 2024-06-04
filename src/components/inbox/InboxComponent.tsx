@@ -6,41 +6,29 @@ import { GoArrowLeft } from 'react-icons/go';
 import { ChatList } from './ChatList';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { useInboxStore } from '@/stores';
+import { IChat, useInboxStore } from '@/stores';
 import { ChatWindow } from './ChatWindow';
 import { ChatInput } from './ChatInput';
+import { set } from 'react-hook-form';
 
 type Props = {
-  currentId: string;
+  // currentId: string;
   recipientId: string;
   username: string;
+  chats: IChat[];
 };
 
-export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
-  /*   const { connectionStatus, sendMessage, messages, connect } = useWebSocket(
-    process.env.API_BASE_URL!
-  );
-  const { register, handleSubmit } = useForm<FormMessageData>({
-    values: { message: '' },
-  });
+export const InboxComponent = ({
+  // currentId,
+  username,
+  recipientId,
+  chats,
+}: Props) => {
+  const { selectedChatId, setChats } = useInboxStore();
 
-  const onSubmit = (data: FormMessageData) => {
-    if (data.message.trim().length < 0) return;
-
-    sendMessage(data.message);
-  }; */
-
-  const { connect, connectionStatus } = useWebSocket();
-  const { selectedChatId } = useInboxStore();
-
-  /*  useEffect(() => {
-    connect();
-  }, [connect]); */
   useEffect(() => {
-    if (connectionStatus === 'disconnected') {
-      connect();
-    }
-  }, [connect, connectionStatus]);
+    setChats(chats);
+  }, [chats, setChats]);
 
   return (
     <div className='px-4 md:px-0"'>
@@ -56,6 +44,7 @@ export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
 
         <div className="flex flex-row justify-between bg-white h-[60vh]">
           <div className=" hidden md:flex flex-col w-full md:w-2/5  border-r-2 overflow-y-auto">
+            {/* <ChatList chats={chats} /> */}
             <ChatList />
           </div>
 
@@ -70,7 +59,7 @@ export const InboxComponent = ({ currentId, username, recipientId }: Props) => {
               )}
             </div>
             <div className="py-5">
-              <ChatInput currentId={recipientId} recipientId={currentId} />
+              <ChatInput recipientId={recipientId} />
             </div>
           </div>
         </div>

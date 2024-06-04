@@ -43,3 +43,5 @@ export * from './payout-methods/delete-method';
 
 export * from './ratings/post-rating';
 export * from './ratings/get-rating-by-username';
+
+export * from './web-sockets/get-inbox-chat'

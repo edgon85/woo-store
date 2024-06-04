@@ -1,19 +1,29 @@
+import { getInboxChats } from '@/actions';
 import { ChatList } from '@/components/inbox/ChatList';
+import { InboxComponent } from '@/components/inbox/InboxComponent';
+import { InboxMainComponent } from '@/components/inbox/InboxMainComponent';
 import { GoArrowLeft } from 'react-icons/go';
 
-export default function InboxPage() {
+export default async function InboxPage() {
+  // const user = await getUserProfile(username);
+  const chats = await getInboxChats();
+  // const
+
   return (
-    <div className="main-wrapper min-h-[70vh] p-4 md:p-0">
-      <div className="flex flex-row justify-between bg-white h-[60vh] mt-4">
-        <div className=" flex flex-col w-full md:w-2/5  border-r-2 overflow-y-auto">
-          <ChatList />
-        </div>
-        <div className="hidden md:flex w-full px-5 flex-col justify-between overflow-y-auto">
-          <div className="flex flex-col justify-center items-center h-full">
-            <p>Seleccione un mensaje</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <InboxMainComponent chatList={chats.data} />
+    </>
   );
+  /*  <div className="main-wrapper min-h-[70vh] p-4 md:p-0">
+     <div className="flex flex-row justify-between bg-white h-[60vh] mt-4">
+       <div className=" flex flex-col w-full md:w-2/5  border-r-2 overflow-y-auto">
+         <ChatList />
+       </div>
+       <div className="hidden md:flex w-full px-5 flex-col justify-between overflow-y-auto">
+         <div className="flex flex-col justify-center items-center h-full">
+           <p>Seleccione un mensaje</p>
+         </div>
+       </div>
+     </div>
+   </div> */
 }

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Props = {
-  currentId: string;
+  // currentId: string;
   recipientId: string;
 };
 
@@ -12,35 +12,41 @@ type MessageFormInput = {
   messageContent: string;
 };
 
-export const ChatInput = ({ currentId, recipientId }: Props) => {
-  const { selectedChatId, chats, addMessage } = useInboxStore();
-  const chat = chats.find((chat) => chat.id === selectedChatId);
-  const { connect, sendMessage, connectionStatus } = useWebSocket(); // Reemplaza 'user-id' con el ID real del usuario
+export const ChatInput = ({  recipientId }: Props) => {
+  const { pendingMessage, selectedChatId, clearPendingMessage } =
+    useInboxStore();
+  const { sendMessage, connectionStatus, connect } = useWebSocket();
 
-  const { register, handleSubmit, reset } = useForm<MessageFormInput>({
-    defaultValues: { messageContent: '' },
-  });
+  const { register, handleSubmit, reset, setValue } =
+    useForm<MessageFormInput>();
+
+  // Setear el mensaje pendiente en el input
+  useEffect(() => {
+    if (pendingMessage) {
+      setValue('messageContent', pendingMessage);
+      clearPendingMessage();
+    }
+  }, [pendingMessage, setValue, clearPendingMessage]);
 
   useEffect(() => {
     if (connectionStatus === 'disconnected') {
       connect();
     }
-
   }, [connect, connectionStatus]);
 
   const onSubmit: SubmitHandler<MessageFormInput> = ({ messageContent }) => {
-    console.log(connectionStatus);
+    // console.log(connectionStatus);
 
-    if (messageContent && chat) {
+    if (messageContent && selectedChatId) {
       const newMessage = {
-        // id: 'uuidv4()',
         content: messageContent,
-        senderId: currentId, // Reemplaza con el ID real del usuario
-        recipientId: chat.participants.find((id) => id !== recipientId) || '', // Reemplaza con el ID real del destinatario
+        // senderId: currentId, // Reemplaza con el ID real del usuario
+        recipientId: recipientId,
         timestamp: new Date().toISOString(),
       };
+      console.log(newMessage);
       sendMessage(messageContent, recipientId);
-      addMessage(chat.id, newMessage);
+      // addMessage(selectedChatId, newMessage);
       reset();
     }
   };

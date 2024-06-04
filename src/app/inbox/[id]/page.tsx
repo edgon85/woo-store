@@ -1,24 +1,21 @@
-import { getUserProfile } from '@/actions';
+import { getInboxChats, getUserProfile } from '@/actions';
 import { InboxComponent } from '@/components/inbox/InboxComponent';
 
 type Props = {
-  params: { id: string };
   searchParams: { username: string };
 };
 
-export default async function InboxPage({
-  params: { id },
-  searchParams: { username },
-}: Props) {
+export default async function InboxPage({ searchParams: { username } }: Props) {
   const user = await getUserProfile(username);
+  const chats = await getInboxChats();
 
-  // console.log(user);
+  // console.log(chats);
   return (
     <div className="main-wrapper min-h-[70vh]">
       <InboxComponent
-        currentId={id}
         username={username}
         recipientId={user.data.id}
+        chats={chats.data}
       />
     </div>
   );
