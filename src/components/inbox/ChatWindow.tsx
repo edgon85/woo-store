@@ -1,18 +1,22 @@
+import useWebSocket from '@/hooks/useWebSocket';
 import { useInboxStore } from '@/stores';
+import { useEffect } from 'react';
 export const ChatWindow = () => {
-  // const { connect, connectionStatus } = useWebSocket();
+
+  const { connect, connectionStatus } = useWebSocket();
 
   const { selectedChatId, chats } = useInboxStore();
   const chat = chats.find((chat) => chat.id === selectedChatId);
 
-  /*  useEffect(() => {
+  useEffect(() => {
     if (connectionStatus === 'disconnected') {
       connect();
     }
-  }, [connect, connectionStatus]); */
+  }, [connect, connectionStatus]);
 
   return (
     <>
+      <p>{connectionStatus}</p>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {chat ? (
           chat.messages.map((msg) => (

@@ -5,3 +5,4 @@ export * from './ui';
 export * from './payouts.interface';
 export * from './balance.interface';
 export * from './message.interface';
+export * from './chat.interface';

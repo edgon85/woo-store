@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Manager, Socket } from 'socket.io-client';
 import Cookies from 'js-cookie';
-import { IMessages } from '@/interfaces';
 import { useInboxStore } from '@/stores';
+import { IMessage } from '@/interfaces';
 
 const useWebSocket = () => {
   const myToken = Cookies.get('token') || '';
@@ -28,19 +28,18 @@ const useWebSocket = () => {
       setConnectionStatus('disconnected');
     });
 
-    socketRef.current.on('message-from-server', (payload: IMessages) => {
-      console.log(payload);
+    socketRef.current.on('message-from-server', (payload: IMessage) => {
+      console.log('Message received from server:', payload);
 
-      addMessage(payload.id, {
-        id: payload.id, // You should include a unique identifier for the message
-        content: payload.content,
-        senderId: payload.senderId,
-        timestamp: payload.timestamp,
-        recipientId: payload.recipientId,
+      addMessage(payload.id!, {
+        id: payload.id,
+        content: payload.message,
+        senderId: payload.from,
+        recipientId: payload.to,
+        timestamp: ''
       });
-
-      // setMessages((prevMessages) => [...prevMessages, payload]);
     });
+    // setMessages((prevMessages) => [...prevMessages, payload]);
 
     return () => {
       socket.off('connect');
@@ -51,13 +50,32 @@ const useWebSocket = () => {
   };
 
   const sendMessage = (content: string, recipientId: string) => {
+    return new Promise((resolve, reject) => {
+      if (socketRef.current) {
+        socketRef.current.emit(
+          'message-from-client',
+          { content, recipientId },
+          (response: any) => {
+            if (response.status === 'success') {
+              resolve(response);
+            } else {
+              reject(new Error(response.message));
+            }
+          }
+        );
+      } else {
+        reject(new Error('Socket is not connected'));
+      }
+    });
+  };
+  /*  const sendMessage = (content: string, recipientId: string) => {
     if (socketRef.current) {
       socketRef.current.emit('message-from-client', {
         content,
         recipientId,
       });
     }
-  };
+  }; */
 
   return {
     connect,

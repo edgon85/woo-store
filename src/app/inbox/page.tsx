@@ -6,12 +6,12 @@ import { GoArrowLeft } from 'react-icons/go';
 
 export default async function InboxPage() {
   // const user = await getUserProfile(username);
-  const chats = await getInboxChats();
+  // const chats = await getInboxChats();
   // const
 
   return (
     <>
-      <InboxMainComponent chatList={chats.data} />
+      <InboxMainComponent  />
     </>
   );
   /*  <div className="main-wrapper min-h-[70vh] p-4 md:p-0">

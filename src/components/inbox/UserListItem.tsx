@@ -1,32 +1,39 @@
 'use client';
 import { checkImageAvailable } from '@/actions';
-import { IChat, useInboxStore } from '@/stores';
+import { useInboxStore } from '@/stores';
 import { formatDateToLocal } from '@/utils';
 import { useRouter } from 'next/navigation';
 import { UserIcon } from '../ui';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { IChat, IUserChar } from '@/interfaces';
+import { ChatContext } from '@/context';
 
 type Props = {
-  chat: IChat;
+  user: IChat;
 };
 
-export const UserListItem = ({ chat }: Props) => {
-  const router = useRouter();
-  const selectChat = useInboxStore((state) => state.selectChat);
+export const UserListItem = ({ user }: Props) => {
+  const { dispatch, chatState } = useContext(ChatContext);
+
   const [imageUrl, setImageUrl] = useState<string | null>(''); // Change the type from 'string || null' to 'string | null'
 
   useEffect(() => {
-    checkImage(chat.recipient.avatar);
-  }, [chat.recipient.avatar]);
+    checkImage(user.recipient.avatar);
+  }, [user.recipient.avatar]);
 
   const checkImage = async (url: string) => {
     const imageUrl = await checkImageAvailable(url);
     setImageUrl(imageUrl);
   };
 
-  const onHandleClick = () => {
-    selectChat(chat.id);
-    router.push(`/inbox/${chat.id}?username=${chat.recipient.username}`);
+  const onHandleClick = async () => {
+    console.log(user.id);
+    dispatch({
+      type: '[Chat] - activar-chat',
+      payload: { senderId: user.user.id, recipientId: user.recipient.id },
+    });
+
+    //TODO:Cargar los mensajes del chat
   };
 
   return (
@@ -39,7 +46,7 @@ export const UserListItem = ({ chat }: Props) => {
           <picture>
             <img
               src={`${imageUrl}`}
-              alt={`foto de perfil de ${chat.recipient.username}`}
+              alt={`foto de perfil de ${user.recipient.username}`}
               className="object-cover h-12 w-12 rounded-full"
               loading="lazy"
             />
@@ -51,9 +58,9 @@ export const UserListItem = ({ chat }: Props) => {
         )}
       </div>
       <div className="flex  flex-col justify-start items-start">
-        <div className="text-lg font-semibold">{chat.recipient.username}</div>
+        <div className="text-lg font-semibold">{user.recipient.username}</div>
         <span className="text-gray-500">
-          {formatDateToLocal(chat.chatInboxDate)}
+          {formatDateToLocal(user.chatInboxDate)}
         </span>
       </div>
     </button>

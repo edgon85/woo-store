@@ -1,8 +1,8 @@
-export interface IMessages {
-  id: string;
-  content: string;
-  fullName: string;
-  senderId: string;
-  recipientId: string;
-  timestamp: string;
+export interface IMessage {
+  id?: string;
+  from: string;
+  to: string;
+  message: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
