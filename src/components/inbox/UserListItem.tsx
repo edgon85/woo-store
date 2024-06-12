@@ -1,25 +1,27 @@
 'use client';
-import { checkImageAvailable } from '@/actions';
-import { useInboxStore } from '@/stores';
-import { formatDateToLocal } from '@/utils';
-import { useRouter } from 'next/navigation';
+
+import { checkImageAvailable, getMessagesForUser } from '@/actions';
 import { UserIcon } from '../ui';
 import { useContext, useEffect, useState } from 'react';
-import { IChat, IUserChar } from '@/interfaces';
+import { IChat } from '@/interfaces';
 import { ChatContext } from '@/context';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 type Props = {
-  user: IChat;
+  chat: IChat;
 };
 
-export const UserListItem = ({ user }: Props) => {
-  const { dispatch, chatState } = useContext(ChatContext);
+export const UserListItem = ({ chat }: Props) => {
+  const { dispatch } = useContext(ChatContext);
+  const router = useRouter();
+  const currentId = Cookies.get('userId');
 
-  const [imageUrl, setImageUrl] = useState<string | null>(''); // Change the type from 'string || null' to 'string | null'
+  const [imageUrl, setImageUrl] = useState<string | null>('');
 
   useEffect(() => {
-    checkImage(user.recipient.avatar);
-  }, [user.recipient.avatar]);
+    checkImage(chat.user.avatar);
+  }, [chat.user.avatar]);
 
   const checkImage = async (url: string) => {
     const imageUrl = await checkImageAvailable(url);
@@ -27,13 +29,26 @@ export const UserListItem = ({ user }: Props) => {
   };
 
   const onHandleClick = async () => {
-    console.log(user.id);
+    dispatch({
+      type: '[Chat] - SET_UID',
+      payload: currentId,
+    });
     dispatch({
       type: '[Chat] - activar-chat',
-      payload: { senderId: user.user.id, recipientId: user.recipient.id },
+      payload: chat.id,
     });
 
-    //TODO:Cargar los mensajes del chat
+    //Cargar los mensajes del chat
+    const data = await getMessagesForUser(chat.id);
+
+    if (data.ok) {
+      dispatch({
+        type: '[Chat] - cargar-mensajes',
+        payload: data.data,
+      });
+
+      router.push(`/inbox?user=${chat.user.id}`);
+    }
   };
 
   return (
@@ -46,7 +61,7 @@ export const UserListItem = ({ user }: Props) => {
           <picture>
             <img
               src={`${imageUrl}`}
-              alt={`foto de perfil de ${user.recipient.username}`}
+              alt={`foto de perfil de ${chat.user.username}`}
               className="object-cover h-12 w-12 rounded-full"
               loading="lazy"
             />
@@ -58,9 +73,10 @@ export const UserListItem = ({ user }: Props) => {
         )}
       </div>
       <div className="flex  flex-col justify-start items-start">
-        <div className="text-lg font-semibold">{user.recipient.username}</div>
+        <div className="text-lg font-semibold">{chat.user.username}</div>
         <span className="text-gray-500">
-          {formatDateToLocal(user.chatInboxDate)}
+          {/* {formatDateToLocal(chat.created_at)} */}
+          {chat.lastMessage}
         </span>
       </div>
     </button>

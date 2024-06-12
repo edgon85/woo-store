@@ -2,8 +2,7 @@ export interface IChat {
   id: string;
   lastMessage: string;
   user: IUserChar;
-  recipient: IUserChar;
-  chatInboxDate: string;
+  created_at: string;
 }
 
 export interface IMessage {
@@ -19,4 +18,5 @@ export interface IUserChar {
   avatar: string;
   email: string;
   username: string;
+  fullName: string;
 }

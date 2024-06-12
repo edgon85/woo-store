@@ -1,6 +1,6 @@
 'use client';
 
-import useWebSocket from '@/hooks/useWebSocket';
+
 import { GoArrowLeft } from 'react-icons/go';
 
 import { ChatList } from './ChatList';
@@ -24,11 +24,9 @@ export const InboxComponent = ({
   recipientId,
   chats,
 }: Props) => {
-  const { selectedChatId, setChats } = useInboxStore();
+  const { selectedChatId } = useInboxStore();
 
-  useEffect(() => {
-    setChats(chats);
-  }, [chats, setChats]);
+
 
   return (
     <div className='px-4 md:px-0"'>

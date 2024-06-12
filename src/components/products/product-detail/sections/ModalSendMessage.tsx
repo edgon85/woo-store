@@ -1,10 +1,9 @@
 'use client';
-import { getChatForUser } from '@/actions';
-import useWebSocket from '@/hooks/useWebSocket';
-import { useInboxStore } from '@/stores';
+
+import { ChatContext, SocketContext } from '@/context';
 import { Divider } from '@tremor/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
 
@@ -18,18 +17,9 @@ type Props = {
 };
 
 export const ModalSendMessage = ({ recipientId, recipientUsername }: Props) => {
-  const { sendMessage, connectionStatus, connect } = useWebSocket();
   const [open, setOpen] = useState(false);
+  const { socket } = useContext(SocketContext);
   const router = useRouter();
-  const {
-    chats,
-    setPendingMessage,
-    addChat,
-    selectChat,
-    clearPendingMessage,
-    pendingMessage,
-    selectedChatId,
-  } = useInboxStore();
 
   const {
     register,
@@ -39,43 +29,35 @@ export const ModalSendMessage = ({ recipientId, recipientUsername }: Props) => {
     reset,
   } = useForm<FormInputData>();
 
-  useEffect(() => {
-    if (connectionStatus === 'disconnected') {
-      connect();
-    }
-  }, [connect, connectionStatus]);
-
   const onCloseModal = () => setOpen(false);
 
   const onHandleClick = async () => {
-    const { data } = await getChatForUser(recipientId);
-    
+    // const { data } = await getChatForUser(recipientId);
 
-    if (data) {
-      console.log(data);
+    setValue('message', 'Hola, estoy interesado en tu producto');
+    setOpen(true);
+    /* if (data) {
+      // TODO: mandar al chat y activar chat
+       console.log(data);
       addChat(data);
       selectChat(data.id);
       router.push(
         `/inbox/${data.id || ''}?username=${recipientUsername || ''}`
-      );
+      ); 
     } else {
       setValue('message', 'Hola, estoy interesado en tu producto');
       setOpen(true);
-    }
+    } */
   };
 
   const onSubmit = (data: FormInputData) => {
-    console.log(data);
 
-    const newMessage = {
-      content: data.message.trim(),
-      senderId: '', // Reemplaza con el ID real del usuario
-      recipientId: recipientId,
-      timestamp: new Date().toISOString(),
-    };
-    console.log(newMessage);
-    sendMessage(newMessage.content, recipientId);
-    // addMessage(selectedChatId, newMessage);
+
+
+    socket?.emit('message-from-client', {
+      message: data.message.trim(),
+      to: recipientId,
+    });
     reset();
     setOpen(false);
     // }

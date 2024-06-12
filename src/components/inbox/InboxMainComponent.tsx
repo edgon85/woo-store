@@ -1,19 +1,17 @@
 'use client';
 import { IChat } from '@/interfaces';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { ChatContext } from '@/context';
 import { UserListItem } from './UserListItem';
 import { ChatWindow } from './ChatWindow';
 import { ChatInput } from './ChatInput';
-import Cookies from 'js-cookie';
 
 type Props = {
-  chatList?: IChat[];
+  recipientId?: string;
 };
 
-export const InboxMainComponent = () => {
+export const InboxMainComponent = ({ recipientId = '' }: Props) => {
   const { chatState } = useContext(ChatContext);
-  const currentUserId = Cookies.get('userId');
 
   return (
     <div className="main-wrapper min-h-[70vh] p-4 md:p-0">
@@ -25,9 +23,10 @@ export const InboxMainComponent = () => {
           </div>
 
           {chatState.users && chatState.users.length > 0 ? (
-            chatState.users
-              .filter((chat: IChat) => chat.id !== currentUserId)
-              .map((chat: IChat) => <UserListItem key={chat.id} user={chat} />)
+            chatState.users.map((chat: IChat) => {
+              // console.log(chat);
+              return <UserListItem key={chat.id} chat={chat} />;
+            })
           ) : (
             <div className="py-4 px-2 text-gray-500">No tienes mensajes</div>
           )}
@@ -44,9 +43,12 @@ export const InboxMainComponent = () => {
                   </div>
                 )}
               </div>
-              <div className="py-5">
-                <ChatInput recipientId={'recipientId'} />
-              </div>
+
+              {chatState.activeChat && (
+                <div className="py-5">
+                  <ChatInput recipientId={recipientId} />
+                </div>
+              )}
             </div>
           </div>
         </div>

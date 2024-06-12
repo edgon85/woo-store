@@ -3,6 +3,6 @@ export interface IMessage {
   from: string;
   to: string;
   message: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  messageDate?: string;
+  updatedAt?: string;
 }

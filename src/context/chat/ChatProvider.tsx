@@ -1,12 +1,12 @@
-import { useReducer } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import { ChatContext } from './ChatContext';
 import { IMessage } from '@/interfaces';
 import { chatReducer } from './chatReducer';
+import { AuthContext } from '../auth';
 
 export interface ChatState {
   uid: string;
-  // activeChat: null | string;
-  activeChat: null | { senderId: string; recipientId: string };
+  activeChat: null | string;
   users: any[];
   messages: IMessage[];
 }

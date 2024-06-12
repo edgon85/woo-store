@@ -38,7 +38,8 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   }, [socket, dispatch]);
 
   useEffect(() => {
-    socket?.on('mensaje-personal', (mensaje) => {
+    socket?.on('message-from-server', (mensaje) => {
+      console.log(mensaje);
       dispatch({
         type: '[Chat] - nuevo-mensaje',
         payload: mensaje,

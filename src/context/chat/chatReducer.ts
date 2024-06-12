@@ -1,18 +1,25 @@
 import { IMessage } from '@/interfaces';
 import { ChatState } from './ChatProvider';
+import Cookies from 'js-cookie';
 
 type ChatActionType =
   | { type: '[Chat] - cargar-usuarios'; payload: any }
-  | { type: '[Chat] - activar-chat'; payload: { senderId: string; recipientId: string } }
+  | { type: '[Chat] - activar-chat'; payload: string }
   | { type: '[Chat] - nuevo-mensaje'; payload: IMessage }
   | { type: '[Chat] - cargar-mensajes'; payload: IMessage[] }
-  | { type: '[Chat] - cerrar-sesión' };
+  | { type: '[Chat] - cerrar-sesión' }
+  | { type: '[Chat] - SET_UID'; payload: string };
 
 export const chatReducer = (
   state: ChatState,
   action: ChatActionType
 ): ChatState => {
   switch (action.type) {
+    case '[Chat] - SET_UID':
+      return {
+        ...state,
+        uid: action.payload,
+      };
     case '[Chat] - cargar-usuarios':
       return {
         ...state,
@@ -24,14 +31,14 @@ export const chatReducer = (
 
       return {
         ...state,
-        activeChat: { senderId: action.payload.senderId, recipientId: action.payload.recipientId},
+        activeChat: action.payload,
         messages: [],
       };
 
     case '[Chat] - nuevo-mensaje':
       if (
-        state.activeChat?.senderId === action.payload.from ||
-        state.activeChat?.recipientId === action.payload.to
+        state.uid === action.payload.from ||
+        state.uid === action.payload.to
       ) {
         return {
           ...state,

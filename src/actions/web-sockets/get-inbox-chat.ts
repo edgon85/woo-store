@@ -8,6 +8,7 @@ export async function getInboxChats() {
   noStore();
   const token = cookies().get('token')?.value;
   let url = `${process.env.API_BASE_URL}/inbox-chat/user-chats`;
+  // let url = `${process.env.API_BASE_URL}/inbox-messages/get-chat-for-user/${recipientId}`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
@@ -34,10 +35,10 @@ export async function getInboxChats() {
   }
 }
 
-export async function getChatForUser(recipientId: string) {
+export async function getMessagesForUser(chatId: string) {
   noStore();
   const token = cookies().get('token')?.value;
-  let url = `${process.env.API_BASE_URL}/inbox-messages/get-chat-for-user/${recipientId}`;
+  let url = `${process.env.API_BASE_URL}/inbox-messages/${chatId}`;
   try {
     const resp = await fetch(url, {
       method: 'GET',

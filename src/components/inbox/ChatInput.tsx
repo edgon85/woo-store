@@ -1,4 +1,5 @@
 import { ChatContext, SocketContext } from '@/context';
+import Cookies from 'js-cookie';
 
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,8 +14,7 @@ type MessageFormInput = {
 };
 
 export const ChatInput = ({ recipientId }: Props) => {
-  // const [message, setMessage] = useState('');
-  const { chatState } = useContext(ChatContext);
+  const currentId = Cookies.get('userId');
   const { socket } = useContext(SocketContext);
 
   const { register, handleSubmit, reset, setValue } =
@@ -22,19 +22,12 @@ export const ChatInput = ({ recipientId }: Props) => {
 
   const onSubmit = ({ messageContent }: MessageFormInput) => {
     if (messageContent.trim() === '') return;
-    /*
-    const newMessage = {
-      content: message,
-      senderId: chatState.user.id,
-      recipientId: recipientId,
-      timestamp: new Date().toISOString(),
-    }; */
 
-    // sendMessage(newMessage);
+    // console.log({currentId, recipientId});
     socket?.emit('message-from-client', {
       message: messageContent,
-      from: chatState.activeChat?.senderId,
-      to: chatState.activeChat?.recipientId,
+       from: currentId,
+      to: recipientId,
     });
 
     reset();
