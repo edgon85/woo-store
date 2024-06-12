@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const UserListItem = ({ chat }: Props) => {
-  const { dispatch } = useContext(ChatContext);
+  const { dispatch, chatState } = useContext(ChatContext);
   const router = useRouter();
   const currentId = Cookies.get('userId');
 
@@ -47,16 +47,18 @@ export const UserListItem = ({ chat }: Props) => {
         payload: data.data,
       });
 
-      router.push(`/inbox?user=${chat.user.id}`);
+      router.push(`/inbox?u=${chat.user.id}&n=${chat.user.username}`);
     }
   };
 
   return (
     <button
       onClick={onHandleClick}
-      className="flex flex-row py-4 px-2 border-b-2 cursor-pointer"
+      className={`flex flex-row gap-4 py-4 px-2 border-b-2 cursor-pointer ${
+        chat.id === chatState.activeChat ? 'border-l-4 border-blue-400' : ''
+      }`}
     >
-      <div className="w-1/4">
+      <div className="">
         {imageUrl !== null ? (
           <picture>
             <img
@@ -72,7 +74,7 @@ export const UserListItem = ({ chat }: Props) => {
           </span>
         )}
       </div>
-      <div className="flex  flex-col justify-start items-start">
+      <div className="flex  flex-col justify-start items-start ">
         <div className="text-lg font-semibold">{chat.user.username}</div>
         <span className="text-gray-500">
           {/* {formatDateToLocal(chat.created_at)} */}

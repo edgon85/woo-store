@@ -8,7 +8,8 @@ type ChatActionType =
   | { type: '[Chat] - nuevo-mensaje'; payload: IMessage }
   | { type: '[Chat] - cargar-mensajes'; payload: IMessage[] }
   | { type: '[Chat] - cerrar-sesión' }
-  | { type: '[Chat] - SET_UID'; payload: string };
+  | { type: '[Chat] - SET_UID'; payload: string }
+  | { type: '[Chat] - DELETE_CHAT_ACTIVE' };
 
 export const chatReducer = (
   state: ChatState,
@@ -59,6 +60,13 @@ export const chatReducer = (
         uid: '',
         activeChat: null,
         users: [],
+        messages: [],
+      };
+
+    case '[Chat] - DELETE_CHAT_ACTIVE':
+      return {
+        ...state,
+        activeChat: null,
         messages: [],
       };
 

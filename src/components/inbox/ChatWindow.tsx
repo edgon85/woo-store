@@ -12,7 +12,8 @@ export const ChatWindow = () => {
 
   return (
     <>
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {/* <div className="flex-1 overflow-y-auto p-4 space-y-4"> */}
+      <div className="p-4 space-y-4">
         {chatState.messages.map((msg: IMessage) =>
           msg.from === currentId ? (
             <MessageIncoming key={msg.id} message={msg} />

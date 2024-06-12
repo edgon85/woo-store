@@ -1,13 +1,16 @@
 import { InboxMainComponent } from '@/components/inbox/InboxMainComponent';
 
 type Props = {
-  searchParams: { user: string };
+  searchParams: { u: string; n: string };
 };
 
 export default async function InboxPage({ searchParams }: Props) {
   return (
-    <>
-      <InboxMainComponent recipientId={searchParams.user} />
-    </>
+    <div className="mt-4">
+      <InboxMainComponent
+        recipientId={searchParams.u}
+        username={searchParams.n}
+      />
+    </div>
   );
 }

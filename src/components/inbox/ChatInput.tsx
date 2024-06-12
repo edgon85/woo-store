@@ -34,10 +34,10 @@ export const ChatInput = ({ recipientId }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-4 bg-gray-100 flex">
+    <form onSubmit={handleSubmit(onSubmit)} className="p-4 bg-gray-100 flex h-24">
       <input
         type="text"
-        className="w-full bg-gray-300 py-5 px-3 rounded-xl"
+        className="w-full bg-gray-300 py-5 px-3 rounded-xl h-full"
         placeholder="Escribe un mensaje"
         {...register('messageContent', { required: true })}
       />
