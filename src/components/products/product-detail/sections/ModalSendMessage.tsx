@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
+import { getChatForUser } from '@/actions';
+import Cookies from 'js-cookie';
 
 type FormInputData = {
   message: string;
@@ -19,7 +21,9 @@ type Props = {
 export const ModalSendMessage = ({ recipientId, recipientUsername }: Props) => {
   const [open, setOpen] = useState(false);
   const { socket } = useContext(SocketContext);
+  const { dispatch } = useContext(ChatContext);
   const router = useRouter();
+  const currentId = Cookies.get('userId');
 
   const {
     register,
@@ -32,28 +36,35 @@ export const ModalSendMessage = ({ recipientId, recipientUsername }: Props) => {
   const onCloseModal = () => setOpen(false);
 
   const onHandleClick = async () => {
-    // const { data } = await getChatForUser(recipientId);
+    const { ok, data } = await getChatForUser(recipientId);
 
-    setValue('message', 'Hola, estoy interesado en tu producto');
-    setOpen(true);
-    /* if (data) {
-      // TODO: mandar al chat y activar chat
-       console.log(data);
-      addChat(data);
-      selectChat(data.id);
-      router.push(
-        `/inbox/${data.id || ''}?username=${recipientUsername || ''}`
-      ); 
+    console.log(data);
+    if (ok) {
+      dispatch({
+        type: '[Chat] - SET_UID',
+        payload: currentId,
+      });
+      dispatch({
+        type: '[Chat] - activar-chat',
+        payload: data.id,
+      });
+
+      //Cargar los mensajes del chat
+      dispatch({
+        type: '[Chat] - cargar-mensajes',
+        payload: data.messages,
+      });
+
+      router.push(`/inbox?u=${recipientId}&n=${recipientUsername}`);
+      setOpen(false);
     } else {
       setValue('message', 'Hola, estoy interesado en tu producto');
       setOpen(true);
-    } */
+      //TODO: Crear mensaje de chat
+    }
   };
 
   const onSubmit = (data: FormInputData) => {
-
-
-
     socket?.emit('message-from-client', {
       message: data.message.trim(),
       to: recipientId,

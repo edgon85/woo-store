@@ -1,5 +1,5 @@
 import { IMessage } from '@/interfaces';
-import { formatDateToLocal } from '@/utils';
+import { formatDateChat } from '@/utils';
 
 type Props = {
   message: IMessage;
@@ -14,7 +14,7 @@ export const MessageOutgoing = ({ message }: Props) => {
             {message.message}
           </p>
           <span className="text-xs pl-2">
-            {formatDateToLocal(message.messageDate!)}
+            {formatDateChat(message.messageDate!)}
           </span>
         </div>
       </div>
