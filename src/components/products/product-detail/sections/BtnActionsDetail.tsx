@@ -1,11 +1,8 @@
 'use client';
 import { TooltipIcon } from '@/components/ui';
 import { IProduct } from '@/interfaces';
-import { IChat, useInboxStore } from '@/stores';
-import { useRouter } from 'next/navigation';
 import { ActionButton } from '../../product-card';
 import { BtnMakeOffer } from './BtnMakeOffer';
-import { getChatForUser } from '@/actions';
 import { ModalSendMessage } from './ModalSendMessage';
 
 type ActionsProps = {
@@ -14,10 +11,6 @@ type ActionsProps = {
 };
 
 export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
-  const router = useRouter();
-  const { chats, setPendingMessage, addChat, selectChat } = useInboxStore();
-
-  const handleSendMessage = async () => {};
 
   return (
     <>
@@ -41,6 +34,7 @@ export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
             <ModalSendMessage
               recipientId={product.user?.id!}
               recipientUsername={product.user?.username!}
+              productId={product.id!}
             />
           </>
         )}

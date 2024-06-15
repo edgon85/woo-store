@@ -29,6 +29,8 @@ export const UserListItem = ({ chat }: Props) => {
   };
 
   const onHandleClick = async () => {
+    console.log({ chat });
+
     dispatch({
       type: '[Chat] - SET_UID',
       payload: currentId,
@@ -37,11 +39,15 @@ export const UserListItem = ({ chat }: Props) => {
       type: '[Chat] - activar-chat',
       payload: chat.id,
     });
+    dispatch({
+      type: '[Chat] - SET_PROD_ID',
+      payload: chat.product,
+    });
 
     //Cargar los mensajes del chat
     const data = await getMessagesForUser(chat.id);
 
-    console.log(data)
+    // console.log(data);
     if (data.ok) {
       dispatch({
         type: '[Chat] - cargar-mensajes',

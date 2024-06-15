@@ -1,6 +1,7 @@
 export interface IChat {
   id: string;
   lastMessage: string;
+  product: string;
   user: IUserChar;
   created_at: string;
 }

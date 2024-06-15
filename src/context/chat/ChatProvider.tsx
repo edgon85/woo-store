@@ -6,6 +6,7 @@ import { AuthContext } from '../auth';
 
 export interface ChatState {
   uid: string;
+  productId: null | string;
   activeChat: null | string;
   users: any[];
   messages: IMessage[];
@@ -13,6 +14,7 @@ export interface ChatState {
 
 const CHAT_INITIAL_STATE: ChatState = {
   uid: '',
+  productId: null,
   activeChat: null,
   users: [],
   messages: [],

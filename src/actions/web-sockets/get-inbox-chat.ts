@@ -65,10 +65,11 @@ export async function getMessagesForUser(chatId: string) {
   }
 }
 
-export async function getChatForUser(fromId: string) {
+export async function getChatForUser(fromId: string, productId: string) {
   noStore();
   const token = cookies().get('token')?.value;
-  let url = `${process.env.API_BASE_URL}/inbox-chat/get-chat-for-user/${fromId}`;
+  let url = `${process.env.API_BASE_URL}/inbox-chat/get-chat-for-user/${fromId}/${productId}`;
+  // let url = `${process.env.API_BASE_URL}/inbox-chat/get-chat-for-user`;
   try {
     const resp = await fetch(url, {
       method: 'GET',

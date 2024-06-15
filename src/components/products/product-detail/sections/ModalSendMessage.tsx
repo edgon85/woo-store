@@ -16,11 +16,17 @@ type FormInputData = {
 type Props = {
   recipientId: string;
   recipientUsername: string;
+  productId: string;
 };
 
-export const ModalSendMessage = ({ recipientId, recipientUsername }: Props) => {
+export const ModalSendMessage = ({
+  recipientId,
+  recipientUsername,
+  productId,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const { socket } = useContext(SocketContext);
+
   const { dispatch } = useContext(ChatContext);
   const router = useRouter();
   const currentId = Cookies.get('userId');
@@ -36,9 +42,11 @@ export const ModalSendMessage = ({ recipientId, recipientUsername }: Props) => {
   const onCloseModal = () => setOpen(false);
 
   const onHandleClick = async () => {
-    const { ok, data } = await getChatForUser(recipientId);
+    /*     setValue('message', 'Hola, estoy interesado en tu producto');
+    setOpen(true); */
 
-    console.log(data);
+    const { ok, data } = await getChatForUser(recipientId, productId);
+
     if (ok) {
       dispatch({
         type: '[Chat] - SET_UID',
@@ -67,11 +75,14 @@ export const ModalSendMessage = ({ recipientId, recipientUsername }: Props) => {
   const onSubmit = (data: FormInputData) => {
     socket?.emit('message-from-client', {
       message: data.message.trim(),
+      productId: productId,
       to: recipientId,
     });
+
     reset();
     setOpen(false);
-    // }
+
+    router.push('/inbox');
   };
 
   return (

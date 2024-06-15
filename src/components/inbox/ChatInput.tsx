@@ -16,6 +16,7 @@ type MessageFormInput = {
 export const ChatInput = ({ recipientId }: Props) => {
   const currentId = Cookies.get('userId');
   const { socket } = useContext(SocketContext);
+  const { chatState } = useContext(ChatContext);
 
   const { register, handleSubmit, reset, setValue } =
     useForm<MessageFormInput>();
@@ -26,7 +27,8 @@ export const ChatInput = ({ recipientId }: Props) => {
     // console.log({currentId, recipientId});
     socket?.emit('message-from-client', {
       message: messageContent,
-       from: currentId,
+      from: currentId,
+      productId: chatState.productId,
       to: recipientId,
     });
 
@@ -34,7 +36,10 @@ export const ChatInput = ({ recipientId }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-4 bg-gray-100 flex h-24">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="p-4 bg-gray-100 flex h-24"
+    >
       <input
         type="text"
         className="w-full bg-gray-300 py-5 px-3 rounded-xl h-full"

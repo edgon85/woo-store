@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 type ChatActionType =
   | { type: '[Chat] - cargar-usuarios'; payload: any }
   | { type: '[Chat] - activar-chat'; payload: string }
+  | { type: '[Chat] - SET_PROD_ID'; payload: string }
   | { type: '[Chat] - nuevo-mensaje'; payload: IMessage }
   | { type: '[Chat] - cargar-mensajes'; payload: IMessage[] }
   | { type: '[Chat] - cerrar-sesión' }
@@ -58,15 +59,23 @@ export const chatReducer = (
     case '[Chat] - cerrar-sesión':
       return {
         uid: '',
+        productId: null,
         activeChat: null,
         users: [],
         messages: [],
+      };
+
+    case '[Chat] - SET_PROD_ID':
+      return {
+        ...state,
+        productId: action.payload,
       };
 
     case '[Chat] - DELETE_CHAT_ACTIVE':
       return {
         ...state,
         activeChat: null,
+        productId: null,
         messages: [],
       };
 

@@ -44,9 +44,6 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
         type: '[Chat] - nuevo-mensaje',
         payload: mensaje,
       });
-
-      // mover el scroll
-      //   scrollToBottomAnimated('messages');
     });
   }, [socket, dispatch]);
 

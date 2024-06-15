@@ -39,7 +39,7 @@ export const InboxMainComponent = ({
             onClick={onHandleClick}
           />
           <div className="flex-1 text-center">
-            <p className='text-lg font-semibold'>{username}</p>
+            <p className="text-lg font-semibold">{username}</p>
           </div>
         </div>
 
