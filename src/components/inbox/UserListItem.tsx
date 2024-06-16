@@ -29,7 +29,7 @@ export const UserListItem = ({ chat }: Props) => {
   };
 
   const onHandleClick = async () => {
-    console.log({ chat });
+    // console.log({ chat });
 
     dispatch({
       type: '[Chat] - SET_UID',

@@ -3,10 +3,10 @@
 import { ChatContext, SocketContext } from '@/context';
 import { Divider } from '@tremor/react';
 import { useRouter } from 'next/navigation';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
-import { getChatForUser } from '@/actions';
+import { getChatForUser, getInboxChats, getMessagesForUser } from '@/actions';
 import Cookies from 'js-cookie';
 
 type FormInputData = {
@@ -47,7 +47,11 @@ export const ModalSendMessage = ({
 
     const { ok, data } = await getChatForUser(recipientId, productId);
 
-    if (ok) {
+    console.log(ok);
+    if (!ok) {
+      setValue('message', 'Hola, estoy interesado en tu producto');
+      setOpen(true);
+    } else {
       dispatch({
         type: '[Chat] - SET_UID',
         payload: currentId,
@@ -65,23 +69,31 @@ export const ModalSendMessage = ({
 
       router.push(`/inbox?u=${recipientId}&n=${recipientUsername}`);
       setOpen(false);
-    } else {
-      setValue('message', 'Hola, estoy interesado en tu producto');
-      setOpen(true);
-      //TODO: Crear mensaje de chat
     }
   };
 
-  const onSubmit = (data: FormInputData) => {
+  const onSubmit = async (data: FormInputData) => {
     socket?.emit('message-from-client', {
       message: data.message.trim(),
       productId: productId,
       to: recipientId,
     });
 
-    reset();
-    setOpen(false);
+    //Cargar los mensajes del chat
+    const { ok, data: dataList } = await getInboxChats();
 
+    // console.log({ ok, dataList });
+    // console.log(data);
+    if (ok) {
+      dispatch({
+        type: '[Chat] - cargar-usuarios',
+        payload: dataList,
+      });
+    }
+
+    reset();
+    // setNewMessage(true);
+    setOpen(false);
     router.push('/inbox');
   };
 
