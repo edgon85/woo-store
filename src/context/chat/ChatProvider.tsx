@@ -1,12 +1,12 @@
-import { useContext, useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import { ChatContext } from './ChatContext';
-import { IMessage } from '@/interfaces';
+import { IChatProduct, IMessage } from '@/interfaces';
 import { chatReducer } from './chatReducer';
-import { AuthContext } from '../auth';
 
 export interface ChatState {
   uid: string;
-  productId: null | string;
+  // productId: null | string;
+  product: IChatProduct | null;
   activeChat: null | string;
   users: any[];
   messages: IMessage[];
@@ -14,7 +14,7 @@ export interface ChatState {
 
 const CHAT_INITIAL_STATE: ChatState = {
   uid: '',
-  productId: null,
+  product: null,
   activeChat: null,
   users: [],
   messages: [],

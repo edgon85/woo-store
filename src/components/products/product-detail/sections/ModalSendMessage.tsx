@@ -1,12 +1,16 @@
 'use client';
 
-import { ChatContext, SocketContext } from '@/context';
+import { ChatContext } from '@/context';
 import { Divider } from '@tremor/react';
 import { useRouter } from 'next/navigation';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
-import { getChatForUser, getInboxChats, getMessagesForUser } from '@/actions';
+import {
+  createNewMessageForChat,
+  getChatForUser,
+  getInboxChats,
+} from '@/actions';
 import Cookies from 'js-cookie';
 
 type FormInputData = {
@@ -25,7 +29,6 @@ export const ModalSendMessage = ({
   productId,
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const { socket } = useContext(SocketContext);
 
   const { dispatch } = useContext(ChatContext);
   const router = useRouter();
@@ -42,9 +45,6 @@ export const ModalSendMessage = ({
   const onCloseModal = () => setOpen(false);
 
   const onHandleClick = async () => {
-    /*     setValue('message', 'Hola, estoy interesado en tu producto');
-    setOpen(true); */
-
     const { ok, data } = await getChatForUser(recipientId, productId);
 
     console.log(ok);
@@ -73,28 +73,30 @@ export const ModalSendMessage = ({
   };
 
   const onSubmit = async (data: FormInputData) => {
-    socket?.emit('message-from-client', {
-      message: data.message.trim(),
-      productId: productId,
-      to: recipientId,
-    });
+    const { ok: okNewMessage } = await createNewMessageForChat(
+      data.message.trim(),
+      recipientId,
+      productId
+    );
 
-    //Cargar los mensajes del chat
-    const { ok, data: dataList } = await getInboxChats();
+    if (okNewMessage) {
+      const { ok, data: usuarios } = await getInboxChats();
 
-    // console.log({ ok, dataList });
-    // console.log(data);
-    if (ok) {
-      dispatch({
-        type: '[Chat] - cargar-usuarios',
-        payload: dataList,
-      });
+      if (ok) {
+        dispatch({
+          type: '[Chat] - cargar-usuarios',
+          payload: usuarios,
+        });
+
+        reset();
+        setOpen(false);
+        router.push('/inbox');
+      } else {
+        console.log('Error al cargar los mensajes');
+      }
+    } else {
+      console.log('Error al enviar el mensaje');
     }
-
-    reset();
-    // setNewMessage(true);
-    setOpen(false);
-    router.push('/inbox');
   };
 
   return (

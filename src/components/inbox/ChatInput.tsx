@@ -5,7 +5,6 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 type Props = {
-  // currentId: string;
   recipientId: string;
 };
 
@@ -28,7 +27,7 @@ export const ChatInput = ({ recipientId }: Props) => {
     socket?.emit('message-from-client', {
       message: messageContent,
       from: currentId,
-      productId: chatState.productId,
+      productId: chatState.product?.id,
       to: recipientId,
     });
 

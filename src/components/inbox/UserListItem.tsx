@@ -13,6 +13,8 @@ type Props = {
 };
 
 export const UserListItem = ({ chat }: Props) => {
+  // console.log({ chat });
+
   const { dispatch, chatState } = useContext(ChatContext);
   const router = useRouter();
   const currentId = Cookies.get('userId');
@@ -29,8 +31,6 @@ export const UserListItem = ({ chat }: Props) => {
   };
 
   const onHandleClick = async () => {
-    // console.log({ chat });
-
     dispatch({
       type: '[Chat] - SET_UID',
       payload: currentId,
@@ -40,7 +40,7 @@ export const UserListItem = ({ chat }: Props) => {
       payload: chat.id,
     });
     dispatch({
-      type: '[Chat] - SET_PROD_ID',
+      type: '[Chat] - SET_PROD',
       payload: chat.product,
     });
 
@@ -83,16 +83,13 @@ export const UserListItem = ({ chat }: Props) => {
       </div>
       <div className="flex  flex-col justify-start items-start ">
         <div className="text-lg font-semibold">{chat.user.username}</div>
-        <span className="text-gray-500">
-          {/* {formatDateToLocal(chat.created_at)} */}
-          {chat.lastMessage}
-        </span>
+        <div className="flex gap-2 items-start">
+          <picture>
+            <img src={chat.product.image} alt="" width={32} height={32} />
+          </picture>
+          <span className="text-gray-500 text-start">{chat.product.title}</span>
+        </div>
       </div>
     </button>
   );
 };
-
-/* 
-TODO: si esta seleccionado el usuario, cambiar el color de fondo
-border-l-4 border-blue-400
-*/

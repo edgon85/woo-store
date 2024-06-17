@@ -7,6 +7,8 @@ import { ChatWindow } from './ChatWindow';
 import { ChatInput } from './ChatInput';
 import { GoArrowLeft } from 'react-icons/go';
 import { useRouter } from 'next/navigation';
+import { formatCurrency } from '@/lib';
+import Link from 'next/link';
 
 type Props = {
   recipientId?: string;
@@ -67,6 +69,30 @@ export const InboxMainComponent = ({
               chatState.activeChat ? 'flex' : 'hidden'
             } w-full md:flex flex-col`}
           >
+            {chatState.activeChat && (
+              <div className=" p-4 flex gap-4 border-b">
+                <picture>
+                  <img
+                    src={chatState.product?.image}
+                    alt={chatState.product?.title}
+                    width={50}
+                    height={50}
+                  />
+                </picture>
+                <div className="flex flex-col items-start">
+                  <Link
+                    href={`/product/${chatState.product?.slug}`}
+                    className="text-lg font-semibold text-start"
+                  >
+                    {chatState.product?.title}
+                  </Link>
+                  <span className="text-gray-500">
+                    {formatCurrency(chatState.product?.price! * 100 || 0)}
+                  </span>
+                </div>
+              </div>
+            )}
+            {/* *-·············································· */}
             <div className=" flex-1  overflow-y-scroll">
               {chatState.activeChat ? (
                 <ChatWindow />

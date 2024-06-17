@@ -1,11 +1,10 @@
-import { IMessage } from '@/interfaces';
+import { IChatProduct, IMessage } from '@/interfaces';
 import { ChatState } from './ChatProvider';
-import Cookies from 'js-cookie';
 
 type ChatActionType =
   | { type: '[Chat] - cargar-usuarios'; payload: any }
   | { type: '[Chat] - activar-chat'; payload: string }
-  | { type: '[Chat] - SET_PROD_ID'; payload: string }
+  | { type: '[Chat] - SET_PROD'; payload: IChatProduct }
   | { type: '[Chat] - nuevo-mensaje'; payload: IMessage }
   | { type: '[Chat] - cargar-mensajes'; payload: IMessage[] }
   | { type: '[Chat] - cerrar-sesión' }
@@ -59,23 +58,23 @@ export const chatReducer = (
     case '[Chat] - cerrar-sesión':
       return {
         uid: '',
-        productId: null,
+        product: null,
         activeChat: null,
         users: [],
         messages: [],
       };
 
-    case '[Chat] - SET_PROD_ID':
+    case '[Chat] - SET_PROD':
       return {
         ...state,
-        productId: action.payload,
+        product: action.payload,
       };
 
     case '[Chat] - DELETE_CHAT_ACTIVE':
       return {
         ...state,
         activeChat: null,
-        productId: null,
+        product: null,
         messages: [],
       };
 
