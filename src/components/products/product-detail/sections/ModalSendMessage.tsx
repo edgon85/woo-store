@@ -1,6 +1,6 @@
 'use client';
 
-import { ChatContext } from '@/context';
+import { AuthContext, ChatContext } from '@/context';
 import { Divider } from '@tremor/react';
 import { useRouter } from 'next/navigation';
 import { useState, useContext } from 'react';
@@ -21,13 +21,19 @@ type Props = {
   recipientId: string;
   recipientUsername: string;
   productId: string;
+  slug: string;
+  title: string;
 };
 
 export const ModalSendMessage = ({
   recipientId,
   recipientUsername,
   productId,
+  slug,
+  title,
 }: Props) => {
+  const { isLoggedIn } = useContext(AuthContext);
+
   const [open, setOpen] = useState(false);
 
   const { dispatch } = useContext(ChatContext);
@@ -42,14 +48,21 @@ export const ModalSendMessage = ({
     reset,
   } = useForm<FormInputData>();
 
-  const onCloseModal = () => setOpen(false);
+  const onCloseModal = () => {
+    reset();
+    setOpen(false);
+  };
 
   const onHandleClick = async () => {
+    if (!isLoggedIn) {
+      router.push(`/auth/login?p=/product/${slug}`);
+      return;
+    }
+
     const { ok, data } = await getChatForUser(recipientId, productId);
 
-    console.log(ok);
     if (!ok) {
-      setValue('message', 'Hola, estoy interesado en tu producto');
+      // setValue('message', 'Hola, estoy interesado en tu producto');
       setOpen(true);
     } else {
       dispatch({
@@ -113,8 +126,12 @@ export const ModalSendMessage = ({
             <h2 className="text-center text-lg font-semibold">
               Enviar mensaje
             </h2>
+            <p>
+              Hola! Si tienes cualquier duda acerca de mi artículo{' '}
+              <span className="font-bold">{title}</span> puedes escribirme aquí
+            </p>
             <Divider />
-            <div className="mb-6">
+            <div className="mb-4">
               <input
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 "
@@ -132,7 +149,7 @@ export const ModalSendMessage = ({
             <div className="pt-2">
               <button
                 type="submit"
-                className="ml-2 px-4 py-2 bg-cerise-red-600 text-white rounded-lg"
+                className="w-full ml-2 px-4 py-2 bg-cerise-red-600 hover:bg-cerise-red-500 text-white rounded-lg"
               >
                 Enviar
               </button>

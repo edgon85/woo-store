@@ -11,7 +11,6 @@ type ActionsProps = {
 };
 
 export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
-
   return (
     <>
       <section className=" flex flex-col gap-4">
@@ -35,6 +34,8 @@ export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
               recipientId={product.user?.id!}
               recipientUsername={product.user?.username!}
               productId={product.id!}
+              slug={product.slug!}
+              title={product.title!}
             />
           </>
         )}
