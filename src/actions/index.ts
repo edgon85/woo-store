@@ -44,5 +44,6 @@ export * from './payout-methods/delete-method';
 export * from './ratings/post-rating';
 export * from './ratings/get-rating-by-username';
 
-export * from './web-sockets/get-inbox-chat'
-export * from './chats/create-new-message'
+export * from './web-sockets/get-inbox-chat';
+export * from './chats/create-new-message';
+export * from './chats/archived-chat';

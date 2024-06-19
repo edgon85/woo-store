@@ -9,6 +9,7 @@ import { GoArrowLeft } from 'react-icons/go';
 import { useRouter } from 'next/navigation';
 import { formatCurrency } from '@/lib';
 import Link from 'next/link';
+import { DropDownSettings } from './DropDownSettings';
 
 type Props = {
   recipientId?: string;
@@ -35,13 +36,18 @@ export const InboxMainComponent = ({
             chatState.activeChat ? 'flex' : 'hidden'
           } justify-between items-center bg-white border-b-2`}
         >
-          <GoArrowLeft
-            size={24}
-            className="md:hidden"
-            onClick={onHandleClick}
-          />
+          <div className="flex-1">
+            <GoArrowLeft
+              className="md:hidden"
+              size={24}
+              onClick={onHandleClick}
+            />
+          </div>
           <div className="flex-1 text-center">
             <p className="text-lg font-semibold">{username}</p>
+          </div>
+          <div className="flex-1 flex justify-end">
+            {chatState.activeChat && <DropDownSettings />}
           </div>
         </div>
 
