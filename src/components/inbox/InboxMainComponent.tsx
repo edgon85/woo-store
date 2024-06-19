@@ -109,7 +109,22 @@ export const InboxMainComponent = ({
               )}
             </div>
             <div className="h-24">
-              {chatState.activeChat && <ChatInput recipientId={recipientId} />}
+              {chatState.product?.status !== 'Available' ? (
+                <div className="p-4 border h-full">
+                  <p className="text-base font-bold">
+                    El artículo no está disponible
+                  </p>
+                  <span className="text-sm text-gray-400">
+                    El artículo se ha vendido o eliminado
+                  </span>
+                </div>
+              ) : (
+                <>
+                  {chatState.activeChat && (
+                    <ChatInput recipientId={recipientId} />
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
