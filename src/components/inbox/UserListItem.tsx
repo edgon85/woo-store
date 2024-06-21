@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const UserListItem = ({ chat }: Props) => {
-  // console.log({ chat });
+  console.log({ chat });
 
   const { dispatch, chatState } = useContext(ChatContext);
   const router = useRouter();
@@ -81,8 +81,10 @@ export const UserListItem = ({ chat }: Props) => {
           </span>
         )}
       </div>
-      <div className="flex  flex-col justify-start items-start ">
-        <div className="text-lg font-semibold">{chat.user.username}</div>
+      <div className="w-full flex flex-col justify-start items-start">
+        <div className="w-full flex justify-between items-center">
+          <p className={`text-lg font-semibol`}>{chat.user.username}</p>
+        </div>
         <div className="flex gap-2 items-start">
           <picture>
             <img src={chat.product.image} alt="" width={32} height={32} />

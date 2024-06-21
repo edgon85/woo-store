@@ -24,9 +24,9 @@ export interface IUserChar {
 
 export interface IChatProduct {
   id: string;
-  slug: string
+  slug: string;
   title: string;
   status: string;
   price: number;
-  image: string
+  image: string;
 }

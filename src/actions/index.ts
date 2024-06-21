@@ -47,3 +47,6 @@ export * from './ratings/get-rating-by-username';
 export * from './web-sockets/get-inbox-chat';
 export * from './chats/create-new-message';
 export * from './chats/archived-chat';
+
+export * from './notifications/get-notifications';
+export * from './notifications/update-read-notification';

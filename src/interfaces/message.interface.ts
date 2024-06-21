@@ -1,4 +1,4 @@
-export interface IMessage {
+export interface IMessagesss {
   id?: string;
   from: string;
   to: string;
