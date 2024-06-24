@@ -1,4 +1,4 @@
-import { getNotifications } from '@/actions';
+import { getInboxChats } from '@/actions';
 import { SocketContext } from '@/context';
 import { useAuth } from '@/hooks';
 import { INotification } from '@/interfaces';
@@ -7,37 +7,78 @@ import { CiMail } from 'react-icons/ci';
 
 export const InboxNotification = () => {
   const { socket } = useContext(SocketContext);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
 
   const [notifications, setNotifications] = useState<any[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [unreadChatIds, setUnreadChatIds] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!isLoggedIn) return;
-    // Listen for new message notifications
-    const fetchNotifications = async () => {
-      const { data } = await getNotifications();
-      setNotifications(data);
-      setUnreadCount(
-        data.filter((notification: INotification) => !notification.read).length
-      );
+
+    try {
+      const fetchNotifications = async () => {
+        const { data } = await getInboxChats();
+
+        setNotifications(data);
+        setUnreadCount(
+          data.filter(
+            (chat: any) =>
+              chat.senderRead === false || chat.recipientRead === false
+          ).length
+        );
+        const initialUnreadChats = data
+          .filter((chat: any) => !chat.senderRead || !chat.recipientRead)
+          .map((chat: any) => chat.id);
+
+        setUnreadChatIds(new Set(initialUnreadChats));
+      };
+
+      fetchNotifications();
+    } catch (error) {
+      console.error('Error fetching chats:', error);
+    }
+  }, [socket, isLoggedIn, user?.id]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNewMessage = (newMessage: any) => {
+      setNotifications((prevChats: any) => {
+        const updatedChats = prevChats.map((chat: any) =>
+          chat.id === newMessage.chatId
+            ? {
+                ...chat,
+                lastMessage: newMessage.message,
+                chatInboxDate: newMessage.chatInboxDate,
+                senderRead: chat.user.id === user?.id ? true : false,
+                recipientRead: chat.recipient.id === user?.id ? true : false,
+              }
+            : chat
+        );
+
+        // Verificar si el chat del nuevo mensaje ya está en el conjunto de chats no leídos
+        const chatAlreadyUnread = unreadChatIds.has(newMessage.chatId);
+
+        if (!chatAlreadyUnread) {
+          setUnreadChatIds((prevUnreadChatIds) => {
+            const newUnreadChatIds = new Set(prevUnreadChatIds);
+            newUnreadChatIds.add(newMessage.chatId);
+            setUnreadCount(newUnreadChatIds.size);
+            return newUnreadChatIds;
+          });
+        }
+
+        return updatedChats;
+      });
     };
 
-    fetchNotifications();
+    socket.on('new-message-notification', handleNewMessage);
 
-    socket?.on('new-message-notification', (newMessage) => {
-      setNotifications((prevNotifications) => [
-        newMessage,
-        ...prevNotifications,
-      ]);
-      setUnreadCount((prevCount) => prevCount + 1);
-    });
-
-    // Clean up on component unmount
     return () => {
-      socket?.off('new-message-notification');
+      socket.off('new-message-notification', handleNewMessage);
     };
-  }, [socket, isLoggedIn]);
+  }, [socket, unreadChatIds, user?.id]);
 
   return (
     <>
