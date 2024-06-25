@@ -1,78 +1,39 @@
+import { IChat } from '@/interfaces';
 import { create } from 'zustand';
 
-export interface IChat {
-  id: string;
-  lastMessage: string;
-  chatInboxDate: string;
-  user: {
-    id: string;
-    username: string;
-    avatar: string;
-  };
-  recipient: {
-    id: string;
-    username: string;
-    avatar: string;
-  };
-  messages: IMessage[];
-}
-
-interface IMessage {
-  id?: string;
-  content: string;
-  senderId: string;
-  recipientId: string;
-  timestamp: string;
-}
-
-interface InboxState {
+interface InboxStore {
   chats: IChat[];
-  selectedChatId: string | null;
-  pendingMessage: string;
-  setChats: (newChats: IChat[]) => void;
-  selectChat: (chatId: string) => void;
-  addMessage: (chatId: string, message: IMessage) => void;
-
-  setPendingMessage: (message: string) => void;
-  clearPendingMessage: () => void;
-
-  addChat: (chat: IChat) => void;
+  unreadCount: number;
+  unreadChatIds: Set<string>;
+  setChats: (chats: IChat[] | ((prevChats: IChat[]) => IChat[])) => void;
+  addUnreadChatId: (chatId: string) => void;
+  removeUnreadChatId: (chatId: string) => void;
 }
 
-export const useInboxStore = create<InboxState>()((set) => ({
+export const useInboxStore = create<InboxStore>()((set) => ({
   chats: [],
-  selectedChatId: null,
-  pendingMessage: '',
-  selectChat: (chatId) => set({ selectedChatId: chatId }),
-
-  setChats: (newChats) =>
+  unreadCount: 0,
+  unreadChatIds: new Set(),
+  setChats: (chats) =>
     set((state) => ({
-      chats: [
-        ...state.chats,
-        ...newChats.filter(
-          (newChat) => !state.chats.some((chat) => chat.id === newChat.id)
-        ),
-      ],
+      chats: typeof chats === 'function' ? chats(state.chats) : chats,
     })),
-  addMessage: (chatId, message) =>
-    set((state) => ({
-      chats: state.chats.map((chat) =>
-        chat.id === chatId
-          ? { ...chat, messages: [...chat.messages, message] }
-          : chat
-      ),
-    })),
-  addChat: (chat) =>
+  addUnreadChatId: (chatId) =>
     set((state) => {
-      const existingChat = state.chats.find((c) => c.id === chat.id);
-      if (!existingChat) {
-        return {
-          chats: [...state.chats, chat],
-        };
-      }
-      return state;
+      const newUnreadChatIds = new Set(state.unreadChatIds);
+      newUnreadChatIds.add(chatId);
+      return {
+        unreadChatIds: newUnreadChatIds,
+        unreadCount: newUnreadChatIds.size,
+      };
     }),
-
-  setPendingMessage: (message) => set({ pendingMessage: message }),
-  clearPendingMessage: () => set({ pendingMessage: '' }),
+  removeUnreadChatId: (chatId) =>
+    set((state) => {
+      const newUnreadChatIds = new Set(state.unreadChatIds);
+      newUnreadChatIds.delete(chatId);
+      return {
+        unreadChatIds: newUnreadChatIds,
+        unreadCount: newUnreadChatIds.size,
+      };
+    }),
 }));

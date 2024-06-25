@@ -4,6 +4,10 @@ export interface IChat {
   product: IChatProduct;
   user: IUserChar;
   created_at: string;
+  senderRead: boolean;
+  recipientRead: boolean;
+  senderId: string;
+  recipientId: string;
 }
 
 export interface IMessage {

@@ -1,25 +1,38 @@
 'use client';
 
-import { checkImageAvailable, getMessagesForUser } from '@/actions';
+import {
+  checkImageAvailable,
+  getMessagesForUser,
+  markChatAsRead,
+} from '@/actions';
 import { UserIcon } from '../ui';
 import { useContext, useEffect, useState } from 'react';
 import { IChat } from '@/interfaces';
 import { ChatContext } from '@/context';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { useInboxStore } from '@/stores';
+import { useAuth } from '@/hooks';
 
 type Props = {
   chat: IChat;
 };
 
 export const UserListItem = ({ chat }: Props) => {
-  console.log({ chat });
+  // console.log({ chat });
 
+  const { setChats, removeUnreadChatId, unreadCount, unreadChatIds } =
+    useInboxStore();
   const { dispatch, chatState } = useContext(ChatContext);
   const router = useRouter();
   const currentId = Cookies.get('userId');
+  const { user } = useAuth();
 
+  const isUnread =
+    chat.senderId === user?.id ? !chat.senderRead : !chat.recipientRead;
   const [imageUrl, setImageUrl] = useState<string | null>('');
+
+  const [isRead, setIsRead] = useState(isUnread);
 
   useEffect(() => {
     checkImage(chat.user.avatar);
@@ -54,8 +67,31 @@ export const UserListItem = ({ chat }: Props) => {
         payload: data.data,
       });
 
+      await handleMarkAsRead(chat.id);
       router.push(`/inbox?u=${chat.user.id}&n=${chat.user.username}`);
     }
+  };
+
+  const handleMarkAsRead = async (chatId: string) => {
+    /*   await markChatAsRead(chatId);
+    setIsRead(true); */
+
+    setChats((prevChats) => {
+      const updatedChats = prevChats.map((chat: any) => {
+        console.log({ chat });
+        return chat.id === chatId
+          ? {
+              ...chat,
+              senderRead: chat.user.id === user?.id ? true : chat.senderRead,
+              recipientRead:
+                chat.recipientId === user?.id ? true : chat.recipientRead,
+            }
+          : chat;
+      });
+      removeUnreadChatId(chatId);
+
+      return updatedChats;
+    });
   };
 
   return (
@@ -63,7 +99,7 @@ export const UserListItem = ({ chat }: Props) => {
       onClick={onHandleClick}
       className={`flex flex-row gap-4 py-4 px-2 border-b-2 cursor-pointer ${
         chat.id === chatState.activeChat ? 'border-l-4 border-blue-400' : ''
-      }`}
+      } ${isRead ? 'bg-gray-100' : ''}`}
     >
       <div className="">
         {imageUrl !== null ? (
@@ -83,7 +119,7 @@ export const UserListItem = ({ chat }: Props) => {
       </div>
       <div className="w-full flex flex-col justify-start items-start">
         <div className="w-full flex justify-between items-center">
-          <p className={`text-lg font-semibol`}>{chat.user.username}</p>
+          <p className={`text-lg font-semibold`}>{chat.user.username}</p>
         </div>
         <div className="flex gap-2 items-start">
           <picture>
