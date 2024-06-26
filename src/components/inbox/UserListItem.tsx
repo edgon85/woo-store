@@ -19,20 +19,20 @@ type Props = {
 };
 
 export const UserListItem = ({ chat }: Props) => {
-  // console.log({ chat });
-
-  const { setChats, removeUnreadChatId, unreadCount, unreadChatIds } =
-    useInboxStore();
+  const { setChats, removeUnreadChatId } = useInboxStore();
   const { dispatch, chatState } = useContext(ChatContext);
   const router = useRouter();
   const currentId = Cookies.get('userId');
   const { user } = useAuth();
 
-  const isUnread =
-    chat.senderId === user?.id ? !chat.senderRead : !chat.recipientRead;
   const [imageUrl, setImageUrl] = useState<string | null>('');
+  const [isChatRead, setIsChatRead] = useState(false);
 
-  const [isRead, setIsRead] = useState(isUnread);
+  useEffect(() => {
+    setIsChatRead(
+      chat.senderId === user?.id ? chat.senderRead : chat.recipientRead
+    );
+  }, [chat, user]);
 
   useEffect(() => {
     checkImage(chat.user.avatar);
@@ -73,25 +73,27 @@ export const UserListItem = ({ chat }: Props) => {
   };
 
   const handleMarkAsRead = async (chatId: string) => {
-    /*   await markChatAsRead(chatId);
-    setIsRead(true); */
+    if (!isChatRead) {
+      await markChatAsRead(chatId);
 
-    setChats((prevChats) => {
-      const updatedChats = prevChats.map((chat: any) => {
-        console.log({ chat });
-        return chat.id === chatId
-          ? {
-              ...chat,
-              senderRead: chat.user.id === user?.id ? true : chat.senderRead,
-              recipientRead:
-                chat.recipientId === user?.id ? true : chat.recipientRead,
-            }
-          : chat;
+      setChats((prevChats) => {
+        const updatedChats = prevChats.map((chat: any) =>
+          chat.id === chatId
+            ? {
+                ...chat,
+                senderRead: chat.user.id === user?.id ? true : chat.senderRead,
+                recipientRead:
+                  chat.recipientId === user?.id ? true : chat.recipientRead,
+              }
+            : chat
+        );
+        removeUnreadChatId(chatId);
+
+        return updatedChats;
       });
-      removeUnreadChatId(chatId);
 
-      return updatedChats;
-    });
+      setIsChatRead(true);
+    }
   };
 
   return (
@@ -99,7 +101,7 @@ export const UserListItem = ({ chat }: Props) => {
       onClick={onHandleClick}
       className={`flex flex-row gap-4 py-4 px-2 border-b-2 cursor-pointer ${
         chat.id === chatState.activeChat ? 'border-l-4 border-blue-400' : ''
-      } ${isRead ? 'bg-gray-100' : ''}`}
+      } ${isChatRead ? 'bg-white' : 'bg-gray-100'}`}
     >
       <div className="">
         {imageUrl !== null ? (
