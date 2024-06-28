@@ -1,9 +1,11 @@
 'use client';
+import { makeOffer } from '@/actions';
 import { Button, Divider } from '@/components/ui';
 import { IProduct } from '@/interfaces';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
+import { toast } from 'react-toastify';
 
 type Props = {
   product: IProduct;
@@ -15,18 +17,40 @@ type FormData = {
 
 export const BtnMakeOffer = ({ product }: Props) => {
   const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>();
 
   const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
+  const onCloseModal = () => {
+    setOpen(false);
+    reset();
+  };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log(data);
+    setIsSubmitting(true);
+    try {
+      const result = await makeOffer(product.id!, Number(data.price));
+      if (result.ok) {
+        toast.success('¡Oferta enviada con éxito!');
+        onCloseModal();
+      } else {
+        toast.error(
+          result.message ||
+            'Error al enviar la oferta. Por favor, intenta de nuevo.'
+        );
+      }
+    } catch (error) {
+      toast.error('Error al enviar la oferta. Por favor, intenta de nuevo.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -73,7 +97,11 @@ export const BtnMakeOffer = ({ product }: Props) => {
             </div>
             <span>¿Te encantó? ¡Adquiérelo ya antes de que se agote!</span>
             <div className="pt-2">
-              <Button label="Enviar oferta" type="submit" />
+              <Button
+                label={isSubmitting ? 'Enviando...' : 'Enviar oferta'}
+                type="submit"
+                disabled={isSubmitting}
+              />
             </div>
           </form>
         </section>

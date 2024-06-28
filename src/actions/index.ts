@@ -51,3 +51,5 @@ export * from './inbox/markAsRead';
 
 export * from './notifications/get-notifications';
 export * from './notifications/update-read-notification';
+
+export * from './offer/make-offer';
