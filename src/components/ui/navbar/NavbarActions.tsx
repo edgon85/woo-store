@@ -5,13 +5,10 @@ import { DropdownAccount } from '../dropdowns';
 import { BellIcon } from '../icons';
 import { HamburgerButton } from './hamburger-button';
 import { LoginRegisterButton } from './login-register-button';
+import { DropDownNotification } from './notifications/DropDownNotification';
 import { InboxNotification } from './notifications/InboxNotification';
 
-
 export const NavbarActions = () => {
- 
-
-
   return (
     <div className="flex gap-1">
       <div className=" md:hidden"></div>
@@ -19,7 +16,8 @@ export const NavbarActions = () => {
       <>
         <InboxNotification />
         <DropdownAccount />
-        <BtnCircle icon={<BellIcon />} />
+        {/* <BtnCircle icon={<BellIcon />} /> */}
+        <DropDownNotification />
 
         <LoginRegisterButton />
         <HamburgerButton />
