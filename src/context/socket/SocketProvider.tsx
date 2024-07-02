@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
-import { SocketContext } from './SocketContext';
-import { useSocket } from '../../hooks';
-import { AuthContext } from '../auth';
-import { ChatContext } from '../chat/ChatContext';
-import { INotification } from '@/interfaces';
+import { useContext, useEffect, useState } from "react";
+import { SocketContext } from "./SocketContext";
+import { useSocket } from "../../hooks";
+import { AuthContext } from "../auth";
+import { ChatContext } from "../chat/ChatContext";
+import { INotification } from "@/interfaces";
 
 interface SocketProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -15,6 +15,9 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   );
   const { isLoggedIn } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
+
+
+  // TODO: Add notifications state context
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
   useEffect(() => {
@@ -31,19 +34,19 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   // escuchar los cambios de los usuarios conectados
   useEffect(() => {
-    socket?.on('lista-usuarios', (usuarios) => {
+    socket?.on("lista-usuarios", (usuarios) => {
       dispatch({
-        type: '[Chat] - cargar-usuarios',
+        type: "[Chat] - cargar-usuarios",
         payload: usuarios,
       });
     });
   }, [socket, dispatch]);
 
   useEffect(() => {
-    socket?.on('message-from-server', (mensaje) => {
+    socket?.on("message-from-server", (mensaje) => {
       // console.log(mensaje);
       dispatch({
-        type: '[Chat] - nuevo-mensaje',
+        type: "[Chat] - nuevo-mensaje",
         payload: mensaje,
       });
     });
@@ -51,23 +54,23 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   // Nuevos efectos para manejar notificaciones
   useEffect(() => {
-    if (!socket) return;
+    // if (!socket) return;
 
-    socket.on(
-      'unread-notifications',
+    socket?.on(
+      "unread-notifications",
       (unreadNotifications: INotification[]) => {
         setNotifications(unreadNotifications);
       }
     );
-
-    socket.on('new-notification', (notification: INotification) => {
+    // new-notification
+    socket?.on("new-notification", (notification: INotification) => {
       setNotifications((prevNotifications) => [
         ...prevNotifications,
         notification,
       ]);
     });
 
-    socket.on('notification-marked-as-read', (notificationId: string) => {
+    socket?.on("notification-marked-as-read", (notificationId: string) => {
       setNotifications((prevNotifications) =>
         prevNotifications.filter(
           (notification: INotification) => notification.id !== notificationId
@@ -76,14 +79,14 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     });
 
     return () => {
-      socket.off('unread-notifications');
-      socket.off('new-notification');
-      socket.off('notification-marked-as-read');
+      socket?.off("unread-notifications");
+      socket?.off("new-notification");
+      socket?.off("notification-marked-as-read");
     };
   }, [socket]);
 
   const markNotificationAsRead = (notificationId: string) => {
-    socket?.emit('mark-notification-as-read', { notificationId });
+    socket?.emit("mark-notification-as-read", { notificationId });
     setNotifications((prevNotifications) =>
       prevNotifications.filter(
         (notification) => notification.id !== notificationId

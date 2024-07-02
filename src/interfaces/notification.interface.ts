@@ -6,10 +6,12 @@ export interface INotification {
   userId: string;
   createdAt: string;
   chatId?: string;
+  url: string;
 }
 
 export enum NotificationType {
-  MESSAGE = 'MESSAGE',
-  SALE = 'SALE',
-  OTHER = 'OTHER',
+  MESSAGE = "MESSAGE",
+  SALE = "SALE",
+  OTHER = "OTHER",
+  OFFER = "OFFER",
 }

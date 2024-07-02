@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <Providers>
-          <div>
+          <div className='min-h-[70vh]'>
             <Navbar />
             <NavClothesType />
             <Sidebar />
