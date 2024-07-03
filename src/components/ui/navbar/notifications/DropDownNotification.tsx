@@ -1,13 +1,15 @@
-import { SocketContext } from "@/context";
-import { useContext, useEffect, useRef, useState } from "react";
-import { BellIcon } from "../../icons";
-import { EmptyNotifications } from "./EmptyNotifications";
-import { ListNotification } from "./ListNotification";
-import { useRouter } from "next/navigation";
+import { NotificationContext, SocketContext } from '@/context';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { BellIcon } from '../../icons';
+import { EmptyNotifications } from './EmptyNotifications';
+import { ListNotification } from './ListNotification';
+import { useRouter } from 'next/navigation';
+import { BtnSeeAll } from './BtnSeeAll';
 
 export const DropDownNotification = () => {
-  const router = useRouter();
-  const { notifications } = useContext(SocketContext);
+  const {
+    state: { notifications },
+  } = useContext(NotificationContext);
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -19,12 +21,12 @@ export const DropDownNotification = () => {
       }
     };
 
-    document.addEventListener("mousedown", handler);
-    document.addEventListener("touchstart", handler);
+    document.addEventListener('mousedown', handler);
+    document.addEventListener('touchstart', handler);
 
     return () => {
-      document.removeEventListener("mousedown", handler);
-      document.removeEventListener("touchstart", handler);
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('touchstart', handler);
     };
   }, [isCollapsed]);
   return (
@@ -53,7 +55,10 @@ export const DropDownNotification = () => {
             aria-labelledby="dropdownDividerButton"
           >
             {notifications.length === 0 ? (
-              <EmptyNotifications />
+              <>
+                <EmptyNotifications />
+                <BtnSeeAll setIsCollapsed={setIsCollapsed} />
+              </>
             ) : (
               <>
                 {notifications.map((notification) => (
@@ -63,17 +68,7 @@ export const DropDownNotification = () => {
                     setIsCollapsed={setIsCollapsed}
                   />
                 ))}
-                <div className="border-t w-full">
-                  <button
-                    onClick={() => {
-                      router.push("/notifications");
-                      setIsCollapsed(false);
-                    }}
-                    className="w-full p-4 rounded-lg"
-                  >
-                    Ver todo
-                  </button>
-                </div>
+                <BtnSeeAll setIsCollapsed={setIsCollapsed} />
               </>
             )}
           </ul>

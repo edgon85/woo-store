@@ -4,3 +4,5 @@ export * from './chat/ChatProvider';
 export * from './chat/chatReducer';
 export * from './socket/SocketContext';
 export * from './socket/SocketProvider';
+export * from './notification/NotificationContext';
+export * from './notification/NotificationProvider';

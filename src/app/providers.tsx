@@ -1,6 +1,11 @@
 'use client';
 
-import { AuthProvider, ChatProvider, SocketProvider } from '@/context';
+import {
+  AuthProvider,
+  ChatProvider,
+  NotificationProvider,
+  SocketProvider,
+} from '@/context';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
 
@@ -18,9 +23,11 @@ export function Providers({ children }: Props) {
     >
       <SessionProvider>
         <ChatProvider>
-          <AuthProvider>
-            <SocketProvider>{children}</SocketProvider>
-          </AuthProvider>
+          <NotificationProvider>
+            <AuthProvider>
+              <SocketProvider>{children}</SocketProvider>
+            </AuthProvider>
+          </NotificationProvider>
         </ChatProvider>
       </SessionProvider>
     </SWRConfig>

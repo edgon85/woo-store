@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import { SocketContext } from "./SocketContext";
-import { useSocket } from "../../hooks";
-import { AuthContext } from "../auth";
-import { ChatContext } from "../chat/ChatContext";
-import { INotification } from "@/interfaces";
+import { useContext, useEffect } from 'react';
+import { SocketContext } from './SocketContext';
+import { useSocket } from '../../hooks';
+import { AuthContext } from '../auth';
+import { ChatContext } from '../chat/ChatContext';
+import { INotification } from '@/interfaces';
+import { NotificationContext } from '../notification/NotificationContext';
 
 interface SocketProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -15,10 +16,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   );
   const { isLoggedIn } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-
-
-  // TODO: Add notifications state context
-  const [notifications, setNotifications] = useState<INotification[]>([]);
+  const { dispatch: notificationDispatch } = useContext(NotificationContext);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -34,70 +32,76 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   // escuchar los cambios de los usuarios conectados
   useEffect(() => {
-    socket?.on("lista-usuarios", (usuarios) => {
+    socket?.on('lista-usuarios', (usuarios) => {
       dispatch({
-        type: "[Chat] - cargar-usuarios",
+        type: '[Chat] - cargar-usuarios',
         payload: usuarios,
       });
     });
   }, [socket, dispatch]);
 
   useEffect(() => {
-    socket?.on("message-from-server", (mensaje) => {
+    socket?.on('message-from-server', (mensaje) => {
       // console.log(mensaje);
       dispatch({
-        type: "[Chat] - nuevo-mensaje",
+        type: '[Chat] - nuevo-mensaje',
         payload: mensaje,
       });
     });
   }, [socket, dispatch]);
 
   // Nuevos efectos para manejar notificaciones
-  useEffect(() => {
-    // if (!socket) return;
 
+  useEffect(() => {
     socket?.on(
-      "unread-notifications",
+      'unread-notifications',
       (unreadNotifications: INotification[]) => {
-        setNotifications(unreadNotifications);
+        notificationDispatch({
+          type: '[Notification] - SET_NOTIFICATIONS',
+          payload: unreadNotifications,
+        });
       }
     );
-    // new-notification
-    socket?.on("new-notification", (notification: INotification) => {
-      setNotifications((prevNotifications) => [
-        ...prevNotifications,
-        notification,
-      ]);
-    });
-
-    socket?.on("notification-marked-as-read", (notificationId: string) => {
-      setNotifications((prevNotifications) =>
-        prevNotifications.filter(
-          (notification: INotification) => notification.id !== notificationId
-        )
-      );
-    });
-
     return () => {
-      socket?.off("unread-notifications");
-      socket?.off("new-notification");
-      socket?.off("notification-marked-as-read");
+      socket?.off('unread-notifications');
     };
-  }, [socket]);
+  }, [socket, notificationDispatch]);
+
+  useEffect(() => {
+    socket?.on('new-notification', (notification: INotification) => {
+      console.log('Nueva notificación recibida:', notification);
+      notificationDispatch({
+        type: '[Notification] - ADD_NOTIFICATION',
+        payload: notification,
+      });
+    });
+    return () => {
+      socket?.off('new-notification');
+    };
+  }, [socket, notificationDispatch]);
+
+  useEffect(() => {
+    socket?.on('notification-marked-as-read', (notificationId: string) => {
+      notificationDispatch({
+        type: '[Notification] - REMOVE_NOTIFICATION',
+        payload: notificationId,
+      });
+    });
+    return () => {
+      socket?.off('notification-marked-as-read');
+    };
+  }, [socket, notificationDispatch]);
 
   const markNotificationAsRead = (notificationId: string) => {
-    socket?.emit("mark-notification-as-read", { notificationId });
-    setNotifications((prevNotifications) =>
-      prevNotifications.filter(
-        (notification) => notification.id !== notificationId
-      )
-    );
+    socket?.emit('mark-notification-as-read', { notificationId });
+    notificationDispatch({
+      type: '[Notification] - MARK_AS_READ',
+      payload: notificationId,
+    });
   };
 
   return (
-    <SocketContext.Provider
-      value={{ socket, online, notifications, markNotificationAsRead }}
-    >
+    <SocketContext.Provider value={{ socket, online, markNotificationAsRead }}>
       {children}
     </SocketContext.Provider>
   );
