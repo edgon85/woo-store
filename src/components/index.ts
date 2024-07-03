@@ -14,3 +14,5 @@ export * from './payouts';
 
 export * from './balance/table-no-paid';
 export * from './balance/table-paid';
+
+export * from './notifications';

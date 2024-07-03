@@ -1,7 +1,15 @@
+import { getNotifications } from '@/actions';
+import { NotificationList } from '@/components';
 export default async function NotificationPage() {
+  const { ok, data, message } = await getNotifications();
+
+  console.log(ok, data, message);
   return (
     <div className="main-wrapper">
-      <h1>Notification Page</h1>
+      <div className="max-w-[50vw] mr-auto mt-4">
+        <h2 className="text-lg font-semibold ">Notificaciones</h2>
+        <NotificationList notifications={data?.notifications} />
+      </div>
     </div>
   );
 }

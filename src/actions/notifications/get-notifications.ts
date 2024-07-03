@@ -1,9 +1,7 @@
 'use server';
 import { cookies } from 'next/headers';
-import { unstable_noStore as noStore } from 'next/cache';
 
 export async function getNotifications() {
-  noStore();
   const token = cookies().get('token')?.value;
   let url = `${process.env.API_BASE_URL}/notification`;
   try {
