@@ -7,3 +7,4 @@ export * from './balance.interface';
 export * from './message.interface';
 export * from './chat.interface';
 export * from './notification.interface';
+export * from './offer.interface';
