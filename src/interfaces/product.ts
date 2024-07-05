@@ -17,6 +17,7 @@ export interface IProduct {
   brand: IBrand;
   measurement: IMeasurement;
   clothesState: IClothesState;
+  reservedFor?: ReservedFor;
 
   user?: IUser;
   createdAt?: Date;
@@ -73,6 +74,12 @@ export interface ProductImage {
   id: number;
   url: string;
   productId: string;
+}
+
+interface ReservedFor {
+  userId: string;
+  fullName: string;
+  username: string;
 }
 
 export interface ISubcategoryWithCategory extends ISubcategory {

@@ -2,8 +2,10 @@ import { IProduct } from '@/interfaces';
 import { ImageComponent } from './ImageComponent';
 import { UserProfile } from './UserProfile';
 import { ProductInfo } from './ProductInfo';
-import { ActionButton } from './ActionButton';
 import { checkImageAvailable } from '@/actions';
+import { BtnBuyOrEdit } from '../product-detail/buttons/BtnBuyOrEdit';
+import { Product } from '../../../interfaces/balance.interface';
+import { ProductStatus } from '@/types';
 
 type Props = {
   product: IProduct;
@@ -23,7 +25,9 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
       />
       <div className="p-2">
         <ProductInfo {...product} />
-        <ActionButton product={product} currentUserId={currentUserId} />
+        {product.status === ProductStatus.Available && (
+          <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
+        )}
       </div>
     </div>
   );

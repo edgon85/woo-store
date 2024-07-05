@@ -1,4 +1,5 @@
 'use client';
+import { acceptOffer } from '@/actions';
 import { IOffer } from '@/interfaces';
 import { formatCurrency } from '@/utils';
 import Swal from 'sweetalert2';
@@ -18,9 +19,32 @@ export const BtnAcceptOffer = ({ offer }: Props) => {
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
+      showLoaderOnConfirm: true,
+      preConfirm: async (_) => {
+        const data = await acceptOffer(offer.id);
+
+        if (!data.ok) {
+          Swal.showValidationMessage(`Error: ${data.message}`);
+        }
+
+        return data;
+      },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log('Aceptar oferta');
+
+        if (result.value?.ok) {
+          Swal.fire({
+            title: 'Oferta aceptada',
+            text: 'La oferta ha sido aceptada con éxito',
+            icon: 'success',
+          });
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al aceptar la oferta',
+            icon: 'error',
+          });
+        }
       }
     });
   };

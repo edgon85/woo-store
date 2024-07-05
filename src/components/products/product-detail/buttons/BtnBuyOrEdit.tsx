@@ -1,8 +1,9 @@
 import { IProduct } from '@/interfaces';
+import { ProductStatus } from '@/types';
 import { translateProductStatus } from '@/utils';
 import Link from 'next/link';
 
-export const ActionButton = ({
+export const BtnBuyOrEdit = ({
   product,
   currentUserId,
 }: {
@@ -11,7 +12,7 @@ export const ActionButton = ({
 }) => {
   const { status } = product;
 
-  if (status === 'Available' || status === 'Hidden') {
+  if (status === ProductStatus.Available || status === ProductStatus.Hidden) {
     return (
       <div className="mt-2 w-full">
         {currentUserId !== product.user?.id ? (

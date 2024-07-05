@@ -3,7 +3,7 @@ import { measurementFormat } from '@/utils';
 import { BsCheck2Circle, BsDropletHalf } from 'react-icons/bs';
 import { IoMdPricetags } from 'react-icons/io';
 import { TbCategory, TbRulerMeasure } from 'react-icons/tb';
-import { BtnActionsDetail } from './sections/BtnActionsDetail';
+import { BtnActionsDetail } from './buttons/BtnActionsDetail';
 import { formatCurrency } from '@/lib';
 
 type ListItemProps = {

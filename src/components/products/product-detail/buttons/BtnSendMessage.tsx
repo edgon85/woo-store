@@ -25,7 +25,7 @@ type Props = {
   title: string;
 };
 
-export const ModalSendMessage = ({
+export const BtnSendMessage = ({
   recipientId,
   recipientUsername,
   productId,
