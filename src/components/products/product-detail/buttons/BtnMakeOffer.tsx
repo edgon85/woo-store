@@ -2,20 +2,21 @@
 import { makeOffer } from '@/actions';
 import { Button, Divider } from '@/components/ui';
 import { IProduct } from '@/interfaces';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
 import { toast } from 'react-toastify';
 
 type Props = {
   product: IProduct;
+  triggerOpen?: boolean
 };
 
 type FormData = {
   price: string;
 };
 
-export const BtnMakeOffer = ({ product }: Props) => {
+export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -25,6 +26,12 @@ export const BtnMakeOffer = ({ product }: Props) => {
     formState: { errors },
     reset,
   } = useForm<FormData>();
+
+  useEffect(() => {
+    if (triggerOpen) {
+      setOpen(true);
+    }
+  }, [triggerOpen]);
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => {

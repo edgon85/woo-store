@@ -1,4 +1,4 @@
-import { INotification } from '@/interfaces';
+import { INotification, NotificationType } from '@/interfaces';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { SocketContext } from '@/context';
@@ -12,10 +12,30 @@ export const ListNotification = ({ notification, setIsCollapsed }: Props) => {
   const router = useRouter();
   const { markNotificationAsRead } = useContext(SocketContext);
 
+  const getRedirectUrl = (notification: INotification) => {
+    switch (notification.type) {
+      case NotificationType.MESSAGE:
+        return '/messages';
+      case NotificationType.SALE:
+        return '/sales';
+      case NotificationType.NEW_OFFER:
+        return '/offers';
+      case NotificationType.ACCEPT_OFFER:
+        return `/product/${notification.url}`;
+      case NotificationType.REJECT_OFFER:
+        return `/product/${notification.url}?offer_rejected=true`;
+      case NotificationType.OTHER:
+      default:
+        return '/notifications';
+    }
+  };
+
   const onHandleClick = async () => {
     markNotificationAsRead(notification.id);
     setIsCollapsed(false);
-    router.push(`/product/${notification.url}`);
+    const redirectUrl = getRedirectUrl(notification);
+    router.push(redirectUrl);
+    // router.push(`/product/${notification.url}`);
   };
   return (
     <li>

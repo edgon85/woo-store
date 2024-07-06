@@ -9,14 +9,20 @@ import {
 import { getProductBySlug } from '@/lib';
 import { IProduct } from '@/interfaces';
 import { cookies } from 'next/headers';
+import { RejectedProduct } from '@/components/products/product-detail/rejected-product/RejectedProduct';
 
 type Props = {
   params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export default async function ProductDetailPage({ params: { slug } }: Props) {
+export default async function ProductDetailPage({
+  params: { slug },
+  searchParams: { offer_rejected },
+}: Props) {
   const product: IProduct = await getProductBySlug(slug);
   const currentUserId = cookies().get('userId')?.value;
+  console.log({ offer_rejected });
 
   const { user } = product;
 
@@ -78,6 +84,10 @@ export default async function ProductDetailPage({ params: { slug } }: Props) {
           currentUserId={currentUserId || ''}
         />
       </section>
+      <RejectedProduct
+        isRejected={offer_rejected === 'true'}
+        product={product}
+      />
     </>
   );
 }

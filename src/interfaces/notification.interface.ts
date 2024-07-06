@@ -10,8 +10,10 @@ export interface INotification {
 }
 
 export enum NotificationType {
-  MESSAGE = "MESSAGE",
-  SALE = "SALE",
-  OTHER = "OTHER",
-  OFFER = "OFFER",
+  MESSAGE = 'message',
+  SALE = 'sale',
+  OTHER = 'other',
+  NEW_OFFER = 'new-offer',
+  ACCEPT_OFFER = 'accept-offer',
+  REJECT_OFFER = 'reject-offer',
 }

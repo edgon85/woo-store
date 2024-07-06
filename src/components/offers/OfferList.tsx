@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { IOffer } from '@/interfaces';
 import { formatCurrency, formatDateToLocal } from '@/utils';
 import { BtnAcceptOffer } from './';
+import { BtnRejectOffer } from './BtnRejectOffer';
 
 type Props = {
   offers: IOffer[];
@@ -62,12 +63,7 @@ export const OfferList = ({ offers }: Props) => {
                 {offer.status === 'pending' && (
                   <div className="flex space-x-2">
                     <BtnAcceptOffer offer={offer} />
-                    <button
-                      //   onClick={() => handleReject(offer.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded text-sm transition duration-300"
-                    >
-                      Rechazar
-                    </button>
+                    <BtnRejectOffer offer={offer} />
                   </div>
                 )}
               </td>
