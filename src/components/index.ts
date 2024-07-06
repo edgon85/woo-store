@@ -18,3 +18,5 @@ export * from './balance/table-paid';
 export * from './notifications';
 
 export * from './offers';
+
+export * from './inbox/InboxMainComponent';

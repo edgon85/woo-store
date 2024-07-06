@@ -4,7 +4,6 @@ export * from './filter';
 export * from './ui';
 export * from './payouts.interface';
 export * from './balance.interface';
-export * from './message.interface';
 export * from './chat.interface';
 export * from './notification.interface';
 export * from './offer.interface';

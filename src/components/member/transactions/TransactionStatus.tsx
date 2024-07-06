@@ -1,7 +1,6 @@
 import { OrderStatus } from '@/lib';
 import { translateOrderStatus } from '@/utils';
 
-// export default function TransactionStatus({ status }: { status: OrderStatus }) {
 export const TransactionStatus = ({ status }: { status: OrderStatus }) => {
   const statusStyles = {
     Initiated: 'bg-blue-100 text-blue-500',
@@ -18,7 +17,6 @@ export const TransactionStatus = ({ status }: { status: OrderStatus }) => {
       className={`inline-flex items-center rounded-full px-2 py-1 text-xs ${statusStyles[status]}`}
     >
       {translateOrderStatus(status)}
-      {/* {statusIcons[status]} */}
     </span>
   );
 };

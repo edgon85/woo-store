@@ -26,8 +26,7 @@ const OfferSlider = ({ productPrice, onOfferChange }: Props) => {
     }
   };
 
-  const trackFillPercentage =
-    ((maxPrice - offerPrice) * 100) / (maxPrice - minPrice);
+  const trackFillPercentage = ((offerPrice - minPrice) * 100) / (maxPrice - minPrice);
 
   const getMessage = () => {
     if (!hasInteracted) {

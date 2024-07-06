@@ -12,10 +12,11 @@ export interface IChat {
 
 export interface IMessage {
   id?: string;
-  content: string;
-  senderId: string;
-  recipientId: string;
-  timestamp: string;
+  from: string;
+  to: string;
+  message: string;
+  messageDate?: string;
+  updatedAt?: string;
 }
 
 export interface IUserChar {
