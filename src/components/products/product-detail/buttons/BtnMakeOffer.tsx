@@ -6,24 +6,28 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
 import { toast } from 'react-toastify';
+import OfferSlider from './OfferSlider';
 
 type Props = {
   product: IProduct;
-  triggerOpen?: boolean
+  triggerOpen?: boolean;
 };
 
 type FormData = {
-  price: string;
+  price: number;
 };
 
 export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [offerPrice, setOfferPrice] = useState(0);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     reset,
   } = useForm<FormData>();
 
@@ -39,8 +43,12 @@ export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
     reset();
   };
 
+  const handleOfferChange = (price: number) => {
+    setOfferPrice(price);
+    setValue('price', offerPrice);
+  };
+
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     setIsSubmitting(true);
     try {
       const result = await makeOffer(product.id!, Number(data.price));
@@ -72,7 +80,26 @@ export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
       <Modal open={open} onClose={onCloseModal} center>
         <section className="md:w-96">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="text-center text-lg font-semibold">Hacer oferta</h2>
+            <OfferSlider
+              productPrice={product.price}
+              onOfferChange={handleOfferChange}
+            />
+            <div className="mt-4">
+              <Button
+                label={isSubmitting ? 'Enviando...' : 'Enviar oferta'}
+                type="submit"
+                disabled={isSubmitting}
+              />
+            </div>
+          </form>
+        </section>
+      </Modal>
+    </div>
+  );
+};
+
+/* 
+ <h2 className="text-center text-lg font-semibold">Hacer oferta</h2>
             <Divider />
             <div className="mb-6">
               <label
@@ -110,9 +137,4 @@ export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
                 disabled={isSubmitting}
               />
             </div>
-          </form>
-        </section>
-      </Modal>
-    </div>
-  );
-};
+*/

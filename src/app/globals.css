@@ -45,3 +45,23 @@ body {
   /* border: 1px solid red; */
   margin: auto;
 }
+
+/* stepper offer */
+@layer components {
+  .slider-thumb::-webkit-slider-thumb {
+    @apply appearance-none w-6 h-6 rounded-full bg-green-500 cursor-pointer;
+  }
+
+  .slider-thumb::-moz-range-thumb {
+    @apply appearance-none w-6 h-6 rounded-full bg-green-500 cursor-pointer;
+  }
+
+  .slider-track {
+    @apply appearance-none w-full h-2 rounded-lg cursor-pointer;
+    background: linear-gradient(
+      to right,
+      #f8bbd0 var(--track-fill),
+      #e5e7eb var(--track-fill)
+    );
+  }
+}

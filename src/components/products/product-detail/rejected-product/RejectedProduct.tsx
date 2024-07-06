@@ -32,5 +32,9 @@ export const RejectedProduct = ({ isRejected = false, product }: Props) => {
     }
   }, [isRejected]);
 
-  return <BtnMakeOffer product={product} triggerOpen={triggerMakeOffer} />;
+  return (
+    <div className='hidden'>
+      <BtnMakeOffer product={product} triggerOpen={triggerMakeOffer} />;
+    </div>
+  );
 };
