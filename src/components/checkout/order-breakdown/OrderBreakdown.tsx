@@ -2,14 +2,14 @@
 'use client';
 
 import { Divider } from '@/components/ui';
-import { IAddress, IProduct } from '@/interfaces';
+import { IAddress, IProductWithOffer } from '@/interfaces';
 import { useEffect } from 'react';
 import { PlaceOrder } from './PlaceOrder';
 import { useCheckoutStore } from '@/stores';
 import { formatCurrency } from '@/lib';
 
 type Props = {
-  product: IProduct;
+  product: IProductWithOffer;
   address: IAddress | null;
 };
 

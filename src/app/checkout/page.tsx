@@ -12,15 +12,18 @@ import {
   fetchShippingAddress,
   getProductBySlug,
 } from '@/lib';
-import { IAddress } from '@/interfaces';
+import { IAddress, IProductWithOffer } from '@/interfaces';
 import { checkOfferIsValid } from '@/actions';
 
 type OfferValidationResult = {
   ok: boolean;
   message?: string;
-  data?: any; // Puedes especificar el tipo de data si lo conoces
+  data?: {
+    id: string;
+    price: number;
+    status: string;
+  };
 };
-
 
 export default async function CheckoutPage({
   searchParams,
@@ -34,7 +37,7 @@ export default async function CheckoutPage({
     throw redirect("/not-found");
   }
 
-  const product = await getProductBySlug(`${transaction}`);
+  let product: IProductWithOffer = await getProductBySlug(`${transaction}`);
   const addresses = await fetchShippingAddress();
   const paymentMethods = await fetchPaymentMethods();
 
@@ -51,6 +54,16 @@ export default async function CheckoutPage({
             "No tienes permiso para ver esta oferta o la oferta no existe"}
         </p>
       );
+    }
+
+    // Si la oferta es válida, adjuntamos la información de la oferta al producto
+    if (offerValidation.data) {
+      product = {
+        ...product,
+        offerPrice: offerValidation.data.price,
+        offerId: offerValidation.data.id,
+        offerStatus: offerValidation.data.status,
+      };
     }
   }
 

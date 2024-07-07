@@ -1,5 +1,5 @@
-import { IPackageDelivery } from '@/lib';
-import { IUser } from './user';
+import { IPackageDelivery } from "@/lib";
+import { IUser } from "./user";
 
 export interface IProduct {
   id?: string;
@@ -84,4 +84,10 @@ interface ReservedFor {
 
 export interface ISubcategoryWithCategory extends ISubcategory {
   category: ICategory;
+}
+
+export interface IProductWithOffer extends IProduct {
+  offerPrice?: number;
+  offerId?: string;
+  offerStatus?: string;
 }
