@@ -13,6 +13,14 @@ import {
   getProductBySlug,
 } from '@/lib';
 import { IAddress } from '@/interfaces';
+import { checkOfferIsValid } from '@/actions';
+
+type OfferValidationResult = {
+  ok: boolean;
+  message?: string;
+  data?: any; // Puedes especificar el tipo de data si lo conoces
+};
+
 
 export default async function CheckoutPage({
   searchParams,
@@ -20,17 +28,33 @@ export default async function CheckoutPage({
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const { transaction } = searchParams;
+  const { transaction, offer } = searchParams;
 
   if (!transaction) {
-    throw redirect('/not-found');
+    throw redirect("/not-found");
   }
 
   const product = await getProductBySlug(`${transaction}`);
   const addresses = await fetchShippingAddress();
   const paymentMethods = await fetchPaymentMethods();
 
-  if (product.status !== 'Available') {
+  let offerValidation: OfferValidationResult = { ok: true };
+  const isReserved = offer === "true";
+
+  if (isReserved) {
+    offerValidation = await checkOfferIsValid(product.user?.id!, product.id!);
+
+    if (!offerValidation.ok) {
+      return (
+        <p>
+          {offerValidation.message ||
+            "No tienes permiso para ver esta oferta o la oferta no existe"}
+        </p>
+      );
+    }
+  }
+
+  if (product.status !== "Available" && !isReserved) {
     return <p>Producto ya no esta disponible</p>;
   }
 
