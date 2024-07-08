@@ -1,19 +1,16 @@
 import { createNewOrder } from '@/actions';
-import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
-import { createOrder } from '@/helpers/httpOrderHelper';
-import { useAuth } from '@/hooks';
+import { Button, SpinnerIcon } from '@/components/ui';
 import { TypeCreateOrder } from '@/lib';
 import { useCheckoutStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export const PlaceOrder = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
 
-  const { user } = useAuth();
   const router = useRouter();
 
   const productCheckout = useCheckoutStore((state) => state.product);
@@ -54,26 +51,26 @@ export const PlaceOrder = () => {
     }
 
     const newOrder: TypeCreateOrder = {
-      product: productCheckout?.id!,
-      shippingAddress: address?.id!,
+      productId: productCheckout?.id!,
+      shippingAddressId: address?.id!,
       paymentMethod: paymentMethod.id,
       amount: amount,
-      packageDelivery: packageDelivery.id,
+      packageDeliveryId: packageDelivery.id,
+      offerId: productCheckout?.offerId,
     };
 
     setShowLoading(true);
 
     const { message, ok, data } = await createNewOrder(newOrder);
 
-    console.log(data);
     if (!ok) {
-      setAlertType('error');
+      toast.error(message);
       setShowLoading(false);
       setError(true);
       console.log(message);
       return;
     } else {
-      setAlertType('success');
+      toast.success('¡Order creada satisfactoriamente!');
       setShowLoading(false);
 
       router.replace(`checkout/confirm/${data.id}`);
@@ -99,21 +96,6 @@ export const PlaceOrder = () => {
         )}
         {error && <p className="text-red-500">{message}</p>}
       </section>
-
-      {alertType === 'success' && (
-        <AlertComponent
-          type="success"
-          message="¡Order creada satisfactoriamente!"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
-      {alertType === 'error' && (
-        <AlertComponent
-          type="error"
-          message="Ocurrió un error al al crear la orden."
-          onDismiss={() => setAlertType('')}
-        />
-      )}
     </>
   );
 };

@@ -9,12 +9,13 @@ export enum OrderStatus {
 }
 
 export type TypeCreateOrder = {
-  product: string;
-  shippingAddress: string;
+  productId: string;
+  shippingAddressId: string;
   paymentMethod: number;
   amount: number;
   orderStatus?: string;
-  packageDelivery: number;
+  packageDeliveryId: number;
+  offerId?: string;
 };
 
 export type Summary = {

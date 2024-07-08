@@ -29,6 +29,6 @@ export async function createNewOrder(order: TypeCreateOrder) {
     };
   } catch (error: any) {
     console.log(error.message);
-    return { ok: false, message: 'ocurrió un error vea los logs' };
+    return { ok: false, message: error.message };
   }
 }

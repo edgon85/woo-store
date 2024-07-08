@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { Divider } from '@/components/ui';
@@ -14,9 +13,8 @@ type Props = {
 };
 
 export const OrderBreakdown = ({ product, address }: Props) => {
-  const { price } = product;
+  const { price, offerPrice } = product;
 
-  const productCheckout = useCheckoutStore((state) => state.product);
   const onAddCheckoutProduct = useCheckoutStore((state) => state.setProduct);
   const onSetShippingAddress = useCheckoutStore(
     (state) => state.setShippingAddress
@@ -26,40 +24,59 @@ export const OrderBreakdown = ({ product, address }: Props) => {
   const amount = useCheckoutStore((state) => state.computed.amount);
 
   useEffect(() => {
-    if (productCheckout === null) {
-      onAddCheckoutProduct(product);
-    }
+    onAddCheckoutProduct(product);
+  }, [product, onAddCheckoutProduct]);
 
-    onSetShippingAddress(address!);
-  }, []);
+  useEffect(() => {
+    if (address) {
+      onSetShippingAddress(address);
+    }
+  }, [address, onSetShippingAddress]);
 
   return (
     <section className="bg-white border p-6 rounded shadow-sm">
-      <h2 className="text-base">Desglose del pedido</h2>
+      <h2 className="text-base font-semibold">Desglose del pedido</h2>
       <Divider />
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <p>Precio</p>
-          <p>{formatCurrency(price * 100)}</p>
+          <div>
+            {offerPrice ? (
+              <>
+                <p className="line-through text-gray-500">
+                  {formatCurrency(price * 100)}
+                </p>
+                <p className="font-semibold">
+                  {formatCurrency(offerPrice * 100)}
+                </p>
+              </>
+            ) : (
+              <p>{formatCurrency(price * 100)}</p>
+            )}
+          </div>
         </div>
+        {offerPrice && (
+          <div className="flex justify-between items-center text-green-600">
+            <p>Ahorro</p>
+            <p>{formatCurrency((price - offerPrice) * 100)}</p>
+          </div>
+        )}
         <div className="flex justify-between items-center">
           <p>Envío</p>
           {packageDelivery === null ? (
-            <p>seleccione envío</p>
+            <p className="text-yellow-600">Seleccione envío</p>
           ) : (
-            <p>{formatCurrency(+packageDelivery?.originalPrice * 100)}</p>
+            <p>{formatCurrency(+packageDelivery.originalPrice * 100)}</p>
           )}
         </div>
         <div className="flex justify-between items-center">
           <p>Tarifa de servicio</p>
           <p>{formatCurrency(serviceFee * 100)}</p>
         </div>
-        {packageDelivery !== null && (
-          <div className="flex justify-between items-center">
-            <p>Total a pagar</p>
-            <p>{formatCurrency(amount * 100)}</p>
-          </div>
-        )}
+        <div className="flex justify-between items-center font-semibold">
+          <strong>Total a pagar</strong>
+          <strong>{formatCurrency(amount * 100)}</strong>
+        </div>
       </div>
       <Divider />
       <PlaceOrder />
