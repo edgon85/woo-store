@@ -4,7 +4,7 @@ import { IProduct } from '@/interfaces';
 
 import { BtnMakeOffer } from './BtnMakeOffer';
 import { BtnSendMessage } from './BtnSendMessage';
-import { ProductStatus } from '@/types';
+import { ProductStatus } from '@/enums';
 import { BtnBuyOrEdit } from './BtnBuyOrEdit';
 import Link from 'next/link';
 

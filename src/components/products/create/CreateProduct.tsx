@@ -4,10 +4,15 @@ import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import { Control, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 
-import { IBrand, IClothesState, IColor, IProduct } from '@/interfaces';
+import {
+  IBrand,
+  IClothesState,
+  IColor,
+  IProduct,
+  IPackageDelivery,
+} from '@/interfaces';
 import { useCreateProductStore } from '@/stores';
 import { createProduct } from '@/actions';
-import { IPackageDelivery } from '@/lib';
 
 import { Button } from '../../ui';
 import {
@@ -27,6 +32,7 @@ import {
   ImageSection,
 } from './sections';
 import { useEffect } from 'react';
+import { ProductStatus } from '@/enums';
 
 export type FormInputs = {
   title: string;
@@ -134,7 +140,7 @@ export const CreateProduct = ({
       colors: [...color.map((col) => col)],
       measurement: measurement!,
       clothesState: clothesState!,
-      status: 'Available',
+      status: ProductStatus.Available,
       packageDelivery: [...packagesDeliveries.map((resp) => resp)],
     };
 

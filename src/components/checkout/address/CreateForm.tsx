@@ -6,8 +6,9 @@ import { departamentosGuatemala } from './UpdateForm';
 import { Button, EditIcon, SpinnerIcon } from '@/components/ui';
 import Modal from 'react-responsive-modal';
 import { useSearchParams } from 'next/navigation';
-import { createAddress, revalidateData } from '@/actions/actions';
+import { createAddress, revalidateData } from '@/actions';
 import { useCheckoutStore } from '@/stores';
+import { toast } from 'react-toastify';
 
 type FormAddress = {
   id: string;
@@ -27,8 +28,6 @@ export const CreateFormAddress = () => {
     (state) => state.setShippingAddress
   );
 
-  const [error, setError] = useState<string | null>(null);
-
   const searchParams = useSearchParams();
   const params = searchParams.get('transaction');
 
@@ -42,10 +41,10 @@ export const CreateFormAddress = () => {
 
   const onHandleSubmit = async (formData: FormAddress) => {
     setShowLoading(true);
-    const data = await createAddress({ ...formData });
+    const { ok, data, message } = await createAddress({ ...formData });
 
-    if (data.message !== 'ok') {
-      setError(data.message);
+    if (!ok) {
+      toast.error(message);
       setShowLoading(false);
       return;
     } else {
@@ -162,14 +161,6 @@ export const CreateFormAddress = () => {
               </>
             ) : (
               <Button label="Guardar" type="submit" />
-            )}
-
-            {error && (
-              <>
-                <span className="text-sm text-red-700">
-                  Error al crear la dirección intente mas tarde
-                </span>
-              </>
             )}
           </div>
         </form>

@@ -6,7 +6,8 @@ import {
   AccordionHeader,
   AccordionList,
 } from '@tremor/react';
-import { IOrder, OrderStatus } from '@/lib';
+import { IOrder } from '@/interfaces';
+import { OrderStatus } from '@/enums';
 import { FormClaim } from './FormClaim';
 import { useSearchParams, useRouter } from 'next/navigation';
 
@@ -34,7 +35,7 @@ export const AccordionComponent = ({ order }: Props) => {
 
   return (
     <AccordionList>
-      {order.orderStatus !== OrderStatus.Delivered ? (
+      {order.orderStatus !== OrderStatus.Completed ? (
         <Accordion
           className="rounded-t"
           onClick={onHandleTabProductNotReceived}
@@ -43,14 +44,14 @@ export const AccordionComponent = ({ order }: Props) => {
             No me ha llegado el producto
           </AccordionHeader>
           <AccordionBody className="leading-6 border-t pt-2 pb-2">
-            {order.orderStatus === OrderStatus.Initiated ? (
+            {order.orderStatus === OrderStatus.OrderPlaced ? (
               <p>
                 Tu vendedor ya fue notificado. Recuerda que tiene 7 días hábiles
                 para enviar tu prenda por {order.packageDelivery.name}.
               </p>
             ) : null}
 
-            {order.orderStatus === OrderStatus.Shipped ? (
+            {order.orderStatus === OrderStatus.SellerNotified ? (
               <p>
                 Tu vendedor ya a enviado el producto y pronto te llegara ver en{' '}
                 <Link
@@ -63,7 +64,7 @@ export const AccordionComponent = ({ order }: Props) => {
               </p>
             ) : null}
 
-            {order.orderStatus === OrderStatus.OutForDelivery ? (
+            {order.orderStatus === OrderStatus.InTransit ? (
               <p>
                 Tu pedido ya esta en camino puedes dar seguimiento en{' '}
                 <Link
@@ -88,7 +89,7 @@ export const AccordionComponent = ({ order }: Props) => {
         <div className="border-t"></div>
       )}
 
-      {order.orderStatus === OrderStatus.Delivered ? (
+      {order.orderStatus === OrderStatus.Completed ? (
         <Accordion className="rounded-t" onClick={onHandleTabReturnProduct}>
           <AccordionHeader className="text-sm font-medium text-tremor-content-strong">
             Ya recibiste el producto

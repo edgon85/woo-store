@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Modal from 'react-responsive-modal';
+import { toast } from 'react-toastify';
 
 type FormName = {
   fullName: string;
@@ -17,7 +18,6 @@ type Props = {
 
 export const NameSection = ({ userId, fullName }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const [initialValue, setInitialValue] = useState(fullName);
@@ -36,18 +36,17 @@ export const NameSection = ({ userId, fullName }: Props) => {
 
   const onHandleSubmit = async (formData: FormName) => {
     setLoading(true);
-    const { data, message, error } = await updateUserData({
+    const { data, message, ok } = await updateUserData({
       id: userId,
       fullName: formData.fullName,
     });
 
-    if (data === null) {
-      console.error(message, error);
-      setAlertType('error');
+    if (!ok) {
+      toast.error(message || 'Ocurrió un error al actualizar.');
       setLoading(false);
       return;
     } else {
-      setAlertType('success');
+      toast.success('¡Tu nombre ha sido actualizado!');
       setLoading(false);
       setModalOpen(false);
       revalidateData(
@@ -102,20 +101,6 @@ export const NameSection = ({ userId, fullName }: Props) => {
           </div>
         </form>
       </Modal>
-      {alertType === 'success' && (
-        <AlertComponent
-          type="success"
-          message="¡Tu nombre ha sido actualizado!"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
-      {alertType === 'error' && (
-        <AlertComponent
-          type="error"
-          message="Ocurrió un error al actualizar."
-          onDismiss={() => setAlertType('')}
-        />
-      )}
     </>
   );
 };

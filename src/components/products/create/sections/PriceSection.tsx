@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
 import { useCreateProductStore } from '@/stores';
-import { formatCurrency } from '@/lib';
 
 export const PriceSection = () => {
   const [value, setValue] = useState<string>('');

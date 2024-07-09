@@ -1,6 +1,6 @@
 import { checkImageAvailable, fetchOrderById } from '@/actions';
 import { AccordionComponent } from '@/components/claim/Accordion';
-import { formatCurrency } from '@/lib';
+import { formatCurrency } from '@/utils';
 import { redirect } from 'next/navigation';
 
 type Props = {

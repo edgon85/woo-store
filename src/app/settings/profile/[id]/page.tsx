@@ -1,14 +1,14 @@
 import { ProfileForm } from '@/components';
-import { fetchUserProfile } from '@/lib';
+import { fetchUserProfile } from '@/actions';
 
 export default async function ProfilePage({
   params,
 }: {
   params: { id: string };
 }) {
-  const userProfile = await fetchUserProfile(params.id);
+  const { ok, data, message } = await fetchUserProfile(params.id);
 
-  const { profile, fullName } = userProfile;
+  const { profile, fullName } = data!;
 
   return (
     <ProfileForm profile={profile!} fullName={fullName} userId={params.id} />

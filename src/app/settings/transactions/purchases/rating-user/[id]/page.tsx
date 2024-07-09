@@ -1,7 +1,6 @@
 import { checkImageAvailable, getOrderBuyer } from '@/actions';
 import { RatingItem } from '@/components';
-import { formatCurrency } from '@/lib';
-import { RatingState } from '../../../../../../stores/rating.store';
+import { formatCurrency } from '@/utils';
 import { FormRating } from '@/components/settings/ratings/FormRating';
 import { BtnActionsRating } from '@/components/settings/ratings/BtnActionsRating';
 

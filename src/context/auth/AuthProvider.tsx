@@ -1,9 +1,9 @@
-import { FC, use, useEffect, useReducer } from 'react';
+import { FC, useEffect, useReducer } from 'react';
 import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
 import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { userState } from '@/helpers';
+import { userState } from '@/actions';
 import Cookies from 'js-cookie';
 
 export interface AuthState {
@@ -30,10 +30,11 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
       // Función asincrónica dentro de useEffect
       const checkUserStateAndAct = async () => {
-        // Llamada a userState
-        const isValidUser = await userState(currentUser?.token || '');
 
-        if (!isValidUser) {
+
+        const { ok } = await userState(currentUser?.token || '');
+
+        if (!ok) {
           console.log('su sesión expiró');
           logout();
           return; // Si la sesión expiró, salimos de la función aquí
@@ -111,13 +112,6 @@ export const AuthProvider: FC<Props> = ({ children }) => {
         hasError: true,
         message: 'hay error',
       };
-    }
-  };
-
-  const checkUser = () => {
-    if (!state.user?.isActive) {
-      console.log('Usuario esta inactivo, comuníquese con un administrador');
-      logout();
     }
   };
 

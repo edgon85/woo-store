@@ -2,7 +2,7 @@
 
 import { rejectOffer } from '@/actions';
 import { IOffer } from '@/interfaces';
-import { formatCurrency } from '@/lib';
+import { formatCurrency } from '@/utils';
 import Swal from 'sweetalert2';
 
 type Props = {

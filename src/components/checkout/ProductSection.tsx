@@ -1,6 +1,5 @@
 import { IProduct, ISubcategoryWithCategory } from '@/interfaces';
-import { formatCurrency } from '@/lib';
-import { measurementFormat } from '@/utils';
+import { measurementFormat, formatCurrency } from '@/utils';
 
 type Props = {
   product: IProduct;

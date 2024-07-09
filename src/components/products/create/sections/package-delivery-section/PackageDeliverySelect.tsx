@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui';
-import { IPackageDelivery } from '@/lib';
+
+import { IPackageDelivery } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { useState } from 'react';
 

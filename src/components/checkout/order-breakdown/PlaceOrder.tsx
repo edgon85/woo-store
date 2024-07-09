@@ -1,6 +1,6 @@
 import { createNewOrder } from '@/actions';
 import { Button, SpinnerIcon } from '@/components/ui';
-import { TypeCreateOrder } from '@/lib';
+import { TypeCreateOrder } from '@/types';
 import { useCheckoutStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

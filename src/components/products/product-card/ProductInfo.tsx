@@ -1,5 +1,5 @@
 import { IProduct } from '@/interfaces';
-import { formatCurrency } from '@/lib';
+import { formatCurrency } from '@/utils';
 import Link from 'next/link';
 
 export const ProductInfo = ({

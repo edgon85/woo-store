@@ -1,4 +1,3 @@
-import { wooLocalApi } from '@/wooApi';
 import { ChangeEvent, useRef, useState } from 'react';
 
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
@@ -51,9 +50,12 @@ export const PhotoSection = ({
 
       try {
         /* petición a api local para subir imagen a cloudinary*/
-        const { data } = await wooLocalApi.post('/profile/upload', formData);
-        const { message: pathCloudinary } = data; //
-        console.log();
+        const response = await fetch('/api/profile/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        const { message: pathCloudinary } = data;
         await updatePhotoUrl(pathCloudinary);
 
         setAlertType('success');

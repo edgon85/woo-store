@@ -1,5 +1,5 @@
 'use server';
-import { TypeCreateOrder } from '@/lib';
+import { TypeCreateOrder } from '@/types';
 import { cookies } from 'next/headers';
 
 export async function createNewOrder(order: TypeCreateOrder) {

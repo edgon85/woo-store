@@ -1,6 +1,6 @@
 'use client';
 
-import { IPaymentMethod } from '@/lib';
+import { IPaymentMethod } from '@/interfaces';
 import { useCheckoutStore } from '@/stores';
 import { useState } from 'react';
 

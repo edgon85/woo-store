@@ -1,17 +1,16 @@
-// 'use client';
 import { AccountForm } from '@/components';
-import { getUserProfile } from '@/helpers';
-import { useAuth } from '@/hooks';
-import { IUser, LocalDataUser } from '@/interfaces';
-import { fetchUserProfile } from '@/lib';
-import { useEffect, useState } from 'react';
+import { fetchUserProfile } from '@/actions';
+import { redirect } from 'next/navigation';
 
 export default async function AccountPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const userProfile = await fetchUserProfile(params.id);
+  const { ok, data, message } = await fetchUserProfile(params.id);
 
-  return <AccountForm user={userProfile} />;
+  if (!ok) {
+    redirect('/404');
+  }
+  return <AccountForm user={data!} />;
 }

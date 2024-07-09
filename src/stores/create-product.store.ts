@@ -5,8 +5,8 @@ import {
   IColor,
   IMeasurement,
   ISubcategory,
+  IPackageDelivery,
 } from '@/interfaces';
-import { IPackageDelivery } from '@/lib';
 import { create } from 'zustand';
 
 type CreateProductState = {
@@ -49,8 +49,8 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
   //onSetGender: (value: string) => set((state) => ({ gender: value })),
   setGender: (value: string) => set((state) => ({ gender: value })),
   setClothesType: (value: string) => set((state) => ({ clothesType: value })),
-  setCategory: (value: ICategory ) => set((state) => ({ category: value })),
-  setSubcategory: (value: ISubcategory | null ) =>
+  setCategory: (value: ICategory) => set((state) => ({ category: value })),
+  setSubcategory: (value: ISubcategory | null) =>
     set((state) => ({ subcategory: value })),
   setBrand: (value: IBrand) => set((state) => ({ brand: value })),
   setMeasurement: (value: IMeasurement) =>

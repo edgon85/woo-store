@@ -1,9 +1,10 @@
 import { EmptyTransaction, TableSales } from '@/components';
 
-import { fetchOrders } from '@/lib';
+import { fetchOrders } from '@/actions';
+import { IOrder } from '@/interfaces';
 
 export default async function Page() {
-  const orders = await fetchOrders('seller');
+  const orders = (await fetchOrders('seller')) as IOrder[];
 
   if (orders.length === 0)
     return (

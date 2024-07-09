@@ -1,16 +1,12 @@
 'use client';
 import { TransactionStatus } from '../TransactionStatus';
-import {
-  IOrder,
-  OrderStatus,
-  formatCurrency,
-  formatDateToLocal,
-  uuIiMyFormat,
-} from '@/lib';
+import { formatCurrency, formatDateToLocal, uuIiMyFormat } from '@/utils';
 import { SlLocationPin } from 'react-icons/sl';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { BtnConfirmReceipt } from './BtnConfirmReceipt';
+import { OrderStatus } from '@/enums';
+import { IOrder } from '@/interfaces';
 
 type Props = {
   orders: IOrder[];
@@ -103,7 +99,7 @@ export const TablePurchases = ({ orders }: Props) => {
                   Escribir al vendedor
                 </button>
 
-                {order.orderStatus === OrderStatus.Delivered &&
+                {order.orderStatus === OrderStatus.Completed &&
                 !order.received &&
                 !order.claim ? (
                   <BtnConfirmReceipt orderId={order.id} />
@@ -118,16 +114,18 @@ export const TablePurchases = ({ orders }: Props) => {
                   </button>
                 )}
 
-                {order.orderStatus !== OrderStatus.Delivered &&
-                order.orderStatus !== OrderStatus.Completed ? (
-                  <Link
-                    href={''}
-                    className="flex gap-1 justify-center items-center underline"
-                  >
-                    <SlLocationPin size={18} />
-                    Ver en Guatex
-                  </Link>
-                ) : null}
+                {
+                  /* order.orderStatus !== OrderStatus.Delivered && */
+                  order.orderStatus !== OrderStatus.Completed ? (
+                    <Link
+                      href={''}
+                      className="flex gap-1 justify-center items-center underline"
+                    >
+                      <SlLocationPin size={18} />
+                      Ver en Guatex
+                    </Link>
+                  ) : null
+                }
               </div>
             </div>
           </div>

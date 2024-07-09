@@ -1,5 +1,5 @@
 import { IProduct } from '@/interfaces';
-import { ProductStatus } from '@/types';
+import { ProductStatus } from '@/enums';
 import { translateProductStatus } from '@/utils';
 import Link from 'next/link';
 

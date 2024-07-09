@@ -4,8 +4,7 @@ import { UserProfile } from './UserProfile';
 import { ProductInfo } from './ProductInfo';
 import { checkImageAvailable } from '@/actions';
 import { BtnBuyOrEdit } from '../product-detail/buttons/BtnBuyOrEdit';
-import { Product } from '../../../interfaces/balance.interface';
-import { ProductStatus } from '@/types';
+import { ProductStatus } from '@/enums';
 
 type Props = {
   product: IProduct;

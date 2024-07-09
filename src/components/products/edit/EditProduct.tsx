@@ -5,6 +5,7 @@ import {
   IColor,
   IProduct,
   ProductImage,
+  IPackageDelivery,
 } from '@/interfaces';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
@@ -25,7 +26,6 @@ import {
 } from '../create/sections';
 import { useCreateProductStore } from '@/stores';
 import { useEffect, useState } from 'react';
-import { IPackageDelivery } from '@/lib';
 import { updateProduct } from '@/actions';
 import { AlertComponent } from '@/components/ui';
 

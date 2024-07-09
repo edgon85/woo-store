@@ -1,15 +1,18 @@
-import { OrderStatus } from '@/lib';
+import { OrderStatus } from '@/enums';
 import { translateOrderStatus } from '@/utils';
 
 export const TransactionStatus = ({ status }: { status: OrderStatus }) => {
   const statusStyles = {
-    Initiated: 'bg-blue-100 text-blue-500',
-    Pending: 'bg-gray-100 text-gray-500',
-    Confirmed: 'bg-yellow-100 text-yellow-500',
-    Shipped: 'bg-purple-100 text-purple-500',
-    OutForDelivery: 'bg-orange-100 text-orange-500',
-    Delivered: 'bg-green-100 text-green-500',
-    Completed: 'bg-green-500 text-white',
+    order_placed: 'bg-blue-100 text-blue-500',
+    seller_notified: 'bg-gray-100 text-gray-500',
+    preparing_order: 'bg-yellow-100 text-yellow-500',
+    in_transit: 'bg-purple-100 text-purple-500',
+    delivered_pending_payment: 'bg-orange-100 text-orange-500',
+    completed: 'bg-green-500 text-white',
+    cancelled: 'bg-green-100 text-green-500',
+    failed: 'bg-green-100 text-green-500',
+    refunded: 'bg-green-100 text-green-500',
+    returned: 'bg-green-100 text-green-500',
   };
 
   return (

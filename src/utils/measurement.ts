@@ -1,4 +1,4 @@
-import { IMeasurement } from '../interfaces/product';
+import { IMeasurement } from '@/interfaces';
 
 export const measurementFormat = (
   category: string,

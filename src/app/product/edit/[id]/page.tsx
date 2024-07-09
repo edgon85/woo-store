@@ -5,9 +5,9 @@ import {
   getColors,
 } from '@/actions';
 import { EditProduct } from '@/components';
-import { getProductBySlug } from '@/lib';
+import { getProductBySlug } from '@/actions';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { IProduct } from '@/interfaces';
 
 export default async function EditProductPage({
   params,
@@ -19,7 +19,7 @@ export default async function EditProductPage({
 
   // const product = (await getProductBySlug(productId)) as IProduct;
   const [
-    product,
+    productResult,
     packageDeliveriesData,
     brandsData,
     clothingConditionData,
@@ -31,6 +31,8 @@ export default async function EditProductPage({
     getClothingCondition(),
     getColors(),
   ]);
+
+  const product = productResult as IProduct;
 
   if (userId !== product.user?.id)
     return (

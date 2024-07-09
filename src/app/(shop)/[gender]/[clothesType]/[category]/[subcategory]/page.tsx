@@ -3,7 +3,6 @@ import {
   getProductBySubcategory,
 } from '@/actions';
 import { BadgeFilterList, Pagination, ProductCard } from '@/components';
-import { fetchData } from '@/lib';
 import { buildQueryString } from '@/utils';
 import { cookies } from 'next/headers';
 

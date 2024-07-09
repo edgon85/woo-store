@@ -1,5 +1,5 @@
 import { IAddress, IProduct } from '@/interfaces';
-import { IPackageDelivery, IPaymentMethod } from '@/lib';
+import { IPackageDelivery, IPaymentMethod } from '@/interfaces';
 import { create } from 'zustand';
 
 interface IProductWithOffer extends IProduct {

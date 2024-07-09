@@ -1,10 +1,12 @@
 'use client';
 
 import { PackageDeliverySkeleton, RadiaSelectIcon } from '@/components/ui';
-import { IPackageDelivery, fetchPackageDelivery, formatCurrency } from '@/lib';
+import { IPackageDelivery } from '@/interfaces';
+import { formatCurrency } from '@/utils';
 import { useCheckoutStore } from '@/stores';
 import { useEffect, useState } from 'react';
 import { IoMdRadioButtonOff } from 'react-icons/io';
+import { fetchPackageDelivery } from '@/actions';
 
 type Props = {
   packagesDeliveriesIds: number[];
@@ -23,9 +25,9 @@ export const PackageDeliverySection = ({ packagesDeliveriesIds }: Props) => {
   }, []);
 
   const getPackageDeliveries = async () => {
-    const packagesDeliveries = await fetchPackageDelivery(
+    const packagesDeliveries = (await fetchPackageDelivery(
       packagesDeliveriesIds
-    );
+    )) as IPackageDelivery[];
     setPackagesDelivery(packagesDeliveries);
     setIsLoading(false);
   };

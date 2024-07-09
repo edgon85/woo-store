@@ -3,7 +3,6 @@ import { NotificationList } from '@/components';
 export default async function NotificationPage() {
   const { ok, data, message } = await getNotifications();
 
-  console.log(ok, data, message);
   return (
     <div className="main-wrapper">
       <div className="max-w-[50vw] mr-auto mt-4">

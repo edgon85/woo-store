@@ -5,7 +5,7 @@ import { IAddress, IProductWithOffer } from '@/interfaces';
 import { useEffect } from 'react';
 import { PlaceOrder } from './PlaceOrder';
 import { useCheckoutStore } from '@/stores';
-import { formatCurrency } from '@/lib';
+import { formatCurrency } from '@/utils';
 
 type Props = {
   product: IProductWithOffer;

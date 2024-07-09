@@ -1,9 +1,12 @@
 'use server';
-import { EmptyStar, FillStar, UserIcon } from '../ui';
+import { UserIcon } from '../ui';
 import Link from 'next/link';
-import { fetchPublicProfile } from '@/lib';
 import { cookies } from 'next/headers';
-import { checkImageAvailable, getRatingByUsername } from '@/actions';
+import {
+  checkImageAvailable,
+  getRatingByUsername,
+  fetchPublicProfile,
+} from '@/actions';
 import { RatingComponent } from './RatingComponent';
 
 interface LocalProfile {

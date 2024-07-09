@@ -5,7 +5,7 @@ import { ClothesStateFilter } from './clothesState/ClothesStateFilter';
 import { ColorFilter } from './colors/ColorFilter';
 import { PriceFilter } from './price/PriceFilter';
 import { MenuItem } from './NavItems';
-import { fetchData } from '@/lib';
+import { fetchData } from '@/actions';
 
 import { SubcategoriesItems } from './CategoriesItem';
 

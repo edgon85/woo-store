@@ -3,7 +3,7 @@ import { TbTruckDelivery } from 'react-icons/tb';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { ItemCreate } from '../ItemCreate';
 import { PackageDeliverySelect } from './PackageDeliverySelect';
-import { IPackageDelivery } from '@/lib';
+import { IPackageDelivery } from '@/interfaces';
 
 type Props = {
   data: IPackageDelivery[];

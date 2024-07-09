@@ -1,7 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
-import { IPackageDelivery } from '../../lib/interfaces';
-import { IProduct } from '@/interfaces';
+import { IPackageDelivery, IProduct } from '@/interfaces';
 
 import { revalidatePath } from 'next/cache';
 

@@ -1,13 +1,13 @@
 'use client';
 
-import { revalidateData, updateAddress } from '@/actions/actions';
+import { revalidateData, updateAddress } from '@/actions';
 import { Button, EditIcon, SpinnerIcon } from '@/components/ui';
 import { IAddress } from '@/interfaces';
-import { useCheckoutStore } from '@/stores';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
+import { toast } from 'react-toastify';
 
 export const departamentosGuatemala: string[] = [
   'Alta Verapaz',
@@ -52,7 +52,6 @@ type Props = {
 export const UpdateFormAddress = ({ address }: Props) => {
   const [isModalOpen, setOpenEditModal] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const params = searchParams.get('transaction');
@@ -78,10 +77,13 @@ export const UpdateFormAddress = ({ address }: Props) => {
   const onHandleSubmit = async (formData: FormAddress) => {
     setShowLoading(true);
 
-    const data = await updateAddress(`${address?.id}`, { ...formData });
+    const { ok, message } = await updateAddress(`${address?.id}`, {
+      ...formData,
+    });
 
-    if (data.message !== 'ok') {
-      setError(data.message);
+    if (!ok) {
+      // setError(data.message);
+      toast.error(message);
       setShowLoading(false);
       return;
     } else {
@@ -196,14 +198,6 @@ export const UpdateFormAddress = ({ address }: Props) => {
               </>
             ) : (
               <Button label="Guardar" type="submit" />
-            )}
-
-            {error && (
-              <>
-                <span className="text-sm text-red-700">
-                  Error al editar la dirección intente mas tarde
-                </span>
-              </>
             )}
           </div>
         </form>

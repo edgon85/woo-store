@@ -1,10 +1,9 @@
 import { IProduct } from '@/interfaces';
-import { measurementFormat } from '@/utils';
+import { measurementFormat, formatCurrency } from '@/utils';
 import { BsCheck2Circle, BsDropletHalf } from 'react-icons/bs';
 import { IoMdPricetags } from 'react-icons/io';
 import { TbCategory, TbRulerMeasure } from 'react-icons/tb';
 import { BtnActionsDetail } from './buttons/BtnActionsDetail';
-import { formatCurrency } from '@/lib';
 
 type ListItemProps = {
   icon: React.ReactNode;

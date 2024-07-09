@@ -1,7 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
 import { unstable_noStore as noStore } from 'next/cache';
-import { IOrder } from '@/lib';
 
 /* ··········································································· */
 /* Obtiene una orden de Seller con su id */

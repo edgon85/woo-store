@@ -1,6 +1,7 @@
 import { updateProduct } from '@/actions';
 import { AlertComponent } from '@/components/ui';
 import { useEffect, useState } from 'react';
+import { ProductStatus } from '@/enums';
 
 type Props = {
   productId: string;
@@ -8,17 +9,17 @@ type Props = {
 };
 
 export const StatusSection = ({ productStatus, productId }: Props) => {
-  const [isAvailable, setIsAvailable] = useState(productStatus === 'Available');
+  const [isAvailable, setIsAvailable] = useState(productStatus === ProductStatus.Available);
   const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
 
   useEffect(() => {
-    setIsAvailable(productStatus === 'Available');
+    setIsAvailable(productStatus === ProductStatus.Available);
   }, [productStatus]);
 
   const handleCheckboxChange = async () => await onUpdateData();
 
   const onUpdateData = async () => {
-    const status = !isAvailable ? 'Available' : 'Hidden';
+    const status = !isAvailable ? ProductStatus.Available : ProductStatus.Hidden;
 
     const data = {
       status,

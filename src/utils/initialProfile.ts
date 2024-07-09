@@ -1,3 +1,5 @@
+import { ProductStatus } from '@/enums';
+
 export const InitialsProfile = (name: string): string => {
   return name
     .split(' ')
@@ -8,20 +10,22 @@ export const InitialsProfile = (name: string): string => {
 
 export const translateProductStatus = (status: string): string => {
   switch (status) {
-    case 'Available':
+    case ProductStatus.Available:
       return 'Disponible';
-    case 'Pending':
+    case ProductStatus.Pending:
       return 'Pendiente';
-    case 'Sold':
+    case ProductStatus.Sold:
       return 'Vendido';
-    case 'Archived':
+    case ProductStatus.Archived:
       return 'Archivado';
-    case 'Hidden':
+    case ProductStatus.Hidden:
       return 'Oculto';
-    case 'Reserved':
+    case ProductStatus.Reserved:
       return 'Reservado';
-    case 'UnderReview':
+    case ProductStatus.UnderReview:
       return 'Bajo revisión';
+    case ProductStatus.PendingPayment:
+      return 'Pendiente de pago';
     default:
       return status; // Si no se encuentra ninguna traducción, devuelve el estado original
   }

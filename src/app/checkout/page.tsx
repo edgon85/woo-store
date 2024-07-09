@@ -7,13 +7,14 @@ import {
 } from '@/components';
 import { redirect } from 'next/navigation';
 
+import { IAddress, IPaymentMethod, IProductWithOffer } from '@/interfaces';
 import {
-  fetchPaymentMethods,
-  fetchShippingAddress,
+  checkOfferIsValid,
   getProductBySlug,
-} from '@/lib';
-import { IAddress, IProductWithOffer } from '@/interfaces';
-import { checkOfferIsValid } from '@/actions';
+  fetchShippingAddress,
+  fetchPaymentMethods,
+} from '@/actions';
+import { ProductStatus } from '@/enums';
 
 type OfferValidationResult = {
   ok: boolean;
@@ -34,15 +35,15 @@ export default async function CheckoutPage({
   const { transaction, offer } = searchParams;
 
   if (!transaction) {
-    throw redirect("/not-found");
+    throw redirect('/not-found');
   }
 
-  let product: IProductWithOffer = await getProductBySlug(`${transaction}`);
+  let product = (await getProductBySlug(`${transaction}`)) as IProductWithOffer;
   const addresses = await fetchShippingAddress();
-  const paymentMethods = await fetchPaymentMethods();
+  const paymentMethods = (await fetchPaymentMethods()) as IPaymentMethod[];
 
   let offerValidation: OfferValidationResult = { ok: true };
-  const isReserved = offer === "true";
+  const isReserved = offer === 'true';
 
   if (isReserved) {
     offerValidation = await checkOfferIsValid(product.user?.id!, product.id!);
@@ -51,7 +52,7 @@ export default async function CheckoutPage({
       return (
         <p>
           {offerValidation.message ||
-            "No tienes permiso para ver esta oferta o la oferta no existe"}
+            'No tienes permiso para ver esta oferta o la oferta no existe'}
         </p>
       );
     }
@@ -67,7 +68,7 @@ export default async function CheckoutPage({
     }
   }
 
-  if (product.status !== "Available" && !isReserved) {
+  if (product.status !== ProductStatus.Available && !isReserved) {
     return <p>Producto ya no esta disponible</p>;
   }
 

@@ -7,9 +7,10 @@ import { ChatWindow } from './ChatWindow';
 import { ChatInput } from './ChatInput';
 import { GoArrowLeft } from 'react-icons/go';
 import { useRouter } from 'next/navigation';
-import { formatCurrency } from '@/lib';
+import { formatCurrency } from '@/utils';
 import Link from 'next/link';
 import { DropDownSettings } from './DropDownSettings';
+import { ProductStatus } from '@/enums';
 
 type Props = {
   recipientId?: string;
@@ -110,7 +111,7 @@ export const InboxMainComponent = ({
             </div>
             {chatState.activeChat && (
               <div className="h-24">
-                {chatState.product?.status !== 'Available' ? (
+                {chatState.product?.status !== ProductStatus.Available ? (
                   <div className="p-4 border h-full">
                     <p className="text-base font-bold">
                       El artículo no está disponible

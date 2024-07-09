@@ -12,8 +12,9 @@ import { PhotoSection } from './PhotoSection';
 import { IProfile } from '@/interfaces';
 
 import Modal from 'react-responsive-modal';
-import { AlertComponent, SpinnerIcon } from '@/components/ui';
+import { SpinnerIcon } from '@/components/ui';
 import { revalidateData, updateProfile } from '@/actions';
+import { toast } from 'react-toastify';
 
 export type FormProfileData = {
   id: string;
@@ -33,7 +34,6 @@ type Props = {
 
 export const ProfileForm = ({ profile, userId, fullName }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
   const {
     register,
     handleSubmit,
@@ -44,16 +44,16 @@ export const ProfileForm = ({ profile, userId, fullName }: Props) => {
 
   const onHandleSubmit = async (FormProfileData: FormProfileData) => {
     setModalOpen(true);
-    const { data, message, error } = await updateProfile({
+    const { message, ok } = await updateProfile({
       ...FormProfileData,
     });
 
-    if (data === null) {
-      console.error(message, error);
-      setAlertType('error');
+    if (!ok) {
+      // setAlertType('error');
+      toast.error(message || 'Ocurrió un error al actualizar.');
       setModalOpen(false);
     } else {
-      setAlertType('success');
+      toast.success('¡Tu perfil ha sido actualizada!');
       revalidateData(
         `/settings/profile/${userId}`,
         `/settings/profile/${userId}`
@@ -131,20 +131,6 @@ export const ProfileForm = ({ profile, userId, fullName }: Props) => {
           <SpinnerIcon className="animate-spin" />
         </div>
       </Modal>
-      {alertType === 'success' && (
-        <AlertComponent
-          type="success"
-          message="¡Tu perfil ha sido actualizada!"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
-      {alertType === 'error' && (
-        <AlertComponent
-          type="error"
-          message="Ocurrió un error al actualizar."
-          onDismiss={() => setAlertType('')}
-        />
-      )}
     </>
   );
 };

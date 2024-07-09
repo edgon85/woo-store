@@ -1,6 +1,7 @@
 import { TransactionStatus } from '../TransactionStatus';
-import { IOrder, formatCurrency, formatDateToLocal } from '@/lib';
+import { formatCurrency, formatDateToLocal } from '@/utils';
 import { DownLoadGide, UpdateSale } from './buttons';
+import { IOrder } from '@/interfaces';
 
 type Props = {
   orders: IOrder[];
