@@ -1,7 +1,14 @@
 'use server';
 
-export async function userState(token: string) {
+import { getAuthToken } from '@/libs';
+
+export async function userState() {
   const url = `${process.env.API_BASE_URL}/auth/check-status`;
+  const token = await getAuthToken();
+
+  if (!token) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
 
   try {
     const resp = await fetch(url, {

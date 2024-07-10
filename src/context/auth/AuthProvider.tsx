@@ -30,9 +30,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
       // Función asincrónica dentro de useEffect
       const checkUserStateAndAct = async () => {
-
-
-        const { ok } = await userState(currentUser?.token || '');
+        const { ok } = await userState();
 
         if (!ok) {
           console.log('su sesión expiró');
