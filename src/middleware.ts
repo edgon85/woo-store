@@ -3,6 +3,8 @@ import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 // import { jwt } from './utils';
 
+const VALID_ADMIN_ROLES = ['admin', 'super-user', 'seo'] as const;
+
 const isAdminRouteApi = (pathname: string) => {
   return pathname.startsWith('/api/admin');
 };
@@ -11,7 +13,6 @@ const isAdminRoute = (pathname: string) => {
 };
 
 const isUserRoute = (pathname: string) => {
-  // return pathname.startsWith('/checkout/:path*');
   return pathname.startsWith('/checkout');
 };
 
@@ -35,16 +36,29 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  const validRoles = ['admin', 'super-user', 'seo'];
-  if (isAdminRoute(requestedPage) && !validRoles.includes(session.user.role)) {
+  // const validRoles = ['admin', 'super-user', 'seo'];
+  if (
+    isAdminRoute(requestedPage) &&
+    !VALID_ADMIN_ROLES.includes(session.user.role)
+  ) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
-  if (
+  /* if (
     isAdminRouteApi(requestedPage) &&
-    !validRoles.includes(session.user.role)
+    !VALID_ADMIN_ROLES.includes(session.user.role)
   ) {
     return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
+  } */
+
+  if (
+    isAdminRouteApi(requestedPage) &&
+    !VALID_ADMIN_ROLES.includes(session.user.role)
+  ) {
+    return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   const response = NextResponse.next();
