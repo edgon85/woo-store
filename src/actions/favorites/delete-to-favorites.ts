@@ -1,19 +1,23 @@
 'use server';
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
-import { cookies } from 'next/headers';
 
-export async function deleteToFavorite(productId: string, token: string) {
+export async function deleteToFavorite(productId: string) {
   noStore();
-  // const token = cookies().get('token')?.value;
-
   const url = `${process.env.API_BASE_URL}/favorites/${productId}`;
+
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
 
   try {
     const resp = await fetch(url, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

@@ -1,17 +1,22 @@
 'use server';
-import { cookies } from 'next/headers';
+
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 
 export async function getOrdersNoPaid() {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/orders/no-paid`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -34,14 +39,18 @@ export async function getOrdersNoPaid() {
 
 export async function getOrdersPaid() {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/orders/order-paid`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

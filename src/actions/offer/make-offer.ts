@@ -1,9 +1,13 @@
 'use server';
 
-import { cookies } from 'next/headers';
+import { getAuthToken } from '@/libs';
 
 export async function makeOffer(productId: string, price: number) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/offer`;
 
   try {
@@ -11,7 +15,7 @@ export async function makeOffer(productId: string, price: number) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ productId, price }),
     });

@@ -1,22 +1,30 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { IPackageDelivery, IProduct } from '@/interfaces';
 
 import { revalidatePath } from 'next/cache';
 
 import { v2 as cloudinary } from 'cloudinary';
+import { getAuthToken } from '@/libs';
+import { ErrorResult } from '@/types';
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 /* ··········································································· */
-export async function fetchPackageDeliveries(): Promise<IPackageDelivery[]> {
-  const token = cookies().get('token')?.value;
+export async function fetchPackageDeliveries(): Promise<
+  IPackageDelivery[] | ErrorResult
+> {
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/package-delivery/all`;
 
   const res = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${authToken}`,
     },
   });
 
@@ -32,7 +40,11 @@ export async function createProduct(
   product: IProduct,
   formImagesData: FormData
 ) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/products`;
   const { images, slug, packageDelivery, ...restProduct } = product;
 
@@ -51,7 +63,7 @@ export async function createProduct(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({
         ...restProduct,
@@ -77,7 +89,11 @@ export async function createProduct(
 }
 
 export const addImagesByProductId = async (dataToUpdate: FormData) => {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const productId = dataToUpdate.get('productId');
   const files = dataToUpdate.getAll('images') as File[];
   const url = `${process.env.API_BASE_URL}/products/${productId}/images`;
@@ -92,7 +108,7 @@ export const addImagesByProductId = async (dataToUpdate: FormData) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({
         images: cloudinaryImages,

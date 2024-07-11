@@ -1,19 +1,24 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { unstable_noStore as noStore } from 'next/cache';
 
 import { ProductImage } from '@/interfaces';
 
 import { v2 as cloudinary } from 'cloudinary';
+import { getAuthToken } from '@/libs';
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 export const deleteProductImage = async (image: ProductImage) => {
   noStore();
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
+
   const { id, url: imageUrl, productId } = image;
   const imageName = imageUrl.split('/').pop()?.split('.')[0] ?? '';
-  const token = cookies().get('token')?.value;
   const url = `${process.env.API_BASE_URL}/products/${id}/image`;
 
   try {
@@ -28,7 +33,7 @@ export const deleteProductImage = async (image: ProductImage) => {
     const resp = await fetch(url, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

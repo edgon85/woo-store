@@ -1,10 +1,14 @@
 'use server';
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 
 export async function deletePayoutMethod(payoutMethodId: string) {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
 
   const url = `${process.env.API_BASE_URL}/payout-method/${payoutMethodId}`;
 
@@ -13,7 +17,7 @@ export async function deletePayoutMethod(payoutMethodId: string) {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

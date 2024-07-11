@@ -1,20 +1,24 @@
 'use server';
 
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
-import { cookies } from 'next/headers';
 
 export const getUserProfile = async (userId: string) => {
   noStore();
-  // const url = `${process.env.API_BASE_URL}/profiles/user/${userId}`;
+
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/profiles?u=${userId}`;
-  const token = cookies().get('token')?.value;
 
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

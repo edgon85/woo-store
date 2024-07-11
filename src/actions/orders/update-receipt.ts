@@ -1,10 +1,15 @@
 'use server';
 
+import { getAuthToken } from '@/libs';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 
 export async function updateConfirmReceipt(orderId: string) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/orders/confirm-received/${orderId}`;
 
   try {
@@ -12,7 +17,7 @@ export async function updateConfirmReceipt(orderId: string) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ received: true }),
     });

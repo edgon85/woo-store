@@ -1,13 +1,17 @@
 'use server';
 
+import { getAuthToken } from '@/libs';
 import { RatingState } from '@/stores/rating.store';
-import { cookies } from 'next/headers';
 
 export async function createRatingUser(
   ratingData: RatingState,
   orderId: string
 ) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/ratings/${orderId}`;
 
   try {
@@ -15,7 +19,7 @@ export async function createRatingUser(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({
         ...ratingData,

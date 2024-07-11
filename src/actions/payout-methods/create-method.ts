@@ -1,10 +1,14 @@
 'use server';
 
+import { getAuthToken } from '@/libs';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 
 export async function addPayoutMethod(payoutMethodData: any) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
 
   const url = `${process.env.API_BASE_URL}/payout-method`;
 
@@ -13,7 +17,7 @@ export async function addPayoutMethod(payoutMethodData: any) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ ...payoutMethodData }),
     });

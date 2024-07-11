@@ -1,15 +1,21 @@
 'use server';
-import { cookies } from 'next/headers';
+import { getAuthToken } from '@/libs';
 
 export async function getNotifications() {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
+
   let url = `${process.env.API_BASE_URL}/notification`;
+
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

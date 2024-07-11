@@ -1,5 +1,5 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { unstable_noStore as noStore } from 'next/cache';
 
 export const getProductByUserIdOrUsername = async (userId: string) => {
@@ -11,7 +11,6 @@ export const getProductByUserIdOrUsername = async (userId: string) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${token}`,
       },
     });
 

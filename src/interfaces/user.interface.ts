@@ -1,13 +1,13 @@
 export interface IUser {
   id: string;
   email: string;
+  username: string;
   fullName: string;
+  isActive: boolean;
+  roles: string[];
+  profileImage: string;
   token: string;
   password?: string;
-  username: string;
-  profileImage: string;
-  role: string[];
-  isActive: boolean;
   profile?: IProfile;
   authType: string;
   location?: string;

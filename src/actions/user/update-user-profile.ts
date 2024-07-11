@@ -1,13 +1,17 @@
-'use server'
+'use server';
 import { IProfile } from '@/interfaces';
-import { cookies } from 'next/headers';
+import { getAuthToken } from '@/libs';
 
 export async function updateProfile(
   profile: IProfile,
   image: boolean = false,
   urlImage?: string
 ) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const { id, ...rest } = profile;
   const url = `${process.env.API_BASE_URL}/profiles/${id}`;
 
@@ -16,7 +20,7 @@ export async function updateProfile(
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify(image ? { profileImage: urlImage } : { ...rest }),
     });

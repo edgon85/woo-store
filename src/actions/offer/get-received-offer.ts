@@ -1,20 +1,25 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 /* ··········································································· */
 /* Obtiene lista de ofertas recibidas*/
 /* ··········································································· */
 export async function getReceivedOffer() {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/offer/received`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

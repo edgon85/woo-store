@@ -1,8 +1,14 @@
 'use server';
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export async function getCheckIsFavorite(productSlug: string, token: string) {
+export async function getCheckIsFavorite(productSlug: string) {
   noStore();
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
 
   const url = `${process.env.API_BASE_URL}/favorites/${productSlug}`;
 
@@ -11,7 +17,7 @@ export async function getCheckIsFavorite(productSlug: string, token: string) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

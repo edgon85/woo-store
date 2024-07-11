@@ -1,15 +1,20 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { unstable_noStore as noStore } from 'next/cache';
 import { IPackageDelivery } from '@/interfaces';
 import { ErrorResult } from '@/types';
+import { getAuthToken } from '@/libs';
 
 export async function fetchPackageDelivery(
   ids: number[]
 ): Promise<IPackageDelivery[] | ErrorResult> {
   noStore();
 
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const queryString = `?ids=${ids.join(',')}`;
   const url = `${process.env.API_BASE_URL}/package-delivery${queryString}`;
   try {
@@ -17,7 +22,7 @@ export async function fetchPackageDelivery(
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

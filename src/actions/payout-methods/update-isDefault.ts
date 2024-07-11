@@ -1,9 +1,14 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { revalidatePath } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 export async function updateIsDefault(payoutMethodId: string) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/payout-method/${payoutMethodId}/update-is-default`;
 
   try {
@@ -11,7 +16,7 @@ export async function updateIsDefault(payoutMethodId: string) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

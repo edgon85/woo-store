@@ -1,5 +1,6 @@
-'use server'
-import { cookies } from 'next/headers';
+'use server';
+
+import { getAuthToken } from '@/libs';
 
 type DataUser = {
   id: string;
@@ -9,7 +10,11 @@ type DataUser = {
   password?: string;
 };
 export async function updateUserData(dataUser: DataUser) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const { id, ...rest } = dataUser;
   const url = `${process.env.API_BASE_URL}/auth/update/${id}`;
 
@@ -18,7 +23,7 @@ export async function updateUserData(dataUser: DataUser) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ ...rest }),
     });

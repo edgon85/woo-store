@@ -1,18 +1,22 @@
 'use server';
 
-import { cookies } from 'next/headers';
 import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 export async function markChatAsRead(chatId: string) {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/inbox-chat/${chatId}/mark-as-read`;
   try {
     const resp = await fetch(url, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

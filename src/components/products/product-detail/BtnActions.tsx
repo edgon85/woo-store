@@ -3,7 +3,7 @@
 import { addToFavorite, deleteToFavorite, getCheckIsFavorite } from '@/actions';
 import { useAuth } from '@/hooks';
 import Link from 'next/link';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsHeart, BsHeartFill, BsShare } from 'react-icons/bs';
 import { ShareButton } from './share/ShareButton';
@@ -15,13 +15,13 @@ type Props = {
 
 export const BtnActions = ({ productId, productName, productPrice }: Props) => {
   const path = usePathname();
-  const { user, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const checkIsFavorite = async () => {
       try {
-        const data = await getCheckIsFavorite(productId, user?.token!);
+        const data = await getCheckIsFavorite(productId);
         setIsFavorite(data.isFavorite);
       } catch (error: any) {
         console.error(
@@ -31,14 +31,14 @@ export const BtnActions = ({ productId, productName, productPrice }: Props) => {
       }
     };
     checkIsFavorite();
-  }, [productId, user?.token]);
+  }, [productId]);
 
   const toggleFavorite = async () => {
     if (isFavorite) {
-      await deleteToFavorite(productId, user?.token!);
+      await deleteToFavorite(productId);
       setIsFavorite(false);
     } else {
-      await addToFavorite(productId, user?.token!);
+      await addToFavorite(productId);
       setIsFavorite(true);
     }
   };

@@ -1,21 +1,26 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { unstable_noStore as noStore } from 'next/cache';
 import { IPaymentMethod } from '@/interfaces';
 import { ErrorResult } from '@/types';
+import { getAuthToken } from '@/libs';
 
 export async function fetchPaymentMethods(): Promise<
   IPaymentMethod[] | ErrorResult
 > {
   noStore();
   const url = `${process.env.API_BASE_URL}/payment-methods`;
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

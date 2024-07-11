@@ -1,26 +1,31 @@
-"use server";
-import { cookies } from "next/headers";
-import { unstable_noStore as noStore } from "next/cache";
+'use server';
+
+import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 /* ··········································································· */
 /*  verifica oferta */
 /* ··········································································· */
 export async function checkOfferIsValid(sellerId: string, productId: string) {
   noStore();
-  const token = cookies().get("token")?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/offer/${sellerId}/${productId}/check`;
   try {
     const resp = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
     if (!resp.ok) {
       const errorData = await resp.json(); // Obtener el mensaje de error como JSON
-      throw new Error(errorData.message || "Error al hacer fetch data");
+      throw new Error(errorData.message || 'Error al hacer fetch data');
     }
 
     const data = await resp.json();

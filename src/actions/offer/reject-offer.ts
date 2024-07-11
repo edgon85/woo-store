@@ -1,19 +1,24 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { revalidatePath } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 /* ··········································································· */
 /* Rechazar oferta*/
 /* ··········································································· */
 export async function rejectOffer(offerId: string) {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/offer/${offerId}/reject`;
   try {
     const resp = await fetch(url, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

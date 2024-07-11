@@ -1,5 +1,5 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { unstable_noStore as noStore } from 'next/cache';
 
 type PaginationOptions = {
@@ -16,7 +16,6 @@ export async function getProductByGenderAndCategory({
   path,
 }: PaginationOptions) {
   noStore();
-  const token = cookies().get('token')?.value;
 
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
@@ -25,17 +24,11 @@ export async function getProductByGenderAndCategory({
     (page - 1) * take
   }`;
 
-  // Agregar el parámetro de búsqueda si se proporciona un valor no vacío para query
-  /*   if (query.trim() !== '') {
-    url += `&search=${encodeURIComponent(query)}`;
-  } */
-
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${token}`,
       },
     });
 
@@ -61,7 +54,6 @@ export async function getProductBySubcategory({
   gender,
 }: PaginationOptions) {
   noStore();
-  const token = cookies().get('token')?.value;
 
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
@@ -80,7 +72,6 @@ export async function getProductBySubcategory({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${token}`,
       },
     });
 

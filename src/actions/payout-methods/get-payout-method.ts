@@ -1,17 +1,20 @@
 'use server';
-import { cookies } from 'next/headers';
+import { getAuthToken } from '@/libs';
 
 export const getPayoutByUser = async (userId: string) => {
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   try {
-    // payout-method/u/d985c61e-48e8-4701-bc37-468875bd533d
     const url = `${process.env.API_BASE_URL}/payout-method/u/${userId}`;
 
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

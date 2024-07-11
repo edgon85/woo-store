@@ -1,6 +1,4 @@
 'use server';
-import { cookies } from 'next/headers';
-
 
 type PaginationOptions = {
   page?: number;
@@ -12,9 +10,6 @@ export async function getFeaturedProducts({
   take = 10,
   query = '',
 }: PaginationOptions) {
-  // noStore();
-  const token = cookies().get('token')?.value;
-
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
 

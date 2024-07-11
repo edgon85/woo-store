@@ -1,12 +1,17 @@
 'use server';
-import { cookies } from 'next/headers';
+
 import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 /* ··········································································· */
 /* Obtiene una orden de Seller con su id */
 /* ··········································································· */
 export async function getInboxChats() {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/inbox-chat/user-chats`;
   // let url = `${process.env.API_BASE_URL}/inbox-messages/get-chat-for-user/${recipientId}`;
   try {
@@ -14,7 +19,7 @@ export async function getInboxChats() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -37,14 +42,18 @@ export async function getInboxChats() {
 
 export async function getMessagesForUser(chatId: string) {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/inbox-messages/${chatId}`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -67,7 +76,11 @@ export async function getMessagesForUser(chatId: string) {
 
 export async function getChatForUser(fromId: string, productId: string) {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/inbox-chat/get-chat-for-user/${fromId}/${productId}`;
   // let url = `${process.env.API_BASE_URL}/inbox-chat/get-chat-for-user`;
   try {
@@ -75,7 +88,7 @@ export async function getChatForUser(fromId: string, productId: string) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

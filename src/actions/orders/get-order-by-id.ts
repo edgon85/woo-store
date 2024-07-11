@@ -1,20 +1,24 @@
 'use server';
-import { cookies } from 'next/headers';
 import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 /* ··········································································· */
 /* Obtiene una orden de Seller con su id */
 /* ··········································································· */
 export async function getOrderById(id: string) {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/orders/s/${id}`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -40,14 +44,18 @@ export async function getOrderById(id: string) {
 /* ··········································································· */
 export async function getOrderBuyer(id: string) {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   let url = `${process.env.API_BASE_URL}/orders/b/${id}`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -73,7 +81,11 @@ export async function getOrderBuyer(id: string) {
 /* ··········································································· */
 export async function fetchOrderById(id: string) {
   noStore();
-  const token = cookies().get('token')?.value;
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   const url = `${process.env.API_BASE_URL}/orders/${id}`;
 
   try {
@@ -81,7 +93,7 @@ export async function fetchOrderById(id: string) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

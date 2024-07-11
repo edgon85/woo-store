@@ -1,19 +1,25 @@
 'use server';
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export async function addToFavorite(productId: string, token: string) {
+export async function addToFavorite(productId: string) {
   noStore();
-  // const token = cookies().get('token')?.value;
 
   const url = `${process.env.API_BASE_URL}/favorites`;
+
+  const authToken = await getAuthToken();
+
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
 
   try {
     const resp = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${authToken}`,
       },
       body: JSON.stringify({ product: productId }),
     });

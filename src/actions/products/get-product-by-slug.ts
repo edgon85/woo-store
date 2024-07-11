@@ -1,5 +1,5 @@
 'use server';
-import { IProduct, IUser } from '@/interfaces';
+import { IProduct } from '@/interfaces';
 import { unstable_noStore as noStore } from 'next/cache';
 
 type ErrorResult = {
