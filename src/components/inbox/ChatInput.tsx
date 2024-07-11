@@ -1,5 +1,6 @@
 import { ChatContext, SocketContext } from '@/context';
-import Cookies from 'js-cookie';
+import { useAuth } from '@/hooks';
+
 
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,7 +14,7 @@ type MessageFormInput = {
 };
 
 export const ChatInput = ({ recipientId }: Props) => {
-  const currentId = Cookies.get('userId');
+  const { user } = useAuth();
   const { socket } = useContext(SocketContext);
   const { chatState } = useContext(ChatContext);
 
@@ -26,7 +27,7 @@ export const ChatInput = ({ recipientId }: Props) => {
     // console.log({currentId, recipientId});
     socket?.emit('message-from-client', {
       message: messageContent,
-      from: currentId,
+      from: user?.id,
       productId: chatState.product?.id,
       to: recipientId,
     });

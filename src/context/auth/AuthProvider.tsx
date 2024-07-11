@@ -4,7 +4,7 @@ import { IUser } from '@/interfaces';
 import { signOut, useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { userState } from '@/actions';
-import Cookies from 'js-cookie';
+
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -50,8 +50,6 @@ export const AuthProvider: FC<Props> = ({ children }) => {
           return; // Si el usuario no está definido, salimos de la función aquí
         }
 
-        Cookies.set('userId', currentUser.id);
-        Cookies.set('token', currentUser.token);
         dispatch({ type: '[Auth] - Login', payload: currentUser });
       };
 
@@ -60,13 +58,11 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
   }, [status, data]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (status === 'unauthenticated') {
-      Cookies.remove('token');
-      Cookies.remove('userId');
-    }
+ 
   }, [status]);
-
+ */
   const registerUser = async (
     fullName: string,
     email: string,
@@ -114,8 +110,6 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   };
 
   const logout = () => {
-    Cookies.remove('token');
-    Cookies.remove('userId');
     signOut();
     redirect('/');
   };

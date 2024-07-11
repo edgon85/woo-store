@@ -1,6 +1,6 @@
-import Cookies from 'js-cookie';
 import { useCallback, useEffect, useState } from 'react';
 import { Manager, Socket } from 'socket.io-client';
+import { useAuth } from '../useAuth';
 
 interface UseSocketReturn {
   socket: Socket | null;
@@ -12,18 +12,11 @@ interface UseSocketReturn {
 export const useSocket = (serverPath: string): UseSocketReturn => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [online, setOnline] = useState(false);
+  const { user } = useAuth();
 
   const conectarSocket = useCallback(() => {
-    const token = Cookies.get('token') || '';
+    const token = user?.token || '';
 
-    /* const manager = new Manager(serverPath, {
-      transports: ['websocket'],
-      autoConnect: false,
-      forceNew: true,
-      query: {
-        'x-token': token,
-      },
-    }); */
     const manager = new Manager(serverPath, {
       extraHeaders: {
         authentication: token,
@@ -33,7 +26,7 @@ export const useSocket = (serverPath: string): UseSocketReturn => {
     const socketTemp = manager.socket('/');
     socketTemp.connect();
     setSocket(socketTemp);
-  }, [serverPath]);
+  }, [serverPath, user?.token]);
 
   const desconectarSocket = useCallback(() => {
     socket?.disconnect();

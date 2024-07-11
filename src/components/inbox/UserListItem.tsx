@@ -10,7 +10,6 @@ import { useContext, useEffect, useState } from 'react';
 import { IChat } from '@/interfaces';
 import { ChatContext } from '@/context';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import { useInboxStore } from '@/stores';
 import { useAuth } from '@/hooks';
 
@@ -22,7 +21,6 @@ export const UserListItem = ({ chat }: Props) => {
   const { setChats, removeUnreadChatId } = useInboxStore();
   const { dispatch, chatState } = useContext(ChatContext);
   const router = useRouter();
-  const currentId = Cookies.get('userId');
   const { user } = useAuth();
 
   const [imageUrl, setImageUrl] = useState<string | null>('');
@@ -46,7 +44,7 @@ export const UserListItem = ({ chat }: Props) => {
   const onHandleClick = async () => {
     dispatch({
       type: '[Chat] - SET_UID',
-      payload: currentId,
+      payload: user?.id,
     });
     dispatch({
       type: '[Chat] - activar-chat',

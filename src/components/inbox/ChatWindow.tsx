@@ -1,14 +1,14 @@
 import { useContext, useEffect, useRef } from 'react';
-import Cookies from 'js-cookie';
 
 import { ChatContext } from '@/context';
 import { IMessage } from '@/interfaces';
 import { MessageOutgoing } from './MessageOutgoing';
 import { MessageIncoming } from './MessageIncoming';
+import { useAuth } from '@/hooks';
 
 export const ChatWindow = () => {
   const { chatState } = useContext(ChatContext);
-  const currentId = Cookies.get('userId');
+  const { user } = useAuth();
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const ChatWindow = () => {
       className="p-4 space-y-4 overflow-y-scroll h-full"
     >
       {chatState.messages.map((msg: IMessage) =>
-        msg.from === currentId ? (
+        msg.from === user?.id ? (
           <MessageIncoming key={msg.id} message={msg} />
         ) : (
           <MessageOutgoing key={msg.id} message={msg} />

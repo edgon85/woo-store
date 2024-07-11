@@ -3,7 +3,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import FacebookProvider from 'next-auth/providers/facebook';
 import { JWT } from 'next-auth/jwt';
-import { cookies } from 'next/headers';
 
 interface ExtendedUser extends User {
   id: string;
@@ -123,7 +122,7 @@ const authOptions: NextAuthOptions = {
             token.user = data.user;
 
             // Guardar el token en una cookie
-            if ((token.user as ExtendedUser).token) {
+            /* if ((token.user as ExtendedUser).token) {
               cookies().set('auth_token', (token.user as ExtendedUser).token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== 'development',
@@ -131,7 +130,7 @@ const authOptions: NextAuthOptions = {
                 maxAge: 172800, // 48 horas, ajusta según necesites
                 path: '/',
               });
-            }
+            } */
           } catch (error) {
             console.error('OAuth error:', error);
             token.user = undefined;
@@ -139,7 +138,7 @@ const authOptions: NextAuthOptions = {
         } else if (account.type === 'credentials') {
           token.user = user as ExtendedUser;
           // Guardar el token en una cookie
-          if ((token.user as ExtendedUser).token) {
+         /*  if ((token.user as ExtendedUser).token) {
             cookies().set('auth_token', (token.user as ExtendedUser).token, {
               httpOnly: true,
               secure: process.env.NODE_ENV !== 'development',
@@ -147,7 +146,7 @@ const authOptions: NextAuthOptions = {
               maxAge: 172800, // 48 horas, ajusta según necesites
               path: '/',
             });
-          }
+          } */
         }
       }
       return token as ExtendedToken;

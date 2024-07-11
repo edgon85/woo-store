@@ -11,7 +11,7 @@ import {
   getChatForUser,
   getInboxChats,
 } from '@/actions';
-import Cookies from 'js-cookie';
+import { useAuth } from '@/hooks';
 
 type FormInputData = {
   message: string;
@@ -38,7 +38,7 @@ export const BtnSendMessage = ({
 
   const { dispatch } = useContext(ChatContext);
   const router = useRouter();
-  const currentId = Cookies.get('userId');
+  const { user } = useAuth();
 
   const {
     register,
@@ -67,7 +67,7 @@ export const BtnSendMessage = ({
     } else {
       dispatch({
         type: '[Chat] - SET_UID',
-        payload: currentId,
+        payload: user?.id,
       });
       dispatch({
         type: '[Chat] - activar-chat',
