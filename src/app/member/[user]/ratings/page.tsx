@@ -1,6 +1,6 @@
 import { getFavoritesByUser } from '@/actions';
 import { EmptyTransaction, Pagination, ProductCard } from '@/components';
-import { cookies } from 'next/headers';
+import { getAuthInfo } from '@/libs';
 
 type Props = {
   params: { user: string };
@@ -8,7 +8,9 @@ type Props = {
 };
 
 export default async function UserRatingsPage({ params, searchParams }: Props) {
-  const currentUserId = cookies().get('userId')?.value;
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
+
   const { page } = searchParams;
 
   const data = await getFavoritesByUser({

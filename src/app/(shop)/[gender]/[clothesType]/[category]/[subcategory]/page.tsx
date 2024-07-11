@@ -1,13 +1,10 @@
-import {
-  getProductByGenderAndCategory,
-  getProductBySubcategory,
-} from '@/actions';
+import { getProductBySubcategory } from '@/actions';
 import { BadgeFilterList, Pagination, ProductCard } from '@/components';
+import { getAuthInfo } from '@/libs';
 import { buildQueryString } from '@/utils';
-import { cookies } from 'next/headers';
 
 export default async function SubcategoryPage({
-  params: { gender, clothesType, category, subcategory },
+  params: { gender, subcategory },
   searchParams,
 }: {
   params: {
@@ -18,7 +15,8 @@ export default async function SubcategoryPage({
   };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const currentUserId = cookies().get('userId')?.value;
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
 
   const queryString = buildQueryString(searchParams);
 

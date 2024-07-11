@@ -5,11 +5,12 @@ import {
   RelatedProducts,
   ProductSlideshow,
   ProductMobileSlideshow,
+  RejectedProduct,
 } from '@/components';
 import { getProductBySlug } from '@/actions';
 import { IProduct } from '@/interfaces';
-import { cookies } from 'next/headers';
-import { RejectedProduct } from '@/components/products/product-detail/rejected-product/RejectedProduct';
+
+import { getAuthInfo } from '@/libs';
 
 type Props = {
   params: { slug: string };
@@ -21,7 +22,10 @@ export default async function ProductDetailPage({
   searchParams: { offer_rejected },
 }: Props) {
   const product = (await getProductBySlug(slug)) as IProduct;
-  const currentUserId = cookies().get('userId')?.value;
+
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
+
   console.log({ offer_rejected });
 
   const { user } = product;

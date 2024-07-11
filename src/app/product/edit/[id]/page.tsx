@@ -6,8 +6,8 @@ import {
 } from '@/actions';
 import { EditProduct } from '@/components';
 import { getProductBySlug } from '@/actions';
-import { cookies } from 'next/headers';
-import { IProduct } from '@/interfaces';
+import { IPackageDelivery, IProduct } from '@/interfaces';
+import { getAuthInfo } from '@/libs';
 
 export default async function EditProductPage({
   params,
@@ -15,12 +15,13 @@ export default async function EditProductPage({
   params: { id: string };
 }) {
   const { id: productId } = params;
-  const userId = cookies().get('userId')?.value;
 
-  // const product = (await getProductBySlug(productId)) as IProduct;
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
+
   const [
     productResult,
-    packageDeliveriesData,
+    packageDeliveriesDataResult,
     brandsData,
     clothingConditionData,
     colorsData,
@@ -33,8 +34,10 @@ export default async function EditProductPage({
   ]);
 
   const product = productResult as IProduct;
+  const packageDeliveriesData =
+    packageDeliveriesDataResult as IPackageDelivery[];
 
-  if (userId !== product.user?.id)
+  if (currentUserId !== product.user?.id)
     return (
       <>
         <p>No pude actualizar este producto</p>

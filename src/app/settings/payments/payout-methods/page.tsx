@@ -1,12 +1,14 @@
 import { getPayoutByUser } from '@/actions';
 import { ListOfPayouts } from '@/components';
-import { cookies } from 'next/headers';
+import { getAuthInfo } from '@/libs';
+
 import Link from 'next/link';
 
 export default async function PayoutMethodsPage() {
-  const userId = cookies().get('userId')?.value;
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
 
-  const payoutList = await getPayoutByUser(userId!);
+  const payoutList = await getPayoutByUser(currentUserId);
 
   return (
     <div className="flex flex-col gap-4">

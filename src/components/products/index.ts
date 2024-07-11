@@ -6,3 +6,5 @@ export * from './slideshow/ProductMobileSlideshow';
 
 /* Edit Product */
 export * from './edit/EditProduct';
+
+export * from './product-detail/rejected-product/RejectedProduct';

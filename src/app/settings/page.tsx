@@ -1,7 +1,8 @@
-import { cookies } from 'next/headers';
+import { getAuthInfo } from '@/libs';
 import { redirect } from 'next/navigation';
 
 export default async function SettingsPage() {
-  const userId = cookies().get('userId')?.value;
-  redirect(`/settings/profile/${userId}`);
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
+  redirect(`/settings/profile/${currentUserId}`);
 }

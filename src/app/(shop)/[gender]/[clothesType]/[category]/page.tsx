@@ -1,7 +1,7 @@
 import { getProductByGenderAndCategory } from '@/actions';
 import { BadgeFilterList, Pagination, ProductCard } from '@/components';
+import { getAuthInfo } from '@/libs';
 import { buildQueryString } from '@/utils';
-import { cookies } from 'next/headers';
 
 export default async function CategoriesPage({
   params: { gender, category },
@@ -10,7 +10,8 @@ export default async function CategoriesPage({
   params: { gender: string; category: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const currentUserId = cookies().get('userId')?.value;
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
 
   const queryString = buildQueryString(searchParams);
 

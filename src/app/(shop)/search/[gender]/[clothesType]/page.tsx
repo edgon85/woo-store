@@ -1,6 +1,6 @@
 import { searchProduct } from '@/actions';
 import { Pagination, ProductCard } from '@/components';
-import { cookies } from 'next/headers';
+import { getAuthInfo } from '@/libs';
 import { redirect } from 'next/navigation';
 
 type Props = {
@@ -14,7 +14,10 @@ export default async function SearchPage({ params, searchParams }: Props) {
   if (query === '' || query === undefined) {
     redirect('/');
   }
-  const currentUserId = cookies().get('userId')?.value;
+
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
+
   const { products, totalPage } = await searchProduct({
     query: query.trim(),
     gender,

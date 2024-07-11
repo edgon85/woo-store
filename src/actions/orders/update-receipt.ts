@@ -2,7 +2,6 @@
 
 import { getAuthToken } from '@/libs';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 
 export async function updateConfirmReceipt(orderId: string) {
   const authToken = await getAuthToken();

@@ -7,21 +7,16 @@ export async function getAuthInfo(): Promise<IUser | null> {
   const session = await getServerSession(authOptions);
   const user = session?.user as IUser | undefined;
 
-  if (!user || !user.token) {
-    console.error('No se encontró un token de autenticación');
-    return null;
-  }
-
   return {
-    id: user.id,
-    email: user.email,
-    username: user.username,
-    fullName: user.fullName,
-    isActive: user.isActive,
-    roles: user.roles,
-    authType: user.authType || 'credentials',
-    profileImage: user.profileImage,
-    token: user.token,
+    id: user?.id || '',
+    email: user?.email || '',
+    username: user?.username || '',
+    fullName: user?.fullName || '',
+    isActive: user?.isActive || false,
+    roles: user?.roles || [],
+    authType: user?.authType || 'credentials',
+    profileImage: user?.profileImage || '',
+    token: user?.token || 'no-token',
   };
 }
 

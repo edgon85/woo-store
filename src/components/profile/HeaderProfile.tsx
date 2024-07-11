@@ -1,13 +1,13 @@
 'use server';
 import { UserIcon } from '../ui';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
 import {
   checkImageAvailable,
   getRatingByUsername,
   fetchPublicProfile,
 } from '@/actions';
 import { RatingComponent } from './RatingComponent';
+import { getAuthInfo } from '@/libs';
 
 interface LocalProfile {
   id: string;
@@ -25,7 +25,8 @@ type Props = {
 export async function HeaderProfile({ username }: Props) {
   const userData = (await fetchPublicProfile(username)) as LocalProfile;
   const ratingUser = await getRatingByUsername(username);
-  const currentUserId = cookies().get('userId')?.value;
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
   const imageUrl = await checkImageAvailable(userData?.profileImage);
 
   /* TODO: obtener el rating */

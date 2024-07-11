@@ -1,7 +1,6 @@
 'use server';
 import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
-import { cookies } from 'next/headers';
 
 export async function addToFavorite(productId: string) {
   noStore();

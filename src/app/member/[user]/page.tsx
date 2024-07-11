@@ -2,7 +2,7 @@ import { getProductByUserIdOrUsername } from '@/actions/products/get-products';
 import { EmptyTransaction, ProductCard } from '@/components';
 
 import { IProduct } from '@/interfaces';
-import { cookies } from 'next/headers';
+import { getAuthInfo } from '@/libs';
 
 export default async function UserMemberPage({
   params: { user },
@@ -10,7 +10,9 @@ export default async function UserMemberPage({
   params: { user: string };
 }) {
   const products: IProduct[] = await getProductByUserIdOrUsername(user);
-  const currentUserId = cookies().get('userId')?.value;
+
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
 
   if (products.length === 0) {
     return (
