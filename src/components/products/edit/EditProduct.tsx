@@ -25,9 +25,9 @@ import {
   SubcategorySection,
 } from '../create/sections';
 import { useCreateProductStore } from '@/stores';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { updateProduct } from '@/actions';
-import { AlertComponent } from '@/components/ui';
+import { toast } from 'react-toastify';
 
 type Props = {
   product: IProduct & { ProductImage?: ProductImage[] };
@@ -52,8 +52,6 @@ export const EditProduct = ({
   clothingConditionList,
   colors: colorList,
 }: Props) => {
-  const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
-
   const setCategory = useCreateProductStore((state) => state.setCategory);
   const setSubCategory = useCreateProductStore((state) => state.setSubcategory);
   const setBrand = useCreateProductStore((state) => state.setBrand);
@@ -137,7 +135,9 @@ export const EditProduct = ({
     };
 
     const { ok } = await updateProduct(product.id!, dataToUpdate);
-    setAlertType(ok ? 'success' : 'error');
+    ok
+      ? toast.success('Producto actualizado')
+      : toast.error('Ocurrió un error');
   };
 
   return (
@@ -204,20 +204,6 @@ export const EditProduct = ({
         </button>
       </form>
       <CustomModal />
-      {alertType === 'success' && (
-        <AlertComponent
-          type="success"
-          message="¡Producto actualizado!"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
-      {alertType === 'error' && (
-        <AlertComponent
-          type="error"
-          message="Ocurrió un error al actualizar"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
     </div>
   );
 };

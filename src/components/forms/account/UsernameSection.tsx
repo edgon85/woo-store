@@ -1,6 +1,6 @@
 'use client';
 import { revalidateData, updateUserData } from '@/actions';
-import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
+import { Button, SpinnerIcon } from '@/components/ui';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';

@@ -3,9 +3,10 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { FormProfileData } from './ProfileForm';
 import Modal from 'react-responsive-modal';
-import { AlertComponent, SpinnerIcon } from '@/components/ui';
+import { SpinnerIcon } from '@/components/ui';
 import { updateProfile } from '@/actions';
 import { IProfile } from '@/interfaces';
+import { toast } from 'react-toastify';
 
 type Props = {
   setValue: UseFormSetValue<FormProfileData>;
@@ -20,7 +21,6 @@ export const PhotoSection = ({
   getValues,
 }: Props) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -58,11 +58,11 @@ export const PhotoSection = ({
         const { message: pathCloudinary } = data;
         await updatePhotoUrl(pathCloudinary);
 
-        setAlertType('success');
+        toast.success('¡Tu imagen ha sido actualizada!');
       } catch (error) {
         console.error('Error subiendo la imagen:', error);
 
-        setAlertType('error');
+        toast.error('Ocurrió un error al actualizar.');
       } finally {
         setModalOpen(false);
       }
@@ -120,21 +120,6 @@ export const PhotoSection = ({
           <SpinnerIcon className="animate-spin" />
         </div>
       </Modal>
-
-      {alertType === 'success' && (
-        <AlertComponent
-          type="success"
-          message="¡Tu imagen ha sido actualizada!"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
-      {alertType === 'error' && (
-        <AlertComponent
-          type="error"
-          message="Ocurrió un error al actualizar."
-          onDismiss={() => setAlertType('')}
-        />
-      )}
     </>
   );
 };

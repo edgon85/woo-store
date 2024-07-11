@@ -1,6 +1,6 @@
 'use client';
 import { updateUserData } from '@/actions';
-import { AlertComponent, Button, SpinnerIcon } from '@/components/ui';
+import { Button, SpinnerIcon } from '@/components/ui';
 import { useAuth } from '@/hooks';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';

@@ -1,7 +1,7 @@
 import { updateProduct } from '@/actions';
-import { AlertComponent } from '@/components/ui';
 import { useEffect, useState } from 'react';
 import { ProductStatus } from '@/enums';
+import { toast } from 'react-toastify';
 
 type Props = {
   productId: string;
@@ -9,8 +9,9 @@ type Props = {
 };
 
 export const StatusSection = ({ productStatus, productId }: Props) => {
-  const [isAvailable, setIsAvailable] = useState(productStatus === ProductStatus.Available);
-  const [alertType, setAlertType] = useState<'success' | 'error' | ''>('');
+  const [isAvailable, setIsAvailable] = useState(
+    productStatus === ProductStatus.Available
+  );
 
   useEffect(() => {
     setIsAvailable(productStatus === ProductStatus.Available);
@@ -19,14 +20,19 @@ export const StatusSection = ({ productStatus, productId }: Props) => {
   const handleCheckboxChange = async () => await onUpdateData();
 
   const onUpdateData = async () => {
-    const status = !isAvailable ? ProductStatus.Available : ProductStatus.Hidden;
+    const status = !isAvailable
+      ? ProductStatus.Available
+      : ProductStatus.Hidden;
 
     const data = {
       status,
     };
     const { ok } = await updateProduct(productId, data);
     setIsAvailable(!isAvailable);
-    setAlertType(ok ? 'success' : 'error');
+
+    toast[ok ? 'success' : 'error'](
+      ok ? '¡Producto actualizado!' : 'Ocurrió un error al actualizar'
+    );
   };
 
   return (
@@ -45,20 +51,6 @@ export const StatusSection = ({ productStatus, productId }: Props) => {
           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-lightPrimary rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-primary"></div>
         </label>
       </div>
-      {alertType === 'success' && (
-        <AlertComponent
-          type="success"
-          message="¡Producto actualizado!"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
-      {alertType === 'error' && (
-        <AlertComponent
-          type="error"
-          message="Ocurrió un error al actualizar"
-          onDismiss={() => setAlertType('')}
-        />
-      )}
     </>
   );
 };
