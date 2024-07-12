@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { BtnMakeOffer } from '../buttons/BtnMakeOffer';
+import { BtnMakeOffer } from '../buttons';
 import { IProduct } from '@/interfaces';
 
 type Props = {
@@ -33,7 +33,7 @@ export const RejectedProduct = ({ isRejected = false, product }: Props) => {
   }, [isRejected]);
 
   return (
-    <div className='hidden'>
+    <div className="hidden">
       <BtnMakeOffer product={product} triggerOpen={triggerMakeOffer} />;
     </div>
   );

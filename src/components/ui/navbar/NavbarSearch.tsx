@@ -5,7 +5,6 @@ import { usePersonalPreferencesStore } from '@/stores';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
-
 type FormInputData = {
   term: string;
   clothesType: string;

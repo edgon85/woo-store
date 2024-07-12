@@ -17,8 +17,8 @@ export const NavbarActions = () => {
       {isLoggedIn && (
         <div className="hidden md:flex gap-1">
           <InboxNotification />
-          <DropdownAccount />
           <DropDownNotification />
+          <DropdownAccount />
         </div>
       )}
       <>

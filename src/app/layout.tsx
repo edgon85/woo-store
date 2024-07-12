@@ -2,7 +2,7 @@ import './globals.css';
 
 import { Roboto } from 'next/font/google';
 import { Providers } from './providers';
-import { Footer, NavClothesType, Navbar } from '@/components';
+import { AuthModal, Footer, NavClothesType, Navbar } from '@/components';
 import Sidebar from '@/components/ui/navbar/sidebar/Sidebar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,15 +27,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <Providers>
-          <div className='min-h-[70vh]'>
-            <Navbar />
-            <NavClothesType />
-            <Sidebar />
-            {children}
-            <ToastContainer />
-          </div>
+          <Navbar />
+          <NavClothesType />
+          <Sidebar />
+          <div className="min-h-[70vh]">{children}</div>
+          <ToastContainer />
 
           <Footer />
+          <AuthModal />
         </Providers>
       </body>
     </html>

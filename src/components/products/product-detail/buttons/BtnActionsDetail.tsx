@@ -1,12 +1,11 @@
 'use client';
+import Link from 'next/link';
+
 import { TooltipIcon } from '@/components/ui';
 import { IProduct } from '@/interfaces';
 
-import { BtnMakeOffer } from './BtnMakeOffer';
-import { BtnSendMessage } from './BtnSendMessage';
+import { BtnMakeOffer, BtnSendMessage, BtnBuyOrEdit } from './';
 import { ProductStatus } from '@/enums';
-import { BtnBuyOrEdit } from './BtnBuyOrEdit';
-import Link from 'next/link';
 
 type ActionsProps = {
   product: IProduct;

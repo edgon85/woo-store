@@ -78,6 +78,7 @@ export const config = {
     '/admin/:path*',
     '/settings/:path*',
     '/claim/:path*',
+    '/offers/:path*',
     '/api/admin/:path*',
   ],
 };

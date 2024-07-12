@@ -1,8 +1,6 @@
 'use client';
 import { useAuth } from '@/hooks';
 import { isEmail, isPassword } from '@/utils';
-import Link from 'next/link';
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -17,8 +15,6 @@ export const RegisterForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const { registerUser, login } = useAuth();
 
-  const searchParams = useSearchParams();
-  const query = searchParams.get('p');
 
   const {
     register,
@@ -26,7 +22,6 @@ export const RegisterForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const myQuery = query !== null ? `?p=${query}` : '';
 
   const onRegisterUser = async ({ fullName, email, password }: FormData) => {
     const { hasError, message } = await registerUser(fullName, email, password);
@@ -129,18 +124,9 @@ export const RegisterForm = () => {
           type="submit"
           className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer"
         >
-          iniciar sesión
+          Registrarse
         </button>
       </form>
-      <div className="mt-4 text-center">
-        <span className="text-sm">¿ya tienes cuenta? </span>
-        <Link
-          href={`/auth/login${myQuery}`}
-          className="text-primary underline text-sm"
-        >
-          Iniciar sesión
-        </Link>
-      </div>
     </div>
   );
 };

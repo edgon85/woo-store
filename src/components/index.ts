@@ -20,3 +20,5 @@ export * from './notifications';
 export * from './offers';
 
 export * from './inbox/InboxMainComponent';
+
+export * from './auth';

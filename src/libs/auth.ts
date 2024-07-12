@@ -2,6 +2,7 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'; // Ajusta esta ruta según tu estructura
 import { IUser } from '@/interfaces';
+import { getProviders } from 'next-auth/react';
 
 export async function getAuthInfo(): Promise<IUser | null> {
   const session = await getServerSession(authOptions);
@@ -24,4 +25,11 @@ export async function getAuthInfo(): Promise<IUser | null> {
 export async function getAuthToken(): Promise<string | null> {
   const authInfo = await getAuthInfo();
   return authInfo?.token || null;
+}
+
+export async function getAuthProviders() {
+  const session = await getServerSession(authOptions);
+  const providers = await getProviders();
+
+  return { session, providers };
 }
