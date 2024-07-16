@@ -16,7 +16,7 @@ export default async function SettingsLayout({
         <ListGroup userId={currentUserId} />
       </div>
 
-      <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2 min-h-[70vh]">
+      <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2 min-h-[70vh] pt-4">
         {children}
       </div>
     </div>

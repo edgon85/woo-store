@@ -10,7 +10,6 @@ export default async function ConfirmCheckoutPage({ params }: Props) {
   const partes = uuid.split('-');
   const ultimaParte = partes[partes.length - 1];
 
-  console.log(params.id);
   const order = await fetchOrderById(params.id);
   const { product, summary, packageDelivery, buyer } = order;
 
@@ -55,7 +54,11 @@ export default async function ConfirmCheckoutPage({ params }: Props) {
           <div className="flex flex-col gap-4">
             <p className="flex justify-between gap-2">
               <span className="font-bold">Envío: </span>
-              <span> {formatCurrency(summary.delivery * 100)}</span>
+              {summary.deliveryOffer !== 0 ? (
+                <span> {formatCurrency(summary.deliveryOffer * 100)}</span>
+              ) : (
+                <span> {formatCurrency(summary.delivery * 100)}</span>
+              )}
             </p>
             <p className="flex justify-between gap-2">
               <span className="font-bold">Tarifa de servicio: </span>

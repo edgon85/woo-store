@@ -7,22 +7,21 @@ type Props = {
 };
 
 export const NotificationItem = ({ notification }: Props) => {
-
   const getRedirectUrl = (notification: INotification) => {
     switch (notification.type) {
       case NotificationType.MESSAGE:
         return '/messages';
       case NotificationType.SALE:
-        return '/sales';
+        return `/settings/transactions/sales/${notification.url}/detail`;
       case NotificationType.NEW_OFFER:
-        return '/offers';
+        return '/settings/offers';
       case NotificationType.ACCEPT_OFFER:
         return `/product/${notification.url}`;
       case NotificationType.REJECT_OFFER:
         return `/product/${notification.url}?offer_rejected=true`;
       case NotificationType.OTHER:
       default:
-        return '/notifications';
+        return '/settings/notifications';
     }
   };
   return (

@@ -29,7 +29,7 @@ export async function acceptOffer(offerId: string) {
 
     const data = await resp.json();
 
-    revalidatePath(`/offers`);
+    revalidatePath(`/settings/offers`);
     return {
       ok: true,
       data,

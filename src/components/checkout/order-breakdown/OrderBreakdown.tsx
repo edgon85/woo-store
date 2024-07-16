@@ -66,7 +66,11 @@ export const OrderBreakdown = ({ product, address }: Props) => {
           {packageDelivery === null ? (
             <p className="text-yellow-600">Seleccione envío</p>
           ) : (
-            <p>{formatCurrency(+packageDelivery.originalPrice * 100)}</p>
+            <p>
+              {packageDelivery.price !== 0
+                ? formatCurrency(+packageDelivery.price * 100)
+                : formatCurrency(+packageDelivery.originalPrice * 100)}
+            </p>
           )}
         </div>
         <div className="flex justify-between items-center">

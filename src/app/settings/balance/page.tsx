@@ -8,7 +8,7 @@ export default async function BalancePage() {
 
   return (
     <>
-      <div className="flex flex-col gap-8 mt-4">
+      <div className="flex flex-col gap-8">
         <p className="text-base">
           Tu dinero se enviara a tu banco 48 horas después de que le llegue la
           prenda al comprador

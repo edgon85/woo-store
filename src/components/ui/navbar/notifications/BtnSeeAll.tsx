@@ -11,7 +11,7 @@ export const BtnSeeAll = ({ setIsCollapsed }: Props) => {
     <div className="border-t w-full">
       <button
         onClick={() => {
-          router.push('/notifications');
+          router.push('/settings/notifications');
           setIsCollapsed(false);
         }}
         className="w-full p-4 rounded-lg"

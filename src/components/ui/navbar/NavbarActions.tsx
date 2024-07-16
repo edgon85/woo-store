@@ -1,10 +1,9 @@
 'use client';
 
 import { DropdownAccount } from '../dropdowns';
+import { DropDownNotification, InboxNotification } from './notifications';
 import { HamburgerButton } from './hamburger-button';
 import { LoginRegisterButton } from './login-register-button';
-import { DropDownNotification } from './notifications/DropDownNotification';
-import { InboxNotification } from './notifications/InboxNotification';
 import { useAuth } from '@/hooks';
 
 export const NavbarActions = () => {

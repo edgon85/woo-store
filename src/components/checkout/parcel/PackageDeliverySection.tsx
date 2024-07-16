@@ -81,13 +81,15 @@ export const PackageDeliverySection = ({ packagesDeliveriesIds }: Props) => {
                     </div>
                     <div>
                       <span className="text-lg text-green-600 font-medium">
-                        {formatCurrency(+option.originalPrice * 100)}
+                        {option.price
+                          ? formatCurrency(+option.price * 100)
+                          : formatCurrency(+option.originalPrice * 100)}
                       </span>
-                      {/* {option.originalPrice && (
-                    <span className="ml-2 line-through text-gray-500">
-                      {option.originalPrice}
-                    </span>
-                  )} */}
+                      { Number(option.price) !== 0 ? (
+                        <span className="ml-2 line-through text-gray-500">
+                          {formatCurrency(+option.originalPrice * 100)}
+                        </span>
+                      ) : null}
                     </div>
                     <span className="text-gray-600">
                       Entrega a domicilio en {option.deliveryTime}

@@ -1,23 +1,22 @@
-import { getReceivedOffer } from '@/actions';
-import { OfferList } from '@/components';
-
-export default async function OfferPage() {
-  const { data: offers, ok, message } = await getReceivedOffer();
+import { getNotifications } from '@/actions';
+import { NotificationList } from '@/components';
+export default async function NotificationPage() {
+  const { ok, data, message } = await getNotifications();
 
   return (
-    <div className="main-wrapper mx-auto px-4 py-8">
+    <div className="">
       {ok ? (
-        offers.length > 0 ? (
+        data?.notifications.length > 0 ? (
           <>
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">
-              Ofertas Recibidas
-            </h1>
-            <OfferList offers={offers} />
+            <div className="max-w-[50vw] mr-auto mt-4">
+              <h2 className="text-lg font-semibold ">Notificaciones</h2>
+              <NotificationList notifications={data?.notifications} />
+            </div>
           </>
         ) : (
           <div className="flex flex-col justify-center items-center gap-4">
             <p className="text-lg text-gray-600">
-              No hay ofertas recibidas en este momento.
+              No hay notificaciones en este momento.
             </p>
             <picture>
               <img src="/empty-image.svg" alt="Empty image" width={400} />

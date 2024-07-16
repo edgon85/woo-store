@@ -42,11 +42,12 @@ export const useCheckoutStore = create<CheckoutState>()((set, get) => ({
     get amount() {
       const product = get().product;
       const priceToUse = product?.offerPrice ?? product?.price ?? 0;
-      return (
-        priceToUse +
-        Number(get().packageDelivery?.originalPrice ?? 0) +
-        get().serviceFee
-      );
+      const packageDelivery = get().packageDelivery;
+      const priceDelivery =
+        packageDelivery?.price !== 0
+          ? packageDelivery?.price
+          : packageDelivery?.originalPrice;
+      return priceToUse + Number(priceDelivery ?? 0) + get().serviceFee;
     },
   },
 }));
