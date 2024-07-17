@@ -6,6 +6,7 @@ import { IProduct } from '@/interfaces';
 
 import { BtnMakeOffer, BtnSendMessage, BtnBuyOrEdit } from './';
 import { ProductStatus } from '@/enums';
+import { CurrentUserReservedContent } from './CurrentUserReservedContent';
 
 type ActionsProps = {
   product: IProduct;
@@ -179,44 +180,6 @@ const OwnerReservedMessage = ({ product }: { product: IProduct }) => {
   );
 };
 
-// CurrentUserReservedContent.tsx
-const CurrentUserReservedContent = ({
-  product,
-  isPendingPayment,
-}: {
-  product: IProduct;
-  isPendingPayment: boolean;
-}) => {
-  if (isPendingPayment) {
-    return (
-      <div className="flex flex-col justify-center items-center">
-        <p className="text-center text-sm text-green-600 mb-4">
-          Ya has comprado este producto
-        </p>
-        <Link
-          href={`/settings/transactions/purchases`}
-          className="text-center text-sm text-yellow-600"
-        >
-          Ver detalles
-        </Link>
-      </div>
-    );
-  }
-  return (
-    <>
-      <p className="text-center text-sm text-green-600 mb-4">
-        Este producto está reservado para ti <br />{' '}
-        <strong>Tienes 24 hrs para realizar la compra</strong>
-      </p>
-      <Link
-        href={`/checkout?transaction=${product.id}&offer=true`}
-        className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white text-sm rounded flex justify-center items-center px-4 py-2"
-      >
-        Comprar ahora
-      </Link>
-    </>
-  );
-};
 
 // OtherUserReservedMessage.tsx
 const OtherUserReservedMessage = () => (
@@ -234,75 +197,4 @@ const UnavailableProduct = () => (
     </p>
   </div>
 );
-/* 
-<section className="flex flex-col gap-4">
-      <div className="text-xs text-gray-500 flex items-center justify-center gap-1">
-        <span>Envíos a todo el país</span>
-        <span>|</span>
-        <span>Protección al comprador</span>
-        <TooltipIcon />
-      </div>
 
-      {isAvailable ? (
-        <div className="flex flex-col gap-2">
-          <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
-          {!isOwner && (
-            <>
-              <BtnMakeOffer product={product} />
-              <BtnSendMessage
-                recipientId={product.user?.id!}
-                recipientUsername={product.user?.username!}
-                productId={product.id!}
-                slug={product.slug!}
-                title={product.title!}
-              />
-            </>
-          )}
-        </div>
-      ) : isReserved ? (
-        <div className="py-8">
-          {isOwner ? (
-            <p className="text-center text-sm text-yellow-600">
-              Este producto está reservado para {product.reservedFor?.fullName}{' '}
-              ({product.reservedFor?.username})
-            </p>
-          ) : isReservedForCurrentUser ? (
-            <>
-              {[
-                ProductStatus.Sold,
-                ProductStatus.UnderReview,
-                ProductStatus.PendingPayment,
-              ].includes(product.status as ProductStatus) ? (
-                <p className="text-center text-sm text-green-600 mb-4">
-                  Ya has comprado este producto
-                </p>
-              ) : (
-                <>
-                  <p className="text-center text-sm text-green-600 mb-4">
-                    Este producto está reservado para ti <br />{' '}
-                    <strong>Tienes 24 hrs para realizar la compra</strong>
-                  </p>
-                  <Link
-                    href={`/checkout?transaction=${product.id}&offer=true`}
-                    className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white text-sm rounded flex justify-center items-center px-4 py-2"
-                  >
-                    Comprar ahora
-                  </Link>
-                </>
-              )}
-            </>
-          ) : (
-            <p className="text-center text-sm text-cerise-red-600">
-              Este producto ya no está disponible
-            </p>
-          )}
-        </div>
-      ) : (
-        <div className="py-8">
-          <p className="text-center text-sm text-cerise-red-600">
-            Este producto ya no está disponible
-          </p>
-        </div>
-      )}
-    </section>
-*/

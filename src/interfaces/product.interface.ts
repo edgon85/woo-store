@@ -21,6 +21,16 @@ export interface IProduct {
   user?: IUser;
   createdAt?: Date;
   updatedAt?: Date;
+
+  offer?: {
+    id: string;
+    price: number;
+    status: string;
+    createdAt: string;
+    acceptedAt: null;
+    rejectedAt: null;
+    counterOfferedAt: null;
+  };
 }
 
 export interface ICategory {
@@ -79,6 +89,7 @@ interface ReservedFor {
   userId: string;
   fullName: string;
   username: string;
+  acceptedAt: string;
 }
 
 export interface ISubcategoryWithCategory extends ISubcategory {
