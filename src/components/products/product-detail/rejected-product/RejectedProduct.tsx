@@ -1,8 +1,11 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+
 import { BtnMakeOffer } from '../buttons';
 import { IProduct } from '@/interfaces';
+import { ProductStatus } from '@/enums';
 
 type Props = {
   isRejected: boolean;
@@ -14,23 +17,27 @@ export const RejectedProduct = ({ isRejected = false, product }: Props) => {
 
   useEffect(() => {
     if (isRejected) {
+      const isAvailable = product.status === ProductStatus.Available;
+
       Swal.fire({
         title: 'Oferta Rechazada',
-        html: 'Lo sentimos, tu oferta para este producto ha sido rechazada.<br>¿Deseas intentarlo de nuevo?',
+        html: isAvailable
+          ? 'Lo sentimos, tu oferta para este producto ha sido rechazada.<br>¿Deseas intentarlo de nuevo?'
+          : 'Lo sentimos, tu oferta para este producto ha sido rechazada.',
         icon: 'warning',
-        showCancelButton: true,
+        showCancelButton: isAvailable,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Intentar de nuevo',
+        confirmButtonText: isAvailable ? 'Intentar de nuevo' : 'Cerrar',
         cancelButtonText: 'Cerrar',
         reverseButtons: true,
       }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed && isAvailable) {
           setTriggerMakeOffer(true);
         }
       });
     }
-  }, [isRejected]);
+  }, [isRejected, product.status]);
 
   return (
     <div className="hidden">

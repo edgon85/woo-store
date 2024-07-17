@@ -26,7 +26,6 @@ export default async function ProductDetailPage({
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
 
-  console.log({ offer_rejected });
 
   const { user } = product;
 

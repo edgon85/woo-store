@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   // TODO: Colocar numero de rastreo
 
-  console.log(order);
+  // console.log(order);
   return (
     <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto mt-4">
       <div className="flex justify-between items-start">

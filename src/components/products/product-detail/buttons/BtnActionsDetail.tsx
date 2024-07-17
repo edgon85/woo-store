@@ -11,16 +11,231 @@ type ActionsProps = {
   product: IProduct;
   currentUserId: string;
 };
+type ActionContentProps = {
+  product: IProduct;
+  currentUserId: string;
+  isOwner: boolean;
+  isReserved?: boolean;
+  isAvailable?: boolean;
+  isReservedForCurrentUser?: boolean;
+};
 
 export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
-  const isOwner = currentUserId === product.user?.id;
-  const isReserved = product.status === ProductStatus.Reserved;
   const isAvailable = product.status === ProductStatus.Available;
+  const isReserved = product.status === ProductStatus.Reserved;
+  // const isPendingPayment = product.status === 'pending_payment';
+  const isOwner = currentUserId === product.user?.id;
   const isReservedForCurrentUser =
-    isReserved && product.reservedFor?.userId === currentUserId;
+    product.reservedFor?.userId === currentUserId;
 
   return (
     <section className="flex flex-col gap-4">
+      <ShippingInfo />
+      <ActionContent
+        product={product}
+        currentUserId={currentUserId}
+        isOwner={isOwner}
+        isReserved={isReserved}
+        // isPendingPayment={isPendingPayment}
+        isAvailable={isAvailable}
+        isReservedForCurrentUser={isReservedForCurrentUser}
+      />
+    </section>
+  );
+};
+
+// ShippingInfo.tsx
+const ShippingInfo = () => (
+  <div className="text-xs text-gray-500 flex items-center justify-center gap-1">
+    <span>Envíos a todo el país</span>
+    <span>|</span>
+    <span>Protección al comprador</span>
+    <TooltipIcon />
+  </div>
+);
+
+// ActionContent.tsx
+const ActionContent = ({
+  product,
+  currentUserId,
+  isOwner,
+  isReserved,
+  isAvailable,
+  isReservedForCurrentUser,
+}: ActionContentProps) => {
+  if (isAvailable) {
+    return (
+      <AvailableProduct
+        product={product}
+        currentUserId={currentUserId}
+        isOwner={isOwner}
+      />
+    );
+  }
+  if (
+    isReserved ||
+    [
+      ProductStatus.Sold,
+      ProductStatus.UnderReview,
+      ProductStatus.PendingPayment,
+    ].includes(product.status as ProductStatus)
+  ) {
+    return (
+      <ReservedProduct
+        product={product}
+        isOwner={isOwner}
+        isReservedForCurrentUser={isReservedForCurrentUser!}
+        // isPendingPayment={isPendingPayment}
+      />
+    );
+  }
+  return <UnavailableProduct />;
+};
+
+// AvailableProduct.tsx
+const AvailableProduct = ({
+  product,
+  currentUserId,
+  isOwner,
+}: {
+  product: IProduct;
+  currentUserId: string;
+  isOwner: boolean;
+}) => (
+  <div className="flex flex-col gap-2">
+    <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
+    {!isOwner && (
+      <>
+        <BtnMakeOffer product={product} />
+        <BtnSendMessage
+          recipientId={product.user?.id!}
+          recipientUsername={product.user?.username!}
+          productId={product.id!}
+          slug={product.slug!}
+          title={product.title!}
+        />
+      </>
+    )}
+  </div>
+);
+
+// ReservedProduct.tsx
+const ReservedProduct = ({
+  product,
+  isOwner,
+  isReservedForCurrentUser,
+}: {
+  product: IProduct;
+  isOwner: boolean;
+  isReservedForCurrentUser: boolean;
+}) => (
+  <div className="py-8">
+    {isOwner ? (
+      <OwnerReservedMessage product={product} />
+    ) : isReservedForCurrentUser ? (
+      <CurrentUserReservedContent
+        product={product}
+        isPendingPayment={[
+          ProductStatus.Sold,
+          ProductStatus.UnderReview,
+          ProductStatus.PendingPayment,
+        ].includes(product.status as ProductStatus)}
+      />
+    ) : (
+      <OtherUserReservedMessage />
+    )}
+  </div>
+);
+
+// OwnerReservedMessage.tsx
+const OwnerReservedMessage = ({ product }: { product: IProduct }) => {
+  return (
+    <>
+      {product.status === ProductStatus.Reserved ? (
+        <div className="w-full flex flex-col justify-center items-center">
+          <Link
+            href={`/settings/transactions/sales`}
+            className="text-center text-sm text-yellow-600"
+          >
+            Este producto está reservado para {product.reservedFor?.fullName} (
+            {product.reservedFor?.username})
+          </Link>
+          <p className="text-xs text-gray-400 text-center">
+            tiene 24hrs para hacer la compra de lo contrario el producto vuelve
+            a estar disponible
+          </p>
+        </div>
+      ) : (
+        <div className="w-full flex justify-center items-center">
+          <Link
+            href={`/settings/transactions/sales`}
+            className="text-center text-sm text-yellow-600"
+          >
+            Este producto ya fue comprado
+          </Link>
+        </div>
+      )}
+    </>
+  );
+};
+
+// CurrentUserReservedContent.tsx
+const CurrentUserReservedContent = ({
+  product,
+  isPendingPayment,
+}: {
+  product: IProduct;
+  isPendingPayment: boolean;
+}) => {
+  if (isPendingPayment) {
+    return (
+      <div className="flex flex-col justify-center items-center">
+        <p className="text-center text-sm text-green-600 mb-4">
+          Ya has comprado este producto
+        </p>
+        <Link
+          href={`/settings/transactions/purchases`}
+          className="text-center text-sm text-yellow-600"
+        >
+          Ver detalles
+        </Link>
+      </div>
+    );
+  }
+  return (
+    <>
+      <p className="text-center text-sm text-green-600 mb-4">
+        Este producto está reservado para ti <br />{' '}
+        <strong>Tienes 24 hrs para realizar la compra</strong>
+      </p>
+      <Link
+        href={`/checkout?transaction=${product.id}&offer=true`}
+        className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white text-sm rounded flex justify-center items-center px-4 py-2"
+      >
+        Comprar ahora
+      </Link>
+    </>
+  );
+};
+
+// OtherUserReservedMessage.tsx
+const OtherUserReservedMessage = () => (
+  <p className="text-center text-sm text-cerise-red-600">
+    Este producto ya no está disponible
+  </p>
+  //Este producto está reservado para otro usuario
+);
+
+// UnavailableProduct.tsx
+const UnavailableProduct = () => (
+  <div className="py-8">
+    <p className="text-center text-sm text-cerise-red-600">
+      Este producto ya no está disponible
+    </p>
+  </div>
+);
+/* 
+<section className="flex flex-col gap-4">
       <div className="text-xs text-gray-500 flex items-center justify-center gap-1">
         <span>Envíos a todo el país</span>
         <span>|</span>
@@ -53,16 +268,28 @@ export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
             </p>
           ) : isReservedForCurrentUser ? (
             <>
-              <p className="text-center text-sm text-green-600 mb-4">
-                Este producto está reservado para ti <br />{' '}
-                <strong>Tienes 24 hrs para realizar la compra</strong>
-              </p>
-              <Link
-                href={`/checkout?transaction=${product.id}&offer=true`}
-                className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white text-sm rounded flex justify-center items-center px-4 py-2"
-              >
-                Comprar ahora
-              </Link>
+              {[
+                ProductStatus.Sold,
+                ProductStatus.UnderReview,
+                ProductStatus.PendingPayment,
+              ].includes(product.status as ProductStatus) ? (
+                <p className="text-center text-sm text-green-600 mb-4">
+                  Ya has comprado este producto
+                </p>
+              ) : (
+                <>
+                  <p className="text-center text-sm text-green-600 mb-4">
+                    Este producto está reservado para ti <br />{' '}
+                    <strong>Tienes 24 hrs para realizar la compra</strong>
+                  </p>
+                  <Link
+                    href={`/checkout?transaction=${product.id}&offer=true`}
+                    className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white text-sm rounded flex justify-center items-center px-4 py-2"
+                  >
+                    Comprar ahora
+                  </Link>
+                </>
+              )}
             </>
           ) : (
             <p className="text-center text-sm text-cerise-red-600">
@@ -78,5 +305,4 @@ export const BtnActionsDetail = ({ product, currentUserId }: ActionsProps) => {
         </div>
       )}
     </section>
-  );
-};
+*/
