@@ -1,14 +1,22 @@
-import { FC, useEffect, useReducer } from 'react';
+import { FC, useEffect, useReducer, useMemo, useCallback } from 'react';
+import { useSession, signOut } from 'next-auth/react';
+import { toast } from 'react-toastify';
 import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
-import { signOut, useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-import { userState } from '@/actions';
-
+import { makeRegisterUser, userState } from '@/actions';
 
 export interface AuthState {
   isLoggedIn: boolean;
   user?: IUser;
+}
+
+interface AuthContextType extends AuthState {
+  logout: () => void;
+  registerUser: (
+    fullName: string,
+    email: string,
+    password: string
+  ) => Promise<{ hasError: boolean; message?: string }>;
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
@@ -16,115 +24,106 @@ const AUTH_INITIAL_STATE: AuthState = {
 };
 
 type Props = {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 };
 
 export const AuthProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
-
   const { data, status } = useSession();
 
-  useEffect(() => {
-    if (status === 'authenticated') {
-      const currentUser = data.user as IUser;
+  const logout = useCallback(() => {
+    signOut({ callbackUrl: '/' });
+  }, []);
 
-      // Función asincrónica dentro de useEffect
-      const checkUserStateAndAct = async () => {
-        const { ok } = await userState();
-
-        if (!ok) {
-          console.log('su sesión expiró');
-          logout();
-          return; // Si la sesión expiró, salimos de la función aquí
-        }
-
-        if (!currentUser?.isActive) {
-          console.log('usuario inactivo, comuníquese con un administrador');
-          logout();
-          return; // Si el usuario no está activo, salimos de la función aquí
-        }
-
-        if (currentUser === undefined) {
-          console.log('usuario no definido');
-          logout();
-          return; // Si el usuario no está definido, salimos de la función aquí
-        }
-
-        dispatch({ type: '[Auth] - Login', payload: currentUser });
-      };
-
-      // Llamar a la función asincrónica
-      checkUserStateAndAct();
+  const checkUserStateAndAct = useCallback(async () => {
+    if (!data || !data.user) {
+      console.error('No hay datos de usuario disponibles');
+      toast.error('Error al cargar los datos del usuario');
+      logout();
+      return;
     }
-  }, [status, data]);
 
-/*   useEffect(() => {
-    if (status === 'unauthenticated') {
- 
-  }, [status]);
- */
+    const currentUser = data.user as IUser;
+
+    try {
+      const { ok } = await userState();
+
+      if (!ok) {
+        throw new Error('Su sesión expiró');
+      }
+
+      if (!currentUser.isActive) {
+        throw new Error('Usuario inactivo, comuníquese con un administrador');
+      }
+
+      if (!currentUser.email || !currentUser.fullName) {
+        throw new Error('Datos de usuario incompletos');
+      }
+
+      dispatch({ type: '[Auth] - Login', payload: currentUser });
+      // toast.success('Sesión iniciada correctamente');
+    } catch (error) {
+      console.error('Error en la verificación del estado del usuario:', error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Ocurrió un error al verificar el estado del usuario'
+      );
+      logout();
+    }
+  }, [data, logout]);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    if (status === 'authenticated') {
+      timeoutId = setTimeout(checkUserStateAndAct, 1000);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [status, checkUserStateAndAct]);
+
   const registerUser = async (
     fullName: string,
     email: string,
     password: string
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
-      const authResponse = await fetch(
-        'http://localhost:5000/api/auth/register',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            fullName,
-            email,
-            password,
-          }),
-        }
+      const { data, ok, message } = await makeRegisterUser(
+        fullName,
+        email,
+        password
       );
 
-      if (!authResponse.ok) {
-        const resp = await authResponse.json();
-        // console.log(resp)
-        return {
-          hasError: true,
-          message: resp.message,
-        };
+      if (ok) {
+        dispatch({ type: '[Auth] - Login', payload: data as IUser });
       }
-      const user = await authResponse.json();
-
-      dispatch({ type: '[Auth] - Login', payload: user as IUser });
 
       return {
-        hasError: false,
+        hasError: !ok,
+        message: message || '',
       };
     } catch (error) {
-      console.log(error);
-
+      console.error('Error during user registration:', error);
       return {
         hasError: true,
-        message: 'hay error',
+        message: 'Ocurrió un error durante el registro',
       };
     }
   };
 
-  const logout = () => {
-    signOut();
-    redirect('/');
-  };
+  const contextValue = useMemo<AuthContextType>(
+    () => ({
+      ...state,
+      logout,
+      registerUser,
+    }),
+    [logout, state]
+  );
 
   return (
-    <AuthContext.Provider
-      value={{
-        ...state,
-
-        /* methods */
-        logout,
-        registerUser,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };

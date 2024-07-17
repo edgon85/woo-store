@@ -1,4 +1,5 @@
 export * from './address';
+export * from './auth';
 export * from './brands';
 export * from './chats';
 export * from './clothing-condition';

@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks';
 import { isEmail, isPassword } from '@/utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { SpinnerIcon } from '../ui';
 
 type FormData = {
   fullName: string;
@@ -11,10 +12,9 @@ type FormData = {
 };
 
 export const RegisterForm = () => {
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState('');
   const { registerUser, login } = useAuth();
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -22,109 +22,104 @@ export const RegisterForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const onRegisterUser = async (data: FormData) => {
+    setIsLoading(true);
+    setError('');
 
-  const onRegisterUser = async ({ fullName, email, password }: FormData) => {
-    const { hasError, message } = await registerUser(fullName, email, password);
+    try {
+      const { hasError, message } = await registerUser(
+        data.fullName,
+        data.email,
+        data.password
+      );
 
-    if (hasError) {
-      setShowError(true);
-      setErrorMessage(message || '');
-      setTimeout(() => {
-        setShowError(false);
-      }, 5000);
-      return;
+      if (hasError) {
+        setError(message || 'Error en el registro');
+        return;
+      }
+
+      await login(data.email, data.password);
+    } catch (error) {
+      setError('Ocurrió un error inesperado');
+    } finally {
+      setIsLoading(false);
     }
-
-    login(email, password);
   };
+
+  const inputClassName = (fieldError?: string) => `
+    block w-full p-4 text-gray-900 border rounded-md sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none
+    ${fieldError ? 'border-red-500 bg-red-50' : 'border-divider'}
+  `;
 
   return (
     <div className="w-full">
-      {showError && (
+      {error && (
         <div
           className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50"
           role="alert"
         >
-          <span className="font-medium">Error</span> {errorMessage}
+          <span className="font-medium">Error:</span> {error}
         </div>
       )}
-      <form onSubmit={handleSubmit(onRegisterUser)}>
-        <div className="mb-3">
-          <label
-            htmlFor="large-input"
-            className="block mb-2 text-lg font-medium text-gray-900"
-          >
-            Nombre y apellido
-          </label>
-          <input
-            type="text"
-            id="large-input"
-            className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            placeholder="Nombre y apellido"
-            {...register('fullName', {
-              required: 'Este campo es requerido',
-              minLength: { value: 3, message: 'Mínimo 3 caracteres' },
-            })}
-          />
-          {errors.fullName && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-              {errors.fullName.message}
-            </p>
-          )}
-        </div>
-        <div className="mb-3">
-          <label
-            htmlFor="large-input"
-            className="block mb-2 text-lg font-medium text-gray-900"
-          >
-            Correo electrónico
-          </label>
-          <input
-            type="email"
-            id="large-input"
-            className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            placeholder="user@correo.com"
-            {...register('email', {
-              required: 'Este campo es requerido',
-              validate: isEmail,
-            })}
-          />
-          {errors.email && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
-        <div className="mb-3">
-          <label
-            htmlFor="password-input"
-            className="block mb-2 text-lg font-medium text-gray-900"
-          >
-            Contraseña
-          </label>
-          <input
-            type="password"
-            id="password-input"
-            className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            placeholder="contraseña"
-            {...register('password', {
-              required: 'Este campo es requerido',
-              minLength: { value: 6, message: 'Mínimo 6 caracteres' },
-              validate: isPassword,
-            })}
-          />
-          {errors.password && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+      <form onSubmit={handleSubmit(onRegisterUser)} noValidate>
+        {['fullName', 'email', 'password'].map((field) => (
+          <div key={field} className="mb-3">
+            <label
+              htmlFor={field}
+              className="block mb-2 text-lg font-medium text-gray-900"
+            >
+              {field === 'fullName'
+                ? 'Nombre y apellido'
+                : field === 'email'
+                ? 'Correo electrónico'
+                : 'Contraseña'}
+            </label>
+            <input
+              type={field === 'password' ? 'password' : 'text'}
+              id={field}
+              className={inputClassName(
+                errors[field as keyof FormData]?.message
+              )}
+              placeholder={
+                field === 'fullName'
+                  ? 'Nombre y apellido'
+                  : field === 'email'
+                  ? 'user@correo.com'
+                  : 'contraseña'
+              }
+              disabled={isLoading}
+              {...register(field as keyof FormData, {
+                required: 'Este campo es requerido',
+                ...(field === 'fullName' && {
+                  minLength: { value: 3, message: 'Mínimo 3 caracteres' },
+                }),
+                ...(field === 'email' && { validate: isEmail }),
+                ...(field === 'password' && {
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                  validate: isPassword,
+                }),
+              })}
+            />
+            {errors[field as keyof FormData] && (
+              <p className="mt-2 text-sm text-red-600">
+                {errors[field as keyof FormData]?.message}
+              </p>
+            )}
+          </div>
+        ))}
 
         <button
           type="submit"
-          className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer"
+          className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer disabled:opacity-50"
+          disabled={isLoading}
         >
-          Registrarse
+          {isLoading ? (
+            <span className="flex items-center justify-center">
+              <SpinnerIcon className="animate-spin" />
+            </span>
+          ) : (
+            'Registrarse'
+          )}
         </button>
       </form>
     </div>

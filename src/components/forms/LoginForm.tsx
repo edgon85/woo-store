@@ -5,6 +5,9 @@ import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 
 import { isEmail } from '@/utils';
+import { useState } from 'react';
+import { SpinnerIcon } from '../ui';
+import { useModalAuth } from '@/stores';
 
 type FormData = {
   email: string;
@@ -12,92 +15,145 @@ type FormData = {
 };
 
 export const LoginForm = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const { closeModal } = useModalAuth();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onLoginUser = ({ email, password }: FormData) => {
-    signIn('credentials', {
-      email,
-      password,
-    });
+  const onLoginUser = async ({ email, password }: FormData) => {
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const result = await signIn('credentials', {
+        redirect: false, // Do not redirect to the page after login
+        email,
+        password,
+      });
+
+      if (result?.error) {
+        setError('Email o contraseña incorrectos');
+      } else {
+        closeModal();
+      }
+    } catch (error) {
+      setError('Ocurrió un error inesperado');
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const inputClassName = (fieldError?: string) => `
+    block w-full p-4 rounded-md sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none
+    ${
+      fieldError
+        ? 'bg-red-50 border border-red-500 text-red-900'
+        : 'border border-divider text-gray-900'
+    }
+  `;
 
   return (
     <div className="w-full">
+      {error && (
+        <div
+          className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50"
+          role="alert"
+        >
+          <span className="font-medium">Error:</span> {error}
+        </div>
+      )}
       <form onSubmit={handleSubmit(onLoginUser)} noValidate>
-        <div className="mb-3">
-          <label
-            htmlFor="large-input"
-            className="block mb-2 text-lg font-medium text-gray-900"
-          >
-            Correo
-          </label>
-          <input
-            type="email"
-            id="large-input"
-            className={`block w-full p-4  ${
-              !errors.email
-                ? 'border border-divider text-gray-900'
-                : 'bg-red-50 border border-red-500 text-red-900'
-            } rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none`}
-            // className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            placeholder="user@correo.com"
-            {...register('email', {
-              required: 'Este campo es requerido',
-              validate: isEmail,
-            })}
-          />
-          {errors.email && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
-        <div className="mb-3">
-          <label
-            htmlFor="password-input"
-            className="block mb-2 text-lg font-medium text-gray-900"
-          >
-            Contraseña
-          </label>
-          <input
-            type="password"
-            id="password-input"
-            // className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-            className={`block w-full p-4  ${
-              !errors.password
-                ? 'border border-divider text-gray-900'
-                : 'bg-red-50 border border-red-500 text-red-900'
-            } rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none`}
-            placeholder="contraseña"
-            {...register('password', {
-              required: 'Este campo es requerido',
-              minLength: { value: 6, message: 'Mínimo 6 caracteres' },
-            })}
-          />
-          {errors.password && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+        {[
+          {
+            name: 'email',
+            label: 'Correo',
+            type: 'email',
+            placeholder: 'user@correo.com',
+          },
+          {
+            name: 'password',
+            label: 'Contraseña',
+            type: 'password',
+            placeholder: 'contraseña',
+          },
+        ].map((field) => (
+          <div key={field.name} className="mb-3">
+            <label
+              htmlFor={field.name}
+              className="block mb-2 text-lg font-medium text-gray-900"
+            >
+              {field.label}
+            </label>
+            <input
+              type={field.type}
+              id={field.name}
+              className={inputClassName(
+                errors[field.name as keyof FormData]?.message
+              )}
+              placeholder={field.placeholder}
+              disabled={isLoading}
+              {...register(field.name as keyof FormData, {
+                required: 'Este campo es requerido',
+                ...(field.name === 'email' && { validate: isEmail }),
+                ...(field.name === 'password' && {
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                }),
+              })}
+            />
+            {errors[field.name as keyof FormData] && (
+              <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                {errors[field.name as keyof FormData]?.message}
+              </p>
+            )}
+          </div>
+        ))}
 
         <button
           type="submit"
-          className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer"
+          className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer disabled:opacity-50"
+          disabled={isLoading}
         >
-          iniciar sesión
+          {isLoading ? (
+            <span className="flex items-center justify-center">
+              <SpinnerIcon className="animate-spin" />
+            </span>
+          ) : (
+            'Iniciar sesión'
+          )}
         </button>
       </form>
       <div className="mt-6 w-full bg-background rounded-md p-2 text-center">
         <span className="text-sm">¿Ha olvidado su contraseña? </span>
-        <Link href="#" className="text-primary underline text-sm uppercase">
+        <Link
+          href="#"
+          className={`text-primary underline text-sm uppercase ${
+            isLoading ? 'pointer-events-none opacity-50' : ''
+          }`}
+        >
           recuperar
         </Link>
       </div>
     </div>
   );
 };
+
+{
+  /*   <button
+    type="submit"
+    className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer disabled:opacity-50"
+    disabled={isLoading}
+  >
+    {isLoading ? (
+      <span className="flex items-center justify-center">
+        <SpinnerIcon className="animate-spin" />
+      </span>
+    ) : (
+      'Iniciar sesión'
+    )}
+  </button> */
+}

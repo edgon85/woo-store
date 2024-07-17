@@ -1,33 +1,53 @@
-import { signIn } from 'next-auth/react';
-import { FacebookIcon, GoogleIcon } from '../icons';
+'use client'
+import { FacebookIcon, GoogleIcon, SpinnerIcon } from '../icons';
+
+type Provider = string;
 
 type Props = {
   title: string;
   icon?: JSX.Element;
   onVoidAction?: () => void;
   provider: string;
+  isLoading: boolean;
 };
 
-export const BtnSocial = ({ title, icon, provider }: Props) => {
-  let selectColor = '';
+const providerColors: { [key: string]: string } = {
+  google: 'bg-googleColor',
+  facebook: 'bg-facebookColor',
+};
 
-  switch (provider) {
-    case 'google':
-      //   selectColor = 'var(--google)';
-      selectColor = 'bg-googleColor';
-      break;
+const providerIcons: { [key: string]: JSX.Element } = {
+  facebook: <FacebookIcon />,
+  google: <GoogleIcon />,
+};
 
-    case 'facebook':
-      selectColor = 'bg-facebookColor';
-      break;
-  }
+const BASE_BUTTON_CLASSES =
+  'text-white w-full rounded-md py-2 uppercase shadow-md flex justify-center items-center gap-2 cursor-pointer';
+
+export const BtnSocial = ({
+  title,
+  icon,
+  provider,
+  isLoading,
+  onVoidAction,
+}: Props) => {
+  const selectColor = providerColors[provider] || '';
 
   return (
     <button
-      onClick={() => signIn(provider)}
-      className={`${selectColor} text-white w-full rounded-md py-2 uppercase shadow-md flex justify-center items-center gap-2 cursor-pointer`}
+      onClick={onVoidAction}
+      className={`${selectColor} ${BASE_BUTTON_CLASSES}`}
+      disabled={isLoading}
     >
-      {provider === 'facebook' ? <FacebookIcon /> : <GoogleIcon />} {title}
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <SpinnerIcon className="animate-spin" />
+        </div>
+      ) : (
+        <>
+          {icon || providerIcons[provider] || null} {title}
+        </>
+      )}
     </button>
   );
 };

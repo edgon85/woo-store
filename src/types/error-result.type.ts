@@ -1,4 +1,4 @@
 export type ErrorResult = {
-  ok: false;
+  ok: boolean;
   message: string;
 };
