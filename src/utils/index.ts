@@ -7,3 +7,4 @@ export * from './currency';
 export * from './format-date-local';
 export * from './jwtUtils';
 export * from './uuid-format';
+export * from './authOptions'

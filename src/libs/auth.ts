@@ -1,6 +1,6 @@
 // lib/auth.ts
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'; // Ajusta esta ruta según tu estructura
+import { authOptions } from '@/utils';
 import { IUser } from '@/interfaces';
 import { getProviders } from 'next-auth/react';
 

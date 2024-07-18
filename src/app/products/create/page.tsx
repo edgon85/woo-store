@@ -5,15 +5,23 @@ import {
   getColors,
 } from '@/actions';
 import { CreateProduct } from '@/components';
+import { IPackageDelivery } from '@/interfaces';
 
 export default async function CreateProductPage() {
-  const [packageDeliveriesData, brandsData, clothingConditionData, colorsData] =
-    await Promise.all([
-      fetchPackageDeliveries(),
-      getBrands(''),
-      getClothingCondition(),
-      getColors(),
-    ]);
+  const [
+    packageDeliveriesDataRequest,
+    brandsData,
+    clothingConditionData,
+    colorsData,
+  ] = await Promise.all([
+    fetchPackageDeliveries(),
+    getBrands(''),
+    getClothingCondition(),
+    getColors(),
+  ]);
+
+  const packageDeliveriesData =
+    packageDeliveriesDataRequest as IPackageDelivery[];
 
   return (
     <div className="main-wrapper flex justify-center pt-8 pb-8">

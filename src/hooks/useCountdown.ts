@@ -1,5 +1,5 @@
 // useCountdown.ts
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface TimeLeft {
   hours: number;
@@ -10,7 +10,7 @@ interface TimeLeft {
 const useCountdown = (targetDate: string): TimeLeft => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const calculateTimeLeft = (): TimeLeft => {
+  const calculateTimeLeft = useCallback((): TimeLeft => {
     if (!targetDate) {
       return { hours: 0, minutes: 0, isExpired: true };
     }
@@ -27,20 +27,24 @@ const useCountdown = (targetDate: string): TimeLeft => {
     }
 
     return { hours: 0, minutes: 0, isExpired: true };
-  };
+  }, [targetDate]);
 
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
 
   useEffect(() => {
-    if (!timeLeft.isExpired) {
-      intervalRef.current = setInterval(() => {
-        const newTimeLeft = calculateTimeLeft();
-        setTimeLeft(newTimeLeft);
+    const updateTimeLeft = () => {
+      const newTimeLeft = calculateTimeLeft();
+      setTimeLeft(newTimeLeft);
 
-        if (newTimeLeft.isExpired && intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-      }, 60000); // Actualiza cada minuto (60000 ms)
+      if (newTimeLeft.isExpired && intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+
+    updateTimeLeft(); // Actualiza inmediatamente
+
+    if (!timeLeft.isExpired) {
+      intervalRef.current = setInterval(updateTimeLeft, 60000); // Actualiza cada minuto (60000 ms)
     }
 
     return () => {
@@ -48,7 +52,7 @@ const useCountdown = (targetDate: string): TimeLeft => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [targetDate]);
+  }, [calculateTimeLeft, timeLeft.isExpired]);
 
   return timeLeft;
 };
