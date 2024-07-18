@@ -1,9 +1,10 @@
 'use client';
-import { useAuth } from '@/hooks';
 import { isEmail, isPassword } from '@/utils';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { SpinnerIcon } from '../ui';
+import { useAuthStore } from '@/stores';
+import { useAuthProviders } from '@/hooks';
 
 type FormData = {
   fullName: string;
@@ -13,7 +14,9 @@ type FormData = {
 
 export const RegisterForm = () => {
   const [error, setError] = useState('');
-  const { registerUser, login } = useAuth();
+  const {  loginCredentials } = useAuthProviders();
+  const { registerUser } = useAuthStore((state) => state);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -38,7 +41,7 @@ export const RegisterForm = () => {
         return;
       }
 
-      await login(data.email, data.password);
+      await loginCredentials(data.email, data.password);
     } catch (error) {
       setError('Ocurrió un error inesperado');
     } finally {

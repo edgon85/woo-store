@@ -10,8 +10,7 @@ import { useContext, useEffect, useState } from 'react';
 import { IChat } from '@/interfaces';
 import { ChatContext } from '@/context';
 import { useRouter } from 'next/navigation';
-import { useInboxStore } from '@/stores';
-import { useAuth } from '@/hooks';
+import { useAuthStore, useInboxStore } from '@/stores';
 
 type Props = {
   chat: IChat;
@@ -21,7 +20,7 @@ export const UserListItem = ({ chat }: Props) => {
   const { setChats, removeUnreadChatId } = useInboxStore();
   const { dispatch, chatState } = useContext(ChatContext);
   const router = useRouter();
-  const { user } = useAuth();
+  const { user } = useAuthStore((state) => state);
 
   const [imageUrl, setImageUrl] = useState<string | null>('');
   const [isChatRead, setIsChatRead] = useState(false);

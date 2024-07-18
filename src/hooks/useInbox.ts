@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { useAuth } from './useAuth';
 import { Socket } from 'socket.io-client';
-import { useInboxStore } from '@/stores';
+import { useAuthStore, useInboxStore } from '@/stores';
 import { getInboxChats } from '@/actions';
 
 const useNotifications = (socket: Socket | null) => {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn } = useAuthStore((state) => state);
   const { setChats, addUnreadChatId, unreadChatIds } = useInboxStore();
 
   useEffect(() => {

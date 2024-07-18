@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { SocketContext } from './SocketContext';
 import { useSocket } from '../../hooks';
-import { AuthContext } from '../auth';
 import { ChatContext } from '../chat/ChatContext';
 import { INotification } from '@/interfaces';
 import { NotificationContext } from '../notification/NotificationContext';
+import { useAuthStore } from '@/stores';
 
 interface SocketProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -14,7 +14,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   const { socket, online, conectarSocket, desconectarSocket } = useSocket(
     process.env.API_BASE_URL!
   );
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useAuthStore( (state) => state);
   const { dispatch } = useContext(ChatContext);
   const { dispatch: notificationDispatch } = useContext(NotificationContext);
 

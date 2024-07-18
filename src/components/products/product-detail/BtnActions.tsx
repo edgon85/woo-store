@@ -1,12 +1,13 @@
 'use client';
 
 import { addToFavorite, deleteToFavorite, getCheckIsFavorite } from '@/actions';
-import { useAuth } from '@/hooks';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { BsHeart, BsHeartFill, BsShare } from 'react-icons/bs';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import { ShareButton } from './share/ShareButton';
+import { useAuthStore } from '@/stores';
 type Props = {
   productId: string;
   productName: string;
@@ -15,7 +16,7 @@ type Props = {
 
 export const BtnActions = ({ productId, productName, productPrice }: Props) => {
   const path = usePathname();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuthStore((state) => state);
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {

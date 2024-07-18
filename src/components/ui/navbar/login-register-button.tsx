@@ -1,12 +1,13 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
-import { useModalAuth } from '@/stores';
-import { useAuth } from '@/hooks';
+import { useAuthStore, useModalAuth } from '@/stores';
+
 import clsx from 'clsx';
 
 export const LoginRegisterButton = () => {
   const pathName = usePathname();
-  const { isLoggedIn } = useAuth();
+  
+  const { isLoggedIn } = useAuthStore((state) => state);
   const router = useRouter();
   const { openModal } = useModalAuth();
 

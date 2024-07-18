@@ -3,18 +3,20 @@ import { useSidebar } from '@/stores';
 import { ButtonCellNow } from './ButtonCellNow';
 import { ButtonRegister } from './ButtonRegister';
 
-import { useAuth } from '@/hooks';
+
 import { MenuItem } from '../../filters/NavItems';
 import { ClothesList } from './clothes/ClothesList';
 import { BsArrowRight } from 'react-icons/bs';
 import { ListGroup } from '@/components';
 
 import clsx from 'clsx';
+import { useAuthStore } from '@/stores/auth.store';
 
 const Sidebar = () => {
   const menuOpen = useSidebar((state) => state.sidebarOpen);
   const setMenuOpen = useSidebar((state) => state.onSidebarOpen);
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const user = useAuthStore((state) => state.user);
 
   return (
     <>

@@ -1,5 +1,5 @@
 'use client';
-import { useAuth } from '@/hooks';
+import { useAuthStore } from '@/stores';
 
 type Props = {
   icon: JSX.Element;
@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const BtnCircle = ({ icon, onVoidCallback }: Props) => {
-  const { isLoggedIn } = useAuth();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   return (
     <>
       {!isLoggedIn ? null : (

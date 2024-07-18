@@ -11,10 +11,12 @@ import {
   UserIcon,
 } from '../icons';
 import { DropdownItem } from './DropdownItem';
-import { useAuth } from '@/hooks';
+
+import { useAuthStore } from '@/stores/auth.store';
 
 export const DropdownAccount = () => {
-  const { logout, user } = useAuth();
+  // const { logout, user } = useAuth();
+  const { logout, user } = useAuthStore()
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

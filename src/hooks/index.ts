@@ -1,4 +1,4 @@
-export * from './useAuth';
+export * from './useAuthProviders';
 export * from './useDebounce';
 export * from './useFetcher';
 export { default as useInbox } from './useInbox';

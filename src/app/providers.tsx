@@ -1,5 +1,6 @@
 'use client';
 
+import { AuthStateManager } from '@/components/auth/AuthStateManager';
 import {
   AuthProvider,
   ChatProvider,
@@ -24,9 +25,10 @@ export function Providers({ children }: Props) {
       <SessionProvider>
         <ChatProvider>
           <NotificationProvider>
-            <AuthProvider>
-              <SocketProvider>{children}</SocketProvider>
-            </AuthProvider>
+            {/* <AuthProvider> */}
+            <AuthStateManager />
+            <SocketProvider>{children}</SocketProvider>
+            {/* </AuthProvider> */}
           </NotificationProvider>
         </ChatProvider>
       </SessionProvider>

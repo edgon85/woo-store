@@ -4,11 +4,12 @@ import { ChatContext } from '@/context';
 import { IMessage } from '@/interfaces';
 import { MessageOutgoing } from './MessageOutgoing';
 import { MessageIncoming } from './MessageIncoming';
-import { useAuth } from '@/hooks';
+import { useAuthStore } from '@/stores';
+
 
 export const ChatWindow = () => {
   const { chatState } = useContext(ChatContext);
-  const { user } = useAuth();
+  const { user } = useAuthStore((state) => state);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

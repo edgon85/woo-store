@@ -1,12 +1,11 @@
 'use client';
 
-import { useAuth } from '@/hooks';
-import { useModalAuth } from '@/stores';
+import { useAuthStore, useModalAuth } from '@/stores';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export const BannerDesktop = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuthStore((state) => state);
   const { openModal } = useModalAuth();
   const router = useRouter();
 
@@ -63,7 +62,7 @@ export const BannerDesktop = () => {
 };
 
 export const BannerMovil = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuthStore();
   const { openModal } = useModalAuth();
   const router = useRouter();
 

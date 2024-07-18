@@ -4,7 +4,6 @@ import { LiteralUnion } from 'react-hook-form';
 import { BuiltInProviderType } from 'next-auth/providers';
 import { ClientSafeProvider, signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { useModalAuth } from '@/stores';
 import { toast } from 'react-toastify';
 
 type Props = {
@@ -19,7 +18,7 @@ export const AuthButtonsProviders = ({ title, providers }: Props) => {
   const [loadingProviders, setLoadingProviders] = useState<
     Record<string, boolean>
   >({});
-  const { closeModal } = useModalAuth();
+
 
   const handleSignIn = async (provider: string) => {
     setLoadingProviders((prev) => ({ ...prev, [provider]: true }));

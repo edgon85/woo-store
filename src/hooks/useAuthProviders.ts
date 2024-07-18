@@ -1,9 +1,8 @@
-import { AuthContext } from '@/context';
-import { getProviders, signIn } from 'next-auth/react';
-import { useContext, useEffect, useState } from 'react';
 
-export const useAuth = () => {
-  const { logout, isLoggedIn, user, registerUser } = useContext(AuthContext);
+import { getProviders, signIn } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+
+export const useAuthProviders = () => {
   const [providers, setProviders] = useState<any>({});
 
   useEffect(() => {
@@ -12,17 +11,19 @@ export const useAuth = () => {
     });
   }, []);
 
-  const login = async (email: string, password: string) =>
+  const loginCredentials = async (email: string, password: string) =>
     await signIn('credentials', { email, password });
 
   return {
-    isLoggedIn,
+    /* isLoggedIn,
     user,
-    providers,
-
-    /* methods */
+    
+    
     logout,
     registerUser,
-    login,
+    */
+   providers,
+   loginCredentials, 
+   
   };
 };

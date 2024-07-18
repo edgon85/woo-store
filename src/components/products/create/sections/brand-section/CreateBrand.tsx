@@ -1,7 +1,6 @@
 import { createBrand } from '@/actions';
-import { useAuth } from '@/hooks';
 import { IBrand } from '@/interfaces';
-import { useModalStore } from '@/stores';
+import { useAuthStore, useModalStore } from '@/stores';
 import { BsPlusCircle } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 
@@ -13,7 +12,7 @@ type Props = {
 
 export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
   const closeModal = useModalStore((state) => state.closeModal);
-  const { user } = useAuth();
+  const { user } = useAuthStore((state) => state);
 
   const handleOnclick = () => {
     Swal.fire({

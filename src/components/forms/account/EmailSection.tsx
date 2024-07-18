@@ -1,7 +1,7 @@
 'use client';
 import { updateUserData } from '@/actions';
 import { Button, SpinnerIcon } from '@/components/ui';
-import { useAuth } from '@/hooks';
+import { useAuthStore } from '@/stores';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-responsive-modal';
@@ -23,7 +23,7 @@ export const EmailSection = ({ userId, email, authType }: Props) => {
   const [initialValue, setInitialValue] = useState(email);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { logout } = useAuth();
+  const { logout } = useAuthStore((state) => state);
 
   const {
     register,

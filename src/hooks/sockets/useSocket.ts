@@ -1,6 +1,7 @@
+import { useAuthStore } from '@/stores';
 import { useCallback, useEffect, useState } from 'react';
 import { Manager, Socket } from 'socket.io-client';
-import { useAuth } from '../useAuth';
+
 
 interface UseSocketReturn {
   socket: Socket | null;
@@ -12,7 +13,7 @@ interface UseSocketReturn {
 export const useSocket = (serverPath: string): UseSocketReturn => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [online, setOnline] = useState(false);
-  const { user } = useAuth();
+  const { user } = useAuthStore( (state) => state);
 
   const conectarSocket = useCallback(() => {
     const token = user?.token || '';

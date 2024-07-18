@@ -2,8 +2,8 @@
 import { IProduct } from '@/interfaces';
 import { useEffect, useState } from 'react';
 import { ModalMakeOffer } from './ModalMakeOffer';
-import { useAuth } from '@/hooks';
-import { useModalAuth } from '@/stores';
+
+import { useAuthStore, useModalAuth } from '@/stores';
 
 type Props = {
   product: IProduct;
@@ -12,7 +12,7 @@ type Props = {
 
 export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
   const [openOfferModal, setOpenOfferModal] = useState(false);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuthStore( (state) => state );
   const { openModal } = useModalAuth();
 
   useEffect(() => {

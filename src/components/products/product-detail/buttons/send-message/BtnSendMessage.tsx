@@ -2,11 +2,11 @@
 import { useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { AuthContext, ChatContext } from '@/context';
+import { ChatContext } from '@/context';
 import { getChatForUser } from '@/actions';
 import { ModalSendMessage } from './ModalSendMessage';
-import { useAuth } from '@/hooks';
-import { useModalAuth } from '@/stores';
+
+import { useAuthStore, useModalAuth } from '@/stores';
 
 type Props = {
   recipientId: string;
@@ -23,11 +23,11 @@ export const BtnSendMessage = ({
   slug,
   title,
 }: Props) => {
-  const { isLoggedIn } = useContext(AuthContext);
+  
   const [open, setOpen] = useState(false);
   const { dispatch } = useContext(ChatContext);
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuthStore((state) => state);
   const { openModal } = useModalAuth();
 
   const onHandleClick = async () => {

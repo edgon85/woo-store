@@ -1,7 +1,6 @@
 'use client';
 
-import { useAuth } from '@/hooks';
-import { usePayoutStore } from '@/stores';
+import { useAuthStore, usePayoutStore } from '@/stores';
 import { ChangeEvent, useState } from 'react';
 import { AccountType } from './step-two/AccountType';
 import { FormPersonal } from './step-two/FormPersonal';
@@ -26,7 +25,7 @@ export const StepTwo = () => {
     (store) => store.onSetBankAccountHolder
   );
 
-  const { user } = useAuth();
+  const { user } = useAuthStore((state) => state);
 
   const prevStep = () => {
     setCurrentStep(currentStep - 1);

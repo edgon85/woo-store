@@ -1,5 +1,6 @@
 import { ChatContext, SocketContext } from '@/context';
-import { useAuth } from '@/hooks';
+import { useAuthStore } from '@/stores';
+
 
 
 import { useContext } from 'react';
@@ -14,7 +15,7 @@ type MessageFormInput = {
 };
 
 export const ChatInput = ({ recipientId }: Props) => {
-  const { user } = useAuth();
+  const { user } = useAuthStore((state) => state);
   const { socket } = useContext(SocketContext);
   const { chatState } = useContext(ChatContext);
 

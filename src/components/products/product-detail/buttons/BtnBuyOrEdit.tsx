@@ -3,8 +3,8 @@ import { IProduct } from '@/interfaces';
 import { ProductStatus } from '@/enums';
 import { translateProductStatus } from '@/utils';
 import Link from 'next/link';
-import { useModalAuth } from '@/stores';
-import { useAuth } from '@/hooks';
+import { useAuthStore, useModalAuth } from '@/stores';
+
 import { useRouter } from 'next/navigation';
 
 export const BtnBuyOrEdit = ({
@@ -16,7 +16,7 @@ export const BtnBuyOrEdit = ({
 }) => {
   const { status } = product;
   const { openModal } = useModalAuth();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuthStore((state) => state);
   const router = useRouter();
 
   const handleBuyClick = (e: React.MouseEvent) => {

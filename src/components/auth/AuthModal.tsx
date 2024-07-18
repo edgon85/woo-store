@@ -4,10 +4,11 @@ import { LoginComponent } from './LoginComponent';
 import { RegisterComponent } from './RegisterComponent';
 import { useState } from 'react';
 import { useModalAuth } from '@/stores';
-import { useAuth } from '@/hooks';
+import { useAuthProviders } from '@/hooks';
+
 
 export const AuthModal = () => {
-  const { providers } = useAuth();
+  const { providers } = useAuthProviders();
   const [selectRegister, setSelectRegister] = useState<boolean>(false);
 
   const { isOpen, closeModal } = useModalAuth();
