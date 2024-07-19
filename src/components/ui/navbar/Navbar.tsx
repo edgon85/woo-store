@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import logo from '../../../../public/logo2.svg';
-import { NavbarSearch, NavbarActions } from './';
+import { NavbarActions, NavbarSearch } from './';
 import Link from 'next/link';
 import { GenderSelected } from '../dropdowns';
+import { Suspense } from 'react';
+// import { DynamicNavbarActions } from '@/components';
 
 export const Navbar = () => {
   return (
@@ -22,9 +24,16 @@ export const Navbar = () => {
             <NavbarSearch />
           </div>
 
-          <div className="">
+          {/*   <div className="">
             <NavbarActions />
-          </div>
+          </div> */}
+          <Suspense
+            fallback={
+              <div className="h-10 w-40 bg-gray-200 animate-pulse rounded"></div>
+            }
+          >
+            <NavbarActions />
+          </Suspense>
         </div>
       </div>
       <div className="md:hidden flex justify-center pb-2">

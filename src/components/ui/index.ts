@@ -10,3 +10,4 @@ export * from './Divider';
 
 export * from './skeletons';
 export * from './pagination/Pagination';
+export * from './svgs';

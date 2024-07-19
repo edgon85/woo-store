@@ -1,31 +1,35 @@
 'use client';
 
-import { DropdownAccount } from '../dropdowns';
+import { memo } from 'react';
 import { DropDownNotification, InboxNotification } from './notifications';
-import { HamburgerButton } from './hamburger-button';
+import { DropdownAccount } from '../dropdowns';
+import { useAuthStore } from '@/stores';
 import { LoginRegisterButton } from './login-register-button';
-import { useAuthStore } from '@/stores/auth.store';
+import { HamburgerButton } from './hamburger-button';
 
+const AuthenticatedActions = memo(() => (
+  <div className="hidden md:flex gap-1">
+    <InboxNotification />
+    <DropDownNotification />
+    <DropdownAccount />
+  </div>
+));
 
-export const NavbarActions = () => {
-  
+AuthenticatedActions.displayName = 'AuthenticatedActions';
+
+export const NavbarActions = memo(() => {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
   return (
-    <div className='flex gap-1'>
-      <div className=' md:hidden'></div>
+    <div className="flex gap-1">
+      <div className="md:hidden"></div>
 
-      {isLoggedIn && (
-        <div className='hidden md:flex gap-1'>
-          <InboxNotification />
-          <DropDownNotification />
-          <DropdownAccount />
-        </div>
-      )}
-      <>
-        <LoginRegisterButton />
-        <HamburgerButton />
-      </>
+      {isLoggedIn && <AuthenticatedActions />}
+
+      <LoginRegisterButton />
+      <HamburgerButton />
     </div>
   );
-};
+});
+
+NavbarActions.displayName = 'NavbarActions';

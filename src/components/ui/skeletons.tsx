@@ -1,3 +1,43 @@
+const shimmer =
+  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
+
+export function CardSkeleton() {
+  return (
+    <div
+      className={`${shimmer} bg-white rounded-lg shadow-md p-4 animate-pulse`}
+    >
+      <div className="w-full aspect-square bg-gray-300 mb-4"></div>
+      <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+      <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+    </div>
+  );
+}
+
+export function CardsSkeleton() {
+  return (
+    <>
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+      <CardSkeleton />
+    </>
+  );
+}
+
+export function ButtonSkeleton() {
+  return (
+    <div className={`${shimmer} h-10 bg-gray-200 rounded animate-pulse`}></div>
+  );
+}
+
 export const PackageDeliverySkeleton = () => {
   return (
     <div className="animate-pulse flex space-x-4">

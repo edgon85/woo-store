@@ -1,41 +1,42 @@
 'use client';
 
+import { useState, useRef, useCallback, memo } from 'react';
+import { IoMdArrowDropright, IoIosWoman, IoIosMan } from 'react-icons/io';
 import { usePersonalPreferencesStore } from '@/stores';
-import { useEffect, useRef, useState } from 'react';
-import { IoIosMan, IoIosWoman, IoMdArrowDropright } from 'react-icons/io';
+import { useOnClickOutside } from '@/hooks';
 
-export const GenderSelected = () => {
-  const gender = usePersonalPreferencesStore((state) => state.gender);
-  const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
+const genderOptions = [
+  { value: 'mujer', label: 'Mujer', Icon: IoIosWoman },
+  { value: 'hombre', label: 'Hombre', Icon: IoIosMan },
+];
 
+export const GenderSelected = memo(() => {
+  const { gender, onSetGender } = usePersonalPreferencesStore((state) => ({
+    gender: state.gender,
+    onSetGender: state.onSetGender,
+  }));
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handler = (evt: any) => {
-      if (isCollapsed && ref.current && !ref.current.contains(evt.target)) {
-        setIsCollapsed(false);
-      }
-    };
+  useOnClickOutside(ref, () => setIsCollapsed(false));
 
-    document.addEventListener('mousedown', handler);
-    document.addEventListener('touchstart', handler);
+  const toggleCollapsed = useCallback(
+    () => setIsCollapsed((prev) => !prev),
+    []
+  );
 
-    return () => {
-      document.removeEventListener('mousedown', handler);
-      document.removeEventListener('touchstart', handler);
-    };
-  }, [isCollapsed]);
-
-  const handleGender = (value: string) => {
-    setIsCollapsed(false);
-    setGender(value);
-  };
+  const handleGender = useCallback(
+    (value: string) => {
+      setIsCollapsed(false);
+      onSetGender(value);
+    },
+    [onSetGender]
+  );
 
   return (
     <div className="relative flex flex-col" ref={ref}>
       <button
-        onClick={() => setIsCollapsed((prev) => !prev)}
+        onClick={toggleCollapsed}
         className="border rounded w-32 md:w-44 hover:bg-gray-300 text-black font-medium text-sm p-2.5 text-center inline-flex items-center"
         type="button"
       >
@@ -47,23 +48,19 @@ export const GenderSelected = () => {
 
       {isCollapsed && (
         <div className="z-10 absolute top-12 bg-white divide-y divide-gray-100 rounded shadow w-32 md:w-44">
-          <ul
-            className="py-2 text-sm text-gray-700"
-            aria-labelledby="dropdownDividerButton"
-          >
-            <li onClick={() => handleGender('mujer')}>
-              <div className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100 cursor-pointer ">
-                <IoIosWoman size={20} /> <span>Mujer</span>
-              </div>
-            </li>
-            <li onClick={() => handleGender('hombre')}>
-              <div className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                <IoIosMan size={20} /> <span>Hombre</span>
-              </div>
-            </li>
+          <ul className="py-2 text-sm text-gray-700">
+            {genderOptions.map(({ value, label, Icon }) => (
+              <li key={value} onClick={() => handleGender(value)}>
+                <div className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <Icon size={20} /> <span>{label}</span>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       )}
     </div>
   );
-};
+});
+
+GenderSelected.displayName = 'GenderSelected';
