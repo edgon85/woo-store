@@ -1,10 +1,11 @@
+import { Suspense } from 'react';
+
 import Image from 'next/image';
 import logo from '../../../../public/logo2.svg';
-import { NavbarActions, NavbarSearch } from './';
+
 import Link from 'next/link';
 import { GenderSelected } from '../dropdowns';
-import { Suspense } from 'react';
-// import { DynamicNavbarActions } from '@/components';
+import { ButtonSkeleton, NavbarActions, NavbarSearch } from '@/components';
 
 export const Navbar = () => {
   return (
@@ -24,14 +25,7 @@ export const Navbar = () => {
             <NavbarSearch />
           </div>
 
-          {/*   <div className="">
-            <NavbarActions />
-          </div> */}
-          <Suspense
-            fallback={
-              <div className="h-10 w-40 bg-gray-200 animate-pulse rounded"></div>
-            }
-          >
+          <Suspense fallback={<ButtonSkeleton />}>
             <NavbarActions />
           </Suspense>
         </div>

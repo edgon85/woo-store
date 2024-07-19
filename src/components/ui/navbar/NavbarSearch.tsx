@@ -19,15 +19,10 @@ const clothesTypeOptions = [
 ];
 
 export const NavbarSearch = () => {
-  const { gender, clothesType, setClothesType } = usePersonalPreferencesStore(
-    useCallback(
-      (state) => ({
-        gender: state.gender,
-        clothesType: state.clothesType,
-        setClothesType: state.setClothesType,
-      }),
-      []
-    )
+  const gender = usePersonalPreferencesStore((state) => state.gender);
+  const clothesType = usePersonalPreferencesStore((state) => state.clothesType);
+  const setClothesType = usePersonalPreferencesStore(
+    (state) => state.setClothesType
   );
 
   const { register, handleSubmit } = useForm<FormInputData>({

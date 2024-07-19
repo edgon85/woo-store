@@ -11,10 +11,9 @@ const genderOptions = [
 ];
 
 export const GenderSelected = memo(() => {
-  const { gender, onSetGender } = usePersonalPreferencesStore((state) => ({
-    gender: state.gender,
-    onSetGender: state.onSetGender,
-  }));
+  const gender = usePersonalPreferencesStore((state) => state.gender);
+  const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
+
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -28,9 +27,9 @@ export const GenderSelected = memo(() => {
   const handleGender = useCallback(
     (value: string) => {
       setIsCollapsed(false);
-      onSetGender(value);
+      setGender(value);
     },
-    [onSetGender]
+    [setGender]
   );
 
   return (
@@ -64,3 +63,31 @@ export const GenderSelected = memo(() => {
 });
 
 GenderSelected.displayName = 'GenderSelected';
+/* 
+const gender = usePersonalPreferencesStore((state) => state.gender);
+  const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
+
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (evt: any) => {
+      if (isCollapsed && ref.current && !ref.current.contains(evt.target)) {
+        setIsCollapsed(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+    document.addEventListener('touchstart', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('touchstart', handler);
+    };
+  }, [isCollapsed]);
+
+  const handleGender = (value: string) => {
+    setIsCollapsed(false);
+    setGender(value);
+  };
+*/
