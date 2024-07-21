@@ -103,9 +103,13 @@ export async function fetchOrderById(id: string) {
     }
 
     const data = await resp.json();
-    return data;
+
+    return {
+      ok: true,
+      data,
+    };
   } catch (error: any) {
     console.log(error.message);
-    return { ok: false, message: 'ocurrió un error vea los logs' };
+    return { ok: false, message: error.message };
   }
 }

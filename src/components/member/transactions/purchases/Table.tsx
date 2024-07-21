@@ -1,31 +1,25 @@
 'use client';
-import { TransactionStatus } from '../TransactionStatus';
-import { formatCurrency, formatDateToLocal, uuIiMyFormat } from '@/utils';
-import { SlLocationPin } from 'react-icons/sl';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { SlLocationPin } from 'react-icons/sl';
+
 import { BtnConfirmReceipt } from './BtnConfirmReceipt';
-import { OrderStatus } from '@/enums';
+import { formatCurrency, formatDateToLocal, uuIiMyFormat } from '@/utils';
 import { IOrder } from '@/interfaces';
+import { OrderStatus } from '@/enums';
+import { TransactionStatus } from '../TransactionStatus';
 
 type Props = {
   orders: IOrder[];
 };
 
 export const TablePurchases = ({ orders }: Props) => {
-  const router = useRouter();
-
-  const onClickHelp = (id: string) => {
-    console.log(id);
-    router.push(`/claim/open?reason=product_not_received&transaction=${id}`);
-  };
-
   return (
     <>
       {orders?.map((order: IOrder) => {
         const images = order.product.images.map((image: any) => image.url);
 
         const { product, summary, seller, packageDelivery } = order;
+
         return (
           <div key={order.id}>
             {order.claim && (
@@ -53,7 +47,14 @@ export const TablePurchases = ({ orders }: Props) => {
                   </p>
                   <p>
                     <span className="text-gray-500 capitalize">Envío: </span>
-                    {formatCurrency(summary.delivery * 100)}
+                    {summary.deliveryOffer !== 0 ? (
+                      <span>
+                        {' '}
+                        {formatCurrency(summary.deliveryOffer * 100)}
+                      </span>
+                    ) : (
+                      <span> {formatCurrency(summary.delivery * 100)}</span>
+                    )}
                   </p>
 
                   <br />
@@ -95,9 +96,12 @@ export const TablePurchases = ({ orders }: Props) => {
                 </p>
               </div>
               <div className="flex flex-col gap-2 items-center">
-                <button className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white">
+                <Link
+                  href={`/inbox?u=${seller.id}&n=${seller.username}`}
+                  className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
+                >
                   Escribir al vendedor
-                </button>
+                </Link>
 
                 {order.orderStatus === OrderStatus.Completed &&
                 !order.received &&
@@ -106,23 +110,23 @@ export const TablePurchases = ({ orders }: Props) => {
                 ) : null}
 
                 {!order.received && (
-                  <button
-                    onClick={() => onClickHelp(order.id)}
+                  <Link
+                    href={`/claim/open?reason=product_not_received&transaction=${order.id}`}
                     className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
                   >
                     Necesito ayuda
-                  </button>
+                  </Link>
                 )}
 
                 {
-                  /* order.orderStatus !== OrderStatus.Delivered && */
+                  /* TODO: poner url del tracking*/
                   order.orderStatus !== OrderStatus.Completed ? (
                     <Link
                       href={''}
                       className="flex gap-1 justify-center items-center underline"
                     >
                       <SlLocationPin size={18} />
-                      Ver en Guatex
+                      Ver en {order.packageDelivery.name}
                     </Link>
                   ) : null
                 }

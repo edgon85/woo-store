@@ -6,8 +6,6 @@ import { IOrder } from '@/interfaces';
 export default async function Page() {
   const orders = (await fetchOrders('buyer')) as IOrder[];
 
-  console.log(orders);
-
   if (orders.length === 0)
     return (
       <EmptyTransaction

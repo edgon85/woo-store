@@ -13,11 +13,19 @@ export default async function ClaimOpenPage({ searchParams }: Props) {
     redirect('/');
   }
 
-  const order = await fetchOrderById(transaction.toString());
+  const { ok, data, message } = await fetchOrderById(transaction.toString());
 
-  const imageUrl = await checkImageAvailable(order.product.images[0]);
+  if (!ok) {
+    return (
+      <div className="main-wrapper">
+        <p>{message}</p>
+      </div>
+    );
+  }
 
-  const { product, summary } = order;
+  const imageUrl = await checkImageAvailable(data.product.images[0]);
+
+  const { product, summary } = data;
 
   return (
     <div className="w-full md:w-1/2 md:m-auto min-h-[70vh] py-4">
@@ -40,7 +48,7 @@ export default async function ClaimOpenPage({ searchParams }: Props) {
 
       <div className="mt-4">
         <p className="mb-4">¿Cómo podemos ayudarte?</p>
-        <AccordionComponent order={order!} />
+        <AccordionComponent order={data!} />
       </div>
     </div>
   );

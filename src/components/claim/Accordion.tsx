@@ -46,21 +46,15 @@ export const AccordionComponent = ({ order }: Props) => {
           <AccordionBody className="leading-6 border-t pt-2 pb-2">
             {order.orderStatus === OrderStatus.OrderPlaced ? (
               <p>
-                Tu vendedor ya fue notificado. Recuerda que tiene 7 días hábiles
-                para enviar tu prenda por {order.packageDelivery.name}.
+                Tu orden ya fue colocada. Pronto el vendedor enviara el
+                producto.
               </p>
             ) : null}
 
             {order.orderStatus === OrderStatus.SellerNotified ? (
               <p>
-                Tu vendedor ya a enviado el producto y pronto te llegara ver en{' '}
-                <Link
-                  className="text-cerise-red-600"
-                  href={`/`}
-                  target="_blank"
-                >
-                  {order.packageDelivery.name}
-                </Link>
+                Tu vendedor ya fue notificado. Recuerda que tiene 7 días hábiles
+                para enviar tu prenda por {order.packageDelivery.name}.
               </p>
             ) : null}
 

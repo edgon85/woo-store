@@ -1,4 +1,4 @@
-import { ProductStatus } from '@/enums';
+import { OrderStatus, ProductStatus } from '@/enums';
 
 export const InitialsProfile = (name: string): string => {
   return name
@@ -33,20 +33,26 @@ export const translateProductStatus = (status: string): string => {
 
 export const translateOrderStatus = (status: string): string => {
   switch (status) {
-    case 'Initiated':
+    case OrderStatus.OrderPlaced:
       return 'Iniciado';
-    case 'Pending':
-      return 'Pendiente';
-    case 'Confirmed':
-      return 'Confirmado';
-    case 'Shipped':
-      return 'Enviado';
-    case 'Out for Delivery':
+    case OrderStatus.SellerNotified:
+      return 'Notificado al vendedor';
+    case OrderStatus.PreparingOrder:
+      return 'Preparando para envió';
+    case OrderStatus.InTransit:
       return 'En camino';
-    case 'Delivered':
-      return 'Entregado';
-    case 'Completed':
+    case OrderStatus.DeliveredPendingPayment:
+      return 'Pendiente de pago';
+    case OrderStatus.Completed:
       return 'Completado';
+    case OrderStatus.Cancelled:
+      return 'Cancelado';
+    case OrderStatus.Failed:
+      return 'Fallido';
+    case OrderStatus.Refunded:
+      return 'Reembolsado';
+    case OrderStatus.Returned:
+      return 'Devuelto';
     default:
       return status; // Si no se encuentra ninguna traducción, devuelve el estado original
   }
