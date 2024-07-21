@@ -1,3 +1,4 @@
+'use client';
 import Modal from 'react-responsive-modal';
 import OfferSlider from './OfferSlider';
 import { useState } from 'react';

@@ -5,7 +5,8 @@ import logo from '../../../../public/logo2.svg';
 
 import Link from 'next/link';
 import { GenderSelected } from '../dropdowns';
-import { ButtonSkeleton, NavbarActions, NavbarSearch } from '@/components';
+import { NavbarSearch, NavbarActions } from './';
+import { ButtonSkeleton } from '../skeletons';
 
 export const Navbar = () => {
   return (

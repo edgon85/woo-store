@@ -5,7 +5,8 @@ import { ProductInfo } from './ProductInfo';
 import { checkImageAvailable } from '@/actions';
 import { ProductStatus } from '@/enums';
 import { Suspense } from 'react';
-import { DynamicBtnBuyOrEdit, ButtonSkeleton } from '@/components';
+import { ButtonSkeleton } from '@/components';
+import { BtnBuyOrEdit } from '../product-detail/buttons';
 
 type Props = {
   product: IProduct;
@@ -32,10 +33,7 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
         {product.status === ProductStatus.Available && (
           <div className="mt-auto">
             <Suspense fallback={<ButtonSkeleton />}>
-              <DynamicBtnBuyOrEdit
-                product={product}
-                currentUserId={currentUserId}
-              />
+              <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
             </Suspense>
           </div>
         )}
