@@ -25,10 +25,10 @@ const nextConfig = {
     ],
   },
   env: {
-    API_BASE_URL: 'http://localhost:5000/api',
-    SERVICE_FEE: "12",
-    CLOUDINARY_URL:"cloudinary://671266619382381:tCXAK8zU_NJfVDRnfvzeMAI6dAM@dc2vkibqq"
-
+    BASE_URL: process.env.BASE_URL,
+    API_BASE_URL: process.env.API_BASE_URL,
+    SERVICE_FEE: process.env.SERVICE_FEE,
+    CLOUDINARY_URL: process.env.CLOUDINARY_URL,
   },
 };
 

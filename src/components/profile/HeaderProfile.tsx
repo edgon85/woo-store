@@ -8,6 +8,7 @@ import {
 } from '@/actions';
 import { RatingComponent } from './RatingComponent';
 import { getAuthInfo } from '@/libs';
+import { BtnShareProfile } from './BtnShareProfile';
 
 interface LocalProfile {
   id: string;
@@ -29,7 +30,6 @@ export async function HeaderProfile({ username }: Props) {
   const { id: currentUserId } = userInfo!;
   const imageUrl = await checkImageAvailable(userData?.profileImage);
 
-  /* TODO: obtener el rating */
   const { ok, message, data } = ratingUser;
 
   return (
@@ -68,12 +68,10 @@ export async function HeaderProfile({ username }: Props) {
             )}
           </div>
           <div className="flex flex-col md:flex-row gap-4 md:items-start">
-            <button className="px-4 py-2 md:min-w-[100px] rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50 font-bold ">
+            {/* <button className="px-4 py-2 md:min-w-[100px] rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50 font-bold ">
               Seguir
-            </button>
-            <button className="px-4 py-2 md:min-w-[100px] font-bold rounded bg-cerise-red-600 text-white hover:bg-cerise-red-500">
-              Compartir
-            </button>
+            </button> */}
+            <BtnShareProfile />
           </div>
         </div>
         <div className="pt-2 md:pt-4">
