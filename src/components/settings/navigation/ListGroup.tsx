@@ -9,14 +9,14 @@ export const ListGroup = ({
 }) => {
   const navItems: ListItemProps[] = [
     {
-      id: 'profile',
-      href: `/settings/profile/${userId}`,
-      label: 'Datos de perfil',
-    },
-    {
       id: 'account',
       href: `/settings/account/${userId}`,
       label: 'Ajustes de cuenta',
+    },
+    {
+      id: 'profile',
+      href: `/settings/profile/${userId}`,
+      label: 'Datos de perfil',
     },
     {
       id: 'purchases',

@@ -29,9 +29,11 @@ export const AccountForm = ({ user }: Props) => {
           <Divider />
         </>
       ) : null}
-      <VacationModeSection />
+
+      {/* TODO: Implementar modo vacaciones y eliminar cuenta*/}
+      {/*   <VacationModeSection />
       <Divider />
-      <DeleteAccountSection />
+      <DeleteAccountSection /> */}
     </>
   );
 };

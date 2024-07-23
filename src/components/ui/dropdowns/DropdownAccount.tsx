@@ -16,7 +16,7 @@ import { useAuthStore } from '@/stores/auth.store';
 
 export const DropdownAccount = () => {
   // const { logout, user } = useAuth();
-  const { logout, user } = useAuthStore()
+  const { logout, user } = useAuthStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -90,7 +90,7 @@ export const DropdownAccount = () => {
             <DropdownItem
               title="Configuración"
               icon={<SettingsIcon />}
-              path={`/settings/profile/${user?.id}`}
+              path={`/settings/account/${user?.id}`}
               setIsCollapsed={setIsCollapsed}
             />
           </ul>
