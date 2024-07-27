@@ -5,7 +5,7 @@ import { IPackageDelivery, IProduct } from '@/interfaces';
 import { revalidatePath } from 'next/cache';
 
 import { v2 as cloudinary } from 'cloudinary';
-import { getAuthToken } from '@/libs';
+import { getAuthInfo, getAuthToken } from '@/libs';
 import { ErrorResult } from '@/types';
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
@@ -41,12 +41,13 @@ export async function createProduct(
   formImagesData: FormData
 ) {
   const authToken = await getAuthToken();
+  const userInfo = await getAuthInfo();
 
   if (!authToken) {
     return { ok: false, message: 'No se encontró un token de autenticación' };
   }
   const url = `${process.env.API_BASE_URL}/products`;
-  const { images, slug, packageDelivery, ...restProduct } = product;
+  const { images, slug, ...restProduct } = product;
 
   // Proceso de carga y guardado de imágenes
   // Recorrer las imágenes y guardarlas
@@ -67,7 +68,6 @@ export async function createProduct(
       },
       body: JSON.stringify({
         ...restProduct,
-        packageDelivery: [...packageDelivery.map((resp) => resp.id)],
         images: cloudinaryImages,
       }),
     });
@@ -76,15 +76,19 @@ export async function createProduct(
       const errorData = await resp.json(); // Obtener el mensaje de error como JSON
       throw new Error(errorData.message || 'Error al hacer fetch data');
     }
-    const data = await resp.json();
+    const response = await resp.text();
 
+    revalidatePath(`/member/${userInfo?.username}`);
     return {
       ok: true,
-      data,
+      data: {
+        message: response,
+        user: userInfo?.username
+      },
     };
   } catch (error: any) {
     console.log(error.message);
-    return { ok: false, message: 'ocurrió un error vea los logs' };
+    return { ok: false, message: error.message };
   }
 }
 

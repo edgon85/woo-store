@@ -55,4 +55,16 @@ module.exports = {
     },
   },
   plugins: [],
+  corePlugins: {},
+  extend: {
+    '.no-spin-buttons': {
+      '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+        '-webkit-appearance': 'none',
+        margin: '0',
+      },
+      '&[type=number]': {
+        '-moz-appearance': 'textfield',
+      },
+    },
+  },
 };

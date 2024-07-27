@@ -5,7 +5,6 @@ import {
   IColor,
   IProduct,
   ProductImage,
-  IPackageDelivery,
 } from '@/interfaces';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
@@ -21,124 +20,75 @@ import {
   ColorsSection,
   CustomModal,
   MeasurementSection,
-  PackageDeliverySection,
+  PriceSection,
   SubcategorySection,
+  WeightSection,
 } from '../create/sections';
-import { useCreateProductStore } from '@/stores';
 import { useEffect } from 'react';
 import { updateProduct } from '@/actions';
 import { toast } from 'react-toastify';
+import { FormInputs, useProductForm, useUnsavedChangesWarning } from '@/hooks';
+import { Button } from '@/components/ui';
 
 type Props = {
   product: IProduct & { ProductImage?: ProductImage[] };
-  packageDeliveriesData: IPackageDelivery[];
   brands: IBrand[];
   clothingConditionList: IClothesState[];
   colors: IColor[];
 };
 
-export type FormEditInputs = {
-  title: string;
-  description: string;
-  gender: string;
-  clothesType: string;
-  price: number;
-};
-
 export const EditProduct = ({
   product,
-  packageDeliveriesData,
   brands,
   clothingConditionList,
   colors: colorList,
 }: Props) => {
-  const setCategory = useCreateProductStore((state) => state.setCategory);
-  const setSubCategory = useCreateProductStore((state) => state.setSubcategory);
-  const setBrand = useCreateProductStore((state) => state.setBrand);
-  const setMeasurement = useCreateProductStore((state) => state.setMeasurement);
-  const setClothesState = useCreateProductStore(
-    (state) => state.setClothesState
-  );
-  const setColors = useCreateProductStore((state) => state.setColors);
-  const setPrice = useCreateProductStore((state) => state.setPrice);
-  const setPackagesDeliveries = useCreateProductStore(
-    (state) => state.setPackageDeliveries
-  );
-
-  const subcategoryState = useCreateProductStore((state) => state.subcategory);
-  const brandState = useCreateProductStore((state) => state.brand);
-  const measurementState = useCreateProductStore((state) => state.measurement);
-  const clothesStateState = useCreateProductStore(
-    (state) => state.clothesState
-  );
-  const colorState = useCreateProductStore((state) => state.colors);
-  const packagesDeliveriesState = useCreateProductStore(
-    (state) => state.packageDeliveries
-  );
-
-  const {
-    title,
-    description,
-    measurement,
-    category,
-    subcategory,
-    brand,
-    clothesState,
-    colors,
-    price,
-    packageDelivery,
-  } = product;
-  const { gender, clothesType } = measurement;
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setValue,
-    setError,
+    formState: { errors, isDirty },
     getValues,
     watch,
-  } = useForm<FormEditInputs>({
-    defaultValues: {
-      title,
-      description,
-      gender,
-      clothesType,
-      price,
-    },
-  });
+    initializeEditForm,
+    subcategory: subcategoryState,
+    brand: brandState,
+    measurement: measurementState,
+    clothesState: clothesStateState,
+    colors: colorState,
+    isShippingIncluded,
+  } = useProductForm('edit', product);
+
+  useUnsavedChangesWarning(isDirty);
 
   useEffect(() => {
-    setCategory(category!);
-    setSubCategory(subcategory);
-    setBrand(brand);
-    setMeasurement(measurement);
-    setClothesState(clothesState);
-    setColors(colors);
-    setPrice(price);
-    setPackagesDeliveries(packageDelivery);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    initializeEditForm(product);
+  }, [product, initializeEditForm]);
 
-  const onHandleSubmit: SubmitHandler<FormEditInputs> = async (
-    data: FormEditInputs
+  const onHandleSubmit: SubmitHandler<FormInputs> = async (
+    dataForm: FormInputs
   ) => {
     const dataToUpdate = {
-      title: data.title,
-      description: data.description,
+      title: dataForm.title,
+      description: dataForm.description,
       subcategory: subcategoryState?.id,
       brand: brandState,
       measurement: measurementState,
       clothesState: clothesStateState,
       colors: colorState,
-      packageDelivery: [...packagesDeliveriesState.map((resp) => resp.id)],
-      price: data.price,
+      price: dataForm.price,
+      weight: dataForm.weight,
+      isShippingIncluded,
     };
 
-    const { ok } = await updateProduct(product.id!, dataToUpdate);
-    ok
-      ? toast.success('Producto actualizado')
-      : toast.error('Ocurrió un error');
+    const { ok, data, message } = await updateProduct(
+      product.id!,
+      dataToUpdate
+    );
+    ok ? toast.success(data?.message) : toast.error(message);
   };
+
+  watch('weight');
+  watch('price');
 
   return (
     <div className="w-full max-w-2xl px-2 md:px-0">
@@ -158,7 +108,10 @@ export const EditProduct = ({
           />
         </div>
         <div className="bg-white rounded-lg shadow sm:p-6 md:p-8 mt-4">
-          <CategorySection gender={gender!} clothesType={clothesType!} />
+          <CategorySection
+            gender={getValues('gender')}
+            clothesType={getValues('clothesType')}
+          />
           <SubcategorySection />
         </div>
 
@@ -170,38 +123,25 @@ export const EditProduct = ({
           />
           <ClothesStateSection clothingConditionList={clothingConditionList} />
           <ColorsSection colors={colorList} />
-          <PackageDeliverySection data={packageDeliveriesData} />
+          {/* ····························································· */}
+          {<WeightSection register={register} errors={errors} />}
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
-          <div className="relative z-0 w-full mb-6 group p-4 md:p-0">
-            <label
-              htmlFor="price"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              Precio de venta{' '}
-            </label>
+        {/* ····························································· */}
+        {getValues('weight') ? (
+          <PriceSection
+            register={register}
+            getValues={getValues}
+            errors={errors}
+          />
+        ) : null}
+        {/* ····························································· */}
 
-            <input
-              id="price"
-              type="number"
-              // value={value}
-              className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-              placeholder="¿A qué precio lo vendes?"
-              {...register('price', {
-                required: 'Este campo es requerido',
-                valueAsNumber: true,
-                min: 0,
-              })}
-            />
+        {watch('price') ? (
+          <div className="mt-4">
+            <Button label="Actualizar" type="submit" />
           </div>
-        </div>
-        <button
-          type="submit"
-          className="mt-4 border border-cerise-red-600 hover:bg-cerise-red-50 text-cerise-red-600 w-full py-4 rounded"
-        >
-          Actualizar
-        </button>
+        ) : null}
       </form>
       <CustomModal />
     </div>

@@ -2,10 +2,11 @@
 import { useCallback, useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import { useAuthStore, useModalAuth } from '@/stores';
+import { useAuthStore, useCreateProductStore, useModalAuth } from '@/stores';
 
 export const LoginRegisterButton = () => {
   const pathName = usePathname();
+  const resetCreateProdSt = useCreateProductStore((state) => state.resetStore);
   const { isLoggedIn } = useAuthStore(
     useCallback((state) => ({ isLoggedIn: state.isLoggedIn }), [])
   );
@@ -14,11 +15,12 @@ export const LoginRegisterButton = () => {
 
   const onHandleClick = useCallback(() => {
     if (isLoggedIn) {
+      resetCreateProdSt();
       router.push('/products/create');
     } else {
       openModal();
     }
-  }, [isLoggedIn, router, openModal]);
+  }, [isLoggedIn, resetCreateProdSt, router, openModal]);
 
   const shouldRenderButton = useMemo(() => {
     return (

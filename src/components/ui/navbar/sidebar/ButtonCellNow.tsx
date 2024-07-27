@@ -1,11 +1,13 @@
-import { useSidebar } from '@/stores';
+import { useCreateProductStore, useSidebar } from '@/stores';
 import { useRouter } from 'next/navigation';
 
 export const ButtonCellNow = () => {
   const router = useRouter();
   const setMenuOpen = useSidebar((state) => state.onSidebarOpen);
+  const resetCreateProdSt = useCreateProductStore((state) => state.resetStore);
 
   const onHandleClick = () => {
+    resetCreateProdSt();
     router.push('/products/create');
     setMenuOpen();
   };

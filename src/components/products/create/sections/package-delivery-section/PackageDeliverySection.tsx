@@ -10,16 +10,15 @@ type Props = {
 };
 
 export const PackageDeliverySection = ({ data }: Props) => {
-  const packageDeliveries = useCreateProductStore(
+  /* const packageDeliveries = useCreateProductStore(
     (state) => state.packageDeliveries
-  );
+  ); */
   const openModal = useModalStore((state) => state.openModal);
 
   return (
     <ItemCreate
       title="Paquetería para enviar el producto"
       icon={TbTruckDelivery}
-      value={packageDeliveries.map((item) => item.name).join(', ')}
       onClick={() =>
         openModal(
           <div className=" w-72 md:w-96 p-4">
@@ -30,6 +29,7 @@ export const PackageDeliverySection = ({ data }: Props) => {
           </div>
         )
       }
+      value={''}
     />
   );
 };

@@ -14,9 +14,9 @@ export const PackageDeliverySelect = ({ data }: Props) => {
   const [selectPackageDelivery, setSelectPackageDelivery] = useState<
     IPackageDelivery[]
   >([]);
-  const setPackageDeliveries = useCreateProductStore(
+  /* const setPackageDeliveries = useCreateProductStore(
     (store) => store.setPackageDeliveries
-  );
+  ); */
 
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -63,7 +63,7 @@ export const PackageDeliverySelect = ({ data }: Props) => {
           disabled={selectPackageDelivery.length === 0}
           className="w-full py-3 text-white bg-cerise-red-600 hover:bg-cerise-red-500 rounded"
           onClick={() => {
-            setPackageDeliveries(selectPackageDelivery);
+            // setPackageDeliveries(selectPackageDelivery);
             closeModal();
           }}
         >

@@ -22,18 +22,21 @@ export async function createBrand(title: string) {
     });
 
     if (!resp.ok) {
-      throw new Error('Failed to fetch data');
+      const errorData = await resp.json(); // Obtener el mensaje de error como JSON
+      throw new Error(errorData.message || 'Error al hacer fetch data');
     }
+
     const data = await resp.json();
+
     return {
-      message: 'ok',
+      ok: true,
       data,
     };
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error.message);
     return {
       ok: false,
-      message: 'no se pudo crear, revisar los logs',
+      message: error.message,
     };
   }
 }

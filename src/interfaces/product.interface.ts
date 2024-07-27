@@ -1,4 +1,4 @@
-import { IPackageDelivery, IUser } from './';
+import { IUser } from './';
 
 export interface IProduct {
   id?: string;
@@ -11,8 +11,9 @@ export interface IProduct {
   images: string[];
   isFeatured?: boolean;
   status: string;
+  weight: number;
+  isShippingIncluded: boolean;
   colors: IColor[];
-  packageDelivery: IPackageDelivery[];
   brand: IBrand;
   measurement: IMeasurement;
   clothesState: IClothesState;

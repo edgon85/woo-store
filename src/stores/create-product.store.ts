@@ -5,7 +5,6 @@ import {
   IColor,
   IMeasurement,
   ISubcategory,
-  IPackageDelivery,
 } from '@/interfaces';
 import { create } from 'zustand';
 
@@ -17,9 +16,10 @@ type CreateProductState = {
   brand: IBrand | null;
   measurement: IMeasurement | null;
   clothesState: IClothesState | null;
-  colors: IColor[];
+  colors: IColor[] /* 
   price: number;
-  packageDeliveries: IPackageDelivery[];
+  weight: number; */;
+  isShippingIncluded: boolean;
 
   setGender: (value: string) => void;
   setClothesType: (value: string) => void;
@@ -29,8 +29,10 @@ type CreateProductState = {
   setMeasurement: (measurement: IMeasurement) => void;
   setClothesState: (clothesState: IClothesState) => void;
   setColors: (colors: IColor[]) => void;
-  setPrice: (price: number) => void;
-  setPackageDeliveries: (packageDelivery: IPackageDelivery[]) => void;
+  /*   setPrice: (price: number) => void;
+  setWeight: (weight: number) => void; */
+  setIsShippingIncluded: (value: boolean) => void;
+
   resetStore: () => void;
 };
 
@@ -43,27 +45,25 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
   measurement: null,
   clothesState: null,
   colors: [],
-  price: 0,
   packageDeliveries: [],
+  isShippingIncluded: false,
 
-  //onSetGender: (value: string) => set((state) => ({ gender: value })),
   setGender: (value: string) => set((state) => ({ gender: value })),
-  setClothesType: (value: string) => set((state) => ({ clothesType: value })),
-  setCategory: (value: ICategory) => set((state) => ({ category: value })),
+  setClothesType: (value: string) => set((_) => ({ clothesType: value })),
+  setCategory: (value: ICategory) => set((_) => ({ category: value })),
   setSubcategory: (value: ISubcategory | null) =>
-    set((state) => ({ subcategory: value })),
-  setBrand: (value: IBrand) => set((state) => ({ brand: value })),
-  setMeasurement: (value: IMeasurement) =>
-    set((state) => ({ measurement: value })),
+    set((_) => ({ subcategory: value })),
+  setBrand: (value: IBrand) => set((_) => ({ brand: value })),
+  setMeasurement: (value: IMeasurement) => set((_) => ({ measurement: value })),
   setClothesState: (value: IClothesState) =>
-    set((state) => ({ clothesState: value })),
-  setColors: (value: IColor[]) => set((state) => ({ colors: value })),
-  setPrice: (value: number) => set((state) => ({ price: value })),
-  setPackageDeliveries: (value: IPackageDelivery[]) =>
-    set((state) => ({ packageDeliveries: value })),
+    set((_) => ({ clothesState: value })),
+  setColors: (value: IColor[]) => set((_) => ({ colors: value })),
+
+  setIsShippingIncluded: (value: boolean) =>
+    set((_) => ({ isShippingIncluded: value })),
 
   resetStore: () =>
-    set((state) => ({
+    set((_) => ({
       gender: '',
       clothesType: '',
       category: null,
@@ -72,7 +72,7 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
       measurement: null,
       clothesState: null,
       colors: [],
-      price: 0,
       packageDeliveries: [],
+      isShippingIncluded: false,
     })),
 }));

@@ -24,22 +24,24 @@ export async function updateProduct(productId: string, dataToUpdate: any) {
     });
 
     if (!resp.ok) {
-      console.log(resp);
-      throw new Error('Failed to fetch data');
+      const errorData = await resp.json(); // Obtener el mensaje de error como JSON
+      throw new Error(errorData.message || 'Error al hacer fetch data');
     }
 
-    const data = await resp.json();
+    const response = await resp.text();
     // console.log(data);
     revalidatePath(`/product/edit/${productId}`);
     return {
       ok: true,
-      data,
+      data: {
+        message: response,
+      },
     };
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error.message);
     return {
       ok: false,
-      message: 'no se pudo actualizar, revisar los logs',
+      message: error.message,
     };
   }
 }

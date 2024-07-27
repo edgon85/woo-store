@@ -24,8 +24,8 @@ export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
       cancelButtonText: 'Cancelar',
       showLoaderOnConfirm: true,
       preConfirm: async () => {
-        const { message, data } = await createBrand(name);
-        if (message !== 'ok') {
+        const { message, data, ok } = await createBrand(name);
+        if (!ok) {
           Swal.showValidationMessage(`error: ${message}`);
           return;
         }

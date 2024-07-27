@@ -6,7 +6,7 @@ import {
 } from '@/actions';
 import { EditProduct } from '@/components';
 import { getProductBySlug } from '@/actions';
-import { IPackageDelivery, IProduct } from '@/interfaces';
+import { IProduct } from '@/interfaces';
 import { getAuthInfo } from '@/libs';
 
 export default async function EditProductPage({
@@ -19,23 +19,16 @@ export default async function EditProductPage({
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
 
-  const [
-    productResult,
-    packageDeliveriesDataResult,
-    brandsData,
-    clothingConditionData,
-    colorsData,
-  ] = await Promise.all([
-    getProductBySlug(productId),
-    fetchPackageDeliveries(),
-    getBrands(''),
-    getClothingCondition(),
-    getColors(),
-  ]);
+  const [productResult, brandsData, clothingConditionData, colorsData] =
+    await Promise.all([
+      getProductBySlug(productId),
+
+      getBrands(''),
+      getClothingCondition(),
+      getColors(),
+    ]);
 
   const product = productResult as IProduct;
-  const packageDeliveriesData =
-    packageDeliveriesDataResult as IPackageDelivery[];
 
   if (currentUserId !== product.user?.id)
     return (
@@ -48,7 +41,6 @@ export default async function EditProductPage({
     <div className="main-wrapper flex justify-center pt-8 pb-8">
       <EditProduct
         product={product}
-        packageDeliveriesData={packageDeliveriesData}
         brands={brandsData}
         clothingConditionList={clothingConditionData}
         colors={colorsData}

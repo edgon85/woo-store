@@ -3,7 +3,7 @@ import { IProduct } from '@/interfaces';
 import { ProductStatus } from '@/enums';
 import { translateProductStatus } from '@/utils';
 import Link from 'next/link';
-import { useAuthStore, useModalAuth } from '@/stores';
+import { useAuthStore, useCreateProductStore, useModalAuth } from '@/stores';
 
 import { useRouter } from 'next/navigation';
 
@@ -17,6 +17,7 @@ export const BtnBuyOrEdit = ({
   const { status } = product;
   const { openModal } = useModalAuth();
   const { isLoggedIn } = useAuthStore((state) => state);
+  const resetCreateProdSt = useCreateProductStore((state) => state.resetStore);
   const router = useRouter();
 
   const handleBuyClick = (e: React.MouseEvent) => {
@@ -26,6 +27,11 @@ export const BtnBuyOrEdit = ({
     } else {
       openModal();
     }
+  };
+
+  const handleEditClick = (prodId: string) => {
+    resetCreateProdSt();
+    router.push(`/product/edit/${prodId}`);
   };
 
   if (status === ProductStatus.Available || status === ProductStatus.Hidden) {
@@ -39,12 +45,12 @@ export const BtnBuyOrEdit = ({
             Comprar
           </button>
         ) : (
-          <Link
+          <button
             className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
-            href={`/product/edit/${product.id}`}
+            onClick={() => handleEditClick(product.id!)}
           >
             Editar
-          </Link>
+          </button>
         )}
       </div>
     );
