@@ -1,9 +1,19 @@
 'use server';
-import { IAddress } from '@/interfaces';
 import { revalidatePath } from 'next/cache';
 import { getAuthToken } from '@/libs';
 
-export async function createAddress(addressData: IAddress) {
+type AddressData = {
+  fullName: string;
+  streetAddress: string;
+  phone: string;
+  label: string | null;
+  isPrimary?: boolean;
+  municipality: string;
+  department: string;
+};
+
+export async function createAddress(addressData: AddressData) {
+  const { municipality, department, ...rest } = addressData;
   const authToken = await getAuthToken();
 
   if (!authToken) {
@@ -18,7 +28,11 @@ export async function createAddress(addressData: IAddress) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authToken}`,
       },
-      body: JSON.stringify({ ...addressData }),
+      body: JSON.stringify({
+        ...rest,
+        municipalitySlug: municipality,
+        departmentSlug: department,
+      }),
     });
 
     if (!resp.ok) {
@@ -28,14 +42,15 @@ export async function createAddress(addressData: IAddress) {
 
     const data = await resp.json();
 
-    revalidatePath(`/settings/transactions/purchases`);
+    //revalidatePath(`/settings/transactions/purchases`);
 
+    console.log(data);
     return {
       ok: true,
       data,
     };
   } catch (error: any) {
     console.log(error.message);
-    return { ok: false, message: 'ocurrió un error vea los logs' };
+    return { ok: false, message: error.message };
   }
 }

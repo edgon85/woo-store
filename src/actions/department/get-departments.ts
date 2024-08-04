@@ -1,21 +1,15 @@
 'use server';
 import { unstable_noStore as noStore } from 'next/cache';
-import { getAuthToken } from '@/libs';
 
-export const fetchShippingAddress = async () => {
+export const getDepartments = async () => {
   noStore();
-  const url = `${process.env.API_BASE_URL}/shipping-address`;
-  const authToken = await getAuthToken();
 
-  if (!authToken) {
-    return { ok: false, message: 'No se encontró un token de autenticación' };
-  }
   try {
+    const url = `${process.env.API_BASE_URL}/department`;
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -32,6 +26,6 @@ export const fetchShippingAddress = async () => {
     };
   } catch (error: any) {
     console.log(error.message);
-    return { ok: false, message: error.message };
+    return { ok: false, message: 'ocurrió un error vea los logs' };
   }
 };

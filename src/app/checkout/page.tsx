@@ -39,7 +39,7 @@ export default async function CheckoutPage({
   }
 
   let product = (await getProductBySlug(`${transaction}`)) as IProductWithOffer;
-  const addresses = await fetchShippingAddress();
+  const addressList = await fetchShippingAddress();
   const paymentMethods = (await fetchPaymentMethods()) as IPaymentMethod[];
 
   let offerValidation: OfferValidationResult = { ok: true };
@@ -76,20 +76,20 @@ export default async function CheckoutPage({
     <div className="main-wrapper flex flex-col sm:flex-row">
       <div className="w-full lg:w-3/4 p-2 flex flex-col gap-2">
         <ProductSection product={product} />
-        <AddressSection addresses={addresses} />
+        <AddressSection />
 
         <PaymentSelectSection paymentMethods={paymentMethods} />
-        <PackageDeliverySection
+        {/* <PackageDeliverySection
           packagesDeliveriesIds={product.packageDelivery.map((item) => item.id)}
-        />
+        /> */}
       </div>
       <div className="w-full lg:w-2/5 p-2">
         <OrderBreakdown
           product={product}
           address={
-            addresses.length === 0
+            addressList.data.length === 0
               ? null
-              : addresses.find((address: IAddress) => address.isPrimary)
+              : addressList.data.find((address: IAddress) => address.isPrimary)
           }
         />
       </div>

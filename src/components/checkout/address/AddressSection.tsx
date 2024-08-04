@@ -1,17 +1,28 @@
 import { AddNewAddress } from './AddNewAddress';
 import { IAddress } from '@/interfaces';
 import { CurrentAddress } from './CurrentAddress';
+import { AddressListSection } from './AddressListSection';
 
 type Props = {
-  addresses: IAddress[];
+  addressList: IAddress[];
 };
 
-export const AddressSection = ({ addresses }: Props) => {
-  if (addresses.length === 0) {
+export const AddressSection = () => {
+  return (
+    <div className="bg-white border p-6 rounded shadow-sm">
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-bold">Dirección</h2>
+        <AddressListSection />
+        {/* <CreateFormAddress /> */}
+      </div>
+      <CurrentAddress />
+    </div>
+  );
+  /* if (addressList.length === 0) {
     return <AddNewAddress />;
   }
 
-  const currentAddress = addresses.find((address) => address.isPrimary);
+  const currentAddress = addressList.find((address) => address.isPrimary);
 
-  return <CurrentAddress address={currentAddress!} />;
+  return <CurrentAddress address={currentAddress!} />; */
 };

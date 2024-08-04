@@ -9,3 +9,4 @@ export * from './offer.interface';
 export * from './order.interface';
 export * from './package-delivery.interface';
 export * from './payment-method.interface';
+export * from './address.interface';
