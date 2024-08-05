@@ -42,9 +42,6 @@ export async function createAddress(addressData: AddressData) {
 
     const data = await resp.json();
 
-    //revalidatePath(`/settings/transactions/purchases`);
-
-    console.log(data);
     return {
       ok: true,
       data,

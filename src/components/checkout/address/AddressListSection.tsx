@@ -9,7 +9,7 @@ import { CiEdit } from 'react-icons/ci';
 import Modal from 'react-responsive-modal';
 import { DeleteAddress } from './delete-address/DeleteAddress';
 import { CreateFormAddress } from './CreateForm';
-import { fetchShippingAddress } from '@/actions';
+import { fetchShippingAddress, makeAddressPrimary } from '@/actions';
 
 export const AddressListSection = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -40,8 +40,9 @@ export const AddressListSection = () => {
   const closeModal = useCallback(() => setModalOpen(false), []);
 
   const onSelectAddress = useCallback(
-    (selectedAddress: IAddress) => {
+    async (selectedAddress: IAddress) => {
       setAddress(selectedAddress);
+      await makeAddressPrimary(selectedAddress.id!);
       closeModal();
     },
     [setAddress, closeModal]
@@ -54,6 +55,13 @@ export const AddressListSection = () => {
   const onAddressCreated = useCallback(() => {
     fetchAddress();
   }, [fetchAddress]);
+
+  const handleAddressDeleted = useCallback((deletedAddressId: string) => {
+    setAddressList((prevList) =>
+      prevList.filter((address) => address.id !== deletedAddressId)
+    );
+  }, []);
+
   return (
     <>
       <button onClick={openModal}>
@@ -89,7 +97,10 @@ export const AddressListSection = () => {
                     >
                       seleccionar
                     </button>
-                    <DeleteAddress addressId={address.id!} />
+                    <DeleteAddress
+                      addressId={address.id!}
+                      onAddressDeleted={handleAddressDeleted}
+                    />
                   </div>
                 </ListItem>
               ))}
