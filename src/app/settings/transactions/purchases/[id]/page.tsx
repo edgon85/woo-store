@@ -4,7 +4,7 @@ import { formatCurrency } from '@/utils';
 import { translateOrderStatus } from '@/utils';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const order = await fetchOrderById(params.id);
+  const {data:order} = await fetchOrderById(params.id);
 
   const uuid = order.id;
   const partes = uuid.split('-');
@@ -66,7 +66,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </h3>
             <p>
               <span className="font-bold">Envío por: </span>{' '}
-              {order.packageDelivery.name}
+              {order.shippingService.name}
             </p>
             <p>
               <span className="font-bold">Método de pago: </span>{' '}

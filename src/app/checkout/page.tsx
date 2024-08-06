@@ -1,7 +1,7 @@
 import {
   AddressSection,
+  ShippingServiceSection,
   OrderBreakdown,
-  PackageDeliverySection,
   PaymentSelectSection,
   ProductSection,
 } from '@/components';
@@ -79,9 +79,9 @@ export default async function CheckoutPage({
         <AddressSection />
 
         <PaymentSelectSection paymentMethods={paymentMethods} />
-        {/* <PackageDeliverySection
-          packagesDeliveriesIds={product.packageDelivery.map((item) => item.id)}
-        /> */}
+        <ShippingServiceSection
+          isShippingIncluded={product.isShippingIncluded}
+        />
       </div>
       <div className="w-full lg:w-2/5 p-2">
         <OrderBreakdown

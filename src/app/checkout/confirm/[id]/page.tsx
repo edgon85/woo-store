@@ -10,8 +10,8 @@ export default async function ConfirmCheckoutPage({ params }: Props) {
   const partes = uuid.split('-');
   const ultimaParte = partes[partes.length - 1];
 
-  const order = await fetchOrderById(params.id);
-  const { product, summary, packageDelivery, buyer } = order;
+  const { data, message, ok } = await fetchOrderById(params.id);
+  const { product, summary, shippingService, buyer } = data;
 
   return (
     <div className="w-full md:w-1/2 md:m-auto min-h-[70vh] flex flex-col items-center gap-8 mt-4 pt-4 pb-4 px-2 md:px-0">
@@ -26,7 +26,7 @@ export default async function ConfirmCheckoutPage({ params }: Props) {
       <h2 className="text-lg font-bold">Felicidades {buyer.fullName}</h2>
       <p>
         Tu vendedor ya fue notificado. Recuerda que tiene 7 días hábiles para
-        enviar tu prenda por {packageDelivery.name}.
+        enviar tu prenda por {shippingService.name}.
       </p>
       <p>¡Gracias por creer en la segunda mano!</p>
 
@@ -54,11 +54,12 @@ export default async function ConfirmCheckoutPage({ params }: Props) {
           <div className="flex flex-col gap-4">
             <p className="flex justify-between gap-2">
               <span className="font-bold">Envío: </span>
-              {summary.deliveryOffer !== 0 ? (
+              <span> {formatCurrency(summary.deliveryTotal * 100)}</span>
+              {/* {summary.deliveryOffer !== 0 ? (
                 <span> {formatCurrency(summary.deliveryOffer * 100)}</span>
               ) : (
-                <span> {formatCurrency(summary.delivery * 100)}</span>
-              )}
+                <span> {formatCurrency(summary.deliveryTotal * 100)}</span>
+              )} */}
             </p>
             <p className="flex justify-between gap-2">
               <span className="font-bold">Tarifa de servicio: </span>

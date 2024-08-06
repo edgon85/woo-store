@@ -13,65 +13,98 @@ type Props = {
 };
 
 export const OrderBreakdown = ({ product, address }: Props) => {
-  const { price, offerPrice } = product;
-
-  const onAddCheckoutProduct = useCheckoutStore((state) => state.setProduct);
-  const onSetShippingAddress = useCheckoutStore(
-    (state) => state.setShippingAddress
-  );
-  const packageDelivery = useCheckoutStore((state) => state.packageDelivery);
-  const serviceFee = useCheckoutStore((state) => state.serviceFee);
-  const amount = useCheckoutStore((state) => state.computed.amount);
+  const { price, offerPrice, isShippingIncluded } = product;
+  const {
+    setProduct,
+    setShippingAddress,
+    shippingService,
+    serviceFee,
+    computed: { amount },
+  } = useCheckoutStore();
 
   useEffect(() => {
-    onAddCheckoutProduct(product);
-  }, [product, onAddCheckoutProduct]);
+    setProduct(product);
+  }, [product, setProduct]);
 
   useEffect(() => {
     if (address) {
-      onSetShippingAddress(address);
+      setShippingAddress(address);
     }
-  }, [address, onSetShippingAddress]);
+  }, [address, setShippingAddress]);
+
+  const renderPrice = () => (
+    <div className="flex justify-between items-center">
+      <p>Precio</p>
+      <div>
+        {offerPrice ? (
+          <>
+            <p className="line-through text-gray-500">
+              {formatCurrency(price * 100)}
+            </p>
+            <p className="font-semibold">{formatCurrency(offerPrice * 100)}</p>
+          </>
+        ) : (
+          <p>{formatCurrency(price * 100)}</p>
+        )}
+      </div>
+    </div>
+  );
+
+  const renderSavings = () => {
+    if (!offerPrice) return null;
+    return (
+      <div className="flex justify-between items-center text-green-600">
+        <p>Ahorro</p>
+        <p>{formatCurrency((price - offerPrice) * 100)}</p>
+      </div>
+    );
+  };
+
+  const renderShipping = () => {
+    if (!shippingService) {
+      return <p className="text-yellow-600">Seleccione envío</p>;
+    }
+
+    if (isShippingIncluded) {
+      return (
+        <>
+          <span className="text-green-600 font-medium">Envío Gratis</span>
+        </>
+      );
+    }
+
+    const showDiscount =
+      shippingService.discountedPrice !== 0 &&
+      shippingService.discountedPrice < shippingService.regularPrice;
+
+    return (
+      <>
+        {showDiscount && (
+          <>
+            <span className="ml-2 line-through text-gray-500">
+              {formatCurrency(shippingService.regularPrice * 100)}
+            </span>
+          </>
+        )}
+        <span>
+          {showDiscount
+            ? formatCurrency(shippingService.discountedPrice * 100)
+            : formatCurrency(shippingService.regularPrice * 100)}
+        </span>
+      </>
+    );
+  };
 
   return (
     <section className="bg-white border p-6 rounded shadow-sm">
       <h2 className="text-base font-semibold">Desglose del pedido</h2>
       <Divider />
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-center">
-          <p>Precio</p>
-          <div>
-            {offerPrice ? (
-              <>
-                <p className="line-through text-gray-500">
-                  {formatCurrency(price * 100)}
-                </p>
-                <p className="font-semibold">
-                  {formatCurrency(offerPrice * 100)}
-                </p>
-              </>
-            ) : (
-              <p>{formatCurrency(price * 100)}</p>
-            )}
-          </div>
-        </div>
-        {offerPrice && (
-          <div className="flex justify-between items-center text-green-600">
-            <p>Ahorro</p>
-            <p>{formatCurrency((price - offerPrice) * 100)}</p>
-          </div>
-        )}
+        {renderPrice()}
+        {renderSavings()}
         <div className="flex justify-between items-center">
           <p>Envío</p>
-          {packageDelivery === null ? (
-            <p className="text-yellow-600">Seleccione envío</p>
-          ) : (
-            <p>
-              {packageDelivery.price !== 0
-                ? formatCurrency(+packageDelivery.price * 100)
-                : formatCurrency(+packageDelivery.originalPrice * 100)}
-            </p>
-          )}
+          {renderShipping()}
         </div>
         <div className="flex justify-between items-center">
           <p>Tarifa de servicio</p>

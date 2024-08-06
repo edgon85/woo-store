@@ -1,40 +1,12 @@
 'use server';
 
-import { IPackageDelivery, IProduct } from '@/interfaces';
-
 import { revalidatePath } from 'next/cache';
-
 import { v2 as cloudinary } from 'cloudinary';
 import { getAuthInfo, getAuthToken } from '@/libs';
-import { ErrorResult } from '@/types';
+import { IProduct } from '@/interfaces';
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 /* ··········································································· */
-export async function fetchPackageDeliveries(): Promise<
-  IPackageDelivery[] | ErrorResult
-> {
-  const authToken = await getAuthToken();
-
-  if (!authToken) {
-    return { ok: false, message: 'No se encontró un token de autenticación' };
-  }
-  const url = `${process.env.API_BASE_URL}/package-delivery/all`;
-
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  const data: IPackageDelivery[] = await res.json();
-  return data;
-}
 
 export async function createProduct(
   product: IProduct,
@@ -83,7 +55,7 @@ export async function createProduct(
       ok: true,
       data: {
         message: response,
-        user: userInfo?.username
+        user: userInfo?.username,
       },
     };
   } catch (error: any) {

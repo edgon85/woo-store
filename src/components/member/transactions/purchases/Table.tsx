@@ -18,7 +18,7 @@ export const TablePurchases = ({ orders }: Props) => {
       {orders?.map((order: IOrder) => {
         const images = order.product.images.map((image: any) => image.url);
 
-        const { product, summary, seller, packageDelivery } = order;
+        const { product, summary, seller, shippingService } = order;
 
         return (
           <div key={order.id}>
@@ -88,7 +88,7 @@ export const TablePurchases = ({ orders }: Props) => {
                 </p>
                 <p>
                   <span className="text-gray-500 capitalize mr-2">Envío:</span>{' '}
-                  <span>{packageDelivery.name}</span>
+                  <span>{shippingService.name}</span>
                 </p>
                 <p>
                   <span className="text-gray-500 capitalize mr-2">Guía:</span>{' '}
@@ -126,7 +126,7 @@ export const TablePurchases = ({ orders }: Props) => {
                       className="flex gap-1 justify-center items-center underline"
                     >
                       <SlLocationPin size={18} />
-                      Ver en {order.packageDelivery.name}
+                      Ver en {order.shippingService.name}
                     </Link>
                   ) : null
                 }

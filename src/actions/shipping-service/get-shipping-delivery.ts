@@ -1,13 +1,10 @@
 'use server';
 
 import { unstable_noStore as noStore } from 'next/cache';
-import { IPackageDelivery } from '@/interfaces';
-import { ErrorResult } from '@/types';
+
 import { getAuthToken } from '@/libs';
 
-export async function fetchPackageDelivery(
-  ids: number[]
-): Promise<IPackageDelivery[] | ErrorResult> {
+export async function fetchShippingService(municipalitySlug: string) {
   noStore();
 
   const authToken = await getAuthToken();
@@ -15,8 +12,8 @@ export async function fetchPackageDelivery(
   if (!authToken) {
     return { ok: false, message: 'No se encontró un token de autenticación' };
   }
-  const queryString = `?ids=${ids.join(',')}`;
-  const url = `${process.env.API_BASE_URL}/package-delivery${queryString}`;
+
+  const url = `${process.env.API_BASE_URL}/shipping-service/available-by-municipality/${municipalitySlug}`;
   try {
     const resp = await fetch(url, {
       method: 'GET',
@@ -31,9 +28,9 @@ export async function fetchPackageDelivery(
       throw new Error(errorData.message || 'Error al hacer fetch data');
     }
 
-    const data: IPackageDelivery[] = await resp.json();
+    const data = await resp.json();
 
-    return data;
+    return { ok: true, data };
   } catch (error: any) {
     console.log(error.message);
     return { ok: false, message: error.message };

@@ -38,7 +38,7 @@ export function ButtonSkeleton() {
   );
 }
 
-export const PackageDeliverySkeleton = () => {
+export const ShippingServiceSkeleton = () => {
   return (
     <div className="animate-pulse flex space-x-4">
       <div className="rounded-full bg-gray-300 h-10 w-10"></div>

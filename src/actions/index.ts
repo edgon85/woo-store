@@ -11,7 +11,7 @@ export * from './notifications';
 export * from './offer';
 export * from './orders';
 export * from './other-actions';
-export * from './package-delivery';
+export * from './shipping-service';
 export * from './payout-methods';
 export * from './products';
 export * from './profile';

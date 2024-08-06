@@ -4,6 +4,6 @@ export type TypeCreateOrder = {
   paymentMethod: number;
   amount: number;
   orderStatus?: string;
-  packageDeliveryId: number;
+  shippingServiceSlug: string
   offerId?: string;
 };

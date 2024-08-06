@@ -10,3 +10,4 @@ export * from './order.interface';
 export * from './package-delivery.interface';
 export * from './payment-method.interface';
 export * from './address.interface';
+export * from './shipping-service.interface';

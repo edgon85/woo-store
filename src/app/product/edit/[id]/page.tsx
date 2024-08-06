@@ -1,5 +1,4 @@
 import {
-  fetchPackageDeliveries,
   getBrands,
   getClothingCondition,
   getColors,

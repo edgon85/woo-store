@@ -54,7 +54,7 @@ export const AccordionComponent = ({ order }: Props) => {
             {order.orderStatus === OrderStatus.SellerNotified ? (
               <p>
                 Tu vendedor ya fue notificado. Recuerda que tiene 7 días hábiles
-                para enviar tu prenda por {order.packageDelivery.name}.
+                para enviar tu prenda por {order.shippingService.name}.
               </p>
             ) : null}
 
@@ -66,7 +66,7 @@ export const AccordionComponent = ({ order }: Props) => {
                   href={`/`}
                   target="_blank"
                 >
-                  {order.packageDelivery.name}
+                  {order.shippingService.name}
                 </Link>
               </p>
             ) : null}

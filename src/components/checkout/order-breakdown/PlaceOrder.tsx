@@ -15,7 +15,7 @@ export const PlaceOrder = () => {
 
   const productCheckout = useCheckoutStore((state) => state.product);
   const paymentMethod = useCheckoutStore((state) => state.paymentMethod);
-  const packageDelivery = useCheckoutStore((state) => state.packageDelivery);
+  const shippingService = useCheckoutStore((state) => state.shippingService);
   const address = useCheckoutStore((state) => state.address);
   const amount = useCheckoutStore((state) => state.computed.amount);
 
@@ -44,7 +44,7 @@ export const PlaceOrder = () => {
       return;
     }
 
-    if (packageDelivery === null) {
+    if (shippingService === null) {
       setError(true);
       setMessage('Seleccione paquetería');
       return;
@@ -55,7 +55,7 @@ export const PlaceOrder = () => {
       shippingAddressId: address?.id!,
       paymentMethod: paymentMethod.id,
       amount: amount,
-      packageDeliveryId: packageDelivery.id,
+      shippingServiceSlug: shippingService.slug,
       offerId: productCheckout?.offerId,
     };
 
