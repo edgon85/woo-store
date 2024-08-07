@@ -46,7 +46,13 @@ export default async function PageOrderDetail({ params }: Props) {
           </div>
           <div className="text-base">
             <p>Guía #:</p>
-            {<p>{order.notes === null ? 'Aun no disponible' : order.notes}</p>}
+            {
+              <p>
+                {order.guideNumber === null
+                  ? 'Aun no disponible'
+                  : order.guideNumber}
+              </p>
+            }
           </div>
           <div className="text-base">
             <p>Paquetería:</p>
@@ -64,14 +70,14 @@ export default async function PageOrderDetail({ params }: Props) {
           <div>
             <p className="text-base">Dirección de entrega:</p>
             <p>
-              {order.shippingAddress.streetAddress},{' '}
+              {order.shippingAddress},{' '}
               {/* {order.shippingAddress.municipality.name},
               {order.shippingAddress.department.name} */}
             </p>
           </div>
           <div>
             <p className="text-base">Teléfono:</p>
-            <p>+502 {order.shippingAddress.phone}</p>
+            <p>+502 {order.recipientPhone}</p>
           </div>
           <div className="text-base">
             <p>Compra:</p>
@@ -81,7 +87,7 @@ export default async function PageOrderDetail({ params }: Props) {
           </div>
           <div className="text-base">
             <p>Recibe:</p>
-            {order.shippingAddress.fullName}
+            {order.recipientName}
           </div>
         </div>
         <div className="p-3 flex  justify-between border mt-3">

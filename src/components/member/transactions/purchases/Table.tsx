@@ -92,7 +92,7 @@ export const TablePurchases = ({ orders }: Props) => {
                 </p>
                 <p>
                   <span className="text-gray-500 capitalize mr-2">Guía:</span>{' '}
-                  <span>{order.notes ? order.notes : '-'}</span>
+                  <span>{order.guideNumber ? order.guideNumber : '-'}</span>
                 </p>
               </div>
               <div className="flex flex-col gap-2 items-center">

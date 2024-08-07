@@ -2,7 +2,7 @@ import { ChangeEvent, useRef, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { FaPlus } from 'react-icons/fa';
 
-import { FormInputs } from '../../CreateProduct';
+import { FormInputs } from '@/hooks';
 import { CloseIcon } from '@/components/ui';
 
 type Props = {

@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
 import { useCreateProductStore } from '@/stores';
-import { FormInputs } from '../CreateProduct';
+import { FormInputs } from '@/hooks';
 import {
   FieldErrors,
   UseFormGetValues,

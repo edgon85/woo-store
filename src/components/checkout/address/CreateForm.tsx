@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { departamentosGuatemala } from './UpdateForm';
-import { Button, EditIcon, SpinnerIcon } from '@/components/ui';
+import { Button, SpinnerIcon } from '@/components/ui';
 import Modal from 'react-responsive-modal';
 import { useSearchParams } from 'next/navigation';
-import { createAddress, getDepartments, revalidateData } from '@/actions';
+import { createAddress, getDepartments } from '@/actions';
 import { useCheckoutStore } from '@/stores';
 import { toast } from 'react-toastify';
 import { IDepartment, IMunicipality } from '@/interfaces';
@@ -40,7 +39,6 @@ export const CreateFormAddress = ({
   );
 
   const searchParams = useSearchParams();
-  const params = searchParams.get('transaction');
 
   const {
     control,

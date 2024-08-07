@@ -1,5 +1,5 @@
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { FormInputs } from '../CreateProduct';
+import { FormInputs } from '@/hooks';
 
 type Props = {
   register: UseFormRegister<FormInputs>;

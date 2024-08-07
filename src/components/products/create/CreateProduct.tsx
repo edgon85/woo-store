@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useProductForm, useUnsavedChangesWarning } from '@/hooks';
 import Swal from 'sweetalert2';
 
-import { IBrand, IClothesState, IColor, IProduct } from '@/interfaces';
+import { IBrand, IClothesState, IColor } from '@/interfaces';
 
 import { createProduct } from '@/actions';
 

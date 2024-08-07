@@ -10,9 +10,6 @@ type Props = {
 };
 
 export const PackageDeliverySection = ({ data }: Props) => {
-  /* const packageDeliveries = useCreateProductStore(
-    (state) => state.packageDeliveries
-  ); */
   const openModal = useModalStore((state) => state.openModal);
 
   return (
