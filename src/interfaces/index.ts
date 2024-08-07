@@ -7,7 +7,6 @@ export * from './chat.interface';
 export * from './notification.interface';
 export * from './offer.interface';
 export * from './order.interface';
-export * from './package-delivery.interface';
 export * from './payment-method.interface';
 export * from './address.interface';
 export * from './shipping-service.interface';

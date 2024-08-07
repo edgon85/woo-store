@@ -10,7 +10,6 @@ export * from './gender-section/GenderSection';
 export * from './image-section/ImageSection';
 export * from './ItemCreate';
 export * from './measurement-section/MeasurementSection';
-export * from './package-delivery-section/PackageDeliverySection';
 export * from './PriceSection';
 export * from './subcategory-section/SubcategorySection';
 export * from './TitleSection';
