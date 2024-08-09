@@ -1,12 +1,19 @@
-import { getBrands, getClothingCondition, getColors } from '@/actions';
+import {
+  getBrands,
+  getClothingCondition,
+  getColors,
+  getDepartmentsAvailable,
+} from '@/actions';
 import { CreateProduct } from '@/components';
 
 export default async function CreateProductPage() {
-  const [brandsData, clothingConditionData, colorsData] = await Promise.all([
-    getBrands(''),
-    getClothingCondition(),
-    getColors(),
-  ]);
+  const [departments, brandsData, clothingConditionData, colorsData] =
+    await Promise.all([
+      getDepartmentsAvailable(),
+      getBrands(''),
+      getClothingCondition(),
+      getColors(),
+    ]);
 
   return (
     <div className="main-wrapper flex justify-center pt-8 pb-8">
@@ -14,6 +21,7 @@ export default async function CreateProductPage() {
         brands={brandsData}
         clothingConditionList={clothingConditionData}
         colors={colorsData}
+        departments={departments.data.departments}
       />
     </div>
   );

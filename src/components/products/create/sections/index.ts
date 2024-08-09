@@ -1,4 +1,3 @@
-
 export * from './brand-section/BrandSection';
 export * from './category-section/CategorySection';
 export * from './clothes-state-section/ClothesStateSection';
@@ -14,3 +13,5 @@ export * from './PriceSection';
 export * from './subcategory-section/SubcategorySection';
 export * from './TitleSection';
 export * from './weight-section/WeightSection';
+export * from './department-section/DepartmentSection';
+export * from './municipality-section/MunicipalitySection';

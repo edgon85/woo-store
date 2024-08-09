@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useProductForm, useUnsavedChangesWarning } from '@/hooks';
 import Swal from 'sweetalert2';
 
-import { IBrand, IClothesState, IColor } from '@/interfaces';
+import { IBrand, IClothesState, IColor, IDepartment } from '@/interfaces';
 
 import { createProduct } from '@/actions';
 
@@ -24,18 +24,22 @@ import {
   PriceSection,
   ImageSection,
   WeightSection,
+  DepartmentSection,
+  MunicipalitySection,
 } from './sections';
 
 type Props = {
   brands: IBrand[];
   clothingConditionList: IClothesState[];
   colors: IColor[];
+  departments: IDepartment[];
 };
 
 export const CreateProduct = ({
   brands,
   clothingConditionList,
   colors,
+  departments,
 }: Props) => {
   const router = useRouter();
 
@@ -50,6 +54,8 @@ export const CreateProduct = ({
     resetStore,
     category,
     subcategory,
+    department,
+    municipality,
   } = useProductForm(
     'create',
     undefined,
@@ -89,7 +95,6 @@ export const CreateProduct = ({
           Swal.fire({
             html: `<p>${result.value?.message}</p>`,
             icon: 'success',
-            
           });
           resetStore();
           router.replace(`/member/${result.value?.user}`);
@@ -104,46 +109,58 @@ export const CreateProduct = ({
   watch('clothesType');
   watch('weight');
   watch('price');
+
   return (
     <div className="w-full max-w-2xl px-2 md:px-0">
       <h2 className="text-2xl font-extrabold mb-4">Subir articulo nuevo</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
-          <ImageSection
-            register={register}
-            errors={errors}
-            setValue={setValue}
-          />
+          <DepartmentSection departments={departments} />
+          {department && <MunicipalitySection />}
         </div>
 
-        <div className="bg-white border rounded shadow  p-6 md:p-8 ">
-          <TitleSection register={register} errors={errors} />
-          <DescriptionSection register={register} errors={errors} />
-        </div>
+        {municipality && (
+          <>
+            <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
+              <ImageSection
+                register={register}
+                errors={errors}
+                setValue={setValue}
+              />
+            </div>
 
-        <div className="bg-white rounded-lg shadow sm:p-6 md:p-8 mt-4">
-          <GenderSection
-            gender={getValues('gender')}
-            onGenderChange={(value) => setValue('gender', value)}
-          />
-          {/* ····························································· */}
-          {getValues('gender') && (
-            <ClothesTypeSection
-              clothesType={getValues('clothesType')}
-              onClothesTypeChange={(value) => setValue('clothesType', value)}
-            />
-          )}
-          {/* ····························································· */}
-          {getValues('clothesType') && (
-            <CategorySection
-              gender={getValues('gender')}
-              clothesType={getValues('clothesType')}
-            />
-          )}
-          {/* ····························································· */}
-          {category && <SubcategorySection />}
-        </div>
+            <div className="bg-white border rounded shadow  p-6 md:p-8 ">
+              <TitleSection register={register} errors={errors} />
+              <DescriptionSection register={register} errors={errors} />
+            </div>
 
+            <div className="bg-white rounded-lg shadow sm:p-6 md:p-8 mt-4">
+              <GenderSection
+                gender={getValues('gender')}
+                onGenderChange={(value) => setValue('gender', value)}
+              />
+
+              {/* ····························································· */}
+              {getValues('gender') && (
+                <ClothesTypeSection
+                  clothesType={getValues('clothesType')}
+                  onClothesTypeChange={(value) =>
+                    setValue('clothesType', value)
+                  }
+                />
+              )}
+              {/* ····························································· */}
+              {getValues('clothesType') && (
+                <CategorySection
+                  gender={getValues('gender')}
+                  clothesType={getValues('clothesType')}
+                />
+              )}
+              {/* ····························································· */}
+              {category && <SubcategorySection />}
+            </div>
+          </>
+        )}
         {subcategory && (
           <div className="bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mt-4">
             {/* ····························································· */}

@@ -1,7 +1,3 @@
-/* import { useForm, SubmitHandler } from 'react-hook-form';
-import { useCreateProductStore } from './store';
-import { FormInputs, IProduct } from './types'; */
-
 import { ProductStatus } from '@/enums';
 import { IProduct } from '@/interfaces';
 import { useCreateProductStore } from '@/stores';
@@ -73,6 +69,8 @@ export const useProductForm = (
     setClothesState,
     setColors,
     setIsShippingIncluded,
+    department,
+    municipality,
   } = useCreateProductStore();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
@@ -103,6 +101,7 @@ export const useProductForm = (
         action === 'create' ? ProductStatus.Available : initialProduct!.status,
       weight: data.weight,
       isShippingIncluded,
+      originMunicipality: municipality!,
     };
 
     if (action === 'edit' && initialProduct) {
@@ -156,6 +155,8 @@ export const useProductForm = (
     clothesState,
     colors,
     isShippingIncluded,
+    department,
+    municipality,
     resetStore,
     initializeEditForm,
     formState: { errors, isDirty },

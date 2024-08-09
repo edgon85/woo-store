@@ -1,4 +1,4 @@
-import { IUser } from './';
+import { IMunicipality, IUser } from './';
 
 export interface IProduct {
   id?: string;
@@ -18,6 +18,7 @@ export interface IProduct {
   measurement: IMeasurement;
   clothesState: IClothesState;
   reservedFor?: ReservedFor;
+  originMunicipality?: IMunicipality
 
   user?: IUser;
   createdAt?: Date;

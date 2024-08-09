@@ -3,7 +3,9 @@ import {
   ICategory,
   IClothesState,
   IColor,
+  IDepartment,
   IMeasurement,
+  IMunicipality,
   ISubcategory,
 } from '@/interfaces';
 import { create } from 'zustand';
@@ -16,10 +18,10 @@ type CreateProductState = {
   brand: IBrand | null;
   measurement: IMeasurement | null;
   clothesState: IClothesState | null;
-  colors: IColor[] /* 
-  price: number;
-  weight: number; */;
+  colors: IColor[];
   isShippingIncluded: boolean;
+  department: IDepartment | null;
+  municipality: IMunicipality | null;
 
   setGender: (value: string) => void;
   setClothesType: (value: string) => void;
@@ -29,9 +31,9 @@ type CreateProductState = {
   setMeasurement: (measurement: IMeasurement) => void;
   setClothesState: (clothesState: IClothesState) => void;
   setColors: (colors: IColor[]) => void;
-  /*   setPrice: (price: number) => void;
-  setWeight: (weight: number) => void; */
   setIsShippingIncluded: (value: boolean) => void;
+  setDepartment: (value: IDepartment) => void;
+  setMunicipality: (value: IMunicipality) => void;
 
   resetStore: () => void;
 };
@@ -47,6 +49,9 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
   colors: [],
   packageDeliveries: [],
   isShippingIncluded: false,
+  isOriginShippingAvailable: false,
+  department: null,
+  municipality: null,
 
   setGender: (value: string) => set((state) => ({ gender: value })),
   setClothesType: (value: string) => set((_) => ({ clothesType: value })),
@@ -61,6 +66,10 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
 
   setIsShippingIncluded: (value: boolean) =>
     set((_) => ({ isShippingIncluded: value })),
+
+  setDepartment: (value: IDepartment) => set((_) => ({ department: value })),
+  setMunicipality: (value: IMunicipality) =>
+    set((_) => ({ municipality: value })),
 
   resetStore: () =>
     set((_) => ({
