@@ -55,3 +55,17 @@ export const ShippingServiceSkeleton = () => {
     </div>
   );
 };
+
+export default function ProductsSkeleton() {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {[...Array(8)].map((_, i) => (
+        <div key={i} className="border p-4 rounded-lg shadow-md animate-pulse">
+          <div className="bg-gray-300 h-48 w-full mb-2"></div>
+          <div className="bg-gray-300 h-4 w-3/4 mb-2"></div>
+          <div className="bg-gray-300 h-4 w-1/2"></div>
+        </div>
+      ))}
+    </div>
+  );
+}

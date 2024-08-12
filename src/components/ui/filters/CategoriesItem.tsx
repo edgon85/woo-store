@@ -1,48 +1,48 @@
 'use client';
-import { ISubcategory } from '@/interfaces';
-import { useEffect, useState } from 'react';
-import { RadiaSelectIcon } from '../icons';
-import { useParams, useRouter } from 'next/navigation';
-import { useSidebar } from '@/stores';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 
+import { ISubcategory } from '@/interfaces';
+import { RadiaSelectIcon } from '../icons';
+import { useSidebar } from '@/stores';
+import { useFetcher } from '@/hooks';
+
 type Props = {
-  subcategories: ISubcategory[];
+  gender: string;
+  category: string;
+  clothing_type: string;
   isMovil?: boolean;
 };
 
 export const SubcategoriesItems = ({
-  subcategories,
+  gender,
+  category,
+  clothing_type,
   isMovil = false,
 }: Props) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
   const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
   const router = useRouter();
 
-  const params = useParams();
-  const { gender, clothesType, category, subcategory } = params;
+  const { data: subcategories } = useFetcher<ISubcategory[]>(
+    `/subcategories/${gender}/${category}`
+  );
 
-  useEffect(() => {
-    if (subcategory === undefined) {
-      setSelectedSubcategory('');
-    } else {
-      setSelectedSubcategory(`${subcategory}`);
-    }
-  }, [subcategory]);
-
-  // Función para manejar el clic en una Subcategoría
   const handleSubcategoryClick = (subSlug: string) => {
+    console.log(subSlug);
     if (selectedSubcategory === subSlug) {
       setSelectedSubcategory('');
-      router.push(`/${gender}/${clothesType}/${category}`);
+      router.push(`/catalog/${gender}/${clothing_type}/${category}`);
     } else {
       setSelectedSubcategory(subSlug);
-      router.push(`/${gender}/${clothesType}/${category}/${subSlug}`);
+      router.push(`/catalog/${gender}/${clothing_type}/${category}/${subSlug}`);
     }
     if (isMovil) {
       menuFilter();
     }
   };
+
   return (
     <>
       <div className="divide-y divide-gray-300">

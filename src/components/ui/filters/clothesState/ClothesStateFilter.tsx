@@ -5,16 +5,15 @@ import { Filter, IClothesState } from '@/interfaces';
 import { useEffect } from 'react';
 import { generateFilterURL } from '@/utils';
 import { useFilterStore, useSidebar } from '@/stores';
+import { useFetcher } from '@/hooks';
 
 type Props = {
-  clothesStates: IClothesState[];
   isMovil?: boolean;
 };
 
-export const ClothesStateFilter = ({
-  clothesStates,
-  isMovil = false,
-}: Props) => {
+export const ClothesStateFilter = ({ isMovil = false }: Props) => {
+  const { data: clothesStates } = useFetcher<IClothesState[]>(`/clothes-state`);
+
   const pathName = usePathname();
   const { replace } = useRouter();
   const filters = useFilterStore((state) => state.filters);

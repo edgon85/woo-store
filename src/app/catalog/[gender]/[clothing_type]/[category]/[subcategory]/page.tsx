@@ -1,30 +1,29 @@
-import { getProductByGenderAndCategory } from '@/actions';
-import { BadgeFilterList, Pagination, ProductCard } from '@/components';
+import { getProductBySubcategory } from '@/actions';
+import { Pagination, ProductCard } from '@/components';
 import { getAuthInfo } from '@/libs';
-import { buildQueryString } from '@/utils';
 
-export default async function CategoriesPage({
-  params: { gender, category },
-  searchParams,
-}: {
-  params: { gender: string; category: string };
+type Props = {
+  params: {
+    gender: string;
+    clothing_type: string;
+    category: string;
+    subcategory: string;
+  };
   searchParams: { [key: string]: string | string[] | undefined };
-}) {
+};
+
+export default async function SubcategoryPage({
+  params: { gender, clothing_type, category, subcategory },
+  searchParams,
+}: Props) {
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
 
-  const queryString = buildQueryString(searchParams);
-
-  const page = Number(searchParams.page) || 1;
-
-  const data = await getProductByGenderAndCategory({
-    gender: gender,
-    category: category,
-    page,
-    pageSize: 2,
+  const { products, totalPage } = await getProductBySubcategory({
+    take: 1,
+    gender,
+    subcategory,
   });
-
-  const { products, totalPage } = data;
 
   if (products.length === 0) {
     return (
@@ -42,8 +41,8 @@ export default async function CategoriesPage({
   }
 
   return (
-    <div>
-      {queryString && <BadgeFilterList />}
+    <>
+      {/* {queryString && <BadgeFilterList />} */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[500]">
         {products.map((product: any) => (
           <ProductCard
@@ -54,6 +53,6 @@ export default async function CategoriesPage({
         ))}
       </div>
       <Pagination totalPages={totalPage} />
-    </div>
+    </>
   );
 }

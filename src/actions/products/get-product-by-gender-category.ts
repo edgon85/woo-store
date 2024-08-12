@@ -10,22 +10,31 @@ type PaginationOptions = {
   subcategory?: string;
   gender?: string;
 };
+
+type PaginationOPtions1 = {
+  gender: string;
+  category: string;
+  page: number;
+  pageSize?: number;
+};
 export async function getProductByGenderAndCategory({
+  gender,
+  category,
   page = 1,
-  take = 10,
-  path,
-}: PaginationOptions) {
+  pageSize = 10,
+}: PaginationOPtions1) {
   noStore();
 
-  if (isNaN(Number(page))) page = 1;
-  if (page < 1) page = 1;
+  const skip = (page - 1) * pageSize;
+  const url = new URL(`${process.env.API_BASE_URL}/products`);
 
-  let url = `${process.env.API_BASE_URL}${path}&take=${take}&skip=${
-    (page - 1) * take
-  }`;
+  url.searchParams.append('gender', gender);
+  url.searchParams.append('category', category);
+  url.searchParams.append('take', pageSize.toString());
+  url.searchParams.append('skip', skip.toString());
 
   try {
-    const resp = await fetch(url, {
+    const resp = await fetch(url.toString(), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

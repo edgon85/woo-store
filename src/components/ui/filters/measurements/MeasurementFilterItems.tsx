@@ -5,16 +5,23 @@ import { Filter, IMeasurement } from '@/interfaces';
 import { generateFilterURL, measurementFormat } from '@/utils';
 import { useEffect } from 'react';
 import { useFilterStore, useSidebar } from '@/stores';
+import { useFetcher } from '@/hooks';
 
 type Props = {
-  measurements: IMeasurement[];
+  gender: string;
+  clothing_type: string;
   isMovil?: boolean;
 };
 
 export const MeasurementFilterItems = ({
-  measurements,
+  gender,
+  clothing_type,
   isMovil = false,
 }: Props) => {
+  const { data: measurements } = useFetcher<IMeasurement[]>(
+    `/measurements?gender=${gender}&type=${clothing_type}`
+  );
+
   const pathName = usePathname();
   const { replace } = useRouter();
 

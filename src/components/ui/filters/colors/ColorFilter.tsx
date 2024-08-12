@@ -1,5 +1,6 @@
 'use client';
 
+import { useFetcher } from '@/hooks';
 import { Filter, IColor } from '@/interfaces';
 import { useFilterStore, useSidebar } from '@/stores';
 import { generateFilterURL } from '@/utils';
@@ -7,11 +8,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 type Props = {
-  colors: IColor[];
   isMovil?: boolean;
 };
 
-export const ColorFilter = ({ colors, isMovil = false }: Props) => {
+export const ColorFilter = ({ isMovil = false }: Props) => {
+
+
+  const { data: colors } = useFetcher<IColor[]>(`/colors`);
+
   const pathName = usePathname();
   const { replace } = useRouter();
 
