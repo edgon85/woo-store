@@ -59,7 +59,7 @@ export const MeasurementFilterItems = ({
     <>
       <div className="divide-y divide-gray-300">
         {measurements.map((measurement) => (
-          <li key={measurement.id} className="pl-1 pr-2 py-2">
+          <li key={measurement.id} className="p-4">
             <label
               htmlFor={measurement.slug}
               className="flex justify-between items-center cursor-pointer hover:text-darkPrimary uppercase"

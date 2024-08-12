@@ -73,7 +73,7 @@ export const BrandsItems = ({ isMobile = false }: Props) => {
   const brandItems = useMemo(
     () =>
       searchResults.map((brandData) => (
-        <li key={brandData.id} className="pl-1 pr-2 py-2">
+        <li key={brandData.id} className="p-4">
           <label
             htmlFor={brandData.slug}
             className="flex justify-between items-center cursor-pointer hover:text-darkPrimary capitalize"

@@ -50,7 +50,7 @@ export const ClothesStateFilter = ({ isMovil = false }: Props) => {
     <>
       <div className="divide-y divide-gray-300">
         {clothesStates.map((clothes) => (
-          <li key={clothes.id} className="pl-1 pr-2 py-2">
+          <li key={clothes.id} className="p-4">
             <label
               htmlFor={clothes.slug}
               className="flex justify-between items-center cursor-pointer hover:text-darkPrimary uppercase"
