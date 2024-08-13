@@ -45,7 +45,7 @@ export const ItemMegaMenu = ({
     (category: ICategory) => {
       toggleMenu(menuName);
       setClothesType(clothesType);
-      router.push(`/${gender}/${clothesType}/${category.slug}`);
+      router.push(`/catalog/${gender}/${clothesType}/${category.slug}`);
     },
     [toggleMenu, menuName, setClothesType, clothesType, gender, router]
   );

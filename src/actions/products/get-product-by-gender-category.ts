@@ -55,7 +55,7 @@ export async function getProductByGenderAndCategory({
   }
 }
 
-export async function getProductBySubcategory({
+/* export async function getProductBySubcategory({
   page = 1,
   take = 10,
   queryString = '',
@@ -96,4 +96,4 @@ export async function getProductBySubcategory({
     console.log(error.message);
     return { ok: false, message: 'ocurrió un error vea los logs' };
   }
-}
+} */

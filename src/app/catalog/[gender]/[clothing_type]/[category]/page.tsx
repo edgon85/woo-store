@@ -1,10 +1,5 @@
 import { getProductByGenderAndCategory } from '@/actions';
-import {
-  BadgeFilterList,
-  CardsSkeleton,
-  Pagination,
-  ProductCard,
-} from '@/components';
+import { BadgeFilterList, Pagination, ProductCard } from '@/components';
 import { getAuthInfo } from '@/libs';
 import { buildQueryString } from '@/utils';
 import NotFound from '../../not-found';
@@ -33,14 +28,14 @@ export default async function CategoryPage({
   });
 
   if (products.length === 0) {
-    NotFound();
+    return NotFound();
   }
 
   return (
     <div>
       {/* {queryString && <BadgeFilterList />} */}
-        <Suspense fallback={<ProductsSkeleton />}>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[500]">
+      <Suspense fallback={<ProductsSkeleton />}>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[500]">
           {products.map((product: any) => (
             <ProductCard
               key={product.id}
@@ -48,9 +43,9 @@ export default async function CategoryPage({
               currentUserId={currentUserId || ''}
             />
           ))}
-      </div>
-        </Suspense>
-      <Pagination totalPages={totalPages} />
+        </div>
+      </Suspense>
+      {<Pagination totalPages={totalPages} />}
     </div>
   );
 }

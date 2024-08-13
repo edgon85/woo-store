@@ -32,8 +32,6 @@ export const HierarchicalMenu = ({
   const [menuStack, setMenuStack] = useState<MenuItem[][]>([]);
   const [urlStack, setUrlStack] = useState<string[]>([]);
 
-  const { category } = params;
-
   const router = useRouter();
 
   useEffect(() => {
@@ -95,16 +93,23 @@ export const HierarchicalMenu = ({
       setUrlStack(urlStack.slice(0, -1));
       router.push(previousUrl);
     } else {
-      // Si estamos en el nivel superior, volvemos a la página principal de la categoría
       router.push(`/catalog/${gender}/${clothingType}`);
     }
   };
 
   const handleItemClick = (item: MenuItem) => {
-    const newUrl = `${urlStack[urlStack.length - 1]}/${item.slug}`;
-    router.push(newUrl);
     if (item.children) {
       navigateToSubmenu(item);
+    } else {
+      const gender = params.gender.toString();
+      const clothing = params.clothing_type.toString();
+      const category = params.category.toString();
+
+      const newUrl = `/catalog/${gender}/${clothing}/${category}/${item.slug}`;
+
+      setUrlStack([...urlStack.slice(0, -1), newUrl]);
+
+      router.push(newUrl);
     }
   };
 
@@ -123,7 +128,9 @@ export const HierarchicalMenu = ({
           <BsChevronLeft className="mr-2" />
           <div className="w-full flex justify-between">
             <span>Atrás</span>
-            <span className='text-cerise-red-600'>{category ? category.toString() : ''}</span>
+            <span className="text-cerise-red-600">
+              {params.category ? params.category.toString() : ''}
+            </span>
           </div>
         </button>
       )}
