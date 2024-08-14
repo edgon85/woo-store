@@ -4,12 +4,19 @@ import { create } from 'zustand';
 interface FilterState {
   filters: Filter[];
 
-  setFilters: (value: Filter[]) => void;
+  setFilters: (
+    filtersOrUpdater: Filter[] | ((prevFilters: Filter[]) => Filter[])
+  ) => void;
 }
 
 export const useFilterStore = create<FilterState>()((set) => ({
   filters: [],
 
-  //   setFilters: (value: Filter[]) => set((state) => ({ filters: value })),
-  setFilters: (value: Filter[]) => set({ filters: value }),
+  setFilters: (filtersOrUpdater) =>
+    set((state) => ({
+      filters:
+        typeof filtersOrUpdater === 'function'
+          ? filtersOrUpdater(state.filters)
+          : filtersOrUpdater,
+    })),
 }));
