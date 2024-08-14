@@ -1,4 +1,5 @@
 import { useFetcher } from '@/hooks';
+import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
@@ -31,6 +32,8 @@ export const HierarchicalMenu = ({
   const [currentMenu, setCurrentMenu] = useState<MenuItem[]>([]);
   const [menuStack, setMenuStack] = useState<MenuItem[][]>([]);
   const [urlStack, setUrlStack] = useState<string[]>([]);
+  const [currentCategory, setCurrentCategory] = useState<string>('');
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -54,6 +57,8 @@ export const HierarchicalMenu = ({
             newUrlStack.push(
               `${newUrlStack[newUrlStack.length - 1]}/${matchingItem.slug}`
             );
+            setCurrentCategory(matchingItem.label);
+            setSelectedItem(matchingItem.slug!);
             if (matchingItem.children) {
               newStack.push(matchingItem.children);
               currentLevel = matchingItem.children;
@@ -76,6 +81,8 @@ export const HierarchicalMenu = ({
     if (item.children) {
       setMenuStack([...menuStack, currentMenu]);
       setCurrentMenu(item.children);
+      setCurrentCategory(item.label);
+      setSelectedItem(item.slug!);
       setUrlStack([
         ...urlStack,
         `${urlStack[urlStack.length - 1]}/${item.slug}`,
@@ -91,9 +98,24 @@ export const HierarchicalMenu = ({
       setCurrentMenu(previousMenu);
       setMenuStack(menuStack.slice(0, -1));
       setUrlStack(urlStack.slice(0, -1));
+
+      // Actualizar la categoría actual
+      if (menuStack.length > 1) {
+        const previousCategory = menuStack[menuStack.length - 2].find(
+          (item) => item.children === previousMenu
+        );
+        setCurrentCategory(previousCategory?.label || '');
+        setSelectedItem(previousCategory?.slug || null);
+      } else {
+        setCurrentCategory('');
+        setSelectedItem(null);
+      }
+
       router.push(previousUrl);
     } else {
       router.push(`/catalog/${gender}/${clothingType}`);
+      setCurrentCategory('');
+      setSelectedItem(null);
     }
   };
 
@@ -106,9 +128,9 @@ export const HierarchicalMenu = ({
       const category = params.category.toString();
 
       const newUrl = `/catalog/${gender}/${clothing}/${category}/${item.slug}`;
-
+      setCurrentCategory(item.label);
+      setSelectedItem(item.slug!);
       setUrlStack([...urlStack.slice(0, -1), newUrl]);
-
       router.push(newUrl);
     }
   };
@@ -128,9 +150,7 @@ export const HierarchicalMenu = ({
           <BsChevronLeft className="mr-2" />
           <div className="w-full flex justify-between">
             <span>Atrás</span>
-            <span className="text-cerise-red-600">
-              {params.category ? params.category.toString() : ''}
-            </span>
+            <span className="text-cerise-red-600">{currentCategory}</span>
           </div>
         </button>
       )}
@@ -138,9 +158,15 @@ export const HierarchicalMenu = ({
         <button
           key={item.id}
           onClick={() => handleItemClick(item)}
-          className="w-full p-4 text-left flex items-center justify-between text-gray-700 hover:bg-gray-100"
+          className={clsx(
+            'w-full p-4 text-left flex items-center justify-between hover:bg-gray-100',
+            {
+              'text-cerise-red-600': selectedItem === item.slug,
+              'text-gray-700': selectedItem !== item.slug,
+            }
+          )}
         >
-          <span>{item.label}</span>
+          <span className="capitalize">{item.label}</span>
           {item.children && <BsChevronRight />}
         </button>
       ))}

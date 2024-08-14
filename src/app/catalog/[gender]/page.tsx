@@ -1,9 +1,10 @@
-import { getProductByGender } from '@/actions';
 import { getAuthInfo } from '@/libs';
 import NotFound from './not-found';
 import { Suspense } from 'react';
 import ProductsSkeleton from '@/components/ui/skeletons';
-import { Pagination, ProductCard } from '@/components';
+import { BadgeFilterList, Pagination, ProductCard } from '@/components';
+import { getFilteredProducts } from '@/utils';
+import ErrorPage from './error';
 
 type Props = {
   params: { gender: string };
@@ -17,12 +18,15 @@ export default async function GenderPage({
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
 
-  const page = Number(searchParams.page) || 1;
+  let products, totalPages, activeFilters;
 
-  const { products, totalPages } = await getProductByGender({
-    gender: gender,
-    page,
-  });
+  try {
+    const result = await getFilteredProducts({ gender }, searchParams);
+    ({ products, totalPages, activeFilters } = result);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return <ErrorPage error={error as Error} />;
+  }
 
   if (products.length === 0) {
     return NotFound();
@@ -30,7 +34,7 @@ export default async function GenderPage({
 
   return (
     <div>
-      {/* {queryString && <BadgeFilterList />} */}
+      {activeFilters.length > 0 && <BadgeFilterList />}
       <Suspense fallback={<ProductsSkeleton />}>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[500]">
           {products.map((product: any) => (
