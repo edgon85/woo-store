@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, memo } from 'react';
 import { IoMdArrowDropright, IoIosWoman, IoIosMan } from 'react-icons/io';
 import { usePersonalPreferencesStore } from '@/stores';
 import { useOnClickOutside } from '@/hooks';
+import { useRouter } from 'next/navigation';
 
 const genderOptions = [
   { value: 'mujer', label: 'Mujer', Icon: IoIosWoman },
@@ -13,6 +14,7 @@ const genderOptions = [
 export const GenderSelected = memo(() => {
   const gender = usePersonalPreferencesStore((state) => state.gender);
   const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
+  const router = useRouter();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -28,8 +30,9 @@ export const GenderSelected = memo(() => {
     (value: string) => {
       setIsCollapsed(false);
       setGender(value);
+      router.push(`/catalog/${value}`);
     },
-    [setGender]
+    [router, setGender]
   );
 
   return (
@@ -63,31 +66,3 @@ export const GenderSelected = memo(() => {
 });
 
 GenderSelected.displayName = 'GenderSelected';
-/* 
-const gender = usePersonalPreferencesStore((state) => state.gender);
-  const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
-
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handler = (evt: any) => {
-      if (isCollapsed && ref.current && !ref.current.contains(evt.target)) {
-        setIsCollapsed(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handler);
-    document.addEventListener('touchstart', handler);
-
-    return () => {
-      document.removeEventListener('mousedown', handler);
-      document.removeEventListener('touchstart', handler);
-    };
-  }, [isCollapsed]);
-
-  const handleGender = (value: string) => {
-    setIsCollapsed(false);
-    setGender(value);
-  };
-*/

@@ -8,6 +8,7 @@ import { MenuItem } from './NavItems';
 
 import { useParams, usePathname } from 'next/navigation';
 import { HierarchicalMenu } from './hierarchical-menu/HierarchicalMenu';
+import { ClothingType } from './clothing-type/ClothingType';
 
 type Props = {
   isMovil?: boolean;
@@ -23,6 +24,17 @@ export const NavCategories = ({ isMovil }: Props) => {
   return (
     <div className="p-4">
       <ul className="space-y-2">
+        {!category && !subcategory ? (
+          <MenuItem
+            title={'Tipo de prenda'}
+            items={
+              <div className="max-h-64 overflow-scroll">
+                <ClothingType isMobile={isMovil} gender={gender.toString()} />
+              </div>
+            }
+          />
+        ) : null}
+
         {gender && clothing_type ? (
           <MenuItem
             title={`${category ? 'Subcategorías' : 'Categorías'} `}
