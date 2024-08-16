@@ -19,6 +19,7 @@ const clothesTypeOptions = [
 ];
 
 export const NavbarSearch = () => {
+  const router = useRouter();
   const gender = usePersonalPreferencesStore((state) => state.gender);
   const clothesType = usePersonalPreferencesStore((state) => state.clothesType);
   const setClothesType = usePersonalPreferencesStore(
@@ -38,21 +39,29 @@ export const NavbarSearch = () => {
   const onClothesChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       setClothesType(event.target.value);
+      router.push(`/catalog/${gender}/${clothesType}`);
     },
-    [setClothesType]
+    [setClothesType, gender, router, clothesType]
   );
 
   const onHandleSubmit = useCallback(
     ({ term }: FormInputData) => {
       const params = new URLSearchParams(searchParams);
       if (term.trim()) {
-        params.set('query', term.trim());
+        params.set('s', term.trim());
+        params.set('gender', gender.trim());
+        params.set('clothesType', clothesType.trim());
       } else {
-        params.delete('query');
+        params.delete('s');
+        params.delete('gender');
+        params.delete('clothesType');
       }
-      replace(`/search/${gender}/${clothesType}?${params.toString()}`);
+
+      const url = params.toString();
+      console.log(url);
+      replace(`/search?${url}`);
     },
-    [gender, clothesType, searchParams, replace]
+    [clothesType, gender, replace, searchParams]
   );
 
   return (
@@ -62,16 +71,19 @@ export const NavbarSearch = () => {
     >
       <div className="flex">
         <div className="flex-1 relative">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <button
+            type="submit"
+            className="absolute inset-y-0 start-0 flex items-center ps-3"
+          >
             <SearchIcon />
-          </div>
+          </button>
           <input
             type="text"
             id="default-search"
             className="block w-full p-4 ps-10 text-sm text-gray-900 outline-none bg-white"
             placeholder="Buscar..."
             defaultValue={searchParams.get('query')?.toString()}
-            {...register('term')}
+            {...(register('term'), { required: true })}
           />
         </div>
         <div className="flex">

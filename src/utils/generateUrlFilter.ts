@@ -1,6 +1,6 @@
 import { Filter } from '@/interfaces';
 
-export const generateFilterURL = (data: Filter[]) => {
+export const generateFilterURL = (data: Filter[], isSearch?: false) => {
   const groups: Record<string, string[]> = {};
   const priceRanges: [number, number][] = [];
 
@@ -34,25 +34,6 @@ export const generateFilterURL = (data: Filter[]) => {
         : `minPrice=${minPrice}&maxPrice=${maxPrice}`;
   }
 
-
   return url;
 };
 
-export const buildQueryString = (params: {
-  [key: string]: string | string[] | undefined;
-}) => {
-  const parts = [];
-  for (const key in params) {
-    const value = params[key];
-    if (Array.isArray(value)) {
-      // Para arrays, añadir cada valor como una entrada separada
-      value.forEach((val) =>
-        parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
-      );
-    } else if (value !== undefined) {
-      // Para valores únicos
-      parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-    }
-  }
-  return parts.join('&');
-};

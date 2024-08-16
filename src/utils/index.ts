@@ -4,6 +4,7 @@ export * from './format-date-local';
 export * from './generatePaginationNumbers';
 export * from './generateUrlFilter';
 export * from './getFilteredProducts'
+export * from './getSearchProducts';
 export * from './initialProfile';
 export * from './jwtUtils';
 export * from './measurement';
