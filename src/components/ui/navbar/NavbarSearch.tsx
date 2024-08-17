@@ -47,6 +47,7 @@ export const NavbarSearch = () => {
   const onHandleSubmit = useCallback(
     ({ term }: FormInputData) => {
       const params = new URLSearchParams(searchParams);
+
       if (term.trim()) {
         params.set('s', term.trim());
         params.set('gender', gender.trim());
@@ -58,7 +59,6 @@ export const NavbarSearch = () => {
       }
 
       const url = params.toString();
-      console.log(url);
       replace(`/search?${url}`);
     },
     [clothesType, gender, replace, searchParams]
@@ -82,8 +82,10 @@ export const NavbarSearch = () => {
             id="default-search"
             className="block w-full p-4 ps-10 text-sm text-gray-900 outline-none bg-white"
             placeholder="Buscar..."
-            defaultValue={searchParams.get('query')?.toString()}
-            {...(register('term'), { required: true })}
+            defaultValue={searchParams.get('q')?.toString()}
+            {...register('term', {
+              required: true,
+            })}
           />
         </div>
         <div className="flex">
