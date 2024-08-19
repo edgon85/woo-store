@@ -1,5 +1,10 @@
 import { getFeaturedProducts } from '@/actions';
-import { Banner, FeaturedArticles } from '@/components';
+import {
+  Banner,
+  CategoryGrid,
+  FeaturedArticles,
+  MenWomanExclusive,
+} from '@/components';
 
 export default async function Home() {
   const { data } = await getFeaturedProducts({});
@@ -7,7 +12,14 @@ export default async function Home() {
   return (
     <main>
       <Banner />
+      <div className="hidden md:block my-8">
+        <CategoryGrid />
+      </div>
       <FeaturedArticles products={data.products} />
+      <div className="block md:hidden">
+        <CategoryGrid />
+      </div>
+      {/* <MenWomanExclusive /> */}
     </main>
   );
 }
