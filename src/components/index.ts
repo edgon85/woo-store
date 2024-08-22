@@ -14,4 +14,4 @@ export * from './products';
 export * from './profile';
 export * from './settings';
 export * from './ui';
-export * from './ui/footer/Footer';
+export * from './help';

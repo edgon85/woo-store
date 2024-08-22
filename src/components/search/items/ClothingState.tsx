@@ -54,16 +54,16 @@ export const ClothingStateItem = ({ isMovil = false }: Props) => {
     setFilters([...filters, newFilter]);
 
     // Realizar la búsqueda
-  }, [searchParams, setFilters]);
+  }, [filters, searchParams, setFilters]);
 
-  useEffect(() => {
-    /*  console.log(searchParams.get('q'));
+  /* useEffect(() => {
+     console.log(searchParams.get('q'));
     const url = generateFilterURL(filters);
-    console.log(`${pathName}${url}`); */
+    console.log(`${pathName}${url}`);
     console.log(filters);
-    /* console.log(pathName);
-    console.log(url); */
-  }, [filters]);
+    console.log(pathName);
+    console.log(url);
+  }, [filters]); */
 
   return (
     <>

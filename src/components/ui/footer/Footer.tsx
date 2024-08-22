@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const Footer = () => {
   return (
     <footer className="bg-white text-gray-900 mt-8">
@@ -18,17 +20,17 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Sobre Nosotros</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/about" className="hover:underline">
                   Quiénes somos
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/how-it-works" className="hover:underline">
                   ¿Cómo funciona?
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <a href="/contact" className="hover:underline">
                   Contacto
                 </a>
               </li>
@@ -40,19 +42,19 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Ayuda</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/faqs" className="hover:underline">
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/help/comprar" className="hover:underline">
                   Cómo comprar
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/help/vender" className="hover:underline">
                   Cómo vender
-                </a>
+                </Link>
               </li>
               {/* <li><a href="#" className="hover:underline">Contacto</a></li> */}
             </ul>
@@ -62,14 +64,14 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/terminos-y-condiciones" className="hover:underline">
                   Términos y condiciones
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/politicas-de-privacidad" className="hover:underline">
                   Política de privacidad
-                </a>
+                </Link>
               </li>
               {/* <li><a href="#" className="hover:underline">Política de cookies</a></li> */}
             </ul>
@@ -112,14 +114,7 @@ export const Footer = () => {
           <p className="text-base text-gray-400">
             &copy; 2024 Woo. Todos los derechos reservados.
           </p>
-          <div className="mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-white mr-4">
-              Términos y condiciones
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white">
-              Política de privacidad
-            </a>
-          </div>
+          
         </div>
       </div>
     </footer>
