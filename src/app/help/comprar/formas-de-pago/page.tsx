@@ -1,6 +1,11 @@
 import { FaBuilding, FaCreditCard, FaTruck } from 'react-icons/fa';
 
 import { AccordionItem } from '@/components';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Formas de pago',
+};
 
 export default function FormasDePagoPage() {
   const paymentMethods = [

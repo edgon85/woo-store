@@ -5,6 +5,11 @@ import {
   getDepartmentsAvailable,
 } from '@/actions';
 import { CreateProduct } from '@/components';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Crear producto',
+};
 
 export default async function CreateProductPage() {
   const [departments, brandsData, clothingConditionData, colorsData] =

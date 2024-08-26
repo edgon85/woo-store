@@ -1,4 +1,5 @@
 import { AddPayout, StepOne, StepThree, StepTwo } from '@/components';
+import { Metadata } from 'next';
 
 const steps = [
   <>
@@ -8,9 +9,13 @@ const steps = [
     <StepTwo />
   </>,
   <>
-   < StepThree />
+    <StepThree />
   </>,
 ];
+
+export const metadata: Metadata = {
+  title: 'Agregar método de pago',
+};
 
 export default function AddPayoutPage() {
   return (

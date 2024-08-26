@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import Image from 'next/image';
-import logo from '../../../../public/logo2.svg';
+import logo from '../../../../public/logo.svg';
 
 import Link from 'next/link';
 import { GenderSelected } from '../dropdowns';

@@ -1,6 +1,12 @@
 import { AccordionItem } from '@/components';
+import { Metadata } from 'next';
 import { FaBellSlash, FaDownload, FaRegBell, FaTruck } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
+
+
+export const metadata: Metadata = {
+  title: 'Como enviar',
+}
 
 export default function EnviosPage() {
   const envioSteps = [

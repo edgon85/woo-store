@@ -1,8 +1,13 @@
 import { AccordionItem } from '@/components';
+import { Metadata } from 'next';
 
 import { BsBuildingAdd } from 'react-icons/bs';
 import { CiSettings } from 'react-icons/ci';
 import { FaCheckCircle, FaCreditCard, FaUser } from 'react-icons/fa';
+
+export const metadata: Metadata = {
+  title: 'Recibir pago',
+};
 
 export default function RecibirPagoPage() {
   const steps = [

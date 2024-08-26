@@ -1,12 +1,13 @@
-import {
-  getBrands,
-  getClothingCondition,
-  getColors,
-} from '@/actions';
+import { getBrands, getClothingCondition, getColors } from '@/actions';
 import { EditProduct } from '@/components';
 import { getProductBySlug } from '@/actions';
 import { IProduct } from '@/interfaces';
 import { getAuthInfo } from '@/libs';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Editar producto',
+};
 
 export default async function EditProductPage({
   params,

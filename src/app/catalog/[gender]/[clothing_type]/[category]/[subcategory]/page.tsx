@@ -3,8 +3,9 @@ import { getAuthInfo } from '@/libs';
 import { Suspense } from 'react';
 import ProductsSkeleton from '@/components/ui/skeletons';
 import NotFound from '../../../not-found';
-import { getFilteredProducts } from '@/utils';
+import { generateDynamicMetadata, getFilteredProducts } from '@/utils';
 import ErrorPage from '../../../error';
+import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
   params: {
@@ -15,6 +16,13 @@ type Props = {
   };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export async function generateMetadata(
+  props: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  return generateDynamicMetadata(props, parent);
+}
 
 export default async function SubcategoryPage({
   params: { gender, clothing_type, category, subcategory },

@@ -2,6 +2,11 @@ import { redirect } from 'next/navigation';
 
 import { RegisterComponent } from '@/components';
 import { getAuthProviders } from '@/libs';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Registro',
+};
 
 export default async function RegisterPage({
   searchParams,

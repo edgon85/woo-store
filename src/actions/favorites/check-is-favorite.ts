@@ -27,7 +27,6 @@ export async function getCheckIsFavorite(productSlug: string) {
     }
 
     const data = await resp.json();
-    console.log(data);
 
     return data;
   } catch (error: any) {

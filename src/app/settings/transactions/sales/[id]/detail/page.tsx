@@ -2,10 +2,15 @@ import { getOrderById } from '@/actions';
 import { DownLoadGide, TransactionStatus } from '@/components';
 import { IOrder } from '@/interfaces';
 import { formatCurrency, formatDateToLocal } from '@/utils';
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 type Props = {
   params: { id: string };
+};
+
+export const metadata: Metadata = {
+  title: 'Detalle de venta',
 };
 
 export default async function PageOrderDetail({ params }: Props) {

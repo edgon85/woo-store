@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import NotFound from './not-found';
 import { Suspense } from 'react';
 import ProductsSkeleton from '@/components/ui/skeletons';
+import { Metadata } from 'next';
 
 type Props = {
   searchParams: {
@@ -14,6 +15,10 @@ type Props = {
     category?: string;
     subcategory?: string;
   };
+};
+
+export const metadata: Metadata = {
+  title: 'Prendas',
 };
 
 export default async function Page({ searchParams }: Props) {

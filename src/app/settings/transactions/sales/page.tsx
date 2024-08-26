@@ -2,6 +2,11 @@ import { EmptyTransaction, TableSales } from '@/components';
 
 import { fetchOrders } from '@/actions';
 import { IOrder } from '@/interfaces';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Mis ventas',
+};
 
 export default async function Page() {
   const orders = (await fetchOrders('seller')) as IOrder[];

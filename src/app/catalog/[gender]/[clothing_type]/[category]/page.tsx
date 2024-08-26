@@ -1,15 +1,23 @@
 import { BadgeFilterList, Pagination, ProductCard } from '@/components';
 import { getAuthInfo } from '@/libs';
-import { getFilteredProducts } from '@/utils';
+import { generateDynamicMetadata, getFilteredProducts } from '@/utils';
 import NotFound from '../../not-found';
 import { Suspense } from 'react';
 import ProductsSkeleton from '@/components/ui/skeletons';
 import ErrorPage from '../../error';
+import { Metadata, ResolvingMetadata } from 'next';
 
 type Props = {
   params: { gender: string; clothing_type: string; category: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export async function generateMetadata(
+  props: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  return generateDynamicMetadata(props, parent);
+}
 
 export default async function CategoryPage({
   params: { gender, clothing_type, category },

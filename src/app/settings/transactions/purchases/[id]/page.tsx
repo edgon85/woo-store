@@ -2,9 +2,14 @@ import { fetchOrderById } from '@/actions';
 import { TransactionStatus } from '@/components';
 import { formatCurrency } from '@/utils';
 import { translateOrderStatus } from '@/utils';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Detalle de orden',
+};
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const {data:order} = await fetchOrderById(params.id);
+  const { data: order } = await fetchOrderById(params.id);
 
   const uuid = order.id;
   const partes = uuid.split('-');

@@ -1,7 +1,12 @@
 import { AccordionItem } from '@/components';
+import { Metadata } from 'next';
 import { FaCamera, FaEdit, FaMapPin, FaTag, FaWeight } from 'react-icons/fa';
 import { IoLogIn } from 'react-icons/io5';
 import { TbCurrencyQuetzal } from 'react-icons/tb';
+
+export const metadata: Metadata = {
+  title: 'Como vender',
+};
 
 export default function VenderPage() {
   const steps = [

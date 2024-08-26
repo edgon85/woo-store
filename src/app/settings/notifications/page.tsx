@@ -1,5 +1,11 @@
 import { getNotifications } from '@/actions';
 import { NotificationList } from '@/components';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Notificaciones',
+};
+
 export default async function NotificationPage() {
   const { ok, data, message } = await getNotifications();
 

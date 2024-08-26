@@ -1,4 +1,5 @@
 import { AccordionItem } from '@/components';
+import { Metadata } from 'next';
 import { useState } from 'react';
 import {
   FaCreditCard,
@@ -9,6 +10,10 @@ import {
 } from 'react-icons/fa';
 import { MdLocalOffer } from 'react-icons/md';
 import { TbMessageCircle } from 'react-icons/tb';
+
+export const metadata: Metadata = {
+  title: 'Como Comprar',
+};
 
 export default function ComprarPage() {
   const steps = [

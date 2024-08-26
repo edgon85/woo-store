@@ -1,10 +1,15 @@
 import { getFavoritesByUser } from '@/actions';
 import { EmptyTransaction, Pagination, ProductCard } from '@/components';
 import { getAuthInfo } from '@/libs';
+import { Metadata } from 'next';
 
 type Props = {
   params: { user: string };
   searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export const metadata: Metadata = {
+  title: 'Favoritos',
 };
 
 export default async function UserRatingsPage({ params, searchParams }: Props) {

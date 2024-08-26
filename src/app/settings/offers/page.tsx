@@ -1,5 +1,10 @@
 import { getReceivedOffer } from '@/actions';
 import { OfferList } from '@/components';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Ofertas',
+};
 
 export default async function OfferPage() {
   const { data: offers, ok, message } = await getReceivedOffer();

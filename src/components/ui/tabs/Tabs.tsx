@@ -10,9 +10,11 @@ type Props = {
 
 export const Tabs = ({ username }: Props) => {
   const router = useRouter();
-  const path = usePathname()
+  const path = usePathname();
 
-  const [activeTab, setActiveTab] = useState(path.includes('ratings') ? 'ratings': 'products');
+  const [activeTab, setActiveTab] = useState(
+    path.includes('ratings') ? 'ratings' : 'products'
+  );
 
   return (
     <div>
@@ -38,7 +40,7 @@ export const Tabs = ({ username }: Props) => {
           }`}
           onClick={() => {
             setActiveTab('ratings');
-            router.push(`/member/${username}/ratings`);
+            router.push(`/member/${username}/favorites`);
           }}
         >
           Favoritos

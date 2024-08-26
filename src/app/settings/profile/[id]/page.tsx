@@ -1,5 +1,10 @@
 import { ProfileForm } from '@/components';
 import { fetchUserProfile } from '@/actions';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Mi perfil',
+};
 
 export default async function ProfilePage({
   params,

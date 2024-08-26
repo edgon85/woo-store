@@ -1,8 +1,13 @@
 import { getPayoutByUser } from '@/actions';
 import { ListOfPayouts } from '@/components';
 import { getAuthInfo } from '@/libs';
+import { Metadata } from 'next';
 
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Métodos de pago',
+};
 
 export default async function PayoutMethodsPage() {
   const userInfo = await getAuthInfo();

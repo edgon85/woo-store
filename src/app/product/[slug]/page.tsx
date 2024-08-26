@@ -11,11 +11,41 @@ import { getProductBySlug } from '@/actions';
 import { IProduct } from '@/interfaces';
 
 import { getAuthInfo } from '@/libs';
+import { Metadata, ResolvingMetadata } from 'next';
+import { formatTitle } from '@/utils';
 
 type Props = {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export async function generateMetadata(
+  props: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const product = (await getProductBySlug(props.params.slug)) as IProduct;
+
+  if (!product) {
+    return {
+      title: formatTitle(props.params.slug),
+    };
+  }
+
+  const title = product.title;
+  const size = product.measurement.size;
+  const imageUrl = product.images[0];
+  const description = product.description || '';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: title,
+      description,
+      images: [`${imageUrl}`],
+    },
+  };
+}
 
 export default async function ProductDetailPage({
   params: { slug },
@@ -25,7 +55,6 @@ export default async function ProductDetailPage({
 
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
-
 
   const { user } = product;
 
@@ -94,38 +123,3 @@ export default async function ProductDetailPage({
     </>
   );
 }
-
-/* 
-<>
-      <section className="main-wrapper flex flex-col sm:flex-row">
-        {/* <!-- Contenido (Lado izquierdo en pantallas grandes) --> * /}
-        <div className="w-full lg:w-3/4 p-2 ">
-          {/ * <LightBoxGallery images={prodImages} /> * /}
-          <div className="container mx-auto ">
-            {/* <ImageSlider images={product.images} /> * /}
-            <ProductSlideshow images={product.images} title={product.title} />
-            <BtnActions />
-          </div>
-        </div>
-
-        {/* <!-- Aside (Lado derecho en pantallas grandes) --> * /}
-        <aside className="w-full lg:w-2/5 p-2">
-          <ProductDetail
-            product={product}
-            currentUserId={currentUserId || ''}
-          />
-          <div className="mt-4">
-            <UserInfo
-              name={user?.fullName!}
-              image={user?.profileImage!}
-              location={user?.location!}
-              username={user?.username!}
-            />
-          </div>
-        </aside>
-      </section>
-      <section className="main-wrapper">
-        <RelatedProducts />
-      </section>
-    </>
-*/

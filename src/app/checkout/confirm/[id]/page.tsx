@@ -1,10 +1,16 @@
 import { fetchOrderById } from '@/actions';
 import { formatCurrency } from '@/utils';
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 type Props = {
   params: { id: string };
 };
+
+export const metadata: Metadata = {
+  title: 'Compra exitosa',
+};
+
 export default async function ConfirmCheckoutPage({ params }: Props) {
   const uuid = params.id;
   const partes = uuid.split('-');

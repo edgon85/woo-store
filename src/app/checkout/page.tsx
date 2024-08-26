@@ -15,6 +15,7 @@ import {
   fetchPaymentMethods,
 } from '@/actions';
 import { ProductStatus } from '@/enums';
+import { Metadata } from 'next';
 
 type OfferValidationResult = {
   ok: boolean;
@@ -24,6 +25,10 @@ type OfferValidationResult = {
     price: number;
     status: string;
   };
+};
+
+export const metadata: Metadata = {
+  title: 'Checkout',
 };
 
 export default async function CheckoutPage({

@@ -1,5 +1,6 @@
 'use client';
 import { useOnClickOutside } from '@/hooks';
+import { formatCurrency } from '@/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { BsShare } from 'react-icons/bs';
@@ -42,14 +43,18 @@ export const ShareButton = ({ productName, productPrice }: Props) => {
           <div className="py-4 flex gap-2 justify-center items-center">
             <FacebookShareButton
               url={`${process.env.BASE_URL}${pathName}`}
-              title={`Mira esta prenda que vi en woo.online, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${productPrice}`}
+              title={`Mira esta prenda que vi en woo.online, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${formatCurrency(
+                productPrice
+              )}`}
               onClick={() => setIsOpen(false)}
             >
               <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
             <WhatsappShareButton
               url={`${process.env.BASE_URL}${pathName}`}
-              title={`Mira esta prenda que vi en woo.online, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${productPrice}`}
+              title={`Mira esta prenda que vi en woo.online, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${formatCurrency(
+                productPrice
+              )}`}
               onClick={() => setIsOpen(false)}
             >
               <WhatsappIcon size={32} round={true} />

@@ -1,11 +1,13 @@
 import './globals.css';
 
+import { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Providers } from './providers';
 import { AuthModal, Footer, NavClothesType, Navbar } from '@/components';
 import Sidebar from '@/components/ui/navbar/sidebar/Sidebar';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -13,9 +15,20 @@ const roboto = Roboto({
   display: 'swap',
 });
 
-export const metadata = {
-  title: 'Woo store',
-  description: 'Compra y vende ropa de segunda',
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Woo store',
+    default: 'Woo store',
+  },
+  description:
+    'Descubre miles de artículos de moda a precios increíbles. Renueva tu closet y vende lo que ya no usas en nuestra plataforma fácil y segura.',
+  metadataBase: new URL(`${process.env.BASE_URL}`),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'es-ES': '/es-ES',
+    },
+  },
 };
 
 export default function RootLayout({

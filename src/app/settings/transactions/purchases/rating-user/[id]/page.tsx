@@ -3,9 +3,14 @@ import { RatingItem } from '@/components';
 import { formatCurrency } from '@/utils';
 import { FormRating } from '@/components/settings/ratings/FormRating';
 import { BtnActionsRating } from '@/components/settings/ratings/BtnActionsRating';
+import { Metadata } from 'next';
 
 type RatingUserPageProps = {
   params: { id: string };
+};
+
+export const metadata: Metadata = {
+  title: 'Valoraciones',
 };
 
 export default async function RatingUserPage({ params }: RatingUserPageProps) {

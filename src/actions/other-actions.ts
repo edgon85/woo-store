@@ -15,12 +15,12 @@ export async function checkImageAvailable(
       if (resp.ok) {
         urlImage = profileImage;
       } else {
-        console.error('La imagen no está disponible');
+        // console.error('La imagen no está disponible');
         urlImage = null;
       }
     })
     .catch((error) => {
-      console.error('Error al verificar la imagen');
+      // console.error('Error al verificar la imagen');
     });
 
   return urlImage;

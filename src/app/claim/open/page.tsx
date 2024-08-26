@@ -1,10 +1,15 @@
 import { checkImageAvailable, fetchOrderById } from '@/actions';
 import { AccordionComponent } from '@/components/claim/Accordion';
 import { formatCurrency } from '@/utils';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export const metadata: Metadata = {
+  title: 'Reclamo',
 };
 
 export default async function ClaimOpenPage({ searchParams }: Props) {

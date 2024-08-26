@@ -1,16 +1,10 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  FaCreditCard,
-  FaLayerGroup,
-  FaLockOpen,
-  FaMoneyBill,
-  FaShieldAlt,
-  FaShoppingCart,
-  FaTag,
-  FaTruck,
-  FaUserCog,
-  FaUsers,
-} from 'react-icons/fa';
+import { FaMoneyBill, FaShoppingCart, FaTag, FaTruck } from 'react-icons/fa';
+
+export const metadata: Metadata = {
+  title: 'Ayuda',
+};
 
 export default function HelpPage() {
   const topics = [

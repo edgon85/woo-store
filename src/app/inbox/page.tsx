@@ -1,7 +1,12 @@
 import { InboxMainComponent } from '@/components/inbox/InboxMainComponent';
+import { Metadata } from 'next';
 
 type Props = {
   searchParams: { u: string; n: string };
+};
+
+export const metadata: Metadata = {
+  title: 'Inbox',
 };
 
 export default async function InboxPage({ searchParams }: Props) {

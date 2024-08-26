@@ -3,6 +3,11 @@ import { redirect } from 'next/navigation';
 import { LoginComponent } from '@/components';
 
 import { getAuthProviders } from '@/libs';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Login',
+};
 
 export default async function LoginPage({
   searchParams,
