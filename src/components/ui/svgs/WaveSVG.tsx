@@ -8,7 +8,7 @@ export const WaveSVG = () => {
       style={{
         fill: '#f6f6f6',
         width: '137%',
-        height: 127,
+        height: 100,
         transform: 'rotate(180deg)',
       }}
     >

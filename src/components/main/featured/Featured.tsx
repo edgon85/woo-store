@@ -15,7 +15,7 @@ export const FeaturedArticles = async ({ products }: Props) => {
 
   return (
     <section className="main-wrapper">
-      <div className="mt-8">
+      <div className="mt-8 p-2 md:p-0">
         <h3 className="mb-4 text-2xl md:text-3xl">Artículos destacados</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-fr">
           <Suspense fallback={<CardsSkeleton />}>
