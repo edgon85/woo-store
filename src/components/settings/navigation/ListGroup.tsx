@@ -37,7 +37,7 @@ export const ListGroup = ({
     },
     {
       id: 'notifications',
-      href: '/settings/notifications',
+      href: '/settings/setting-notifications',
       label: 'Notificaciones',
     },
     {
@@ -45,11 +45,11 @@ export const ListGroup = ({
       href: '/settings/offers',
       label: 'Ofertas',
     },
-    {
+    /*   {
       id: 'privacy',
-      href: '/',
+      href: '/settings/privacy',
       label: 'Ajustes de privacidad',
-    },
+    }, */
   ];
 
   return (

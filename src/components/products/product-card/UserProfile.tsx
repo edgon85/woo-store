@@ -24,9 +24,9 @@ export const UserProfile = async ({ user }: { user: IUser | null }) => {
           </span>
         )}
       </Link>
-      <Link href={`/member/${user?.username}`} className="ml-2 text-gray-800">
+      {/*    <Link href={`/member/${user?.username}`} className="ml-2 text-gray-800">
         {user?.username || 'Nombre de Usuario'}
-      </Link>
+      </Link> */}
     </div>
   );
 };

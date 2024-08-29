@@ -1,12 +1,11 @@
+import Image from 'next/image';
+
 import { IProduct } from '@/interfaces';
-import { ImageComponent } from './ImageComponent';
 import { UserProfile } from './UserProfile';
-import { ProductInfo } from './ProductInfo';
 import { checkImageAvailable } from '@/actions';
-import { ProductStatus } from '@/enums';
-import { Suspense } from 'react';
-import { ButtonSkeleton } from '@/components';
-import { BtnBuyOrEdit } from '../product-detail/buttons';
+import { FaTag } from 'react-icons/fa';
+import Link from 'next/link';
+import { formatCurrency } from '@/utils';
 
 type Props = {
   product: IProduct;
@@ -17,6 +16,53 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
   const imageUrl = await checkImageAvailable(product.images[0]);
 
   return (
+    <div className="relative w-full max-w-md mx-auto border border-gray-200 rounded-lg">
+      <div className="relative group">
+        <Link href={`/product/${product.slug}`}>
+          <Image
+            src={imageUrl ?? '/empty-image.svg'}
+            width={600}
+            height={600}
+            alt={product.title}
+            className="aspect-square object-cover w-full rounded-t-lg"
+          />
+        </Link>
+        <div className="absolute top-2 right-2">
+          <UserProfile user={product.user!} />
+        </div>
+      </div>
+      <div className="space-y-2 bg-white rounded-b-lg p-2">
+        <Link
+          href={`/product/${product.slug}`}
+          className="hover:text-cerise-red-600"
+        >
+          <h3 className="text-lg font-semibold capitalize">{product.title}</h3>
+        </Link>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-bold text-cerise-red-500">
+              {formatCurrency(product.price * 100)}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground text-sm text-gray-500">
+              Talla:
+            </span>
+            <span className="font-medium uppercase text-gray-500">
+              {product.measurement.size}
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 text-muted-foreground text-sm">
+          <FaTag className="h-4 w-4 text-gray-500" />
+          <span className="text-gray-500">{product.brand.title}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* 
     <div className="bg-white rounded-lg shadow-md flex flex-col h-full">
       <div className="p-2">
         <UserProfile user={product.user!} />
@@ -39,5 +85,5 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
         )}
       </div>
     </div>
-  );
-};
+
+*/

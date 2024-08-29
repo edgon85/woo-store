@@ -48,7 +48,7 @@ export const DropDownNotification = () => {
       {isCollapsed && (
         <div
           id="dropdownDivider"
-          className="z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow min-w-96"
+          className="z-10 absolute top-12 right-0 bg-white divide-y divide-gray-100 rounded-lg shadow min-w-96 border"
         >
           <ul
             className="pt-2 text-sm text-gray-700"

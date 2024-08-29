@@ -14,7 +14,11 @@ export async function generateMetadata(
   props: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const userData = await fetchPublicProfile(props.params.user);
+  const {
+    ok,
+    message: messageData,
+    data: userData,
+  } = await fetchPublicProfile(props.params.user);
 
   if (!userData) {
     return {

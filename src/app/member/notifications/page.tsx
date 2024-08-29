@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   title: 'Notificaciones',
 };
 
-export default async function NotificationPage() {
+export default async function NotificationsPage() {
   const { ok, data, message } = await getNotifications();
 
   return (
-    <div className="">
+    <div className="main-wrapper">
       {ok ? (
         data?.notifications.length > 0 ? (
           <>

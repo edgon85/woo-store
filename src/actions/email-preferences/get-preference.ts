@@ -1,13 +1,21 @@
 'use server';
+import { getAuthToken } from '@/libs';
+import { unstable_noStore as noStore } from 'next/cache';
 
-export const fetchPublicProfile = async (username: string) => {
-  const url = `${process.env.API_BASE_URL}/profiles?u=${username}`;
+export const getEmailPreferences = async () => {
+  noStore();
+  const url = `${process.env.API_BASE_URL}/email/get-preferences`;
+  const authToken = await getAuthToken();
 
+  if (!authToken) {
+    return { ok: false, message: 'No se encontró un token de autenticación' };
+  }
   try {
     const resp = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
     });
 
@@ -24,6 +32,6 @@ export const fetchPublicProfile = async (username: string) => {
     };
   } catch (error: any) {
     console.log(error.message);
-    return { ok: false, message: error.message };
+    return { ok: false, message: 'ocurrió un error vea los logs' };
   }
 };

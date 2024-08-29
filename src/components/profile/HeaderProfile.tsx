@@ -1,11 +1,7 @@
 'use server';
 import { UserIcon } from '../ui';
 import Link from 'next/link';
-import {
-  checkImageAvailable,
-  getRatingByUsername,
-  fetchPublicProfile,
-} from '@/actions';
+import { checkImageAvailable, getRatingByUsername } from '@/actions';
 import { RatingComponent } from './RatingComponent';
 import { getAuthInfo } from '@/libs';
 import { BtnShareProfile } from './BtnShareProfile';
@@ -21,16 +17,16 @@ interface LocalProfile {
 
 type Props = {
   username: string;
+  profile: LocalProfile;
 };
 
-export async function HeaderProfile({ username }: Props) {
-  const userData = (await fetchPublicProfile(username)) as LocalProfile;
+export async function HeaderProfile({ username, profile }: Props) {
   const ratingUser = await getRatingByUsername(username);
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
-  const imageUrl = await checkImageAvailable(userData?.profileImage);
+  const imageUrl = await checkImageAvailable(profile.profileImage);
 
-  const { ok, message, data } = ratingUser;
+  const { message: ratingMessage, data: ratingData } = ratingUser;
 
   return (
     <header className="flex gap-2 md:gap-4 py-4">
@@ -39,7 +35,7 @@ export async function HeaderProfile({ username }: Props) {
           <picture>
             <img
               src={imageUrl}
-              alt={`foto de perfil de ${userData.fullName}`}
+              alt={`foto de perfil de ${profile.fullName}`}
               className="object-cover w-24 h-24 rounded"
               loading="lazy"
             />
@@ -53,12 +49,12 @@ export async function HeaderProfile({ username }: Props) {
       <div className="w-full flex flex-col">
         <div className="flex justify-between">
           <div className="flex flex-col gap-1 items-start">
-            <h2 className="font-bold text-lg">{userData.username}</h2>
+            <h2 className="font-bold text-lg">{profile.username}</h2>
 
-            <RatingComponent data={data} message={message} />
+            <RatingComponent data={ratingData} message={ratingMessage} />
 
             {/* {ok ? <p>★★★☆☆</p> : <p>{message}</p>} */}
-            {currentUserId === userData.id && (
+            {currentUserId === profile.id && (
               <Link
                 href="/settings/profile"
                 className="px-2 py-1 rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50"
@@ -75,7 +71,7 @@ export async function HeaderProfile({ username }: Props) {
           </div>
         </div>
         <div className="pt-2 md:pt-4">
-          <p className="whitespace-pre-wrap">{userData.biography}</p>
+          <p className="whitespace-pre-wrap">{profile.biography}</p>
         </div>
       </div>
     </header>
