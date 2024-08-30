@@ -21,8 +21,8 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
         <Link href={`/product/${product.slug}`}>
           <Image
             src={imageUrl ?? '/empty-image.svg'}
-            width={600}
-            height={600}
+            width={800}
+            height={800}
             alt={product.title}
             className="aspect-square object-cover w-full rounded-t-lg"
           />

@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { v2 as cloudinary } from 'cloudinary';
 import { getAuthInfo, getAuthToken } from '@/libs';
 import { IProduct } from '@/interfaces';
+import sharp from 'sharp';
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 /* ··········································································· */
@@ -114,7 +115,15 @@ const uploadImages = async (images: File[]) => {
     const uploadPromises = images.map(async (image) => {
       try {
         const buffer = await image.arrayBuffer();
-        const base64Image = Buffer.from(buffer).toString('base64');
+
+        // Procesar la imagen con sharp
+        const processedBuffer = await sharp(Buffer.from(buffer))
+          .resize(800) // Cambiar el tamaño de la imagen (puedes ajustar según sea necesario)
+          .toFormat('jpeg') // Convertir a JPEG, puedes cambiar a otro formato si es necesario
+          .toBuffer();
+
+        // Convertir la imagen procesada a base64
+        const base64Image = processedBuffer.toString('base64');
 
         return cloudinary.uploader
           .upload(`data:image/png;base64,${base64Image}`, {
@@ -127,10 +136,25 @@ const uploadImages = async (images: File[]) => {
       }
     });
 
+    // Esperar a que todas las imágenes se suban
     const uploadedImages = await Promise.all(uploadPromises);
     return uploadedImages;
   } catch (error) {
-    console.log(error);
+    console.error('Error en el proceso de subida de imágenes:', error);
     return null;
   }
 };
+
+/* cloudinary  */
+/* 
+transformation: [
+      { gravity: 'face', height: 500, width: 500, crop: 'fill' },
+      { fetch_format: 'jpg' },
+    ], 
+*/
+/* 
+eager: [
+      { width: 400, height: 400, crop: 'crop', gravity: 'face' },
+      { width: 400, height: 400, crop: 'pad' },
+    ], 
+*/

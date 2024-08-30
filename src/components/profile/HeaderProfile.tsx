@@ -56,7 +56,7 @@ export async function HeaderProfile({ username, profile }: Props) {
             {/* {ok ? <p>★★★☆☆</p> : <p>{message}</p>} */}
             {currentUserId === profile.id && (
               <Link
-                href="/settings/profile"
+                href={`/settings/profile/${profile.id}`}
                 className="px-2 py-1 rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50"
               >
                 Editar
