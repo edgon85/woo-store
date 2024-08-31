@@ -2,7 +2,7 @@
 
 import { unstable_noStore as noStore } from 'next/cache';
 
-export const getRatingByUsername = async (username: string) => {
+export async function getRatingByUsername(username: string) {
   noStore();
 
   try {

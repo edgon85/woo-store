@@ -9,7 +9,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { getAuthToken } from '@/libs';
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
-export const deleteProductImage = async (image: ProductImage) => {
+export async function deleteProductImage(image: ProductImage) {
   noStore();
   const authToken = await getAuthToken();
 
@@ -52,4 +52,4 @@ export const deleteProductImage = async (image: ProductImage) => {
       message: 'No se puedo eliminar la imagen',
     };
   }
-};
+}

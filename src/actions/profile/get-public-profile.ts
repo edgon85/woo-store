@@ -1,6 +1,6 @@
 'use server';
 
-export const fetchPublicProfile = async (username: string) => {
+export async function fetchPublicProfile(username: string) {  
   const url = `${process.env.API_BASE_URL}/profiles?u=${username}`;
 
   try {

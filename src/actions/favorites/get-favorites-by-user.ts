@@ -7,11 +7,11 @@ type PaginationOptions = {
   username: string;
 };
 
-export const getFavoritesByUser = async ({
+export async function getFavoritesByUser({
   username,
   page = 1,
   take = 10,
-}: PaginationOptions) => {
+}: PaginationOptions) {
   noStore();
 
   try {
@@ -37,4 +37,4 @@ export const getFavoritesByUser = async ({
     console.log(error.message);
     return { ok: false, message: 'ocurrió un error vea los logs' };
   }
-};
+}

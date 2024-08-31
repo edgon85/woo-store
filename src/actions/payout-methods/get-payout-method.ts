@@ -1,7 +1,7 @@
 'use server';
 import { getAuthToken } from '@/libs';
 
-export const getPayoutByUser = async (userId: string) => {
+export  async function getPayoutByUser(userId: string) {
   const authToken = await getAuthToken();
 
   if (!authToken) {

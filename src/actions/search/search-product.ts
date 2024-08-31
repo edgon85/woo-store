@@ -18,7 +18,7 @@ type SearchOptions = {
   maxPrice?: number;
 };
 
-export const searchProduct = async ({
+export async function searchProduct({
   searchTerm,
   gender,
   clothesType,
@@ -32,7 +32,7 @@ export const searchProduct = async ({
   measurements,
   minPrice,
   maxPrice,
-}: SearchOptions) => {
+}: SearchOptions) {
   noStore();
 
   const skip = (page - 1) * pageSize;
@@ -97,4 +97,4 @@ export const searchProduct = async ({
     console.log(error.message);
     return { ok: false, message: error.message };
   }
-};
+}

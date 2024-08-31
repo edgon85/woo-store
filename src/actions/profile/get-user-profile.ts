@@ -3,7 +3,7 @@ import { IUser } from '@/interfaces';
 import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export const fetchUserProfile = async (userId: string) => {
+export async function fetchUserProfile(userId: string) {
   noStore();
   const authToken = await getAuthToken();
 
@@ -36,4 +36,4 @@ export const fetchUserProfile = async (userId: string) => {
     console.log(error.message);
     return { ok: false, message: error.message };
   }
-};
+}

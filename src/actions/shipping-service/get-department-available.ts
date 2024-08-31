@@ -2,7 +2,7 @@
 import { unstable_noStore as noStore } from 'next/cache';
 import { getAuthToken } from '@/libs';
 
-export const getDepartmentsAvailable = async () => {
+export async function getDepartmentsAvailable() {
   noStore();
 
   const authToken = await getAuthToken();

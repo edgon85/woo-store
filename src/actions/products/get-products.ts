@@ -2,7 +2,7 @@
 
 import { unstable_noStore as noStore } from 'next/cache';
 
-export const getProductByUserIdOrUsername = async (userId: string) => {
+export async function getProductByUserIdOrUsername(userId: string) {
   noStore();
 
   try {
@@ -26,4 +26,4 @@ export const getProductByUserIdOrUsername = async (userId: string) => {
     console.log(error.message);
     return { ok: false, message: 'ocurrió un error vea los logs' };
   }
-};
+}

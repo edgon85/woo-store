@@ -1,6 +1,6 @@
 'use server';
 
-export const getCategories = async (gender: string, genderType: string) => {
+export async function getCategories(gender: string, genderType: string) {
   const url = `${process.env.API_BASE_URL}/categories?gender=${gender}&type=${genderType}`;
 
   try {
@@ -26,4 +26,4 @@ export const getCategories = async (gender: string, genderType: string) => {
     console.log(error.message);
     return { ok: false, message: error.message };
   }
-};
+}

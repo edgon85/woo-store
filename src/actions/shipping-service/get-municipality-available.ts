@@ -2,7 +2,7 @@
 import { unstable_noStore as noStore } from 'next/cache';
 import { getAuthToken } from '@/libs';
 
-export const getMunicipalitiesAvailable = async (department: string) => {
+export async function getMunicipalitiesAvailable(department: string) {
   noStore();
 
   const authToken = await getAuthToken();
@@ -36,4 +36,4 @@ export const getMunicipalitiesAvailable = async (department: string) => {
     console.log(error.message);
     return { ok: false, message: 'ocurrió un error vea los logs' };
   }
-};
+}

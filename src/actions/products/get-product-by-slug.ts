@@ -7,9 +7,9 @@ type ErrorResult = {
   message: string;
 };
 
-export const getProductBySlug = async (
+export async function getProductBySlug(
   productSlug: string
-): Promise<IProduct | ErrorResult> => {
+): Promise<IProduct | ErrorResult> {
   noStore();
   const url = `${process.env.API_BASE_URL}/products/${productSlug}`;
 
@@ -33,4 +33,4 @@ export const getProductBySlug = async (
     console.log(error.message);
     return { ok: false, message: error.message };
   }
-};
+}

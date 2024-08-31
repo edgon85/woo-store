@@ -3,7 +3,7 @@ import { IEmailPreference } from '@/interfaces';
 import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export const updateEmailPreferences = async (data: IEmailPreference) => {
+export  async function updateEmailPreferences(data: IEmailPreference) {
   noStore();
   const url = `${process.env.API_BASE_URL}/email/update-preferences`;
   const authToken = await getAuthToken();

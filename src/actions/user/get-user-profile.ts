@@ -3,7 +3,7 @@
 import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export const getUserProfile = async (userId: string) => {
+export async function getUserProfile(userId: string) {
   noStore();
 
   const authToken = await getAuthToken();

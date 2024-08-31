@@ -2,7 +2,7 @@
 import { unstable_noStore as noStore } from 'next/cache';
 import { getAuthToken } from '@/libs';
 
-export const fetchShippingAddress = async () => {
+export async function fetchShippingAddress() {
   noStore();
   const url = `${process.env.API_BASE_URL}/shipping-address`;
   const authToken = await getAuthToken();
@@ -34,4 +34,4 @@ export const fetchShippingAddress = async () => {
     console.log(error.message);
     return { ok: false, message: error.message };
   }
-};
+}

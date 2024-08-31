@@ -1,7 +1,7 @@
 'use server';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export const getDepartments = async () => {
+export async function getDepartments() {
   noStore();
 
   try {
@@ -28,4 +28,4 @@ export const getDepartments = async () => {
     console.log(error.message);
     return { ok: false, message: 'ocurrió un error vea los logs' };
   }
-};
+}

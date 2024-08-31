@@ -110,7 +110,7 @@ export const addImagesByProductId = async (dataToUpdate: FormData) => {
   }
 };
 
-const uploadImages = async (images: File[]) => {
+async function uploadImages(images: File[]) {
   try {
     const uploadPromises = images.map(async (image) => {
       try {
@@ -143,7 +143,7 @@ const uploadImages = async (images: File[]) => {
     console.error('Error en el proceso de subida de imágenes:', error);
     return null;
   }
-};
+}
 
 /* cloudinary  */
 /* 
