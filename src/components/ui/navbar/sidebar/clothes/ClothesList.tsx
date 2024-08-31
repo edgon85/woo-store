@@ -23,8 +23,7 @@ export const ClothesList = ({ articleType }: Props) => {
           <button
             className="py-2 pl-2 capitalize"
             onClick={() => {
-              console.log(articleType);
-              router.push(`/${gender}/${articleType}/${category.slug}`);
+              router.push(`/catalog/${gender}/${articleType}/${category.slug}`);
               sidebarMenu();
             }}
           >

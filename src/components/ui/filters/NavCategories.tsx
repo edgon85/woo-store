@@ -44,6 +44,7 @@ export const NavCategories = ({ isMovil }: Props) => {
                   gender={gender.toString()}
                   clothingType={clothing_type.toString()}
                   initialPath={initialPath}
+                  isMobile={isMovil}
                 />
               </div>
             }

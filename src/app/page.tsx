@@ -12,13 +12,13 @@ export default async function Home() {
   return (
     <main>
       <Banner />
-      <div className="hidden md:block my-4">
+      {/* <div className="hidden md:block my-4">
         <CategoryGrid />
       </div>
       <FeaturedArticles products={data.products} />
       <div className="block md:hidden">
         <CategoryGrid />
-      </div>
+      </div> */}
       {/* <MenWomanExclusive /> */}
     </main>
   );

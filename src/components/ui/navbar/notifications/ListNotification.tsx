@@ -2,6 +2,7 @@ import { INotification, NotificationType } from '@/interfaces';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { SocketContext } from '@/context';
+import { formatDateChat } from '@/utils';
 
 type Props = {
   notification: INotification;
@@ -38,6 +39,22 @@ export const ListNotification = ({ notification, setIsCollapsed }: Props) => {
     // router.push(`/product/${notification.url}`);
   };
   return (
+    <button
+      onClick={onHandleClick}
+      className="flex py-3 px-4 border-b hover:bg-gray-100 "
+    >
+      <div className="pl-3 w-full">
+        <div className="text-gray-500 font-normal text-sm text-start mb-1.5 ">
+          {notification.message}
+        </div>
+        <div className="text-xs font-medium text-primary-700 text-start">
+          {formatDateChat(notification.createdAt)}
+        </div>
+      </div>
+    </button>
+  );
+};
+/* 
     <li>
       <button
         onClick={onHandleClick}
@@ -49,5 +66,5 @@ export const ListNotification = ({ notification, setIsCollapsed }: Props) => {
         <span>{notification.message}</span>
       </button>
     </li>
-  );
-};
+
+*/

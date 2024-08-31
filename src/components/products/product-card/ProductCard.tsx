@@ -36,11 +36,13 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
           href={`/product/${product.slug}`}
           className="hover:text-cerise-red-600"
         >
-          <h3 className="text-lg font-semibold capitalize">{product.title}</h3>
+          <h3 className="text-sm md:text-lg font-semibold capitalize">
+            {product.title}
+          </h3>
         </Link>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-cerise-red-500">
+            <span className="text-xs md:text-sm font-bold text-cerise-red-500">
               {formatCurrency(product.price * 100)}
             </span>
           </div>

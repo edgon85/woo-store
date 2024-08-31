@@ -1,4 +1,5 @@
 import { useFetcher } from '@/hooks';
+import { useSidebar } from '@/stores';
 import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -16,12 +17,14 @@ type Props = {
   gender: string;
   clothingType: string;
   initialPath?: string;
+  isMobile?: boolean;
 };
 
 export const HierarchicalMenu = ({
   gender,
   clothingType,
   initialPath,
+  isMobile = false,
 }: Props) => {
   const {
     data: menuItems,
@@ -34,6 +37,7 @@ export const HierarchicalMenu = ({
   const [urlStack, setUrlStack] = useState<string[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
 
   const router = useRouter();
 
@@ -48,7 +52,6 @@ export const HierarchicalMenu = ({
         let currentLevel = initialMenu;
         const newStack = [initialMenu];
         const newUrlStack = [`/catalog/${gender}/${clothingType}`];
-
         for (const part of pathParts) {
           const matchingItem = currentLevel.find(
             (item) => item.slug?.toLowerCase() === part.toLowerCase()
@@ -87,6 +90,7 @@ export const HierarchicalMenu = ({
         ...urlStack,
         `${urlStack[urlStack.length - 1]}/${item.slug}`,
       ]);
+      // if (isMobile) menuFilter();
       router.push(`${urlStack[urlStack.length - 1]}/${item.slug}`);
     }
   };
@@ -112,8 +116,10 @@ export const HierarchicalMenu = ({
       }
 
       router.push(previousUrl);
+      if (isMobile) menuFilter();
     } else {
       router.push(`/catalog/${gender}/${clothingType}`);
+      if (isMobile) menuFilter();
       setCurrentCategory('');
       setSelectedItem(null);
     }
@@ -122,6 +128,7 @@ export const HierarchicalMenu = ({
   const handleItemClick = (item: MenuItem) => {
     if (item.children) {
       navigateToSubmenu(item);
+      if (isMobile) menuFilter();
     } else {
       const gender = params.gender.toString();
       const clothing = params.clothing_type.toString();
@@ -132,6 +139,7 @@ export const HierarchicalMenu = ({
       setSelectedItem(item.slug!);
       setUrlStack([...urlStack.slice(0, -1), newUrl]);
       router.push(newUrl);
+      if (isMobile) menuFilter();
     }
   };
 
