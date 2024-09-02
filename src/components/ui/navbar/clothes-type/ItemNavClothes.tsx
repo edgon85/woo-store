@@ -56,21 +56,23 @@ export const ItemMegaMenu = ({
       id="mega-menu-dropdown"
       className={`absolute z-10 grid ${
         isCollapsed ? 'grid-cols-2 md:grid-cols-3' : 'hidden'
-      } w-auto text-sm bg-white border border-gray-100 rounded-lg shadow-md`}
+      } w-auto text-sm bg-white border border-gray-100 rounded shadow-md`}
     >
       {groupedClothingData.map((columnData, columnIndex) => (
         <div key={columnIndex} className="p-4 pb-0 text-gray-900 md:pb-4">
           <ul className="space-y-4" aria-labelledby="mega-menu-dropdown-button">
-            {columnData.map((category: ICategory) => (
-              <li key={category.id}>
-                <button
-                  onClick={() => handleOnclick(category)}
-                  className="text-gray-500 hover:text-darkPrimary capitalize"
-                >
-                  {category.title}
-                </button>
-              </li>
-            ))}
+            {columnData
+              .sort((a, b) => a.title.localeCompare(b.title))
+              .map((category: ICategory) => (
+                <li key={category.id}>
+                  <button
+                    onClick={() => handleOnclick(category)}
+                    className="text-gray-500 hover:text-darkPrimary capitalize"
+                  >
+                    {category.title}
+                  </button>
+                </li>
+              ))}
           </ul>
         </div>
       ))}

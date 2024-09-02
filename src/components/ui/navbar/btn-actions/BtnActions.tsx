@@ -27,7 +27,7 @@ export const BtnActions = memo(() => {
 
   return (
     <div className="flex gap-1">
-      <BtnSearch />
+      {/* <BtnSearch /> */}
       {isLoggedIn ? <AuthenticatedActions /> : <BtnLoginRegister />}
       <HamburgerButton />
     </div>

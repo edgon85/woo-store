@@ -1,100 +1,46 @@
-import { Suspense } from 'react';
-
 import Image from 'next/image';
-import logo from '../../../../public/logo.svg';
-
 import Link from 'next/link';
+
+import { BtnActions } from './btn-actions';
+import logo from '../../../../public/logo.svg';
+import { SearchInput } from './search/SearchInput';
 import { GenderSelected } from '../dropdowns';
-import { NavbarSearch, NavbarActions } from './';
-import { ButtonSkeleton } from '../skeletons';
-import {
-  BtnNotification,
-  BtnApps,
-  BtnUserMenu,
-  BtnSearch,
-  BtnSellNow,
-  BtnLoginRegister,
-  BtnActions,
-} from './btn-actions';
+import { ListClothesType } from './clothes-type/ListClothesType';
 
 export const Navbar = () => {
   return (
-    <header className="antialiased bg-white">
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 main-wrapper">
-        <div className="flex flex-wrap justify-between items-center">
-          <div className="flex justify-start items-center">
-            <Link href="/">
-              <Image src={logo} alt="Logo de woo" priority />
-            </Link>
-            <form className="hidden lg:block lg:pl-2">
-              <label htmlFor="topbar-search" className="sr-only">
-                Search
-              </label>
-              <div className="relative mt-1 lg:w-96">
-                <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                  <svg
-                    className="w-4 h-4 text-gray-500 "
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    {' '}
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />{' '}
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  name="email"
-                  id="topbar-search"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-9 p-2.5 "
-                  placeholder="Search"
-                />
-              </div>
-            </form>
-          </div>
-          <div className="flex items-center lg:order-2">
-            {/* <!-- search --> */}
-            <BtnActions />
-          </div>
+    <>
+      <div className="h-[144px]"></div>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white h-[144px]">
+        <div className="main-wrapper h-full flex flex-col">
+          <nav className="flex items-center justify-between py-2 md:py-2.5 flex-grow px-4 md:px-0">
+            <div className="flex-shrink-0">
+              <Link href="/">
+                <Image src={logo} alt="Logo de woo" priority />
+              </Link>
+            </div>
+            <div className="flex-grow mx-4 hidden md:block max-w-2xl">
+              <SearchInput />
+            </div>
+            <div className="flex-shrink-0">
+              <BtnActions />
+            </div>
+          </nav>
+          <nav className="flex items-center justify-center py-2 md:py-2.5 px-4 md:px-0">
+            <div className="w-full flex justify-center items-center md:hidden">
+              <SearchInput />
+            </div>
+            <div className="w-full max-w-lg mx-auto hidden md:flex justify-center">
+              <ListClothesType />
+            </div>
+          </nav>
         </div>
-      </nav>
-    </header>
+      </header>
+    </>
   );
 };
-
-/* 
-    <nav className="px-4 lg:px-0 bg-white shadow-sm md:shadow-none">
-      <div className="main-wrapper">
-        <div className="flex justify-between items-center h-20">
-          <div className="burgerIcon md:hidden">
-            <GenderSelected />
-          </div>
-          <div className="logo cursor-pointer">
-            <Link href="/">
-              <Image src={logo} alt="Logo de woo" priority />
-            </Link>
-          </div>
-
-          <div className="flex-1  hidden md:flex justify-center items-center">
-            <NavbarSearch />
-          </div>
-
-          <Suspense fallback={<ButtonSkeleton />}>
-            <NavbarActions />
-          </Suspense>
-        </div>
-      </div>
-      <div className="md:hidden flex justify-center pb-2">
-        <NavbarSearch />
-      </div>
-    </nav>
-
-
-*/
+{
+  /* <div className="flex-1">
+  <GenderSelected />
+</div> */
+}

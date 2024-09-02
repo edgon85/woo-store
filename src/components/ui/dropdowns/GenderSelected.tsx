@@ -30,37 +30,61 @@ export const GenderSelected = memo(() => {
     (value: string) => {
       setIsCollapsed(false);
       setGender(value);
-      router.push(`/catalog/${value}`);
+      // router.push(`/catalog/${value}`);
     },
-    [router, setGender]
+    [setGender]
   );
 
   return (
-    <div className="relative flex flex-col" ref={ref}>
+    <div className="relative" ref={ref}>
       <button
+        id="dropdown-button"
         onClick={toggleCollapsed}
-        className="border rounded w-32 md:w-44 hover:bg-gray-300 text-black font-medium text-sm p-2.5 text-center inline-flex items-center"
+        data-dropdown-toggle="dropdown"
+        className="flex-shrink-0 text-cerise-red-600 capitalize z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
         type="button"
       >
-        <span className="flex w-full justify-between gap-1 items-center capitalize">
-          {gender}
-          <IoMdArrowDropright size={24} />
-        </span>
+        {gender}
+        <svg
+          className="w-2.5 h-2.5 ms-2.5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
       </button>
 
-      {isCollapsed && (
-        <div className="z-10 absolute top-12 bg-white divide-y divide-gray-100 rounded shadow w-32 md:w-44">
-          <ul className="py-2 text-sm text-gray-700">
-            {genderOptions.map(({ value, label, Icon }) => (
-              <li key={value} onClick={() => handleGender(value)}>
-                <div className="flex gap-2 items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  <Icon size={20} /> <span>{label}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div
+        id="dropdown"
+        className={`${
+          isCollapsed ? 'block' : 'hidden'
+        } absolute left-0 mt-1 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44`}
+      >
+        <ul
+          className="py-2 text-sm text-gray-700"
+          aria-labelledby="dropdown-button"
+        >
+          {genderOptions.map(({ value, label, Icon }) => (
+            <li key={value} onClick={() => handleGender(value)}>
+              <button
+                type="button"
+                onClick={() => setIsCollapsed(false)}
+                className="inline-flex w-full px-4 py-2 hover:bg-gray-100"
+              >
+                <Icon size={20} /> <span>{label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 });
