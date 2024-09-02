@@ -5,23 +5,14 @@ import { useForm } from 'react-hook-form';
 
 type FormInputData = {
   term: string;
-  //   clothesType: string;
 };
-
-const clothesTypeOptions = [
-  { value: 'ropa', label: 'Ropa' },
-  { value: 'zapatos', label: 'Zapatos' },
-  { value: 'accesorios', label: 'Accesorios' },
-];
 
 export const InputSearch = () => {
   const gender = usePersonalPreferencesStore((state) => state.gender);
-  const clothesType = usePersonalPreferencesStore((state) => state.clothesType);
 
-  const { register, handleSubmit } = useForm<FormInputData>({
+  const { register, handleSubmit, reset } = useForm<FormInputData>({
     defaultValues: {
       term: '',
-      //   clothesType: clothesType,
     },
   });
 
@@ -44,8 +35,9 @@ export const InputSearch = () => {
 
       const url = params.toString();
       replace(`/search?${url}`);
+      reset({ term: '' });
     },
-    [gender, replace, searchParams]
+    [gender, replace, searchParams, reset]
   );
 
   return (

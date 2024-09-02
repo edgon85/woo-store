@@ -74,8 +74,15 @@ export const BadgeFilter = ({ filterItem }: Props) => {
 
       case 'colors':
         return (title = 'color: ');
+
       case 'price':
         return (title = 'Entre: ');
+
+      case 'gender':
+        return (title = 'Genero: ');
+
+      case 'clothesType':
+        return (title = 'Tipo de prenda: ');
     }
   };
 

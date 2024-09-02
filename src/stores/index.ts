@@ -9,3 +9,4 @@ export * from './payout/payout.store';
 export * from './inbox/inbox.store';
 export * from './modal-auth.store';
 export * from './auth.store';
+export * from './search/search-filters.store';

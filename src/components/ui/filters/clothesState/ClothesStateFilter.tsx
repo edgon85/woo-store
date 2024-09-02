@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Filter, IClothesState } from '@/interfaces';
 import { useEffect } from 'react';
 import { generateFilterURL } from '@/utils';
@@ -8,10 +8,14 @@ import { useFilterStore, useSidebar } from '@/stores';
 import { useFetcher } from '@/hooks';
 
 type Props = {
-  isMovil?: boolean;
+  isMobile?: boolean;
+  isSearch?: boolean;
 };
 
-export const ClothesStateFilter = ({ isMovil = false }: Props) => {
+export const ClothesStateFilter = ({
+  isMobile = false,
+  isSearch = false,
+}: Props) => {
   const { data: clothesStates } = useFetcher<IClothesState[]>(`/clothes-state`);
 
   const pathName = usePathname();
@@ -19,6 +23,11 @@ export const ClothesStateFilter = ({ isMovil = false }: Props) => {
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
   const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
+
+  const searchParams = useSearchParams();
+
+  const searchTerm = searchParams.get('s')?.toString();
+  const gender = searchParams.get('gender')?.toString();
 
   const handleChange = (clothesState: IClothesState, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -32,7 +41,7 @@ export const ClothesStateFilter = ({ isMovil = false }: Props) => {
     if (isChecked) {
       draft.push(newFilter);
       setFilters([...draft]);
-      if (isMovil) {
+      if (isMobile) {
         menuFilter();
       }
     } else {
@@ -42,9 +51,14 @@ export const ClothesStateFilter = ({ isMovil = false }: Props) => {
   };
 
   useEffect(() => {
-    const url = generateFilterURL(filters);
-    replace(`${pathName}${url}`);
-  }, [filters, pathName, replace]);
+    if (isSearch) {
+      const url = generateFilterURL(filters, true, searchTerm, gender);
+      replace(`${pathName}${url}`);
+    } else {
+      const url = generateFilterURL(filters);
+      replace(`${pathName}${url}`);
+    }
+  }, [filters, gender, isSearch, pathName, replace, searchTerm]);
 
   return (
     <>

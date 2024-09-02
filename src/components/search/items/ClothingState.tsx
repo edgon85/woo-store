@@ -1,93 +1,98 @@
-import { useFetcher } from '@/hooks';
-import { IClothesState, Filter } from '@/interfaces';
-import { useFilterStore, useSidebar } from '@/stores';
+'use client';
+import { IoIosRadioButtonOn, IoIosRadioButtonOff } from 'react-icons/io';
+
+import { Filter } from '@/interfaces';
+import {
+  useFilterStore,
+  usePersonalPreferencesStore,
+  useSidebar,
+} from '@/stores';
 import { generateFilterURL } from '@/utils';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+
+const ClothingOptions = [
+  { id: 'ropa', slug: 'ropa', name: 'Ropa' },
+  { id: 'zapatos', slug: 'zapatos', name: 'Zapatos' },
+  { id: 'accesorios', slug: 'accesorios', name: 'Accesorios' },
+];
 
 type Props = {
-  isMovil?: boolean;
+  isMobile?: boolean;
+  isSearch?: boolean;
 };
 
-export const ClothingStateItem = ({ isMovil = false }: Props) => {
-  const { data: clothesStates } = useFetcher<IClothesState[]>(`/clothes-state`);
+export const ClothingTypeSearch = ({
+  isMobile = false,
+  isSearch = false,
+}: Props) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const searchTerm = searchParams.get('s')?.toString();
+  const gender = searchParams.get('gender')?.toString();
+
+  const { replace } = useRouter();
+
+  const clothesType = usePersonalPreferencesStore((state) => state.clothesType);
+  const setClothesType = usePersonalPreferencesStore(
+    (state) => state.setClothesType
+  );
+  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
-  const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
-  const { replace } = useRouter();
-  const pathName = usePathname();
-  const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleChange = (clothesState: IClothesState, isChecked: boolean) => {
-    const newFilter: Filter = {
-      slug: clothesState.slug,
-      title: clothesState.title,
-      type: 'clothesState',
-    };
+  const onHandleClick = (slug: string) => {
+    let updatedFilters = filters.filter(
+      (filter) => filter.type !== 'clothesType'
+    );
 
-    let draft = structuredClone(filters);
-
-    if (isChecked) {
-      draft.push(newFilter);
-      setFilters([...draft]);
-      if (isMovil) {
-        menuFilter();
-      }
+    if (slug !== clothesType) {
+      const newFilter: Filter = {
+        slug: slug,
+        title: 'clothesType',
+        type: 'clothesType',
+      };
+      updatedFilters.push(newFilter);
+      setClothesType(slug);
+      if (isMobile) menuFilter();
     } else {
-      draft = draft.filter((resp) => newFilter.slug !== resp.slug);
-      setFilters(draft);
+      setClothesType('ropa');
     }
+
+    setFilters(updatedFilters);
   };
 
   useEffect(() => {
-    const term = searchParams.get('q') || '';
-    setSearchTerm(term);
-    const newFilter: Filter = {
-      slug: term,
-      title: term,
-      type: 'search',
-    };
-    console.log({ term });
-    // Recuperar filtros de la URL
-
-    setFilters([...filters, newFilter]);
-
-    // Realizar la búsqueda
-  }, [filters, searchParams, setFilters]);
-
-  /* useEffect(() => {
-     console.log(searchParams.get('q'));
-    const url = generateFilterURL(filters);
-    console.log(`${pathName}${url}`);
-    console.log(filters);
-    console.log(pathName);
-    console.log(url);
-  }, [filters]); */
+    const url = isSearch
+      ? generateFilterURL(filters, true, searchTerm, gender)
+      : generateFilterURL(filters);
+    replace(`${pathname}${url}`);
+  }, [filters, gender, isSearch, searchTerm, pathname, replace]);
 
   return (
-    <>
-      <div className="divide-y divide-gray-300">
-        {clothesStates.map((clothes) => (
-          <li key={clothes.id} className="p-4">
-            <label
-              htmlFor={clothes.slug}
-              className="flex justify-between items-center cursor-pointer hover:text-darkPrimary uppercase"
-            >
-              <span className="capitalize">{clothes.title}</span>
-              <input
-                name={clothes.title}
-                value={clothes.title}
-                className="w-5 h-5 bg-primary text-primary cursor-pointer"
-                type="checkbox"
-                id={clothes.slug}
-                onChange={(e) => handleChange(clothes, e.target.checked)}
-                // checked={filters.some((filter) => filter.slug === clothes.slug)}
-              />
-            </label>
-          </li>
-        ))}
-      </div>
-    </>
+    <div className="divide-y divide-gray-300">
+      {ClothingOptions.map((clothing) => (
+        <li key={clothing.id} className="p-4">
+          <button
+            onClick={() => onHandleClick(clothing.slug)}
+            className={clsx('flex justify-between w-full', {
+              'text-cerise-red-600': clothesType === clothing.slug,
+              'text-gray-700': clothesType !== clothing.slug,
+            })}
+          >
+            <span>{clothing.name}</span>
+            <span>
+              {clothesType === clothing.slug ? (
+                <IoIosRadioButtonOn size={24} />
+              ) : (
+                <IoIosRadioButtonOff size={24} />
+              )}
+            </span>
+          </button>
+        </li>
+      ))}
+    </div>
   );
 };

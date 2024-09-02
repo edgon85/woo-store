@@ -11,10 +11,10 @@ import { HierarchicalMenu } from './hierarchical-menu/HierarchicalMenu';
 import { ClothingType } from './clothing-type/ClothingType';
 
 type Props = {
-  isMovil?: boolean;
+  isMobile?: boolean;
 };
 
-export const NavCategories = ({ isMovil }: Props) => {
+export const NavCategories = ({ isMobile }: Props) => {
   const params = useParams();
   const { gender, clothing_type, category, subcategory } = params;
   // const pathname = usePathname();
@@ -29,7 +29,7 @@ export const NavCategories = ({ isMovil }: Props) => {
             title={'Tipo de prenda'}
             items={
               <div className="max-h-64 overflow-scroll">
-                <ClothingType isMobile={isMovil} gender={gender.toString()} />
+                <ClothingType isMobile={isMobile} gender={gender.toString()} />
               </div>
             }
           />
@@ -44,7 +44,7 @@ export const NavCategories = ({ isMovil }: Props) => {
                   gender={gender.toString()}
                   clothingType={clothing_type.toString()}
                   initialPath={initialPath}
-                  isMobile={isMovil}
+                  isMobile={isMobile}
                 />
               </div>
             }
@@ -55,7 +55,7 @@ export const NavCategories = ({ isMovil }: Props) => {
           title={'Marcas'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <BrandsItems isMobile={isMovil} />
+              <BrandsItems isMobile={isMobile} />
             </div>
           }
         />
@@ -65,11 +65,7 @@ export const NavCategories = ({ isMovil }: Props) => {
             title={'Tallas'}
             items={
               <div className="max-h-64 overflow-scroll">
-                <MeasurementFilterItems
-                  gender={gender.toString()}
-                  clothing_type={clothing_type.toString()}
-                  isMovil={isMovil}
-                />
+                <MeasurementFilterItems isMobile={isMobile} />
               </div>
             }
           />
@@ -79,7 +75,7 @@ export const NavCategories = ({ isMovil }: Props) => {
           title={'Estado'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ClothesStateFilter isMovil={isMovil} />
+              <ClothesStateFilter isMobile={isMobile} />
             </div>
           }
         />
@@ -88,7 +84,7 @@ export const NavCategories = ({ isMovil }: Props) => {
           title={'Color'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ColorFilter isMovil={isMovil} />
+              <ColorFilter isMobile={isMobile} />
             </div>
           }
         />
@@ -97,7 +93,7 @@ export const NavCategories = ({ isMovil }: Props) => {
           title={'Precio'}
           items={
             <div className="">
-              <PriceFilter isMovil={isMovil} />
+              <PriceFilter isMobile={isMobile} />
             </div>
           }
         />

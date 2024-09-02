@@ -4,24 +4,27 @@ import { useFetcher } from '@/hooks';
 import { Filter, IColor } from '@/interfaces';
 import { useFilterStore, useSidebar } from '@/stores';
 import { generateFilterURL } from '@/utils';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 type Props = {
-  isMovil?: boolean;
+  isMobile?: boolean;
+  isSearch?: boolean;
 };
 
-export const ColorFilter = ({ isMovil = false }: Props) => {
-
-
+export const ColorFilter = ({ isMobile = false, isSearch = false }: Props) => {
   const { data: colors } = useFetcher<IColor[]>(`/colors`);
 
   const pathName = usePathname();
+  const searchParams = useSearchParams();
   const { replace } = useRouter();
 
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
   const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
+
+  const searchTerm = searchParams.get('s')?.toString();
+  const gender = searchParams.get('gender')?.toString();
 
   const handleChange = (colorItem: IColor, isChecked: boolean) => {
     const newFilter: Filter = {
@@ -35,7 +38,7 @@ export const ColorFilter = ({ isMovil = false }: Props) => {
     if (isChecked) {
       draft.push(newFilter);
       setFilters([...draft]);
-      if (isMovil) {
+      if (isMobile) {
         menuFilter();
       }
     } else {
@@ -45,9 +48,14 @@ export const ColorFilter = ({ isMovil = false }: Props) => {
   };
 
   useEffect(() => {
-    const url = generateFilterURL(filters);
-    replace(`${pathName}${url}`);
-  }, [filters, pathName, replace]);
+    if (isSearch) {
+      const url = generateFilterURL(filters, true, searchTerm, gender);
+      replace(`${pathName}${url}`);
+    } else {
+      const url = generateFilterURL(filters);
+      replace(`${pathName}${url}`);
+    }
+  }, [filters, gender, isSearch, pathName, replace, searchTerm]);
 
   return (
     <div className="grid grid-cols-3 gap-4 p-2">

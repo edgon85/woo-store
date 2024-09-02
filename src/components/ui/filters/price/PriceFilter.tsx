@@ -2,7 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { Button } from '../../buttons';
 import { Filter } from '@/interfaces';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { generateFilterURL } from '@/utils';
 import { useFilterStore, useSidebar } from '@/stores';
@@ -13,11 +13,17 @@ type FormData = {
 };
 
 type Props = {
-  isMovil?: boolean;
+  isMobile?: boolean;
+  isSearch?: boolean;
 };
 
-export const PriceFilter = ({ isMovil = false }: Props) => {
+export const PriceFilter = ({ isMobile = false, isSearch = false }: Props) => {
   const pathName = usePathname();
+  const searchParams = useSearchParams();
+
+  const searchTerm = searchParams.get('s')?.toString();
+  const gender = searchParams.get('gender')?.toString();
+
   const { replace } = useRouter();
   const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
 
@@ -54,15 +60,20 @@ export const PriceFilter = ({ isMovil = false }: Props) => {
 
     setFilters([...draft, newFilter]);
 
-    if (isMovil) {
+    if (isMobile) {
       menuFilter();
     }
   };
 
   useEffect(() => {
-    const url = generateFilterURL(filters);
-    replace(`${pathName}${url}`);
-  }, [filters, pathName, replace]);
+    if (isSearch) {
+      const url = generateFilterURL(filters, true, searchTerm, gender);
+      replace(`${pathName}${url}`);
+    } else {
+      const url = generateFilterURL(filters);
+      replace(`${pathName}${url}`);
+    }
+  }, [filters, gender, isSearch, pathName, replace, searchTerm]);
 
   return (
     <>
@@ -75,7 +86,7 @@ export const PriceFilter = ({ isMovil = false }: Props) => {
             placeholder="Min"
             {...register('min', {
               required: 'requerido',
-              min: 0,
+              min: 1,
             })}
           />
           {errors.min && (

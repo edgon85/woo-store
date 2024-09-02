@@ -3,7 +3,6 @@ import { useSidebar } from '@/stores';
 import { ButtonCellNow } from './ButtonCellNow';
 import { ButtonRegister } from './ButtonRegister';
 
-
 import { MenuItem } from '../../filters/NavItems';
 import { ClothesList } from './clothes/ClothesList';
 import { BsArrowRight } from 'react-icons/bs';
@@ -74,7 +73,7 @@ const Sidebar = () => {
             <>
               <li className="text-center text-lg font-semibold">Ajustes</li>
               <ul>
-                <ListGroup userId={user?.id!} isMovil={true} />
+                <ListGroup userId={user?.id!} isMobile={true} />
               </ul>
             </>
           )}

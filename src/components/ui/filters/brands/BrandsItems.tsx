@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Filter, IBrand } from '@/interfaces';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -11,14 +11,20 @@ import { useFetcher } from '@/hooks';
 
 type Props = {
   isMobile?: boolean;
+  isSearch?: boolean;
 };
 
-export const BrandsItems = ({ isMobile = false }: Props) => {
+export const BrandsItems = ({ isMobile = false, isSearch = false }: Props) => {
   const { data: initialBrands = [] } = useFetcher<IBrand[]>(
     '/brands/all?take=15'
   );
   const pathname = usePathname();
   const { replace } = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const searchTerm = searchParams.get('s')?.toString();
+  const gender = searchParams.get('gender')?.toString();
 
   const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
   const filters = useFilterStore((state) => state.filters);
@@ -97,11 +103,16 @@ export const BrandsItems = ({ isMobile = false }: Props) => {
 
   useEffect(() => {
     if (JSON.stringify(prevFiltersRef.current) !== JSON.stringify(filters)) {
-      const url = generateFilterURL(filters);
-      replace(`${pathname}${url}`);
+      if (isSearch) {
+        const url = generateFilterURL(filters, true, searchTerm, gender);
+        replace(`${pathname}${url}`);
+      } else {
+        const url = generateFilterURL(filters);
+        replace(`${pathname}${url}`);
+      }
       prevFiltersRef.current = filters;
     }
-  }, [filters, pathname, replace]);
+  }, [filters, pathname, replace, isSearch, searchTerm, gender]);
 
   return (
     <div className="divide-y divide-gray-300">

@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <ButtonFilter />
         {children}
       </div>
-      <SidebarFilter filters={<NavCategories isMovil={true} />} />
+      <SidebarFilter filters={<NavCategories isMobile={true} />} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Pagination, ProductCard } from '@/components';
+import { BadgeFilterList, Pagination, ProductCard } from '@/components';
 import { getAuthInfo } from '@/libs';
 import { getSearchProducts } from '@/utils';
 import { redirect } from 'next/navigation';

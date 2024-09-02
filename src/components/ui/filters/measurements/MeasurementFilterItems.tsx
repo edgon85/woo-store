@@ -1,29 +1,42 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Filter, IMeasurement } from '@/interfaces';
 import { generateFilterURL, measurementFormat } from '@/utils';
 import { useEffect } from 'react';
-import { useFilterStore, useSidebar } from '@/stores';
+import {
+  useFilterStore,
+  usePersonalPreferencesStore,
+  useSidebar,
+} from '@/stores';
 import { useFetcher } from '@/hooks';
 
 type Props = {
-  gender: string;
-  clothing_type: string;
-  isMovil?: boolean;
+  isMobile?: boolean;
+  isSearch?: boolean;
 };
 
 export const MeasurementFilterItems = ({
-  gender,
-  clothing_type,
-  isMovil = false,
+  /*  gender,
+  clothing_type, */
+  isMobile = false,
+  isSearch = false,
 }: Props) => {
+  const gender = usePersonalPreferencesStore((state) => state.gender);
+  const clothing_type = usePersonalPreferencesStore(
+    (state) => state.clothesType
+  );
+
   const { data: measurements } = useFetcher<IMeasurement[]>(
     `/measurements?gender=${gender}&type=${clothing_type}`
   );
 
   const pathName = usePathname();
   const { replace } = useRouter();
+  const searchParams = useSearchParams();
+
+  const searchTerm = searchParams.get('s')?.toString();
+  const genderSearch = searchParams.get('gender')?.toString();
 
   const filters = useFilterStore((state) => state.filters);
   const setFilters = useFilterStore((state) => state.setFilters);
@@ -41,7 +54,7 @@ export const MeasurementFilterItems = ({
     if (isChecked) {
       draft.push(newFilter);
       setFilters([...draft]);
-      if (isMovil) {
+      if (isMobile) {
         menuFilter();
       }
     } else {
@@ -51,9 +64,14 @@ export const MeasurementFilterItems = ({
   };
 
   useEffect(() => {
-    const url = generateFilterURL(filters);
-    replace(`${pathName}${url}`);
-  }, [filters, pathName, replace]);
+    if (isSearch) {
+      const url = generateFilterURL(filters, true, searchTerm, genderSearch);
+      replace(`${pathName}${url}`);
+    } else {
+      const url = generateFilterURL(filters);
+      replace(`${pathName}${url}`);
+    }
+  }, [filters, gender, genderSearch, isSearch, pathName, replace, searchTerm]);
 
   return (
     <>

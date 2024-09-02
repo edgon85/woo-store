@@ -7,13 +7,13 @@ export interface ListItemProps {
   id: string;
   href: string;
   label: string;
-  isMovil?: boolean;
+  isMobile?: boolean;
 }
 export const ListItem = ({
   href,
   label,
   id,
-  isMovil = false,
+  isMobile = false,
 }: ListItemProps) => {
   const pathname = usePathname();
   const menuModal = useSidebar((state) => state.onSidebarOpen);
@@ -24,7 +24,7 @@ export const ListItem = ({
   return (
     <Link
       onClick={() => {
-        if (isMovil) {
+        if (isMobile) {
           menuModal();
         }
       }}

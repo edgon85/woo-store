@@ -12,14 +12,14 @@ type Props = {
   gender: string;
   category: string;
   clothing_type: string;
-  isMovil?: boolean;
+  isMobile?: boolean;
 };
 
 export const SubcategoriesItems = ({
   gender,
   category,
   clothing_type,
-  isMovil = false,
+  isMobile = false,
 }: Props) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
   const menuFilter = useSidebar((state) => state.onSidebarFilterOpen);
@@ -38,7 +38,7 @@ export const SubcategoriesItems = ({
       setSelectedSubcategory(subSlug);
       router.push(`/catalog/${gender}/${clothing_type}/${category}/${subSlug}`);
     }
-    if (isMovil) {
+    if (isMobile) {
       menuFilter();
     }
   };
