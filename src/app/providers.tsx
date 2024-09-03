@@ -9,6 +9,7 @@ import {
 } from '@/context';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
+import { Suspense } from 'react';
 
 type Props = {
   children: JSX.Element | JSX.Element[];
@@ -25,10 +26,12 @@ export function Providers({ children }: Props) {
       <SessionProvider>
         <ChatProvider>
           <NotificationProvider>
-            {/* <AuthProvider> */}
             <AuthStateManager />
-            <SocketProvider>{children}</SocketProvider>
-            {/* </AuthProvider> */}
+            <SocketProvider>
+              {/* <Suspense> */}
+              {children}
+              {/* </Suspense> */}
+            </SocketProvider>
           </NotificationProvider>
         </ChatProvider>
       </SessionProvider>

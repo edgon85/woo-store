@@ -5,9 +5,7 @@ import { IOrder } from '@/interfaces';
 import { ErrorResult } from '@/types';
 import { getAuthToken } from '@/libs';
 
-export async function fetchOrders(
-  type: string
-): Promise<IOrder[] | ErrorResult> {
+export async function fetchOrders(type: string) {
   noStore();
   const url = `${process.env.API_BASE_URL}/orders?type=${type}`;
   const authToken = await getAuthToken();
@@ -29,8 +27,9 @@ export async function fetchOrders(
       throw new Error(errorData.message || 'Error al hacer fetch data');
     }
 
-    const data: IOrder[] = await resp.json();
+    const data = await resp.json();
 
+    return { ok: true, data };
     return data;
   } catch (error: any) {
     console.log(error.message);

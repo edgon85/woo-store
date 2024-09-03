@@ -1,7 +1,7 @@
 'use client';
 
 import { useModalAuth } from '@/stores';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 
 export const BtnLoginRegister = () => {

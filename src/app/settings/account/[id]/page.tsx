@@ -1,7 +1,7 @@
 import { AccountForm } from '@/components';
 import { fetchUserProfile } from '@/actions';
-import { redirect } from 'next/navigation';
 import { Metadata } from 'next';
+import NotFound from '../../not-found';
 
 export const metadata: Metadata = {
   title: 'Mi cuenta',
@@ -12,10 +12,10 @@ export default async function AccountPage({
 }: {
   params: { id: string };
 }) {
-  const { ok, data, message } = await fetchUserProfile(params.id);
+  const { ok, data } = await fetchUserProfile(params.id);
 
   if (!ok) {
-    redirect('/404');
+    NotFound();
   }
   return <AccountForm user={data!} />;
 }

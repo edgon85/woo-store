@@ -77,37 +77,13 @@ export const BtnApps = () => {
       <div
         className={`${
           isCollapsed ? 'block' : 'hidden'
-        } absolute right-0 mt-2 w-80 overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg`}
+        } absolute z-50 mt-2 w-80 max-w-sm overflow-hidden bg-white rounded divide-y divide-gray-100 shadow-lg text-base list-none my-4 md:right-0 left-3/4 transform -translate-x-3/4 md:translate-x-0 md:left-auto`}
         id="apps-dropdown"
       >
         <div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 ">
           Opciones
         </div>
         <div className="grid grid-cols-3 gap-4 p-4">
-          {/*  <Link
-            onClick={() => setIsCollapsed(false)}
-            href={`/catalog/mujer`}
-            className="block p-4 text-center rounded-lg hover:bg-gray-100 group"
-          >
-            <IoIosWoman className="mx-auto mb-2 w-5 h-5 text-gray-400 group-hover:text-gray-500" />
-            <div className="text-sm font-medium text-gray-900">Mujeres</div>
-          </Link>
-          <Link
-            onClick={() => setIsCollapsed(false)}
-            href={`/catalog/hombre`}
-            className="block p-4 text-center rounded-lg hover:bg-gray-100 group"
-          >
-            <IoIosMan className="mx-auto mb-2 w-5 h-5 text-gray-400 group-hover:text-gray-500" />
-            <div className="text-sm font-medium text-gray-900">Hombres</div>
-          </Link>
-          <Link
-            onClick={() => setIsCollapsed(false)}
-            href={`/catalog/accesorios`}
-            className="block p-4 text-center rounded-lg hover:bg-gray-100 group"
-          >
-            <FaSwatchbook className="mx-auto mb-2 w-5 h-5 text-gray-400 group-hover:text-gray-500" />
-            <div className="text-sm font-medium text-gray-900">Accesorios</div>
-          </Link> */}
           <button
             onClick={onHandleClickMessages}
             className="relative p-4 text-center rounded-lg hover:bg-gray-100 group"

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { BtnActions } from './btn-actions';
 import logo from '../../../../public/logo.svg';
 import { SearchInput } from './search/SearchInput';
-import { GenderSelected } from '../dropdowns';
 import { ListClothesType } from './clothes-type/ListClothesType';
 
 export const Navbar = () => {
@@ -39,8 +38,3 @@ export const Navbar = () => {
     </>
   );
 };
-{
-  /* <div className="flex-1">
-  <GenderSelected />
-</div> */
-}

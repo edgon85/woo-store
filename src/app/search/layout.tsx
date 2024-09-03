@@ -1,3 +1,4 @@
+import { ButtonFilter, SidebarFilter } from '@/components';
 import { NavFilters } from '@/components/search/Filters';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -10,8 +11,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* <!-- Sección de Cuadrícula de 4 Columnas (Lado Derecho) --> */}
       <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2">
+        <ButtonFilter />
         {children}
       </div>
+      <SidebarFilter filters={<NavFilters isMobile={true} />} />
     </div>
   );
 }

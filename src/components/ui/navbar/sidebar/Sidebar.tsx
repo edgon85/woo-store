@@ -20,20 +20,20 @@ const Sidebar = () => {
   return (
     <>
       {menuOpen && (
-        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30" />
+        <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-black opacity-30" />
       )}
 
       {menuOpen && (
         <div
           onClick={setMenuOpen}
-          className="fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm transition-all duration-300 ease-in-out"
+          className="fixed top-0 left-0 w-screen h-screen z-50 backdrop-filter backdrop-blur-sm transition-all duration-300 ease-in-out"
         />
       )}
 
       {/* Sidebar */}
       <div
         className={clsx(
-          'fixed top-0 right-0 h-screen w-3/4 bg-white transition-all duration-300 ease-in-out  md:hidden z-20 overflow-y-scroll',
+          'fixed top-0 right-0 h-screen w-3/4 bg-white transition-all duration-300 ease-in-out  md:hidden z-50 overflow-y-scroll',
           {
             'translate-x-full': !menuOpen,
           }

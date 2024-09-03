@@ -28,8 +28,6 @@ export const BtnNotification = () => {
     };
   }, [isCollapsed]);
 
-  console.log(notifications);
-
   return (
     <div className="relative" ref={ref}>
       <button
@@ -59,7 +57,7 @@ export const BtnNotification = () => {
       <div
         className={`${
           isCollapsed ? 'block' : 'hidden'
-        } absolute right-0 mt-2 overflow-hidden z-50 w-80 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg`}
+        } absolute mt-2 overflow-hidden z-50 w-80 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg md:right-0 left-1/2 transform -translate-x-1/2 md:translate-x-0 md:left-auto`}
       >
         <div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 ">
           Notificaciones
@@ -110,83 +108,3 @@ export const BtnNotification = () => {
     </div>
   );
 };
-
-/* 
- <a href="#" className="flex py-3 px-4 border-b hover:bg-gray-100 ">
-            <div className="pl-3 w-full">
-              <div className="text-gray-500 font-normal text-sm mb-1.5 ">
-                New message from{' '}
-                <span className="font-semibold text-gray-900 ">
-                  Bonnie Green
-                </span>
-                : &ldquo;Hey, what&apos;s up? All set for the
-                presentation?&ldquo;
-              </div>
-              <div className="text-xs font-medium text-primary-700">
-                a few moments ago
-              </div>
-            </div>
-          </a>
-          <a href="#" className="flex py-3 px-4 border-b hover:bg-gray-100 ">
-            
-            <div className="pl-3 w-full">
-              <div className="text-gray-500 font-normal text-sm mb-1.5 ">
-                <span className="font-semibold text-gray-900 ">Jese leos</span>{' '}
-                and <span className="font-medium text-gray-900 ">5 others</span>{' '}
-                started following you.
-              </div>
-              <div className="text-xs font-medium text-primary-700">
-                10 minutes ago
-              </div>
-            </div>
-          </a>
-          <a href="#" className="flex py-3 px-4 border-b hover:bg-gray-100 ">
-            
-            <div className="pl-3 w-full">
-              <div className="text-gray-500 font-normal text-sm mb-1.5 ">
-                <span className="font-semibold text-gray-900 ">
-                  Joseph Mcfall
-                </span>{' '}
-                and{' '}
-                <span className="font-medium text-gray-900 ">141 others</span>{' '}
-                love your story. See it and view more stories.
-              </div>
-              <div className="text-xs font-medium text-primary-700">
-                44 minutes ago
-              </div>
-            </div>
-          </a>
-          <a href="#" className="flex py-3 px-4 border-b hover:bg-gray-100 ">
-           
-            <div className="pl-3 w-full">
-              <div className="text-gray-500 font-normal text-sm mb-1.5 ">
-                <span className="font-semibold text-gray-900 ">
-                  Leslie Livingston
-                </span>{' '}
-                mentioned you in a comment:{' '}
-                <span className="font-medium text-primary-700">
-                  @bonnie.green
-                </span>{' '}
-                what do you say?
-              </div>
-              <div className="text-xs font-medium text-primary-700">
-                1 hour ago
-              </div>
-            </div>
-          </a>
-          <a href="#" className="flex py-3 px-4 hover:bg-gray-100">
-            
-            <div className="pl-3 w-full">
-              <div className="text-gray-500 font-normal text-sm mb-1.5 ">
-                <span className="font-semibold text-gray-900 ">
-                  Robert Brown
-                </span>{' '}
-                posted a new video: Glassmorphism - learn how to implement the
-                new design trend.
-              </div>
-              <div className="text-xs font-medium text-primary-700">
-                3 hours ago
-              </div>
-            </div>
-          </a>
-*/

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { GenderSelected } from '../../dropdowns';
-import { usePersonalPreferencesStore } from '@/stores';
 import { InputSearch } from './InputSearch';
 
 export const SearchInput = () => {

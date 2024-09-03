@@ -1,17 +1,26 @@
-import { EmptyTransaction, TableSales } from '@/components';
+import {
+  EmptyTransaction,
+  PageLoadingSkeleton,
+  TableSales,
+} from '@/components';
 
 import { fetchOrders } from '@/actions';
-import { IOrder } from '@/interfaces';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import NotFound from '../../not-found';
 
 export const metadata: Metadata = {
   title: 'Mis ventas',
 };
 
 export default async function Page() {
-  const orders = (await fetchOrders('seller')) as IOrder[];
+  const { data, ok } = await fetchOrders('seller');
 
-  if (orders.length === 0)
+  if (!ok) {
+    NotFound();
+  }
+
+  if (data.length === 0)
     return (
       <EmptyTransaction
         label="¡Aun no tienes ventas!"
@@ -22,8 +31,10 @@ export default async function Page() {
     );
 
   return (
-    <main>
-      <TableSales orders={orders} />
-    </main>
+    <Suspense fallback={<PageLoadingSkeleton />}>
+      <main>
+        <TableSales orders={data} />
+      </main>
+    </Suspense>
   );
 }

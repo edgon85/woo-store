@@ -1,5 +1,5 @@
-import { getEmailPreferences, getNotifications } from '@/actions';
-import { EmailPreferenceItem, NotificationList } from '@/components';
+import { getEmailPreferences } from '@/actions';
+import { EmailPreferenceItem } from '@/components';
 import { Metadata } from 'next';
 import NotFound from '../not-found';
 
@@ -8,10 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default async function NotificationPage() {
-  const { ok, data, message } = await getEmailPreferences();
+  const { ok, data } = await getEmailPreferences();
 
   if (!ok) {
-    return NotFound();
+    NotFound();
   }
 
   return (
@@ -22,11 +22,7 @@ export default async function NotificationPage() {
             Preferencias de correo electrónico
           </h2>
         </div>
-        {/*  <EmailPreferenceItem
-      title="Email de bienvenida"
-      preferenceValue={data.welcomeEmail}
-      preferenceKey="welcomeEmail"
-    /> */}
+
         <hr />
         <EmailPreferenceItem
           title="Productos Listados"
@@ -51,11 +47,6 @@ export default async function NotificationPage() {
           preferenceValue={data.shipmentReminder}
           preferenceKey="shipmentReminder"
         />
-        {/* <Divider />
-  <EmailPreferenceItem
-  title="Confirmación de pago"
-  preferenceValue={data.paymentConfirmation}
-  /> */}
         <hr />
         <EmailPreferenceItem
           title="Confirmación de compra"
@@ -69,10 +60,6 @@ export default async function NotificationPage() {
           preferenceKey="shippingUpdate"
         />
         <hr />
-        {/* <EmailPreferenceItem
-    title="Receipt Confirmation Reminder"
-    preferenceValue={data.receiptConfirmationReminder}
-    /> */}
 
         <EmailPreferenceItem
           title="Solicitud de calificación"
@@ -88,9 +75,3 @@ export default async function NotificationPage() {
     </>
   );
 }
-/* 
-- Likes en mis artículos
-- Artículos que bajaron de precio
-- Nuevas seguidoras
-https://vercel.com/confirm?email=isaacher8820%40gmail.com&token=Px7FzxuSI8YY6el5AHr7CjRi&mode=signup
-*/

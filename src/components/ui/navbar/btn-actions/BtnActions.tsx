@@ -8,8 +8,6 @@ import { BtnUserMenu } from './BtnUserMenu';
 import { BtnSellNow } from './BtnSellNow';
 import { BtnLoginRegister } from './BtnLoginRegister';
 import { HamburgerButton } from '../hamburger-button';
-import { BtnSearch } from './BtnSearch';
-import { InboxNotification } from '../notifications';
 
 const AuthenticatedActions = memo(() => (
   <div className="flex gap-1">
@@ -27,7 +25,6 @@ export const BtnActions = memo(() => {
 
   return (
     <div className="flex gap-1">
-      {/* <BtnSearch /> */}
       {isLoggedIn ? <AuthenticatedActions /> : <BtnLoginRegister />}
       <HamburgerButton />
     </div>
