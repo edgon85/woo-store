@@ -1,5 +1,5 @@
-import { useCreateProductStore, useModalStore } from '@/stores';
-import { IoIosCheckmark } from 'react-icons/io';
+import { CheckMark } from '@/components/ui';
+import { useModalStore } from '@/stores';
 
 type Props = {
   gender: string;
@@ -7,13 +7,9 @@ type Props = {
 };
 
 export const SelectGender = ({ gender, onGenderChange }: Props) => {
-  // const gender = useCreateProductStore((state) => state.gender);
-  // const setGender = useCreateProductStore((state) => state.setGender);
-
   const closeModal = useModalStore((state) => state.closeModal);
 
   const handleOnclick = (value: string) => {
-    // setGender(value);
     onGenderChange(value);
     closeModal();
   };
@@ -25,7 +21,7 @@ export const SelectGender = ({ gender, onGenderChange }: Props) => {
       >
         <span>Mujer</span>
         {gender === 'mujer' ? (
-          <IoIosCheckmark size={24} color="var(--primary)" />
+          <CheckMark className="text-cerise-red-600" />
         ) : null}
       </div>
       <div
@@ -34,7 +30,7 @@ export const SelectGender = ({ gender, onGenderChange }: Props) => {
       >
         <span>Hombre</span>
         {gender === 'hombre' ? (
-          <IoIosCheckmark size={24} color="var(--primary)" />
+          <CheckMark className="text-cerise-red-600" />
         ) : null}
       </div>
     </div>

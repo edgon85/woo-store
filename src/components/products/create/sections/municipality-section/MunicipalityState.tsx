@@ -1,9 +1,8 @@
 import { getMunicipalitiesAvailable } from '@/actions';
-import { SpinnerIcon } from '@/components/ui';
+import { CheckMark, SpinnerIcon } from '@/components/ui';
 import { IMunicipality } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { IoIosCheckmark } from 'react-icons/io';
 
 export const MunicipalityState = () => {
   const { municipality, setMunicipality, department } = useCreateProductStore(
@@ -67,7 +66,7 @@ export const MunicipalityState = () => {
             <h6 className="text-lg capitalize">{muni.name}</h6>
           </div>
           {municipality?.id === muni.id && (
-            <IoIosCheckmark size={24} color="var(--primary)" />
+            <CheckMark className="text-cerise-red-600" />
           )}
         </li>
       )),

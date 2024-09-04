@@ -1,19 +1,18 @@
-type Props = {
-  size?: string;
-  color?: string;
+type IconProps = {
+  className?: string;
 };
 
-export const SearchIcon = ({ size = '24', color="currentColor" }: Props) => {
+export const SearchIcon = ({
+  className = 'w-6 h-6 text-gray-500',
+}: IconProps) => {
   return (
     <svg
-      width={size}
-      height={size}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      /*       viewBox="0 0 24 24"*/
-      strokeWidth={1.5} 
-      stroke={color}
-      className="w-6 h-6"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className={className}
     >
       <path
         strokeLinecap="round"

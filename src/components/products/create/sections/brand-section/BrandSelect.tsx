@@ -1,9 +1,8 @@
 'use client';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { IoIosCheckmark } from 'react-icons/io';
 import clsx from 'clsx';
 
-import { SearchIcon } from '@/components/ui';
+import { CheckMark, SearchIcon } from '@/components/ui';
 import { useDebounce } from '@/hooks/useDebounce';
 import { IBrand } from '@/interfaces';
 import { CreateBrand } from './CreateBrand';
@@ -66,7 +65,7 @@ export const BrandSelect = ({ brands }: Props) => {
             </div>
           </>
         ) : (
-          <SearchIcon color="var(--divider)" />
+          <SearchIcon className="text-gray-400" />
         )}
       </div>
       {searchResults.length === 0 ? (
@@ -89,7 +88,7 @@ export const BrandSelect = ({ brands }: Props) => {
         >
           <span className="capitalize">{brand.title}</span>
           {selectedBrand?.id === brand.id ? (
-            <IoIosCheckmark size={24} className="text-cerise-red-600" />
+            <CheckMark className="text-cerise-red-600" />
           ) : null}
         </div>
       ))}

@@ -1,8 +1,14 @@
-import { AccordionItem } from '@/components';
+import {
+  AccordionItem,
+  ArrowBarRightEnd,
+  CameraIcon,
+  CurrencyQuetzal,
+  EditIcon,
+  MapMarker,
+  ScaleIcon,
+  TagPriceIcon,
+} from '@/components';
 import { Metadata } from 'next';
-import { FaCamera, FaEdit, FaMapPin, FaTag, FaWeight } from 'react-icons/fa';
-import { IoLogIn } from 'react-icons/io5';
-import { TbCurrencyQuetzal } from 'react-icons/tb';
 
 export const metadata: Metadata = {
   title: 'Como vender',
@@ -13,7 +19,7 @@ export default function VenderPage() {
     {
       id: 'iniciar-sesion-registrarse',
       title: 'Iniciar sesión o registrarse',
-      icon: <IoLogIn className="w-6 h-6" />,
+      icon: <ArrowBarRightEnd />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -37,7 +43,7 @@ export default function VenderPage() {
     {
       id: 'haz-click-en-vender',
       title: "Haz clic en 'Vender ahora'",
-      icon: <FaEdit className="w-6 h-6" />,
+      icon: <EditIcon />,
       content: (
         <div className="mt-2">
           <p>
@@ -51,7 +57,7 @@ export default function VenderPage() {
     {
       id: 'selecciona-departamento-municipio',
       title: 'Seleccionar departamento y municipio',
-      icon: <FaMapPin className="w-6 h-6" />,
+      icon: <MapMarker className="w-6 h-6" />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -72,7 +78,7 @@ export default function VenderPage() {
     {
       id: 'tomar-fotografia',
       title: 'Tomar fotografías',
-      icon: <FaCamera className="w-6 h-6" />,
+      icon: <CameraIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -96,7 +102,7 @@ export default function VenderPage() {
     {
       id: 'titulo-y-descripcion',
       title: 'Título y descripción',
-      icon: <FaEdit className="w-6 h-6" />,
+      icon: <EditIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Crea un título atractivo y una descripción detallada:</p>
@@ -117,7 +123,7 @@ export default function VenderPage() {
     {
       id: 'seleccionar-genero',
       title: 'Seleccionar género',
-      icon: <FaTag className="w-6 h-6" />,
+      icon: <TagPriceIcon />,
       content: (
         <div className="mt-2">
           <p>
@@ -131,7 +137,7 @@ export default function VenderPage() {
     {
       id: 'detalles-del-articulo',
       title: 'Detalles del artículo',
-      icon: <FaTag className="w-6 h-6" />,
+      icon: <TagPriceIcon className="w-6 h-6" />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Proporciona información específica sobre tu artículo:</p>
@@ -152,7 +158,7 @@ export default function VenderPage() {
     {
       id: 'peso-del-articulo',
       title: 'Peso del artículo',
-      icon: <FaWeight className="w-6 h-6" />,
+      icon: <ScaleIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -172,7 +178,7 @@ export default function VenderPage() {
     {
       id: 'precio-del-articulo',
       title: 'Precio del artículo',
-      icon: <TbCurrencyQuetzal className="w-6 h-6" />,
+      icon: <CurrencyQuetzal />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Establece un precio justo para tu artículo. Considera:</p>

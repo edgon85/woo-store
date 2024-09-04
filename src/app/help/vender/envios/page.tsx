@@ -1,19 +1,22 @@
-import { AccordionItem } from '@/components';
+import {
+  AccordionItem,
+  BellIcon,
+  DownLoadIcon,
+  PackageIcon,
+  TruckIcon,
+} from '@/components';
 import { Metadata } from 'next';
-import { FaBellSlash, FaDownload, FaRegBell, FaTruck } from 'react-icons/fa';
-import { GoPackage } from 'react-icons/go';
-
 
 export const metadata: Metadata = {
   title: 'Como enviar',
-}
+};
 
 export default function EnviosPage() {
   const envioSteps = [
     {
       id: 'notificacion-venta',
       title: 'Recibe notificación de venta',
-      icon: <FaRegBell className="w-6 h-6" />,
+      icon: <BellIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -40,7 +43,7 @@ export default function EnviosPage() {
     {
       id: 'descarga-guia',
       title: 'Descarga la guía de paquetería',
-      icon: <FaDownload className="w-6 h-6" />,
+      icon: <DownLoadIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Para obtener la guía de envío, sigue estos pasos:</p>
@@ -60,7 +63,7 @@ export default function EnviosPage() {
     {
       id: 'prepara-empaca',
       title: 'Prepara y empaca el producto',
-      icon: <GoPackage className="w-6 h-6" />,
+      icon: <PackageIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Antes de enviar el producto, asegúrate de:</p>
@@ -85,7 +88,7 @@ export default function EnviosPage() {
     {
       id: 'envia-paqueteria',
       title: 'Lleva el paquete a la paquetería y envía',
-      icon: <FaTruck className="w-6 h-6" />,
+      icon: <TruckIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Para completar el envío:</p>

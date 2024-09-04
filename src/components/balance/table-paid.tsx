@@ -1,5 +1,6 @@
 import { Balance } from '@/interfaces';
 import { formatCurrency } from '@/utils';
+import { ClipboardDocumentIcon } from '../ui';
 
 type Props = {
   data: Balance;
@@ -37,14 +38,7 @@ export const TablePaid = ({ data }: Props) => {
               <tr className="bg-white w-full text-center">
                 <td colSpan={5} className="text-center">
                   <p className="px-6 py-4 text-gray-700 flex flex-col justify-center items-center gap-4">
-                    <picture className="w-12 h-12">
-                      <img
-                        src="/document-checklist.svg"
-                        alt=""
-                        width={150}
-                        height={150}
-                      />
-                    </picture>
+                    <ClipboardDocumentIcon className="w-28 h-28" />
                     <span>Todavía no tienes ventas</span>
                   </p>
                 </td>

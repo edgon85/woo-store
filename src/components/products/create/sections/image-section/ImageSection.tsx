@@ -1,9 +1,8 @@
 import { ChangeEvent, useRef, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { FaPlus } from 'react-icons/fa';
 
 import { FormInputs } from '@/hooks';
-import { CloseIcon } from '@/components/ui';
+import { CloseIcon, PlusIcon } from '@/components/ui';
 
 type Props = {
   register: UseFormRegister<FormInputs>;
@@ -160,7 +159,7 @@ export const ImageSection = ({ register, errors, setValue }: Props) => {
                 type="button"
                 className="absolute top-1 right-1 flex items-center justify-center bg-cerise-red-600 hover:bg-cerise-red-500 w-6 h-6 p-1 rounded-full"
               >
-                <CloseIcon size="20" color="#fff" />
+                <CloseIcon className="w-5 h-5 text-white" />
               </button>
             </picture>
           ))}
@@ -171,7 +170,7 @@ export const ImageSection = ({ register, errors, setValue }: Props) => {
               type="button"
               className="rounded-lg h-20 w-20 flex gap-1 flex-col items-center justify-center border-2 border-cerise-red-300 border-dashed"
             >
-              <FaPlus size={24} className="text-cerise-red-700" />
+              <PlusIcon className="text-cerise-red-700" />
               <p className="text-xs text-gray-500">
                 (Quedan {10 - thumbnails.length})
               </p>

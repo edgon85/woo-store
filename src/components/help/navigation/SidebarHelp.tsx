@@ -1,8 +1,8 @@
 'use client';
 
+import { ChevronDown, ChevronUp } from '@/components/ui';
 import Link from 'next/link';
 import { useState } from 'react';
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 const categories = [
   //   { name: 'Primeros pasos', path: '/help/primeros-pasos' },
@@ -23,28 +23,6 @@ const categories = [
       { name: 'Formas de pago', path: '/help/comprar/formas-de-pago' },
     ],
   },
-  /*   {
-    name: 'Envíos',
-    path: '/help/envios',
-    subcategories: [
-      { name: 'Opciones de envío', path: '/help/envio-opciones' },
-      { name: 'Seguimiento de paquetes', path: '/envios-seguimiento' },
-    ],
-  },
-  {
-    name: 'Pagos e Indemnizaciones',
-    path: '/help/pagos-indemnizaciones',
-    subcategories: [
-      {
-        name: 'Métodos de pago',
-        path: '/help/metodos-pago',
-      },
-      {
-        name: 'Política de reembolsos',
-        path: '/help/reembolsos',
-      },
-    ],
-  }, */
 ];
 
 export const SidebarHelp = () => {
@@ -75,9 +53,9 @@ export const SidebarHelp = () => {
               >
                 <span>{category.name}</span>
                 {expandedCategory === category.name ? (
-                  <BsChevronUp size={20} />
+                  <ChevronUp />
                 ) : (
-                  <BsChevronDown size={20} />
+                  <ChevronDown />
                 )}
               </button>
               {expandedCategory === category.name && (

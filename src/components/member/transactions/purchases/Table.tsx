@@ -1,12 +1,12 @@
 'use client';
 import Link from 'next/link';
-import { SlLocationPin } from 'react-icons/sl';
 
 import { BtnConfirmReceipt } from './BtnConfirmReceipt';
 import { formatCurrency, formatDateToLocal, uuIiMyFormat } from '@/utils';
 import { IOrder } from '@/interfaces';
 import { OrderStatus } from '@/enums';
 import { TransactionStatus } from '../TransactionStatus';
+import { MapMarker } from '@/components/ui';
 
 type Props = {
   orders: IOrder[];
@@ -125,7 +125,7 @@ export const TablePurchases = ({ orders }: Props) => {
                       href={''}
                       className="flex gap-1 justify-center items-center underline"
                     >
-                      <SlLocationPin size={18} />
+                      <MapMarker />
                       Ver en {order.shippingService.name}
                     </Link>
                   ) : null

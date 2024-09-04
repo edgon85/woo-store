@@ -1,9 +1,8 @@
-import { IoMdPricetags } from 'react-icons/io';
-
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { BrandSelect } from './BrandSelect';
 import { ItemCreate } from '../ItemCreate';
 import { IBrand } from '@/interfaces';
+import { TagPriceIcon } from '@/components/ui';
 
 type Props = {
   brands: IBrand[];
@@ -16,7 +15,7 @@ export const BrandSection = ({ brands }: Props) => {
   return (
     <ItemCreate
       title="Marca"
-      icon={IoMdPricetags}
+      icon={<TagPriceIcon />}
       value={`${brand?.title !== undefined ? brand?.title : ''}`}
       onClick={() =>
         openModal(

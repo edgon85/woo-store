@@ -5,8 +5,7 @@ import { ButtonRegister } from './ButtonRegister';
 
 import { MenuItem } from '../../filters/NavItems';
 import { ClothesList } from './clothes/ClothesList';
-import { BsArrowRight } from 'react-icons/bs';
-import { ListGroup } from '@/components';
+import { ArrowRightIcon, ListGroup } from '@/components';
 
 import clsx from 'clsx';
 import { useAuthStore } from '@/stores/auth.store';
@@ -41,7 +40,7 @@ const Sidebar = () => {
       >
         <ul className="border-b shadow-sm h-16 w-full flex justify-start items-center pl-2">
           <button onClick={setMenuOpen} className="w-8 h-8">
-            <BsArrowRight size={24} />
+            <ArrowRightIcon />
           </button>
         </ul>
         <ul className="mt-8 pb-8 mx-4 space-y-2">

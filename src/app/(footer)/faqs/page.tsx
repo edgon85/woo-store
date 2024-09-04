@@ -1,5 +1,4 @@
-import { AccordionItem } from '@/components';
-import { IoHelpCircle } from 'react-icons/io5';
+import { AccordionItem, HelpCircle } from '@/components';
 
 export default function FaqPage() {
   const faqData = [
@@ -49,33 +48,7 @@ export default function FaqPage() {
         </div>
       ),
     },
-    /* {
-      id: 'seguridad-transacciones',
-      question: '¿Cómo se garantiza la seguridad de las transacciones?',
-      answer: (
-        <div className="mt-2 space-y-2">
-          <p>Garantizamos la seguridad de las transacciones mediante:</p>
-          <ul className="list-disc list-inside pl-4">
-            <li>
-              Un sistema de pago seguro que actúa como intermediario entre
-              compradores y vendedores
-            </li>
-            <li>
-              Retención del pago hasta que el comprador confirma la recepción
-              del artículo en las condiciones descritas
-            </li>
-            <li>
-              Protección de todas las transacciones por nuestra política de
-              protección al comprador y al vendedor
-            </li>
-          </ul>
-          <p className="text-sm text-gray-600 mt-2">
-            Nuestro objetivo es proporcionar un entorno seguro y confiable para
-            todas las transacciones en la plataforma.
-          </p>
-        </div>
-      ),
-    }, */
+
     {
       id: 'articulo-no-coincide',
       question:
@@ -152,11 +125,6 @@ export default function FaqPage() {
               través de nuestros socios logísticos
             </li>
           </ul>
-
-          {/* <p className="text-sm text-gray-600 mt-2">
-            Importante: Independientemente del método elegido, el vendedor debe
-            proporcionar siempre un número de seguimiento al comprador.
-          </p> */}
         </div>
       ),
     },
@@ -174,7 +142,7 @@ export default function FaqPage() {
             key={faq.id}
             id={faq.id}
             title={faq.question}
-            icon={<IoHelpCircle className="w-6 h-6" />}
+            icon={<HelpCircle />}
             content={faq.answer}
           />
         ))}

@@ -5,12 +5,13 @@ import { ChatContext } from '@/context';
 import { UserListItem } from './UserListItem';
 import { ChatWindow } from './ChatWindow';
 import { ChatInput } from './ChatInput';
-import { GoArrowLeft } from 'react-icons/go';
+
 import { useRouter } from 'next/navigation';
 import { formatCurrency } from '@/utils';
 import Link from 'next/link';
 import { DropDownSettings } from './DropDownSettings';
 import { ProductStatus } from '@/enums';
+import { ArrowLeftIcon } from '../ui';
 
 type Props = {
   recipientId?: string;
@@ -37,12 +38,8 @@ export const InboxMainComponent = ({
             chatState.activeChat ? 'flex' : 'hidden'
           } justify-between items-center bg-white border-b-2`}
         >
-          <div className="flex-1">
-            <GoArrowLeft
-              className="md:hidden"
-              size={24}
-              onClick={onHandleClick}
-            />
+          <div className="flex-1" onClick={onHandleClick}>
+            <ArrowLeftIcon className="md:hidden" />
           </div>
           <div className="flex-1 text-center">
             <p className="text-lg font-semibold">{username}</p>

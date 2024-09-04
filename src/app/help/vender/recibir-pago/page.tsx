@@ -1,9 +1,12 @@
-import { AccordionItem } from '@/components';
+import {
+  AccordionItem,
+  BuildIcon,
+  CircleCheck,
+  CreditCard,
+  SettingsIcon,
+  UserIcon,
+} from '@/components';
 import { Metadata } from 'next';
-
-import { BsBuildingAdd } from 'react-icons/bs';
-import { CiSettings } from 'react-icons/ci';
-import { FaCheckCircle, FaCreditCard, FaUser } from 'react-icons/fa';
 
 export const metadata: Metadata = {
   title: 'Recibir pago',
@@ -14,7 +17,7 @@ export default function RecibirPagoPage() {
     {
       id: 'ir-a-configuracion',
       title: 'Ir a Configuración, Cobros',
-      icon: <CiSettings className="w-6 h-6" />,
+      icon: <SettingsIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -41,7 +44,7 @@ export default function RecibirPagoPage() {
     {
       id: 'agregar-forma-de-cobro',
       title: 'Agregar una forma de cobro',
-      icon: <FaCreditCard className="w-6 h-6" />,
+      icon: <CreditCard />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -70,7 +73,7 @@ export default function RecibirPagoPage() {
     {
       id: 'agregar el titular de cuenta',
       title: 'Agregar el titular de la cuenta',
-      icon: <FaUser className="w-6 h-6" />,
+      icon: <UserIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -97,7 +100,7 @@ export default function RecibirPagoPage() {
     {
       id: 'seleccionar-banco',
       title: 'Seleccionar banco y detalles de la cuenta',
-      icon: <BsBuildingAdd className="w-6 h-6" />,
+      icon: <BuildIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -125,7 +128,7 @@ export default function RecibirPagoPage() {
     {
       id: 'agregar-esperar-verificacion',
       title: 'Agregar y esperar verificación',
-      icon: <FaCheckCircle className="w-6 h-6" />,
+      icon: <CircleCheck />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Una vez que hayas ingresado todos los detalles:</p>

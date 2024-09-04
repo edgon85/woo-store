@@ -1,5 +1,6 @@
 'use client';
-import { EmptyStar, FillStar } from '@/components/ui';
+
+import { EmptyStarIcon, FillStarIcon } from '@/components/ui';
 import { RatingState, useRatingStore } from '@/stores/rating.store';
 
 type Props = {
@@ -33,9 +34,9 @@ export const RatingItem = ({ title, aspect }: Props) => {
             >
               {/* {index < rating ? <FillStar /> : <EmptyStar />} */}
               {typeof rating === 'number' && index < rating ? (
-                <FillStar />
+                <FillStarIcon className="text-cerise-red-500" />
               ) : (
-                <EmptyStar />
+                <EmptyStarIcon />
               )}
             </span>
           ))}

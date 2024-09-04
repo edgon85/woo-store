@@ -1,9 +1,10 @@
 'use client';
+import { ShareIcon } from '@/components/ui';
 import { useOnClickOutside } from '@/hooks';
 import { formatCurrency } from '@/utils';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { BsShare } from 'react-icons/bs';
+
 import {
   EmailIcon,
   EmailShareButton,
@@ -35,8 +36,7 @@ export const ShareButton = ({ productName, productPrice }: Props) => {
         onClick={togglePopover}
         className="flex justify-center items-center gap-2"
       >
-        <BsShare className="text-cerise-red-600" size={24} />{' '}
-        <span>Compartir</span>
+        <ShareIcon className="w-6 h-6 text-cerise-red-600" /> <span>Compartir</span>
       </button>
       {isOpen && (
         <div className="absolute z-10 right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">

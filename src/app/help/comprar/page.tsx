@@ -1,15 +1,14 @@
-import { AccordionItem } from '@/components';
-import { Metadata } from 'next';
-import { useState } from 'react';
 import {
-  FaCreditCard,
-  FaEye,
-  FaSearch,
-  FaStar,
-  FaTruckLoading,
-} from 'react-icons/fa';
-import { MdLocalOffer } from 'react-icons/md';
-import { TbMessageCircle } from 'react-icons/tb';
+  AccordionItem,
+  CreditCard,
+  EyeDropIcon,
+  FillStarIcon,
+  MessagesIcon,
+  OfferIcon,
+  SearchIcon,
+  SpinnerIcon,
+} from '@/components';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Como Comprar',
@@ -20,7 +19,7 @@ export default function ComprarPage() {
     {
       id: 'buscar-articulos',
       title: 'Buscar artículos',
-      icon: <FaSearch className="w-6 h-6" />,
+      icon: <SearchIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>
@@ -48,7 +47,7 @@ export default function ComprarPage() {
     {
       id: 'revisar-detalles-del-articulo',
       title: 'Revisar detalles del artículo',
-      icon: <FaEye className="w-6 h-6" />,
+      icon: <EyeDropIcon className="w-6 h-6" />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Una vez que encuentres un artículo interesante:</p>
@@ -68,7 +67,7 @@ export default function ComprarPage() {
     {
       id: 'comunicarse-con-el-vendedor',
       title: 'Comunicarse con el vendedor',
-      icon: <TbMessageCircle className="w-6 h-6" />,
+      icon: <MessagesIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Si tienes preguntas o necesitas más información:</p>
@@ -92,7 +91,7 @@ export default function ComprarPage() {
     {
       id: 'hacer-una-oferta',
       title: 'Hacer una oferta',
-      icon: <MdLocalOffer className="w-6 h-6" />,
+      icon: <OfferIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Puedes ofertar por la prenda:</p>
@@ -124,7 +123,7 @@ export default function ComprarPage() {
     {
       id: 'realizar-la-compra',
       title: 'Realizar la compra',
-      icon: <FaCreditCard className="w-6 h-6" />,
+      icon: <CreditCard />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Cuando estés listo para comprar:</p>
@@ -149,7 +148,7 @@ export default function ComprarPage() {
     {
       id: 'recibir-el-articulo',
       title: 'Recibir el artículo',
-      icon: <FaTruckLoading className="w-6 h-6" />,
+      icon: <SpinnerIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Después de confirmar la orden:</p>
@@ -173,7 +172,7 @@ export default function ComprarPage() {
     {
       id: 'deja-una-valoracion',
       title: 'Dejar una valoración',
-      icon: <FaStar className="w-6 h-6" />,
+      icon: <FillStarIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Para ayudar a la comunidad:</p>

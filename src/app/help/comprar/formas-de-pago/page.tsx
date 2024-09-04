@@ -1,6 +1,4 @@
-import { FaBuilding, FaCreditCard, FaTruck } from 'react-icons/fa';
-
-import { AccordionItem } from '@/components';
+import { AccordionItem, BuildIcon, CreditCard, TruckIcon } from '@/components';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,7 +10,7 @@ export default function FormasDePagoPage() {
     {
       id: 'pago-contra-entrega',
       title: 'Pago contra entrega',
-      icon: <FaTruck className="w-6 h-6" />,
+      icon: <TruckIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Con el pago contra entrega, pagas cuando recibes tu producto:</p>
@@ -46,7 +44,7 @@ export default function FormasDePagoPage() {
     {
       id: 'transferencia-bancaria',
       title: 'Transferencia bancaria',
-      icon: <FaBuilding className="w-6 h-6" />,
+      icon: <BuildIcon />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Para pagar mediante transferencia bancaria:</p>
@@ -76,7 +74,7 @@ export default function FormasDePagoPage() {
     {
       id: 'tarjeta-credito-debito',
       title: 'Tarjeta de crédito o débito',
-      icon: <FaCreditCard className="w-6 h-6" />,
+      icon: <CreditCard />,
       content: (
         <div className="mt-2 space-y-2">
           <p>Pagar con tarjeta de crédito o débito es rápido y seguro:</p>

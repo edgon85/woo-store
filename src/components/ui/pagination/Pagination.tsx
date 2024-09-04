@@ -1,11 +1,11 @@
 'use client';
 
-import { generatePaginationNumbers } from '@/utils';
 import Link from 'next/link';
 import { redirect, usePathname, useSearchParams } from 'next/navigation';
-
-import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 import clsx from 'clsx';
+
+import { generatePaginationNumbers } from '@/utils';
+import { ChevronLeftIcon, ChevronRightIcon } from '../icons';
 
 type Props = {
   totalPages: number;
@@ -53,7 +53,7 @@ export const Pagination = ({ totalPages }: Props) => {
               className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
               href={createPageUrl(currentPage - 1)}
             >
-              <IoChevronBackOutline size={30} />
+              <ChevronLeftIcon className="w-8 h-8" />
             </Link>
           </li>
 
@@ -79,7 +79,7 @@ export const Pagination = ({ totalPages }: Props) => {
               className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
               href={createPageUrl(currentPage + 1)}
             >
-              <IoChevronForwardOutline size={30} />
+              <ChevronRightIcon className="w-8 h-8" />
             </Link>
           </li>
         </ul>

@@ -1,7 +1,7 @@
 import { createBrand } from '@/actions';
+import { CirclePlus } from '@/components/ui';
 import { IBrand } from '@/interfaces';
 import { useAuthStore, useModalStore } from '@/stores';
-import { BsPlusCircle } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 
 type Props = {
@@ -56,7 +56,7 @@ export const CreateBrand = ({ name, setBrand, setSearchQuery }: Props) => {
         </p>
       </div>
       <span onClick={handleOnclick} className=" text-primary cursor-pointer">
-        <BsPlusCircle size={24} />
+        <CirclePlus />
       </span>
     </div>
   );

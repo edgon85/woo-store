@@ -1,23 +1,21 @@
 type Props = {
-  size?: string;
-  color?: string;
+  className?: string;
 };
 
-export const CloseIcon = ({ size, color = 'currentColor' }: Props) => {
+export const CloseIcon = ({ className = 'w-6 h-6 text-gray-500' }: Props) => {
   return (
     <svg
-      className="w-3 h-3"
-      aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      viewBox="0 0 14 14"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className={className}
     >
       <path
-        stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
-        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+        d="M6 18 18 6M6 6l12 12"
       />
     </svg>
   );

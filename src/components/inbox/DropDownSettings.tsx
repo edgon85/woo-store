@@ -4,8 +4,8 @@ import { archivedChat, getInboxChats } from '@/actions';
 import { ChatContext } from '@/context';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { BsThreeDots } from 'react-icons/bs';
-import { IoMdArchive } from 'react-icons/io';
+
+import { ArchiveIcon, ThreeDots } from '../ui';
 
 export const DropDownSettings = () => {
   const { chatState, dispatch } = useContext(ChatContext);
@@ -62,7 +62,7 @@ export const DropDownSettings = () => {
           className="bg-gray-200 hover:bg-gray-300 text-black font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
           type="button"
         >
-          <BsThreeDots />
+          <ThreeDots />
         </button>
 
         {isCollapsed && (
@@ -79,7 +79,7 @@ export const DropDownSettings = () => {
                 className="flex items-center px-4 py-2 hover:bg-gray-100 w-full"
               >
                 <span className="mr-2">
-                  <IoMdArchive />
+                  <ArchiveIcon />
                 </span>
                 Archivar
               </button>

@@ -1,5 +1,4 @@
 'use client';
-import { IoIosRadioButtonOn, IoIosRadioButtonOff } from 'react-icons/io';
 
 import { Filter } from '@/interfaces';
 import {
@@ -11,6 +10,7 @@ import { generateFilterURL } from '@/utils';
 import clsx from 'clsx';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
+import { RadioButtonOff, RadioButtonOn } from '@/components/ui';
 
 const ClothingOptions = [
   { id: 'ropa', slug: 'ropa', name: 'Ropa' },
@@ -85,9 +85,9 @@ export const ClothingTypeSearch = ({
             <span>{clothing.name}</span>
             <span>
               {clothesType === clothing.slug ? (
-                <IoIosRadioButtonOn size={24} />
+                <RadioButtonOn />
               ) : (
-                <IoIosRadioButtonOff size={24} />
+                <RadioButtonOff />
               )}
             </span>
           </button>

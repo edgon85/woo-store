@@ -1,5 +1,4 @@
 import { MouseEvent } from 'react';
-import { IconType } from 'react-icons/lib';
 
 type Props = {
   label: string;
@@ -7,7 +6,7 @@ type Props = {
   disabled?: boolean;
   outlined?: boolean;
   small?: boolean;
-  icon?: IconType;
+  icon?: JSX.Element;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -17,7 +16,7 @@ export const Button = ({
   disabled,
   outlined,
   small,
-  icon: Icon,
+  icon,
   onClick,
 }: Props) => {
   return (
@@ -46,7 +45,7 @@ export const Button = ({
             ${small ? 'border-[1px]' : 'border-2'}
         `}
     >
-      {Icon && <Icon size={24} className="absolute left-4 top-3" />}
+      {icon && <span className="absolute left-4 top-3">{icon}</span>}
       {label}
     </button>
   );

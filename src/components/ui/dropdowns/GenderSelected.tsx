@@ -1,20 +1,18 @@
 'use client';
 
 import { useState, useRef, useCallback, memo } from 'react';
-import { IoMdArrowDropright, IoIosWoman, IoIosMan } from 'react-icons/io';
 import { usePersonalPreferencesStore } from '@/stores';
 import { useOnClickOutside } from '@/hooks';
-import { useRouter } from 'next/navigation';
+import { ManIcon, WomanIcon } from '../icons';
 
 const genderOptions = [
-  { value: 'mujer', label: 'Mujer', Icon: IoIosWoman },
-  { value: 'hombre', label: 'Hombre', Icon: IoIosMan },
+  { value: 'mujer', label: 'Mujer', Icon: WomanIcon },
+  { value: 'hombre', label: 'Hombre', Icon: ManIcon },
 ];
 
 export const GenderSelected = memo(() => {
   const gender = usePersonalPreferencesStore((state) => state.gender);
   const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
-  const router = useRouter();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -79,7 +77,7 @@ export const GenderSelected = memo(() => {
                 onClick={() => setIsCollapsed(false)}
                 className="inline-flex w-full px-4 py-2 hover:bg-gray-100"
               >
-                <Icon size={20} /> <span>{label}</span>
+                <Icon className="w-5 h-5" /> <span>{label}</span>
               </button>
             </li>
           ))}

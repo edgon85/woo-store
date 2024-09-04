@@ -1,15 +1,14 @@
+import { CheckMark } from '@/components/ui';
 import { useFetcher } from '@/hooks';
 import { ICategory } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
-import { IoIosCheckmark } from 'react-icons/io';
-
 
 type Props = {
-  gender: string
+  gender: string;
   clothesType: string;
-}
+};
 
-export const SelectCategory = ({ gender, clothesType }: Props ) => {
+export const SelectCategory = ({ gender, clothesType }: Props) => {
   const setCategory = useCreateProductStore((state) => state.setCategory);
   const setSubcategory = useCreateProductStore((state) => state.setSubcategory);
   const category = useCreateProductStore((state) => state.category);
@@ -22,7 +21,7 @@ export const SelectCategory = ({ gender, clothesType }: Props ) => {
 
   const handleOnclick = (category: ICategory) => {
     setCategory(category);
-    setSubcategory(null)
+    setSubcategory(null);
     closeModal();
   };
 
@@ -36,7 +35,7 @@ export const SelectCategory = ({ gender, clothesType }: Props ) => {
         >
           <span className="capitalize">{cat.title}</span>
           {cat.id === category?.id ? (
-            <IoIosCheckmark size={24} color="var(--primary)" />
+            <CheckMark className="text-cerise-red-600" />
           ) : null}
         </div>
       ))}

@@ -1,6 +1,6 @@
 import { PayoutMethod } from '@/interfaces';
-import { CiBank } from 'react-icons/ci';
 import { BtnEditPayout } from './buttons/BtnEditPayout';
+import { BankIcon } from '../ui';
 
 type Props = {
   payouts: PayoutMethod[];
@@ -19,7 +19,7 @@ export const ListOfPayouts = ({ payouts }: Props) => {
             className="py-4 px-2 w-full md:w-6/12 flex justify-between items-center"
           >
             <div className="flex gap-2">
-              <CiBank size={24} />
+              <BankIcon />
               <div>
                 <p className="text-base">
                   Cuenta bancaria

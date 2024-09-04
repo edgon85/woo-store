@@ -1,11 +1,14 @@
 'use client';
 
-import { ShippingServiceSkeleton, RadiaSelectIcon } from '@/components/ui';
+import {
+  ShippingServiceSkeleton,
+  RadioButtonOff,
+  RadioButtonOn,
+} from '@/components/ui';
 import { IShippingService } from '@/interfaces';
 import { formatCurrency } from '@/utils';
 import { useCheckoutStore } from '@/stores';
 import { useCallback, useEffect, useState } from 'react';
-import { IoMdRadioButtonOff } from 'react-icons/io';
 import { fetchShippingService } from '@/actions';
 
 type Props = {
@@ -135,15 +138,9 @@ export const ShippingServiceSection = ({ isShippingIncluded }: Props) => {
                   </div>
                   <div>
                     {selectedOption === ppd.id ? (
-                      <RadiaSelectIcon
-                        className="text-cerise-red-500"
-                        size="24"
-                      />
+                      <RadioButtonOn className="text-cerise-red-500" />
                     ) : (
-                      <IoMdRadioButtonOff
-                        size={24}
-                        className="text-cerise-red-300"
-                      />
+                      <RadioButtonOff className="text-cerise-red-300" />
                     )}
                   </div>
                 </div>

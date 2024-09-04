@@ -3,9 +3,10 @@ import Image from 'next/image';
 import { IProduct } from '@/interfaces';
 import { UserProfile } from './UserProfile';
 import { checkImageAvailable } from '@/actions';
-import { FaTag } from 'react-icons/fa';
+
 import Link from 'next/link';
 import { formatCurrency } from '@/utils';
+import { TagPriceIcon } from '@/components/ui';
 
 type Props = {
   product: IProduct;
@@ -56,7 +57,7 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
           </div>
         </div>
         <div className="flex items-center gap-2 text-muted-foreground text-sm">
-          <FaTag className="h-4 w-4 text-gray-500" />
+          <TagPriceIcon className="h-4 w-4 text-gray-500" />
           <span className="text-gray-500">{product.brand.title}</span>
         </div>
       </div>

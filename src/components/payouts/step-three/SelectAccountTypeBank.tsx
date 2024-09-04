@@ -1,4 +1,4 @@
-import { RadiaSelectIcon } from '@/components/ui';
+import { RadioButtonOn } from '@/components/ui';
 import { usePayoutStore } from '@/stores';
 import clsx from 'clsx';
 
@@ -23,7 +23,7 @@ export const SelectAccountTypeBank = () => {
               <p>Monetarios</p>
             </div>
             {accountTypeBank === 'monetarios' && (
-              <RadiaSelectIcon size="16" className="text-cerise-red-600" />
+              <RadioButtonOn className="text-cerise-red-600" />
             )}
           </div>
         </div>
@@ -42,7 +42,7 @@ export const SelectAccountTypeBank = () => {
               <p>Ahorros</p>
             </div>
             {accountTypeBank === 'ahorros' && (
-              <RadiaSelectIcon size="16" className="text-cerise-red-600" />
+              <RadioButtonOn className="text-cerise-red-600" />
             )}
           </div>
         </div>

@@ -1,8 +1,4 @@
-import { BsRecycle } from 'react-icons/bs';
-import { IoEarthSharp } from 'react-icons/io5';
-import { GiReceiveMoney } from 'react-icons/gi';
-
-import { TbBuildingCommunity } from 'react-icons/tb';
+import { BuildIcon, CashIcon, EarthIcon, RecycleIcon } from '@/components';
 
 export default function AboutPage() {
   return (
@@ -47,24 +43,22 @@ export default function AboutPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <ValueCard
-                icon={<IoEarthSharp className="h-8 w-8 text-red-500" />}
+                icon={<EarthIcon className="h-8 w-8 text-red-500" />}
                 title="Sostenibilidad"
                 description="Promovemos la reutilización y el consumo responsable para cuidar nuestro planeta."
               />
               <ValueCard
-                icon={<BsRecycle className="h-8 w-8 text-green-500" />}
+                icon={<RecycleIcon className="h-8 w-8 text-green-500" />}
                 title="Economía Circular"
                 description="Fomentamos un ciclo de vida más largo para la ropa, reduciendo el desperdicio."
               />
               <ValueCard
-                icon={<GiReceiveMoney className="h-8 w-8 text-blue-500" />}
+                icon={<CashIcon className="h-8 w-8 text-blue-500" />}
                 title="Accesibilidad"
                 description="Ofrecemos moda de calidad a precios accesibles para todos."
               />
               <ValueCard
-                icon={
-                  <TbBuildingCommunity className="h-8 w-8 text-purple-500" />
-                }
+                icon={<BuildIcon className="h-8 w-8 text-purple-500" />}
                 title="Comunidad"
                 description="Construimos una comunidad de amantes de la moda consciente y sostenible."
               />

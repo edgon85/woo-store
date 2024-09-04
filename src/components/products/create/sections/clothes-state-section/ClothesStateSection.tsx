@@ -1,8 +1,8 @@
 import { ItemCreate } from '../ItemCreate';
-import { BsCheck2Circle } from 'react-icons/bs';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { ClothesState } from './ClothesState';
 import { IClothesState } from '@/interfaces';
+import { CircleCheck } from '@/components/ui';
 
 type Props = {
   clothingConditionList: IClothesState[];
@@ -15,7 +15,7 @@ export const ClothesStateSection = ({ clothingConditionList }: Props) => {
   return (
     <ItemCreate
       title="Estado"
-      icon={BsCheck2Circle}
+      icon={<CircleCheck />}
       value={clothesState?.title!}
       onClick={() =>
         openModal(

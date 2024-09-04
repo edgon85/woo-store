@@ -1,9 +1,9 @@
 import { checkImageAvailable, getRatingByUsername } from '@/actions';
+import { ArrowRightIcon, FillStarIcon } from '@/components/ui';
 import { InitialsProfile } from '@/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { BsArrowRight, BsStarFill } from 'react-icons/bs';
 
 type Props = {
   name: string;
@@ -42,7 +42,7 @@ export const UserInfo = async ({ name, image, location, username }: Props) => {
             <span>{message}</span>
           ) : (
             <p className="flex gap-1">
-              <BsStarFill className="text-cerise-red-600" /> (
+              <FillStarIcon className="text-cerise-red-600" /> (
               {data.overallAverage})
             </p>
           )}
@@ -54,7 +54,7 @@ export const UserInfo = async ({ name, image, location, username }: Props) => {
         className="text-darkPrimary hover:text-primary "
         href={`/member/${username}`}
       >
-        <BsArrowRight size={24} />
+        <ArrowRightIcon />
       </Link>
     </section>
   );

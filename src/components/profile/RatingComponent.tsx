@@ -1,4 +1,4 @@
-import { EmptyStar, FillStar } from '../ui';
+import { EmptyStarIcon, FillStarIcon } from '../ui';
 
 interface IRating {
   overallAverage: number;
@@ -22,10 +22,10 @@ export const RatingComponent = ({ data, message }: Props) => {
     return (
       <>
         {[...Array(filledStars)].map((_, index) => (
-          <FillStar key={index} />
+          <FillStarIcon key={index} className="text-cerise-red-500" />
         ))}
         {[...Array(emptyStars)].map((_, index) => (
-          <EmptyStar key={index} />
+          <EmptyStarIcon key={index} />
         ))}
         <span className="text-sm text-gray-500">({data.numberOfRatings})</span>
       </>

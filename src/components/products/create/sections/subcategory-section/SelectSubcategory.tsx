@@ -1,7 +1,7 @@
+import { CheckMark } from '@/components/ui';
 import { useFetcher } from '@/hooks';
 import { ISubcategory } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
-import { IoIosCheckmark } from 'react-icons/io';
 
 export const SelectSubcategory = () => {
   const closeModal = useModalStore((state) => state.closeModal);
@@ -29,7 +29,7 @@ export const SelectSubcategory = () => {
         >
           <span className="capitalize">{sub.title}</span>
           {sub.id === subcategory?.id ? (
-            <IoIosCheckmark size={24} color="var(--primary)" />
+            <CheckMark className="text-cerise-red-600" />
           ) : null}
         </div>
       ))}

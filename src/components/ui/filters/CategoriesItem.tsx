@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 
 import { ISubcategory } from '@/interfaces';
-import { RadiaSelectIcon } from '../icons';
+import { RadioButtonOn } from '../icons';
 import { useSidebar } from '@/stores';
 import { useFetcher } from '@/hooks';
 
@@ -64,7 +64,7 @@ export const SubcategoriesItems = ({
               >
                 <span>{sub.title}</span>
                 {sub.slug == selectedSubcategory ? (
-                  <RadiaSelectIcon size="16" className="text-cerise-red-600" />
+                  <RadioButtonOn className="text-cerise-red-600" />
                 ) : null}
               </label>
             </li>

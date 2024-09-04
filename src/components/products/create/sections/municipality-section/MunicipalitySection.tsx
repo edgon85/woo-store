@@ -1,7 +1,7 @@
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { ItemCreate } from '../ItemCreate';
 import { MunicipalityState } from './MunicipalityState';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { MapMarker } from '@/components/ui';
 
 export const MunicipalitySection = () => {
   const municipality = useCreateProductStore((state) => state.municipality);
@@ -10,7 +10,7 @@ export const MunicipalitySection = () => {
   return (
     <ItemCreate
       title="Municipio"
-      icon={FaMapMarkerAlt}
+      icon={<MapMarker />}
       value={municipality?.name!}
       onClick={() =>
         openModal(

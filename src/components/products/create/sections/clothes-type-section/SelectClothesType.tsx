@@ -1,16 +1,16 @@
-import { useCreateProductStore, useModalStore } from '@/stores';
-import { IoIosCheckmark } from 'react-icons/io';
+import { CheckMark } from '@/components/ui';
+import { useModalStore } from '@/stores';
+
 type Props = {
   clothesType: string;
-  onClothesTypeChange: (value: string) => void
-}
+  onClothesTypeChange: (value: string) => void;
+};
 
-
-
-export const SelectClothesType = ({clothesType, onClothesTypeChange}: Props) => {
+export const SelectClothesType = ({
+  clothesType,
+  onClothesTypeChange,
+}: Props) => {
   const closeModal = useModalStore((state) => state.closeModal);
-/*   const clothesType = useCreateProductStore((state) => state.clothesType);
-  const setClothesType = useCreateProductStore((state) => state.setClothesType); */
 
   const handleOnclick = (value: string) => {
     onClothesTypeChange(value);
@@ -24,7 +24,7 @@ export const SelectClothesType = ({clothesType, onClothesTypeChange}: Props) => 
       >
         <span>Ropa</span>
         {clothesType === 'ropa' ? (
-          <IoIosCheckmark size={24} color="var(--primary)" />
+          <CheckMark className="text-cerise-red-600" />
         ) : null}
       </div>
       <div
@@ -33,7 +33,7 @@ export const SelectClothesType = ({clothesType, onClothesTypeChange}: Props) => 
       >
         <span>Zapatos</span>
         {clothesType === 'zapatos' ? (
-          <IoIosCheckmark size={24} color="var(--primary)" />
+          <CheckMark className="text-cerise-red-600" />
         ) : null}
       </div>
       <div
@@ -42,7 +42,7 @@ export const SelectClothesType = ({clothesType, onClothesTypeChange}: Props) => 
       >
         <span>Accesorios</span>
         {clothesType === 'accesorios' ? (
-          <IoIosCheckmark size={24} color="var(--primary)" />
+          <CheckMark className="text-cerise-red-600" />
         ) : null}
       </div>
     </div>

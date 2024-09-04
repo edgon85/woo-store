@@ -1,9 +1,8 @@
 'use client';
-import { BsArrowBarRight } from 'react-icons/bs';
-import { FaCloudDownloadAlt } from 'react-icons/fa';
 
 import { saveAs } from 'file-saver';
 import { useRouter } from 'next/navigation';
+import { ArrowBarRight, DownLoadIcon } from '@/components/ui';
 
 export const UpdateSale = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -14,7 +13,7 @@ export const UpdateSale = ({ id }: { id: string }) => {
       onClick={() => router.push(`/settings/transactions/sales/${id}/detail`)}
     >
       <span>Detalles</span>
-      <BsArrowBarRight size={24} />
+      <ArrowBarRight />
     </button>
   );
 };
@@ -36,7 +35,7 @@ export const DownLoadGide = ({
           onClick={handleDownload}
         >
           <span>Descargar Guía</span>
-          <FaCloudDownloadAlt size={24} />
+          <DownLoadIcon />
         </button>
       ) : (
         <button
@@ -44,7 +43,7 @@ export const DownLoadGide = ({
           disabled
         >
           <span>Descargar Guía</span>
-          <FaCloudDownloadAlt size={24} />
+          <DownLoadIcon />
           <span className="text-xs">Aun No disponible</span>
         </button>
       )}

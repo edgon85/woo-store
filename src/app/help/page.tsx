@@ -1,6 +1,6 @@
+import { CashIcon, ShoppingCart, TagPriceIcon, TruckIcon } from '@/components';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { FaMoneyBill, FaShoppingCart, FaTag, FaTruck } from 'react-icons/fa';
 
 export const metadata: Metadata = {
   title: 'Ayuda',
@@ -8,16 +8,16 @@ export const metadata: Metadata = {
 
 export default function HelpPage() {
   const topics = [
-    { name: 'Vender', icon: FaTag, path: '/help/vender' },
-    { name: 'Comprar', icon: FaShoppingCart, path: '/help/comprar' },
+    { name: 'Vender', icon: TagPriceIcon, path: '/help/vender' },
+    { name: 'Comprar', icon: ShoppingCart, path: '/help/comprar' },
     {
       name: 'Formas de pago',
-      icon: FaMoneyBill,
+      icon: CashIcon,
       path: '/help/comprar/formas-de-pago',
     },
     {
       name: 'Envíos',
-      icon: FaTruck,
+      icon: TruckIcon,
       path: '/help/vender/envios',
     },
   ];

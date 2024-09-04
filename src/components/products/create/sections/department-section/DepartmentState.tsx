@@ -1,8 +1,6 @@
+import { CheckMark } from '@/components/ui';
 import { IDepartment } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
-import { IoIosCheckmark } from 'react-icons/io';
-
-
 
 type Props = {
   departmentList: IDepartment[];
@@ -33,7 +31,7 @@ export const DepartmentState = ({ departmentList }: Props) => {
             {/* <p className="text-gray-500">{resp.}</p> */}
           </div>
           {department?.id === resp.id ? (
-            <IoIosCheckmark size={24} color="var(--primary)" />
+            <CheckMark className="text-cerise-red-600" />
           ) : null}
         </li>
       ))}

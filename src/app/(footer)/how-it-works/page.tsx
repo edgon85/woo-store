@@ -1,12 +1,12 @@
-import Link from 'next/link';
 import {
-  BsCamera,
-  BsCreditCard,
-  BsSearch,
-  BsTruck,
-  BsUpload,
-} from 'react-icons/bs';
-import { GoPackage } from 'react-icons/go';
+  CameraIcon,
+  CreditCard,
+  PackageIcon,
+  SearchIcon,
+  TruckIcon,
+  UploadIcon,
+} from '@/components';
+import Link from 'next/link';
 
 export default function HowItWorksPage() {
   return (
@@ -22,17 +22,17 @@ export default function HowItWorksPage() {
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Vende</h3>
             <ul className="space-y-6">
               <Step
-                icon={<BsCamera className="h-6 w-6 text-indigo-600" />}
+                icon={<CameraIcon className="text-indigo-600" />}
                 title="Fotografía tus prendas"
                 description="Toma fotos claras y atractivas de los artículos que quieres vender."
               />
               <Step
-                icon={<BsUpload className="h-6 w-6 text-indigo-600" />}
+                icon={<UploadIcon className="text-indigo-600" />}
                 title="Sube y describe"
                 description="Crea un anuncio detallando el estado, marca y precio de tu prenda."
               />
               <Step
-                icon={<GoPackage className="h-6 w-6 text-indigo-600" />}
+                icon={<PackageIcon className=" text-indigo-600" />}
                 title="Empaca y envía"
                 description="Cuando vendes un artículo, empácalo con cuidado y envíalo al comprador."
               />
@@ -50,17 +50,17 @@ export default function HowItWorksPage() {
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Compra</h3>
             <ul className="space-y-6">
               <Step
-                icon={<BsSearch className="h-6 w-6 text-cerise-red-500" />}
+                icon={<SearchIcon className="text-cerise-red-500" />}
                 title="Explora el catálogo"
                 description="Navega por miles de prendas de segunda mano y encuentra tu estilo."
               />
               <Step
-                icon={<BsCreditCard className="h-6 w-6 text-cerise-red-500" />}
+                icon={<CreditCard className="text-cerise-red-500" />}
                 title="Compra seguro"
                 description="Elige tu artículo y paga de forma segura a través de nuestra plataforma."
               />
               <Step
-                icon={<BsTruck className="h-6 w-6 text-cerise-red-500" />}
+                icon={<TruckIcon className="text-cerise-red-500" />}
                 title="Recibe tu compra"
                 description="Espera la llegada de tu nueva adquisición y ¡disfrútala!"
               />

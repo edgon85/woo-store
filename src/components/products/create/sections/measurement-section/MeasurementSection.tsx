@@ -1,7 +1,7 @@
 import { ItemCreate } from '../ItemCreate';
-import { TbRulerMeasure } from 'react-icons/tb';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { Measurements, formatMeasurementString } from './Measurements';
+import { RulerIcon } from '@/components/ui';
 
 type Props = {
   gender: string;
@@ -17,7 +17,7 @@ export const MeasurementSection = ({ gender, clothesType }: Props) => {
     <ItemCreate
       uppercase
       title="Talla"
-      icon={TbRulerMeasure}
+      icon={<RulerIcon />}
       value={formatMeasurementString(
         measurement!,
         gender,

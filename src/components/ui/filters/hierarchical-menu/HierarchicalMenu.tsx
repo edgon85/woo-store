@@ -3,7 +3,7 @@ import { useSidebar } from '@/stores';
 import clsx from 'clsx';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { ChevronLeftIcon, ChevronRightIcon } from '../../icons';
 
 interface MenuItem {
   id: string;
@@ -155,7 +155,7 @@ export const HierarchicalMenu = ({
           onClick={navigateBack}
           className="w-full p-4 text-left flex items-center text-gray-700 hover:bg-gray-100"
         >
-          <BsChevronLeft className="mr-2" />
+          <ChevronLeftIcon className="w-6 h-6" />
           <div className="w-full flex justify-between">
             <span>Atrás</span>
             <span className="text-cerise-red-600">{currentCategory}</span>
@@ -175,7 +175,7 @@ export const HierarchicalMenu = ({
           )}
         >
           <span className="capitalize">{item.label}</span>
-          {item.children && <BsChevronRight />}
+          {item.children && <ChevronRightIcon />}
         </button>
       ))}
     </div>

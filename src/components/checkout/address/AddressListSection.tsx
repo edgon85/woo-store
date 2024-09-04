@@ -3,13 +3,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { IAddress } from '@/interfaces';
 import { useCheckoutStore } from '@/stores';
 import { Divider, List, ListItem } from '@tremor/react';
-import { IoIosAddCircleOutline } from 'react-icons/io';
-import { CiEdit } from 'react-icons/ci';
 
 import Modal from 'react-responsive-modal';
 import { DeleteAddress } from './delete-address/DeleteAddress';
 import { CreateFormAddress } from './CreateForm';
 import { fetchShippingAddress, makeAddressPrimary } from '@/actions';
+import { CirclePlus, EditIcon } from '@/components/ui';
 
 export const AddressListSection = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -67,11 +66,11 @@ export const AddressListSection = () => {
       <button onClick={openModal}>
         {address ? (
           <span className="flex items-center justify-center gap-2">
-            Cambiar <CiEdit size={20} />
+            Cambiar <EditIcon />
           </span>
         ) : (
           <span className="flex items-center justify-center gap-2">
-            Agregar <IoIosAddCircleOutline size={20} />
+            Agregar <CirclePlus />
           </span>
         )}
       </button>

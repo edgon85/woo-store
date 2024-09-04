@@ -1,9 +1,14 @@
 import { IProduct } from '@/interfaces';
 import { measurementFormat, formatCurrency } from '@/utils';
-import { BsCheck2Circle, BsDropletHalf } from 'react-icons/bs';
-import { IoMdPricetags } from 'react-icons/io';
-import { TbCategory, TbRulerMeasure } from 'react-icons/tb';
+
 import { BtnActionsDetail } from './buttons/BtnActionsDetail';
+import {
+  CategoryIcon,
+  CircleCheck,
+  EyeDropIcon,
+  RulerIcon,
+  TagPriceIcon,
+} from '@/components/ui';
 
 type ListItemProps = {
   icon: React.ReactNode;
@@ -52,27 +57,27 @@ export const ProductDetail = ({ product, currentUserId }: Props) => {
       <section className="divide-x-reverse divide-gray-300">
         <ul className="capitalize">
           <ListItem
-            icon={<TbRulerMeasure />}
+            icon={<RulerIcon />}
             title="Talla"
             content={measurementFormat(category?.title!, measurement)}
           />
           <ListItem
-            icon={<BsCheck2Circle />}
+            icon={<CircleCheck />}
             title="Estado"
             content={clothesState.title}
           />
           <ListItem
-            icon={<TbCategory />}
+            icon={<CategoryIcon />}
             title="Categoría"
             content={category?.title}
           />
           <ListItem
-            icon={<IoMdPricetags />}
+            icon={<TagPriceIcon />}
             title="Marca"
             content={brand.title}
           />
           <ListItem
-            icon={<BsDropletHalf />}
+            icon={<EyeDropIcon />}
             title="Color"
             content={
               <p className="flex gap-1">

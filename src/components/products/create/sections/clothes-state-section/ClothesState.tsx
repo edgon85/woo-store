@@ -1,7 +1,6 @@
-import { useFetcher } from '@/hooks';
+import { CheckMark } from '@/components/ui';
 import { IClothesState } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
-import { IoIosCheckmark } from 'react-icons/io';
 
 type Props = {
   clothingConditionList: IClothesState[];
@@ -13,7 +12,6 @@ export const ClothesState = ({ clothingConditionList }: Props) => {
   );
   const clotheState = useCreateProductStore((state) => state.clothesState);
 
-  // const { data } = useFetcher<IClothesState[]>(`/clothes-state`);
   const closeModal = useModalStore((state) => state.closeModal);
 
   const handleClick = (clothesState: IClothesState) => {
@@ -34,7 +32,7 @@ export const ClothesState = ({ clothingConditionList }: Props) => {
             <p className="text-gray-500">{resp.subtitle}</p>
           </div>
           {clotheState?.id === resp.id ? (
-            <IoIosCheckmark size={24} color="var(--primary)" />
+            <CheckMark className="text-cerise-red-600" />
           ) : null}
         </li>
       ))}

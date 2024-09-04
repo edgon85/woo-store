@@ -5,9 +5,10 @@ import { addToFavorite, deleteToFavorite, getCheckIsFavorite } from '@/actions';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
+
 import { ShareButton } from './share/ShareButton';
 import { useAuthStore } from '@/stores';
+import { FillHeart, HeartIcon } from '@/components/ui';
 type Props = {
   productId: string;
   productName: string;
@@ -51,7 +52,7 @@ export const BtnActions = ({ productId, productName, productPrice }: Props) => {
           href={`/auth/login?p=${path}`}
           className="flex justify-center items-center gap-2"
         >
-          <BsHeart className="text-cerise-red-600" size={24} />
+          <HeartIcon className="w-6 h-6 text-cerise-red-600" />
           <span className="text-xs">Añadir a favoritos</span>
         </Link>
       ) : (
@@ -61,43 +62,19 @@ export const BtnActions = ({ productId, productName, productPrice }: Props) => {
         >
           {isFavorite ? (
             <>
-              <BsHeartFill className="text-cerise-red-600" size={24} />
+              <FillHeart className="w-6 h-6 text-cerise-red-600" />
               <span className="text-xs">Eliminar de favoritos</span>
             </>
           ) : (
             <>
-              <BsHeart className="text-cerise-red-600" size={24} />
+              <HeartIcon className="w-6 h-6 text-cerise-red-600" />
               <span className="text-xs">Añadir a favoritos</span>
             </>
           )}
         </button>
       )}
 
-      {/* <button className="flex justify-center items-center gap-2">
-        <BsShare className="text-cerise-red-600" size={24} />{' '}
-        <span>Compartir</span>
-      </button> */}
       <ShareButton productName={productName} productPrice={productPrice} />
     </div>
   );
 };
-
-/* 
- {!isLoggedIn ? (
-        <button
-          onClick={() => console.log(productId)}
-          className="flex justify-center items-center gap-2"
-        >
-          <BsHeart className="text-cerise-red-600" size={24} />{' '}
-          <span className="text-xs">Añadir a favoritos</span>
-        </button>
-      ) : (
-        <button
-          onClick={() => console.log('delete to favorites')}
-          className="flex justify-center items-center gap-2"
-        >
-          <BsHeartFill className="text-cerise-red-600" size={24} />{' '}
-          <span className="text-xs">Eliminar de favoritos</span>
-        </button>
-      )}
-*/

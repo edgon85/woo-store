@@ -1,6 +1,6 @@
 import { deleteAddress } from '@/actions';
+import { TrashIcon } from '@/components/ui';
 import { useCheckoutStore } from '@/stores';
-import { MdOutlineDeleteForever } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 
@@ -64,7 +64,7 @@ export const DeleteAddress = ({ addressId, onAddressDeleted }: Props) => {
       onClick={onDeleteAddress}
       className="rounded border border-cerise-red-500 text-cerise-red-500 hover:bg-cerise-red-600 hover:text-white text-xs p-2"
     >
-      <MdOutlineDeleteForever />
+      <TrashIcon />
     </button>
   );
 };

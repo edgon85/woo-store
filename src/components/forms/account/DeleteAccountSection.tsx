@@ -1,4 +1,4 @@
-import { BsArrowRight } from 'react-icons/bs';
+import { ArrowRightIcon } from '@/components/ui';
 
 export const DeleteAccountSection = () => {
   return (
@@ -11,7 +11,7 @@ export const DeleteAccountSection = () => {
         </div>
         <div className="flex-1">
           <button className="p-2 rounded-md ">
-            <BsArrowRight size={24} />
+            <ArrowRightIcon />
           </button>
         </div>
       </div>
