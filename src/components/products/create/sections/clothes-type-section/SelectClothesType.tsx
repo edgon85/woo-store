@@ -24,7 +24,7 @@ export const SelectClothesType = ({
       >
         <span>Ropa</span>
         {clothesType === 'ropa' ? (
-          <CheckMark className="text-cerise-red-600" />
+          <CheckMark className="text-cerise-red-600 w-6 h-6" />
         ) : null}
       </div>
       <div
@@ -33,7 +33,7 @@ export const SelectClothesType = ({
       >
         <span>Zapatos</span>
         {clothesType === 'zapatos' ? (
-          <CheckMark className="text-cerise-red-600" />
+          <CheckMark className="text-cerise-red-600 w-6 h-6" />
         ) : null}
       </div>
       <div
@@ -42,7 +42,7 @@ export const SelectClothesType = ({
       >
         <span>Accesorios</span>
         {clothesType === 'accesorios' ? (
-          <CheckMark className="text-cerise-red-600" />
+          <CheckMark className="text-cerise-red-600 w-6 h-6" />
         ) : null}
       </div>
     </div>

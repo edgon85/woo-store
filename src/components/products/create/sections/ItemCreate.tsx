@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from '@/components/ui';
+import { ArrowRightIcon, ChevronRightIcon, MapIcon } from '@/components/ui';
 
 type Props = {
   title: string;
@@ -21,11 +21,11 @@ export const ItemCreate = ({
       onClick={onClick}
     >
       <p className="flex gap-2 items-center">
-        {icon && <span className="absolute left-4 top-3">{icon}</span>} {title}
+        {icon} {title}
       </p>
       <span className="text-primary flex gap-2 items-center capitalize">
         {uppercase ? value.toUpperCase() : value}{' '}
-        <ArrowRightIcon className="text-gray-400 w-4 h-4" />
+        <ChevronRightIcon className="text-gray-400 w-6 h-6 font-bold" />
       </span>
     </div>
   );

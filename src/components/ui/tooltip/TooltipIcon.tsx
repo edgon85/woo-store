@@ -1,10 +1,6 @@
 import { ExclamationCircleIcon } from '../icons';
 
-type TooltipIconProps = {
-  tooltipText?: string;
-};
-
-export const TooltipIcon = ({ tooltipText }: TooltipIconProps) => {
+export const TooltipIcon = () => {
   return (
     <div className="relative group inline-block">
       <div className="text-darkPrimary hover:text-primary">
@@ -12,14 +8,12 @@ export const TooltipIcon = ({ tooltipText }: TooltipIconProps) => {
       </div>
       <div className="absolute hidden group-hover:block z-10 bottom-full left-1/2 transform -translate-x-1/2 -translate-y-2 min-w-[300px]">
         <div className="bg-white text-darkPrimary shadow rounded py-1 px-2 text-sm">
-          {tooltipText}
+          <span>
+            En caso de que no recibas tu pedido o te llegue en mal estado,
+            tienes 48 horas para notificarlo, te devolvemos tu dinero
+          </span>
         </div>
       </div>
     </div>
   );
-};
-
-TooltipIcon.defaultProps = {
-  tooltipText:
-    'En caso de que no recibas tu pedido o te llegue en mal estado, tienes 48 horas para notificarlo, te devolvemos tu dinero',
 };

@@ -22,7 +22,7 @@ export const BtnBuyNow = () => {
   return (
     <button
       onClick={handleBuyClick}
-      className="bg-cerise-red-600 text-white py-3 w-full rounded-md mb-2 font-bold uppercase"
+      className="bg-cerise-red-600 text-white py-3 w-full rounded mb-2 font-bold uppercase"
     >
       Vender ya
     </button>

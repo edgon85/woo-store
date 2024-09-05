@@ -24,11 +24,11 @@ import {
   SubcategorySection,
   WeightSection,
 } from '../create/sections';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { updateProduct } from '@/actions';
 import { toast } from 'react-toastify';
 import { FormInputs, useProductForm, useUnsavedChangesWarning } from '@/hooks';
-import { Button } from '@/components/ui';
+import { Button, SpinnerIcon } from '@/components/ui';
 
 type Props = {
   product: IProduct & { ProductImage?: ProductImage[] };
@@ -47,6 +47,7 @@ export const EditProduct = ({
     register,
     handleSubmit,
     formState: { errors, isDirty },
+    reset,
     getValues,
     watch,
     initializeEditForm,
@@ -60,6 +61,8 @@ export const EditProduct = ({
 
   useUnsavedChangesWarning(isDirty);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     initializeEditForm(product);
   }, [product, initializeEditForm]);
@@ -67,6 +70,8 @@ export const EditProduct = ({
   const onHandleSubmit: SubmitHandler<FormInputs> = async (
     dataForm: FormInputs
   ) => {
+    setIsLoading(true);
+
     const dataToUpdate = {
       title: dataForm.title,
       description: dataForm.description,
@@ -84,7 +89,10 @@ export const EditProduct = ({
       product.id!,
       dataToUpdate
     );
+
     ok ? toast.success(data?.message) : toast.error(message);
+    setIsLoading(false);
+    reset();
   };
 
   watch('weight');
@@ -139,7 +147,18 @@ export const EditProduct = ({
 
         {watch('price') ? (
           <div className="mt-4">
-            <Button label="Actualizar" type="submit" />
+            <Button
+              label={isLoading ? '' : 'Guardar'}
+              icon={
+                isLoading ? (
+                  <SpinnerIcon className="w-6 h-6 animate-spin text-white" />
+                ) : (
+                  <></>
+                )
+              }
+              type="submit"
+              disabled={!isDirty}
+            />
           </div>
         ) : null}
       </form>
@@ -147,3 +166,6 @@ export const EditProduct = ({
     </div>
   );
 };
+{
+  /* <SpinnerIcon className="w-6 h-6 animate-spin" /> */
+}

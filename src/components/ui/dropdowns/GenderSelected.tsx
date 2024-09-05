@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, memo } from 'react';
 import { usePersonalPreferencesStore } from '@/stores';
 import { useOnClickOutside } from '@/hooks';
 import { ManIcon, WomanIcon } from '../icons';
+import { useRouter } from 'next/navigation';
 
 const genderOptions = [
   { value: 'mujer', label: 'Mujer', Icon: WomanIcon },
@@ -13,6 +14,7 @@ const genderOptions = [
 export const GenderSelected = memo(() => {
   const gender = usePersonalPreferencesStore((state) => state.gender);
   const setGender = usePersonalPreferencesStore((state) => state.onSetGender);
+  const router = useRouter();
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -28,9 +30,9 @@ export const GenderSelected = memo(() => {
     (value: string) => {
       setIsCollapsed(false);
       setGender(value);
-      // router.push(`/catalog/${value}`);
+      router.push(`/catalog/${value}`);
     },
-    [setGender]
+    [setGender, router]
   );
 
   return (

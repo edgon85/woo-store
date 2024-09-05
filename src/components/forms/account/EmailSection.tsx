@@ -119,7 +119,7 @@ export const EmailSection = ({ userId, email, authType }: Props) => {
             )}
             {loading ? (
               <div className="flex justify-center items-center">
-                <SpinnerIcon className="animate-spin" />
+                <SpinnerIcon className="w-6 h-6 animate-spin" />
               </div>
             ) : (
               <Button

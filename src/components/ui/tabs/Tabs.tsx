@@ -18,7 +18,7 @@ export const Tabs = ({ username }: Props) => {
 
   return (
     <div>
-      <div className="flex">
+      <div className="flex bg-white">
         <button
           className={`flex-grow py-4 text-sm font-semibold text-center ${
             activeTab === 'products'

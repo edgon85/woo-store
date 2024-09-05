@@ -21,7 +21,7 @@ export const SelectGender = ({ gender, onGenderChange }: Props) => {
       >
         <span>Mujer</span>
         {gender === 'mujer' ? (
-          <CheckMark className="text-cerise-red-600" />
+          <CheckMark className="text-cerise-red-600 w-6 h-6" />
         ) : null}
       </div>
       <div
@@ -30,7 +30,7 @@ export const SelectGender = ({ gender, onGenderChange }: Props) => {
       >
         <span>Hombre</span>
         {gender === 'hombre' ? (
-          <CheckMark className="text-cerise-red-600" />
+          <CheckMark className="text-cerise-red-600 w-6 h-6" />
         ) : null}
       </div>
     </div>

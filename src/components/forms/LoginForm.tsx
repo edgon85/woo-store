@@ -120,7 +120,7 @@ export const LoginForm = () => {
         >
           {isLoading ? (
             <span className="flex items-center justify-center">
-              <SpinnerIcon className="animate-spin" />
+              <SpinnerIcon className="w-6 h-6 animate-spin" />
             </span>
           ) : (
             'Iniciar sesión'
@@ -142,18 +142,4 @@ export const LoginForm = () => {
   );
 };
 
-{
-  /*   <button
-    type="submit"
-    className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer disabled:opacity-50"
-    disabled={isLoading}
-  >
-    {isLoading ? (
-      <span className="flex items-center justify-center">
-        <SpinnerIcon className="animate-spin" />
-      </span>
-    ) : (
-      'Iniciar sesión'
-    )}
-  </button> */
-}
+

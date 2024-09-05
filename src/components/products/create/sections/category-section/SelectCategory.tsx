@@ -35,7 +35,7 @@ export const SelectCategory = ({ gender, clothesType }: Props) => {
         >
           <span className="capitalize">{cat.title}</span>
           {cat.id === category?.id ? (
-            <CheckMark className="text-cerise-red-600" />
+            <CheckMark className="text-cerise-red-600 w-6 h-6" />
           ) : null}
         </div>
       ))}

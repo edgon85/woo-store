@@ -89,7 +89,7 @@ export const NameSection = ({ userId, fullName }: Props) => {
             />
             {loading ? (
               <div className="flex justify-center items-center">
-                <SpinnerIcon className="animate-spin" />
+                <SpinnerIcon className="w-6 h-6 animate-spin" />
               </div>
             ) : (
               <Button

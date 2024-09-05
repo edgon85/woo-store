@@ -29,7 +29,7 @@ export const SelectSubcategory = () => {
         >
           <span className="capitalize">{sub.title}</span>
           {sub.id === subcategory?.id ? (
-            <CheckMark className="text-cerise-red-600" />
+            <CheckMark className="text-cerise-red-600 w-6 h-6" />
           ) : null}
         </div>
       ))}

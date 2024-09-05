@@ -1,3 +1,4 @@
+import { CheckMark } from '@/components/ui';
 import { useFetcher } from '@/hooks';
 import { IMeasurement } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
@@ -14,6 +15,7 @@ export const Measurements = ({ gender, clothesType }: Props) => {
   const setMeasurements = useCreateProductStore(
     (state) => state.setMeasurement
   );
+  const measurement = useCreateProductStore((state) => state.measurement);
 
   const { data: measurements } = useFetcher<IMeasurement[]>(
     `/measurements?gender=${gender}&type=${clothesType}`
@@ -29,20 +31,23 @@ export const Measurements = ({ gender, clothesType }: Props) => {
       <ul className="text-sm font-medium uppercase">
         {measurements
           .sort((a, b) => a.id - b.id)
-          .map((measurement) => {
-            const { id } = measurement;
+          .map((resp) => {
+            const { id } = resp;
             return (
               <li
-                onClick={() => handleClick(measurement)}
+                onClick={() => handleClick(resp)}
                 key={id}
-                className="w-full px-4 py-2 border-b border-gray-200  cursor-pointer hover:bg-lightPrimary"
+                className="flex justify-between items-center px-1 py-2 border-b cursor-pointer hover:bg-lightPrimary"
               >
                 {formatMeasurementString(
-                  measurement,
+                  resp,
                   gender,
                   clothesType,
                   category?.title!
                 )}
+                {measurement?.id === resp.id ? (
+                  <CheckMark className="text-cerise-red-600 w-6 h-6" />
+                ) : null}
               </li>
             );
           })}

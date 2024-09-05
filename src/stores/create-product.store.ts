@@ -83,5 +83,7 @@ export const useCreateProductStore = create<CreateProductState>()((set) => ({
       colors: [],
       packageDeliveries: [],
       isShippingIncluded: false,
+      department: null,
+      municipality: null,
     })),
 }));

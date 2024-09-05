@@ -103,7 +103,7 @@ export const ImageSection = ({ register, errors, setValue }: Props) => {
         {thumbnails.length === 0 && (
           <div
             onClick={addMoreImages}
-            className="flex flex-col items-center justify-center w-full h-52 md:h-64 border-2 border-cerise-red-300 border-dashed rounded-lg cursor-pointer bg-cerise-red-50"
+            className="flex flex-col items-center justify-center w-full h-52 md:h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-100"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
@@ -122,11 +122,11 @@ export const ImageSection = ({ register, errors, setValue }: Props) => {
                 />
               </svg>
               <p className="mb-2 text-sm text-cerise-red-500">
-                <span className="font-semibold">Click para subir fotos</span>{' '}
-                <span className="hidden md:inline"> o arrastre y suelte</span>
+                <span className="font-semibold">Click para subir fotos</span>
+                {/* <span className="hidden md:inline"> o arrastre y suelte</span> */}
               </p>
               <p className="text-xs text-cerise-red-500">
-                PNG, JPEG (MAX. 800x400px)
+                PNG, JPEG (MAX. 800x800px)
               </p>
             </div>
           </div>
@@ -179,9 +179,7 @@ export const ImageSection = ({ register, errors, setValue }: Props) => {
         </div>
       )}
       {errors.images && (
-        <p className="text-cerise-red-800 text-xs py-1">
-          {errors.images.message}
-        </p>
+        <p className="mt-2 text-sm text-red-600">{errors.images.message} *</p>
       )}
     </>
   );

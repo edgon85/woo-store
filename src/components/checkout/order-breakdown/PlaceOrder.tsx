@@ -4,12 +4,13 @@ import { TypeCreateOrder } from '@/types';
 import { useCheckoutStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 export const PlaceOrder = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const router = useRouter();
 
@@ -59,41 +60,64 @@ export const PlaceOrder = () => {
       offerId: productCheckout?.offerId,
     };
 
-    setShowLoading(true);
+    setIsLoading(true);
+    Swal.fire({
+      title: '¿Realizar compra?',
+      html: `Se va a crear un nuevo pedido`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, comprar',
+      cancelButtonText: 'Cancelar',
+      showLoaderOnConfirm: true,
 
-    const { message, ok, data } = await createNewOrder(newOrder);
+      preConfirm: async () => {
+        const { message, ok, data } = await createNewOrder(newOrder);
 
-    if (!ok) {
-      toast.error(message);
-      setShowLoading(false);
-      setError(true);
-      console.log(message);
-      return;
-    } else {
-      toast.success('¡Order creada satisfactoriamente!');
-      setShowLoading(false);
+        if (!ok) {
+          Swal.showValidationMessage(`error: ${message}`);
+          return;
+        }
+        return data;
+      },
 
-      router.replace(`checkout/confirm/${data.id}`);
-    }
+      allowOutsideClick: () => {
+        const popup = Swal.getPopup() as HTMLElement;
+        popup.classList.remove('swal2-show');
+        setIsLoading(false);
+        return !Swal.isLoading();
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setIsLoading(false);
+        Swal.fire({
+          html: '<p>¡Order creada satisfactoriamente!</p>',
+          icon: 'success',
+        });
+
+        setDisabled(true);
+        router.replace(`checkout/confirm/${result.value.id}`);
+      } else if (result.dismiss) {
+        setIsLoading(false);
+      }
+    });
   };
 
   return (
     <>
       <section className="flex flex-col gap-1 items-center justify-center">
-        {/* <Button label="Realizar pedido" type="button" onClick={onHandleClick} /> */}
-        {showLoading ? (
-          <>
-            <div className="flex justify-center items-center">
-              <SpinnerIcon className="animate-spin" />
-            </div>
-          </>
-        ) : (
-          <Button
-            label="Realizar pedido"
-            type="button"
-            onClick={onHandleClick}
-          />
-        )}
+        <Button
+          type="button"
+          onClick={onHandleClick}
+          label={isLoading ? '' : 'Realizar pedido'}
+          icon={
+            isLoading ? (
+              <SpinnerIcon className="w-6 h-6 animate-spin text-white" />
+            ) : (
+              <></>
+            )
+          }
+          disabled={disabled}
+        />
         {error && <p className="text-red-500">{message}</p>}
       </section>
     </>

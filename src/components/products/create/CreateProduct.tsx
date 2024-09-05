@@ -8,7 +8,7 @@ import { IBrand, IClothesState, IColor, IDepartment } from '@/interfaces';
 
 import { createProduct } from '@/actions';
 
-import { Button } from '../../ui';
+import { Button, SpinnerIcon } from '../../ui';
 import {
   CustomModal,
   ClothesTypeSection,
@@ -27,6 +27,7 @@ import {
   DepartmentSection,
   MunicipalitySection,
 } from './sections';
+import { useState } from 'react';
 
 type Props = {
   brands: IBrand[];
@@ -42,6 +43,8 @@ export const CreateProduct = ({
   departments,
 }: Props) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const {
     register,
@@ -65,6 +68,7 @@ export const CreateProduct = ({
         return;
       }
 
+      setIsLoading(true);
       Swal.fire({
         title: '¿Estás seguro?',
         html: `Se va a crear un nuevo producto`,
@@ -85,19 +89,25 @@ export const CreateProduct = ({
           }
           return data;
         },
+
         allowOutsideClick: () => {
           const popup = Swal.getPopup() as HTMLElement;
           popup.classList.remove('swal2-show');
+          setIsLoading(false);
           return !Swal.isLoading();
         },
       }).then((result) => {
         if (result.isConfirmed) {
+          setIsLoading(false);
           Swal.fire({
             html: `<p>${result.value?.message}</p>`,
             icon: 'success',
           });
           resetStore();
+          setDisabled(true);
           router.replace(`/member/${result.value?.user}`);
+        } else if (result.dismiss) {
+          setIsLoading(false);
         }
       });
     }
@@ -195,7 +205,18 @@ export const CreateProduct = ({
 
         {watch('price') ? (
           <div className="mt-4">
-            <Button label="Publicar" type="submit" />
+            <Button
+              label={isLoading ? '' : 'Publicar'}
+              icon={
+                isLoading ? (
+                  <SpinnerIcon className="w-6 h-6 animate-spin text-white" />
+                ) : (
+                  <></>
+                )
+              }
+              type="submit"
+              disabled={disabled}
+            />
           </div>
         ) : null}
       </form>

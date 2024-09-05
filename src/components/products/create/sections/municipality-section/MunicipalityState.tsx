@@ -66,7 +66,7 @@ export const MunicipalityState = () => {
             <h6 className="text-lg capitalize">{muni.name}</h6>
           </div>
           {municipality?.id === muni.id && (
-            <CheckMark className="text-cerise-red-600" />
+            <CheckMark className="text-cerise-red-600 w-6 h-6" />
           )}
         </li>
       )),
@@ -76,7 +76,7 @@ export const MunicipalityState = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center">
-        <SpinnerIcon className="animate-spin" />
+        <SpinnerIcon className="w-6 h-6 animate-spin" />
       </div>
     );
   }

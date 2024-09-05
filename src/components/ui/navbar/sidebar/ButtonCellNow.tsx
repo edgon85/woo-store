@@ -16,9 +16,12 @@ export const ButtonCellNow = () => {
     <button
       onClick={onHandleClick}
       type="button"
-      className="bg-cerise-red-600 text-white w-full font-medium text-sm px-5 py-2.5 rounded"
+      className="inline-flex items-center justify-center bg-cerise-red-600 text-white hover:bg-cerise-red-500 font-medium rounded text-xs px-3 py-1.5 mr-2  focus:outline-none"
     >
       VENDER AHORA
     </button>
   );
 };
+/* 
+items-center justify-center bg-cerise-red-600 text-white hover:bg-cerise-red-500 font-medium rounded-lg text-xs px-3 py-1.5 mr-2  focus:outline-none
+*/

@@ -31,7 +31,7 @@ export const DepartmentState = ({ departmentList }: Props) => {
             {/* <p className="text-gray-500">{resp.}</p> */}
           </div>
           {department?.id === resp.id ? (
-            <CheckMark className="text-cerise-red-600" />
+            <CheckMark className="w-6 h-6 text-cerise-red-600" />
           ) : null}
         </li>
       ))}

@@ -28,7 +28,7 @@ export const Button = ({
             relative
             disabled:opacity-70
             disabled:cursor-not-allowed
-            rounded-lg
+            rounded
             hover:opacity-80
             transition
             w-full
@@ -45,7 +45,7 @@ export const Button = ({
             ${small ? 'border-[1px]' : 'border-2'}
         `}
     >
-      {icon && <span className="absolute left-4 top-3">{icon}</span>}
+      {icon && <span className="flex items-center justify-center">{icon}</span>}
       {label}
     </button>
   );

@@ -64,7 +64,7 @@ export const DeleteAddress = ({ addressId, onAddressDeleted }: Props) => {
       onClick={onDeleteAddress}
       className="rounded border border-cerise-red-500 text-cerise-red-500 hover:bg-cerise-red-600 hover:text-white text-xs p-2"
     >
-      <TrashIcon />
+      <TrashIcon className='w-4 h-4 hover:text-white' />
     </button>
   );
 };

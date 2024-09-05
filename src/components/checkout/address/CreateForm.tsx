@@ -231,7 +231,7 @@ export const CreateFormAddress = ({
             {showLoading ? (
               <>
                 <div className="flex justify-center items-center">
-                  <SpinnerIcon className="animate-spin" />
+                  <SpinnerIcon className="w-6 h-6 animate-spin" />
                 </div>
               </>
             ) : (

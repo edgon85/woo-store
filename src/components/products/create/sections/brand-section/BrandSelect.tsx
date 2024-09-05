@@ -2,7 +2,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import clsx from 'clsx';
 
-import { CheckMark, SearchIcon } from '@/components/ui';
+import { CheckMark, SearchIcon, SpinnerIcon } from '@/components/ui';
 import { useDebounce } from '@/hooks/useDebounce';
 import { IBrand } from '@/interfaces';
 import { CreateBrand } from './CreateBrand';
@@ -57,16 +57,14 @@ export const BrandSelect = ({ brands }: Props) => {
           placeholder="Buscar marcas"
           onChange={handleOnchange}
         />
-        {loading ? (
+        <SearchIcon className="text-gray-400 w-6 h-6" />
+        {/* {loading ? (
           <>
-            <div className="animate-pulse flex w-full h-52">
-              <span>h-2</span>
-              <span>h-2</span>
-            </div>
+            {/ * <SpinnerIcon className="w-6 h-6 animate-spin" /> * /}
           </>
         ) : (
-          <SearchIcon className="text-gray-400" />
-        )}
+          <SearchIcon className="text-gray-400 w-6 h-6" />
+        )} */}
       </div>
       {searchResults.length === 0 ? (
         <CreateBrand
@@ -88,7 +86,7 @@ export const BrandSelect = ({ brands }: Props) => {
         >
           <span className="capitalize">{brand.title}</span>
           {selectedBrand?.id === brand.id ? (
-            <CheckMark className="text-cerise-red-600" />
+            <CheckMark className="text-cerise-red-600 w-6 h-6" />
           ) : null}
         </div>
       ))}

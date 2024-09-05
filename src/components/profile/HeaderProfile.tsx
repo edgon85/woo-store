@@ -5,6 +5,8 @@ import { checkImageAvailable, getRatingByUsername } from '@/actions';
 import { RatingComponent } from './RatingComponent';
 import { getAuthInfo } from '@/libs';
 import { BtnShareProfile } from './BtnShareProfile';
+import Image from 'next/image';
+import { DetailProfile } from './DetailProfile';
 
 interface LocalProfile {
   id: string;
@@ -29,20 +31,78 @@ export async function HeaderProfile({ username, profile }: Props) {
   const { message: ratingMessage, data: ratingData } = ratingUser;
 
   return (
-    <header className="flex gap-2 md:gap-4 py-4">
-      <div className="w-12 h-12 md:w-24 md:h-24 flex justify-center items-center rounded-full overflow-hidden">
-        {imageUrl !== null ? (
-          <picture>
-            <img
-              src={imageUrl}
-              alt={`foto de perfil de ${profile.fullName}`}
-              className="object-cover w-24 h-24 rounded"
-              loading="lazy"
-            />
-          </picture>
+    <div className=" bg-white overflow-hidden">
+      <div className="flex p-4">
+        {imageUrl ? (
+          <Image
+            className="w-16 h-16 rounded-full"
+            src={imageUrl!}
+            alt="Profile"
+            width={64}
+            height={64}
+          />
         ) : (
-          <span className="w-16 h-16 flex justify-center items-center rounded-full bg-cerise-red-400 font-bold text-white">
-            <UserIcon />
+          <span className="w-16 h-16 rounded-full flex justify-center items-center bg-cerise-red-400 text-white">
+            <UserIcon className="w-6 h-6 sm:w-8 sm:h-8" />
+          </span>
+        )}
+
+        <div className="flex flex-col gap-1 ml-4">
+          <h2 className="text-xl font-semibold text-gray-900">
+            {profile.username}
+          </h2>
+          <div className="flex items-center">
+            <RatingComponent data={ratingData} message={ratingMessage} />
+          </div>
+          <p className="text-sm text-gray-600">
+            {profile.location ? `${profile.location}` : ''}
+          </p>
+          {/* <p className="text-sm text-gray-600">
+            Última conexión hace 23 minutos
+          </p> */}
+          <div>
+            {currentUserId === profile.id && (
+              <Link
+                href={`/settings/profile/${profile.id}`}
+                className="px-2 py-1 rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50"
+              >
+                Editar
+              </Link>
+            )}
+          </div>
+        </div>
+        <div className="ml-auto">
+          <BtnShareProfile />
+        </div>
+      </div>
+      <div className="px-4 py-2">
+        {/* <p className="whitespace-pre-wrap">{profile.biography}</p> */}
+        <DetailProfile biography={profile.biography} />
+      </div>
+      {/*  <div className="flex justify-between px-4 py-2">
+        <button className="bg-cerise-red-600 text-white font-semibold py-2 px-4 rounded-lg">
+          Mensaje
+        </button>
+        <button className="bg-cerise-red-600 text-white font-semibold py-2 px-4 rounded-lg">
+          Seguir
+        </button>
+      </div> */}
+    </div>
+  );
+}
+/*  <header className="flex gap-2 md:gap-4 py-4">
+      <div className="w-12 h-12 md:w-16 md:h-16 flex justify-center items-center rounded-full overflow-hidden relative border border-gray-200 hover:border-cerise-red-600">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={`foto de perfil de ${profile.fullName}`}
+            className="object-cover w-full h-full"
+            width={48}
+            height={48}
+          />
+        ) : (
+          <span className="w-full h-full flex justify-center items-center bg-cerise-red-400 text-white">
+            <UserIcon className="w-6 h-6 sm:w-8 sm:h-8" />
           </span>
         )}
       </div>
@@ -52,8 +112,6 @@ export async function HeaderProfile({ username, profile }: Props) {
             <h2 className="font-bold text-lg">{profile.username}</h2>
 
             <RatingComponent data={ratingData} message={ratingMessage} />
-
-            {/* {ok ? <p>★★★☆☆</p> : <p>{message}</p>} */}
             {currentUserId === profile.id && (
               <Link
                 href={`/settings/profile/${profile.id}`}
@@ -64,9 +122,6 @@ export async function HeaderProfile({ username, profile }: Props) {
             )}
           </div>
           <div className="flex flex-col md:flex-row gap-4 md:items-start">
-            {/* <button className="px-4 py-2 md:min-w-[100px] rounded border text-cerise-red-600 border-cerise-red-600 hover:bg-cerise-red-50 font-bold ">
-              Seguir
-            </button> */}
             <BtnShareProfile />
           </div>
         </div>
@@ -74,6 +129,4 @@ export async function HeaderProfile({ username, profile }: Props) {
           <p className="whitespace-pre-wrap">{profile.biography}</p>
         </div>
       </div>
-    </header>
-  );
-}
+    </header> */

@@ -22,10 +22,10 @@ export const RatingComponent = ({ data, message }: Props) => {
     return (
       <>
         {[...Array(filledStars)].map((_, index) => (
-          <FillStarIcon key={index} className="text-cerise-red-500" />
+          <FillStarIcon key={index} className="w-4 h-4 text-cerise-red-500" />
         ))}
         {[...Array(emptyStars)].map((_, index) => (
-          <EmptyStarIcon key={index} />
+          <EmptyStarIcon key={index} className="w-4 h-4 text-cerise-red-500" />
         ))}
         <span className="text-sm text-gray-500">({data.numberOfRatings})</span>
       </>

@@ -117,7 +117,7 @@ export const PhotoSection = ({
       <Modal open={isModalOpen} onClose={() => {}} center closeIcon={<></>}>
         {/* <div className="w-8 h-8 border-t-4 border-primary border-solid rounded-full animate-spin"></div> */}
         <div className="flex justify-center items-center">
-          <SpinnerIcon className="animate-spin" />
+          <SpinnerIcon className="w-6 h-6 animate-spin" />
         </div>
       </Modal>
     </>

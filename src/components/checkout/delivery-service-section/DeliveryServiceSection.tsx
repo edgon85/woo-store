@@ -138,9 +138,9 @@ export const ShippingServiceSection = ({ isShippingIncluded }: Props) => {
                   </div>
                   <div>
                     {selectedOption === ppd.id ? (
-                      <RadioButtonOn className="text-cerise-red-500" />
+                      <RadioButtonOn className="text-cerise-red-500 w-6 h-6" />
                     ) : (
-                      <RadioButtonOff className="text-cerise-red-300" />
+                      <RadioButtonOff className="text-gray-300 w-6 h-6" />
                     )}
                   </div>
                 </div>

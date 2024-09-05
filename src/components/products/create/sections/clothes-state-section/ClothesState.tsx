@@ -32,7 +32,7 @@ export const ClothesState = ({ clothingConditionList }: Props) => {
             <p className="text-gray-500">{resp.subtitle}</p>
           </div>
           {clotheState?.id === resp.id ? (
-            <CheckMark className="text-cerise-red-600" />
+            <CheckMark className="text-cerise-red-600 w-6 h-6" />
           ) : null}
         </li>
       ))}
