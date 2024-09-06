@@ -18,7 +18,7 @@ export default async function PurchasesPage() {
 
   if (!ok) return NotFound();
 
-  if (!data)
+  if (data.length === 0)
     return (
       <EmptyTransaction
         label="¡Aun no tienes compras!"

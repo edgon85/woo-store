@@ -112,8 +112,8 @@ const AvailableProduct = ({
           recipientId={product.user?.id!}
           recipientUsername={product.user?.username!}
           productId={product.id!}
-          slug={product.slug!}
           title={product.title!}
+          orderId={null}
         />
       </>
     )}
@@ -180,7 +180,6 @@ const OwnerReservedMessage = ({ product }: { product: IProduct }) => {
   );
 };
 
-
 // OtherUserReservedMessage.tsx
 const OtherUserReservedMessage = () => (
   <p className="text-center text-sm text-cerise-red-600">
@@ -197,4 +196,3 @@ const UnavailableProduct = () => (
     </p>
   </div>
 );
-

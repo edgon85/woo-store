@@ -1,6 +1,6 @@
 'use client';
 import { IChat } from '@/interfaces';
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { ChatContext } from '@/context';
 import { UserListItem } from './UserListItem';
 import { ChatWindow } from './ChatWindow';
@@ -12,18 +12,47 @@ import Link from 'next/link';
 import { DropDownSettings } from './DropDownSettings';
 import { ProductStatus } from '@/enums';
 import { ArrowLeftIcon } from '../ui';
+import { checkIsBuyer } from '@/actions';
 
 type Props = {
   recipientId?: string;
   username?: string;
+  currentUserId: string;
 };
 
 export const InboxMainComponent = ({
   recipientId = '',
   username = '',
+  currentUserId,
 }: Props) => {
   const { chatState, dispatch } = useContext(ChatContext);
   const router = useRouter();
+  const [isBuyer, setIsBuyer] = useState(false);
+
+  const isProductOwner = chatState.product?.userId === currentUserId;
+
+  const checkBuyerStatus = useCallback(async () => {
+    if (!recipientId || !chatState.product) return;
+
+    const { ok, data } = await checkIsBuyer();
+
+    // console.log({ data });
+    if (ok && data.buyer.id === currentUserId) {
+      setIsBuyer(true);
+    }
+  }, [chatState.product, currentUserId, recipientId]);
+
+  useEffect(() => {
+    if (isProductOwner) return;
+
+    if (chatState.product?.status !== ProductStatus.Available) {
+      checkBuyerStatus();
+    } else {
+      setIsBuyer(false); // Reset isBuyer when product becomes available again
+    }
+  }, [chatState.product?.status, checkBuyerStatus, isProductOwner]);
+
+  const canAccessChat = isProductOwner || isBuyer;
 
   const onHandleClick = () => {
     router.push('/inbox');
@@ -108,7 +137,8 @@ export const InboxMainComponent = ({
             </div>
             {chatState.activeChat && (
               <div className="h-24">
-                {chatState.product?.status !== ProductStatus.Available ? (
+                {chatState.product?.status !== ProductStatus.Available &&
+                !canAccessChat ? (
                   <div className="p-4 border h-full">
                     <p className="text-base font-bold">
                       El artículo no está disponible
@@ -118,11 +148,7 @@ export const InboxMainComponent = ({
                     </span>
                   </div>
                 ) : (
-                  <>
-                    {chatState.activeChat && (
-                      <ChatInput recipientId={recipientId} />
-                    )}
-                  </>
+                  <ChatInput recipientId={recipientId} />
                 )}
               </div>
             )}

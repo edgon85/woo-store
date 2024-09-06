@@ -1,4 +1,5 @@
 import { InboxMainComponent } from '@/components';
+import { getAuthInfo } from '@/libs';
 import { Metadata } from 'next';
 
 type Props = {
@@ -9,9 +10,15 @@ export const metadata: Metadata = {
   title: 'Inbox',
 };
 export default async function InboxPage({ searchParams: { username } }: Props) {
+
+  const userInfo = await getAuthInfo();
+  const { id: currentUserId } = userInfo!;
+
   return (
     <div className="main-wrapper min-h-[70vh]">
-      <InboxMainComponent />
+      <InboxMainComponent
+        currentUserId={currentUserId}
+      />
     </div>
   );
 }

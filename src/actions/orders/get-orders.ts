@@ -1,8 +1,6 @@
 'use server';
 
 import { unstable_noStore as noStore } from 'next/cache';
-import { IOrder } from '@/interfaces';
-import { ErrorResult } from '@/types';
 import { getAuthToken } from '@/libs';
 
 export async function fetchOrders(type: string) {

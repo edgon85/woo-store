@@ -96,12 +96,10 @@ export const TablePurchases = ({ orders }: Props) => {
               {/* Actions */}
               <div className="flex flex-col gap-2">
                 <BtnSendMessage
-                  /*  productId={order.product.id!}
+                  productId={order.product.id!}
                   recipientId={order.seller.id!}
                   title={order.product.title!}
                   recipientUsername={order.seller.username!}
-                  sellerId={product.user?.id!} */
-                  product={order.product}
                 />
 
                 {order.orderStatus === OrderStatus.Completed &&

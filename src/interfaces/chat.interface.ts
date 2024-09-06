@@ -34,4 +34,5 @@ export interface IChatProduct {
   status: string;
   price: number;
   image: string;
+  userId: string;
 }

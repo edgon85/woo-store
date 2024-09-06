@@ -12,7 +12,6 @@ type Props = {
   recipientId: string;
   recipientUsername: string;
   productId: string;
-  slug: string;
   title: string;
 };
 
@@ -20,10 +19,8 @@ export const BtnSendMessage = ({
   recipientId,
   recipientUsername,
   productId,
-  slug,
   title,
 }: Props) => {
-  
   const [open, setOpen] = useState(false);
   const { dispatch } = useContext(ChatContext);
   const router = useRouter();
@@ -56,7 +53,27 @@ export const BtnSendMessage = ({
         payload: data.messages,
       });
 
-      router.push(`/inbox?u=${recipientId}&n=${recipientUsername}`);
+      dispatch({
+        type: '[Chat] - SET_PROD',
+        payload: {
+          id: data.product.id,
+          slug: data.product.slug,
+          title: data.product.title,
+          status: data.product.status,
+          price: data.product.price,
+          image: data.product.image,
+        },
+      });
+
+      const params = new URLSearchParams('');
+      params.set('u', recipientId);
+      params.set('n', recipientUsername);
+      /* if (orderId) {
+        params.set('o', orderId);
+      } */
+
+      const url = params.toString();
+      router.push(`/inbox?${url}`);
       setOpen(false);
     }
   };
@@ -75,6 +92,8 @@ export const BtnSendMessage = ({
         recipientId={recipientId}
         productId={productId}
         title={title}
+        orderId={null}
+        recipientUsername={recipientUsername}
       />
     </>
   );
