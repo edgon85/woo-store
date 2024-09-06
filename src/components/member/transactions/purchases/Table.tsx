@@ -7,6 +7,7 @@ import { IOrder } from '@/interfaces';
 import { OrderStatus } from '@/enums';
 import { TransactionStatus } from '../TransactionStatus';
 import { MapMarker } from '@/components/ui';
+import { BtnSendMessage } from '@/components/products/product-detail/buttons';
 
 type Props = {
   orders: IOrder[];
@@ -14,127 +15,122 @@ type Props = {
 
 export const TablePurchases = ({ orders }: Props) => {
   return (
-    <>
+    <div className="space-y-4">
       {orders?.map((order: IOrder) => {
         const images = order.product.images.map((image: any) => image.url);
-
         const { product, summary, seller, shippingService } = order;
 
         return (
-          <div key={order.id}>
+          <div
+            key={order.id}
+            className="bg-white shadow rounded-lg overflow-hidden"
+          >
             {order.claim && (
-              <div className="p-2 full bg-yellow-300">
-                <p className="">Reclamo en revision</p>
+              <div className="bg-yellow-300 p-2">
+                <p className="text-center font-semibold">Reclamo en revisión</p>
               </div>
             )}
-
-            <div className="flex flex-col md:flex-row gap-1 md:gap-0 justify-between bg-white p-2 mb-1">
-              <div className="flex gap-2">
+            <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Product Information */}
+              <div className="flex gap-4">
                 <picture>
-                  <img src={images[0]} alt="" width={100} />
+                  <img
+                    src={images[0]}
+                    alt={product.title}
+                    className="w-24 h-24 object-cover"
+                  />
                 </picture>
                 <div>
-                  <p className="text-lg capitalize">{product.title}</p>
+                  <h3 className="text-lg font-semibold capitalize">
+                    {product.title}
+                  </h3>
                   <p>
-                    <span className="text-gray-500 capitalize">Precio: </span>
+                    <span className="text-gray-500">Precio:</span>{' '}
                     {formatCurrency(summary.productPrice * 100)}
                   </p>
                   <p>
-                    <span className="text-gray-500 capitalize">
-                      Tarifa de servicio:{' '}
-                    </span>
+                    <span className="text-gray-500">Tarifa de servicio:</span>{' '}
                     {formatCurrency(summary.serviceFee * 100)}
                   </p>
                   <p>
-                    <span className="text-gray-500 capitalize">Envío: </span>
-                    {summary.deliveryOffer !== 0 ? (
-                      <span>
-                        {' '}
-                        {formatCurrency(summary.deliveryOffer * 100)}
-                      </span>
-                    ) : (
-                      <span> {formatCurrency(summary.delivery * 100)}</span>
-                    )}
+                    <span className="text-gray-500">Envío:</span>{' '}
+                    {summary.deliveryOffer !== 0
+                      ? formatCurrency(summary.deliveryOffer * 100)
+                      : formatCurrency(summary.delivery * 100)}
                   </p>
-
-                  <br />
-
-                  <p>
-                    <span className="text-gray-500 capitalize">Total:</span>
+                  <p className="font-semibold mt-2">
+                    <span className="text-gray-500">Total:</span>{' '}
                     {formatCurrency(summary.total * 100)}
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col gap-1">
+
+              {/* Order Details */}
+              <div className="space-y-1">
                 <p>
-                  <span className="text-gray-500 capitalize mr-2">
-                    pedido ID:
-                  </span>{' '}
+                  <span className="text-gray-500">Pedido ID:</span>{' '}
                   <span className="uppercase">{uuIiMyFormat(order.id)}</span>
                 </p>
                 <p>
-                  <span className="text-gray-500 capitalize mr-2">Fecha:</span>{' '}
-                  <span>{formatDateToLocal(order.orderDate)}</span>
+                  <span className="text-gray-500">Fecha:</span>{' '}
+                  {formatDateToLocal(order.orderDate)}
                 </p>
                 <p>
-                  <span className="text-gray-500 capitalize mr-2">
-                    Vendedor:
-                  </span>{' '}
-                  <span>{seller.fullName}</span>
+                  <span className="text-gray-500">Vendedor:</span>{' '}
+                  {seller.fullName}
                 </p>
                 <p>
-                  <span className="text-gray-500 capitalize mr-2">Estado:</span>{' '}
+                  <span className="text-gray-500">Estado:</span>{' '}
                   <TransactionStatus status={order.orderStatus!} />
                 </p>
                 <p>
-                  <span className="text-gray-500 capitalize mr-2">Envío:</span>{' '}
-                  <span>{shippingService.name}</span>
+                  <span className="text-gray-500">Envío:</span>{' '}
+                  {shippingService.name}
                 </p>
                 <p>
-                  <span className="text-gray-500 capitalize mr-2">Guía:</span>{' '}
-                  <span>{order.guideNumber ? order.guideNumber : '-'}</span>
+                  <span className="text-gray-500">Guía:</span>{' '}
+                  {order.guideNumber || '-'}
                 </p>
               </div>
-              <div className="flex flex-col gap-2 items-center">
-                <Link
-                  href={`/inbox?u=${seller.id}&n=${seller.username}`}
-                  className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
-                >
-                  Escribir al vendedor
-                </Link>
+
+              {/* Actions */}
+              <div className="flex flex-col gap-2">
+                <BtnSendMessage
+                  /*  productId={order.product.id!}
+                  recipientId={order.seller.id!}
+                  title={order.product.title!}
+                  recipientUsername={order.seller.username!}
+                  sellerId={product.user?.id!} */
+                  product={order.product}
+                />
 
                 {order.orderStatus === OrderStatus.Completed &&
-                !order.received &&
-                !order.claim ? (
-                  <BtnConfirmReceipt orderId={order.id} />
-                ) : null}
+                  !order.received &&
+                  !order.claim && <BtnConfirmReceipt orderId={order.id} />}
 
                 {!order.received && (
                   <Link
                     href={`/claim/open?reason=product_not_received&transaction=${order.id}`}
-                    className="w-full px-4 py-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
+                    className="w-full px-4 py-2 text-center rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
                   >
                     Necesito ayuda
                   </Link>
                 )}
 
-                {
-                  /* TODO: poner url del tracking*/
-                  order.orderStatus !== OrderStatus.Completed ? (
-                    <Link
-                      href={''}
-                      className="flex gap-1 justify-center items-center underline"
-                    >
-                      <MapMarker />
-                      Ver en {order.shippingService.name}
-                    </Link>
-                  ) : null
-                }
+                {order.orderStatus !== OrderStatus.Completed && (
+                  <Link
+                    href=""
+                    className="flex gap-1 justify-center items-center underline"
+                  >
+                    <MapMarker />
+                    Ver en {order.shippingService.name}
+                  </Link>
+                )}
               </div>
             </div>
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
