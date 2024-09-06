@@ -34,23 +34,21 @@ export const InboxMainComponent = ({
   const checkBuyerStatus = useCallback(async () => {
     if (!recipientId || !chatState.product) return;
 
-    const { ok, data } = await checkIsBuyer();
+    console.log('reviso si es comprador');
+    const { data } = await checkIsBuyer(chatState.product.id);
 
-    // console.log({ data });
-    if (ok && data.buyer.id === currentUserId) {
-      setIsBuyer(true);
-    }
-  }, [chatState.product, currentUserId, recipientId]);
+    setIsBuyer(data.isBuyer);
+  }, [chatState.product, recipientId]);
 
   useEffect(() => {
     if (isProductOwner) return;
 
-    if (chatState.product?.status !== ProductStatus.Available) {
+    if (chatState.product && !isProductOwner) {
       checkBuyerStatus();
     } else {
-      setIsBuyer(false); // Reset isBuyer when product becomes available again
+      setIsBuyer(false);
     }
-  }, [chatState.product?.status, checkBuyerStatus, isProductOwner]);
+  }, [chatState.product, isProductOwner, checkBuyerStatus]);
 
   const canAccessChat = isProductOwner || isBuyer;
 

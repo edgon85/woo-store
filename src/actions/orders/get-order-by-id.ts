@@ -117,14 +117,14 @@ export async function fetchOrderById(id: string) {
 /* ··········································································· */
 /* Check es comprador */
 /* ··········································································· */
-export async function checkIsBuyer() {
+export async function checkIsBuyer(productId: string) {
   noStore();
   const authToken = await getAuthToken();
 
   if (!authToken) {
     return { ok: false, message: 'No se encontró un token de autenticación' };
   }
-  const url = `${process.env.API_BASE_URL}/orders/check/is-owner`;
+  const url = `${process.env.API_BASE_URL}/orders/check-is-owner/${productId}`;
 
   try {
     const resp = await fetch(url, {
