@@ -7,12 +7,14 @@ import {
   ProductMobileSlideshow,
   RejectedProduct,
 } from '@/components';
-import { getProductBySlug } from '@/actions';
+import { getComments, getProductBySlug } from '@/actions';
 import { IProduct } from '@/interfaces';
 
 import { getAuthInfo } from '@/libs';
 import { Metadata, ResolvingMetadata } from 'next';
 import { formatTitle } from '@/utils';
+import { ProductComments } from '@/components/products/product-detail/comments/ProductComments';
+import NotFound from './not-found';
 
 type Props = {
   params: { slug: string };
@@ -53,6 +55,12 @@ export default async function ProductDetailPage({
 }: Props) {
   const product = (await getProductBySlug(slug)) as IProduct;
 
+  if (!product) {
+    NotFound();
+  }
+
+  const { data: comments } = await getComments(product.id!);
+
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
 
@@ -61,8 +69,8 @@ export default async function ProductDetailPage({
   return (
     <>
       <section className="main-wrapper mt-0 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
-        {/* Slideshow */}
-        <div className="col-span-1 md:col-span-2 ">
+        {/* Image Slideshow */}
+        <div className="col-span-1 md:col-span-2">
           {/* Desktop */}
           <ProductSlideshow
             images={product.images}
@@ -70,6 +78,62 @@ export default async function ProductDetailPage({
             className="hidden md:block h-[85vh]"
           />
           {/* Mobile slideshow */}
+          <ProductMobileSlideshow
+            images={product.images}
+            title={product.title}
+            className="block md:hidden"
+          />
+        </div>
+
+        {/* Detalles */}
+        <div className="col-span-1 md:row-span-2">
+          <div className="flex flex-col gap-2 md:gap-4">
+            <div className="order-2 md:order-1">
+              <ProductDetail
+                product={product}
+                currentUserId={currentUserId || ''}
+              />
+            </div>
+            <div className="order-1 md:order-2">
+              <BtnActions
+                productId={product.id!}
+                productName={product.title}
+                productPrice={product.price}
+              />
+            </div>
+            <div className="order-3">
+              <UserInfo
+                name={user?.fullName!}
+                image={user?.profileImage!}
+                location={user?.location!}
+                username={user?.username!}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Comentarios */}
+        <div className="col-span-1 md:col-span-2">
+          <ProductComments
+            productId={product.id!}
+            comments={comments === null ? [] : comments}
+          />
+        </div>
+      </section>
+    </>
+  );
+}
+/* 
+  <section className="main-wrapper mt-0 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
+        {/ * Slideshow * /}
+        <div className="col-span-1 md:col-span-2 border border-cerise-red-400">
+          {/* Desktop * /}
+          <ProductSlideshow
+            images={product.images}
+            title={product.title}
+            className="hidden md:block h-[85vh]"
+          />
+          {/ * Mobile slideshow * /}
           <ProductMobileSlideshow
             images={product.images}
             title={product.title}
@@ -85,7 +149,7 @@ export default async function ProductDetailPage({
           </div>
         </div>
 
-        {/* Detalles */}
+        {/ * Detalles * /}
         <div className="col-span-1">
           <ProductDetail
             product={product}
@@ -121,5 +185,5 @@ export default async function ProductDetailPage({
         product={product}
       />
     </>
-  );
-}
+
+*/

@@ -21,3 +21,4 @@ export * from './user';
 export * from './web-sockets';
 export * from './department';
 export * from './email-preferences';
+export * from './comments';

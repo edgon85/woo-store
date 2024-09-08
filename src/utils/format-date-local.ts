@@ -12,6 +12,26 @@ export const formatDateToLocal = (
   return formatter.format(date);
 };
 
+export const formatDateToLocalGT = (
+  dateStr: string,
+  locale: string = 'es-GT',
+  timeZone: string = 'America/Guatemala'
+) => {
+  const date = new Date(dateStr);
+  const options: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: timeZone,
+    hour12: true,
+  };
+  const formatter = new Intl.DateTimeFormat(locale, options);
+  return formatter.format(date);
+};
+
 export function formatDateChat(dateString: string): string {
   const date = new Date(dateString);
   const today = new Date();

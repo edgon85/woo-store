@@ -46,7 +46,7 @@ export const BtnActions = ({ productId, productName, productPrice }: Props) => {
   };
 
   return (
-    <div className="flex justify-evenly items-center gap-4 py-8">
+    <div className="flex justify-evenly items-center gap-4 py-2 md:py-4">
       {!isLoggedIn ? (
         <Link
           href={`/auth/login?p=${path}`}
