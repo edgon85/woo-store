@@ -64,3 +64,4 @@ export * from './HelpCircle';
 export * from './EarthIcon';
 export * from './RecycleIcon';
 export * from './SquaresIcon';
+export * from './SendIcon';

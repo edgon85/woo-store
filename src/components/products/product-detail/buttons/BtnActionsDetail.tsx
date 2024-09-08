@@ -108,13 +108,12 @@ const AvailableProduct = ({
     {!isOwner && (
       <>
         <BtnMakeOffer product={product} />
-        <BtnSendMessage
+        {/* <BtnSendMessage
           recipientId={product.user?.id!}
           recipientUsername={product.user?.username!}
           productId={product.id!}
           title={product.title!}
-          orderId={null}
-        />
+        /> */}
       </>
     )}
   </div>
@@ -167,12 +166,15 @@ const OwnerReservedMessage = ({ product }: { product: IProduct }) => {
           </p>
         </div>
       ) : (
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex flex-col gap-2 justify-center items-center">
+          <p className="text-center text-sm text-yellow-600 font-bold">
+            Este producto ya fue comprado
+          </p>
           <Link
             href={`/settings/transactions/sales`}
-            className="text-center text-sm text-yellow-600"
+            className="px-4 border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
           >
-            Este producto ya fue comprado
+            Ver pedidos
           </Link>
         </div>
       )}
@@ -182,7 +184,7 @@ const OwnerReservedMessage = ({ product }: { product: IProduct }) => {
 
 // OtherUserReservedMessage.tsx
 const OtherUserReservedMessage = () => (
-  <p className="text-center text-sm text-cerise-red-600">
+  <p className="text-center text-sm text-cerise-red-600 font-bold">
     Este producto ya no está disponible
   </p>
   //Este producto está reservado para otro usuario
@@ -191,7 +193,7 @@ const OtherUserReservedMessage = () => (
 // UnavailableProduct.tsx
 const UnavailableProduct = () => (
   <div className="py-8">
-    <p className="text-center text-sm text-cerise-red-600">
+    <p className="text-center text-sm text-cerise-red-600 font-bold">
       Este producto ya no está disponible
     </p>
   </div>

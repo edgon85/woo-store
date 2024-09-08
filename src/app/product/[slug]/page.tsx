@@ -51,8 +51,10 @@ export async function generateMetadata(
 
 export default async function ProductDetailPage({
   params: { slug },
-  searchParams: { offer_rejected },
+  searchParams: { offer_rejected, focus },
 }: Props) {
+  const focusMessage = focus === 'message';
+
   const product = (await getProductBySlug(slug)) as IProduct;
 
   if (!product) {
@@ -117,73 +119,15 @@ export default async function ProductDetailPage({
           <ProductComments
             productId={product.id!}
             comments={comments === null ? [] : comments}
+            focusMessage={focusMessage}
+            productTitle={product.title}
           />
         </div>
-      </section>
-    </>
-  );
-}
-/* 
-  <section className="main-wrapper mt-0 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
-        {/ * Slideshow * /}
-        <div className="col-span-1 md:col-span-2 border border-cerise-red-400">
-          {/* Desktop * /}
-          <ProductSlideshow
-            images={product.images}
-            title={product.title}
-            className="hidden md:block h-[85vh]"
-          />
-          {/ * Mobile slideshow * /}
-          <ProductMobileSlideshow
-            images={product.images}
-            title={product.title}
-            className="block md:hidden"
-          />
-
-          <div className="block md:hidden">
-            <BtnActions
-              productId={product.id!}
-              productName={product.title}
-              productPrice={product.price}
-            />
-          </div>
-        </div>
-
-        {/ * Detalles * /}
-        <div className="col-span-1">
-          <ProductDetail
-            product={product}
-            currentUserId={currentUserId || ''}
-          />
-
-          <div className="hidden md:block">
-            <BtnActions
-              productId={product.id!}
-              productName={product.title}
-              productPrice={product.price}
-            />
-          </div>
-
-          <div className="mt-4">
-            <UserInfo
-              name={user?.fullName!}
-              image={user?.profileImage!}
-              location={user?.location!}
-              username={user?.username!}
-            />
-          </div>
-        </div>
-      </section>
-      <section className="main-wrapper">
-        <RelatedProducts
-          productSlug={product.slug!}
-          currentUserId={currentUserId || ''}
-        />
       </section>
       <RejectedProduct
         isRejected={offer_rejected === 'true'}
         product={product}
       />
     </>
-
-*/
+  );
+}

@@ -12,8 +12,8 @@ import { BtnSendMessage } from '@/components/products/product-detail/buttons';
 type Props = {
   orders: IOrder[];
 };
-
 export const TablePurchases = ({ orders }: Props) => {
+  console.log(orders);
   return (
     <div className="space-y-4">
       {orders?.map((order: IOrder) => {
@@ -95,12 +95,18 @@ export const TablePurchases = ({ orders }: Props) => {
 
               {/* Actions */}
               <div className="flex flex-col gap-2">
-                <BtnSendMessage
+                {/* <BtnSendMessage
                   productId={order.product.id!}
                   recipientId={order.seller.id!}
                   title={order.product.title!}
                   recipientUsername={order.seller.username!}
-                />
+                /> */}
+                <Link
+                  href={`/product/${order.product.slug}?focus=message`}
+                  className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
+                >
+                  Enviar mensaje
+                </Link>
 
                 {order.orderStatus === OrderStatus.Completed &&
                   !order.received &&

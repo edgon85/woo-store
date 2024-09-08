@@ -2,6 +2,7 @@ import { TransactionStatus } from '../TransactionStatus';
 import { formatCurrency, formatDateToLocal } from '@/utils';
 import { DownLoadGide, UpdateSale } from './buttons';
 import { IOrder } from '@/interfaces';
+import Link from 'next/link';
 
 type Props = {
   orders: IOrder[];
@@ -34,7 +35,9 @@ export const TableSales = ({ orders }: Props) => {
                             alt={`${order.product.title}'s picture`}
                           />
                         </picture>
-                        <p>{order.product.title}</p>
+                        <Link href={`/product/${order.product.slug}`}>
+                          {order.product.title}
+                        </Link>
                       </div>
                     </div>
                     <TransactionStatus status={order.orderStatus!} />
@@ -99,7 +102,9 @@ export const TableSales = ({ orders }: Props) => {
                             alt={`${order.product.title}'s picture`}
                           />
                         </picture>
-                        <p>{order.product.title}</p>
+                        <Link href={`/product/${order.product.slug}`}>
+                          {order.product.title}
+                        </Link> 
                       </div>
                     </td>
 
