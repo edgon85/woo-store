@@ -16,7 +16,7 @@ export const ListNotification = ({ notification, setIsCollapsed }: Props) => {
   const getRedirectUrl = (notification: INotification) => {
     switch (notification.type) {
       case NotificationType.MESSAGE:
-        return '/messages';
+        return `/product/${notification.url}`;
       case NotificationType.SALE:
         return `/settings/transactions/sales/${notification.url}/detail`;
       case NotificationType.NEW_OFFER:
