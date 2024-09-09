@@ -13,6 +13,7 @@ export const Banner = () => {
           alt="Mujer sonriente en un armario"
           className="absolute inset-0 w-full h-full object-cover"
           fill={true}
+          priority={true}
         />
 
         {/* Gradiente superpuesto (visible solo en pantallas md y superiores) */}

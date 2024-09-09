@@ -77,3 +77,20 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.custom-pagination-bullet {
+  width: 20px !important;
+  height: 4px !important;
+  border-radius: 0 !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination-bullet-active {
+  background: #c2185b !important;
+  width: 30px !important;
+}
+
+.swiper-pagination {
+  bottom: 20px !important;
+}

@@ -1,9 +1,16 @@
 'use client';
 import React, { useState } from 'react';
 
-import { Swiper as SwiperObject } from 'swiper';
+// import { Swiper as SwiperObject } from 'swiper';
+import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import {
+  Autoplay,
+  FreeMode,
+  Navigation,
+  Thumbs,
+  Pagination,
+} from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -11,6 +18,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import './slideshow.css';
+import 'swiper/css/pagination';
 import Image from 'next/image';
 
 type Props = {
@@ -20,61 +28,77 @@ type Props = {
 };
 
 export const ProductSlideshow = ({ images, title, className }: Props) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperObject>();
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
   return (
-    <div className={className}>
+    <div className={`${className} h-[50vh] md:h-[70vh] flex flex-col`}>
       <Swiper
         style={
           {
-            '--swiper-navigation-color': 'var(--primary)',
-            '--swiper-pagination-color': 'var(--primary)',
+            '--swiper-navigation-color': '#000',
+            '--swiper-pagination-color': '#c2185b',
           } as React.CSSProperties
         }
         spaceBetween={10}
         navigation={true}
+        pagination={{
+          clickable: true,
+          renderBullet: function (index, className) {
+            return (
+              '<span class="' + className + ' custom-pagination-bullet"></span>'
+            );
+          },
+        }}
         autoplay={{
-          delay: 2500,
+          delay: 3500,
+          disableOnInteraction: false,
         }}
         thumbs={{
           swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
         }}
-        modules={[FreeMode, Navigation, Thumbs, Autoplay]}
-        className=""
+        modules={[FreeMode, Navigation, Thumbs, Autoplay, Pagination]}
+        className="flex-1"
       >
-        {images.map((image) => (
-          <SwiperSlide key={image}>
-            <Image
-              src={image}
-              alt={title}
-              width={1024}
-              height={800}
-              className="rounded object-fill"
-            />
+        {images.map((image, index) => (
+          <SwiperSlide key={`main-${image}`} className="h-full">
+            <div className="relative w-full h-full">
+              <Image
+                src={image}
+                alt={`${title} - Image ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: 'contain' }}
+                className="rounded-lg"
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
-      <Swiper
+
+      {/*   <Swiper
         onSwiper={setThumbsSwiper}
-        spaceBetween={5}
+        spaceBetween={10}
         slidesPerView={4}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
+        className="h-[200px] thumbs-swiper"
       >
-        {images.map((image) => (
-          <SwiperSlide key={image}>
-            <Image
-              src={image}
-              alt={title}
-              width={800}
-              height={600}
-              className="rounded object-fill"
-            />
+        {images.map((image, index) => (
+          <SwiperSlide key={`thumb-${image}`} className="h-[200]">
+            <div className="relative w-full h-[200]">
+              <Image
+                src={image}
+                alt={`${title} - Thumbnail ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 25vw, (max-width: 1200px) 15vw, 10vw"
+                style={{ objectFit: 'contain' }}
+                className="rounded-md cursor-pointer"
+              />
+            </div>
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
     </div>
   );
 };

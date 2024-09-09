@@ -4,7 +4,6 @@ import {
   UserInfo,
   RelatedProducts,
   ProductSlideshow,
-  ProductMobileSlideshow,
   RejectedProduct,
 } from '@/components';
 import { getComments, getProductBySlug } from '@/actions';
@@ -77,13 +76,7 @@ export default async function ProductDetailPage({
           <ProductSlideshow
             images={product.images}
             title={product.title}
-            className="hidden md:block h-[85vh]"
-          />
-          {/* Mobile slideshow */}
-          <ProductMobileSlideshow
-            images={product.images}
-            title={product.title}
-            className="block md:hidden"
+            className="w-full bg-white"
           />
         </div>
 
