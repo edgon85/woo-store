@@ -1,6 +1,7 @@
 import { getOrderById } from '@/actions';
 import NotFound from '../../../../not-found';
 import {
+  BtnUpdateState,
   DownLoadGide,
   PageLoadingSkeleton,
   TransactionStatus,
@@ -57,7 +58,13 @@ export default async function PageOrderDetail({ params }: Props) {
               <p>{order.seller.fullName}</p>
             </div>
             <div>
-              <p className="text-base">Estado:</p>
+              <div className="flex gap-1 mb-2">
+                <p className="text-base">Estado:</p>
+                <BtnUpdateState
+                  orderId={order.id!}
+                  orderStatus={order.orderStatus}
+                />
+              </div>
               <TransactionStatus status={order.orderStatus} />
             </div>
             <div className="text-base">
