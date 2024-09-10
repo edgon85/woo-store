@@ -100,7 +100,6 @@ export const ShippingServiceSection = ({ isShippingIncluded }: Props) => {
                             Envío Gratis
                           </span>
                           <span className="ml-2 text-sm text-gray-500">
-                            (Valor original:{' '}
                             {formatCurrency(ppd.regularPrice * 100)})
                           </span>
                         </>

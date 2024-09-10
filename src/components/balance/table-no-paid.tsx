@@ -6,6 +6,7 @@ type Props = {
 };
 
 export const TableNoPaid = ({ data }: Props) => {
+  console.log(data);
   return (
     <section className="mb-4">
       <div className="relative overflow-x-auto">
@@ -25,6 +26,9 @@ export const TableNoPaid = ({ data }: Props) => {
                 Precio
               </th>
               <th scope="col" className="px-6 py-3">
+                Envío incluido
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Comisión
               </th>
               <th scope="col" className="px-6 py-3">
@@ -33,37 +37,45 @@ export const TableNoPaid = ({ data }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {data.orders.map((order: any) => (
-              <tr key={order.id} className="bg-white border-b ">
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize"
-                >
-                  {order.product.title}
-                </th>
-                <td className="px-6 py-4">
-                  {order.paid ? <span>pagado</span> : <span>pendiente</span>}
-                </td>
-                <td className="px-6 py-4">
-                  {formatCurrency(order.product.price * 100)}
-                </td>
-                <td className="px-6 py-4">
-                  {formatCurrency(order.summary.serviceFeeSeller * 100)}
-                </td>
-                <td className="px-6 py-4">
-                  {formatCurrency(
-                    (order.summary.productPrice -
-                      order.summary.serviceFeeSeller) *
-                      100
-                  )}
-                </td>
-              </tr>
-            ))}
+            {data.orders.map((order: any) => {
+              console.log(order.summary);
+              return (
+                <tr key={order.id} className="bg-white border-b ">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize"
+                  >
+                    {order.product.title}
+                  </th>
+                  <td className="px-6 py-4">
+                    {order.paid ? <span>pagado</span> : <span>pendiente</span>}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(order.product.price * 100)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(order.summary.shippingIncluded * 100)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(order.summary.serviceFeeSeller * 100)}
+                  </td>
+                  <td className="px-6 py-4">
+                    {formatCurrency(
+                      (order.summary.productPrice -
+                        (order.summary.serviceFeeSeller +
+                          order.summary.shippingIncluded)) *
+                        100
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
             <tr className="">
               <th
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               ></th>
+              <td className="px-6 py-4"></td>
               <td className="px-6 py-4"></td>
               <td className="px-6 py-4"></td>
               <td className="px-6 py-4 bg-cerise-red-500 text-white">

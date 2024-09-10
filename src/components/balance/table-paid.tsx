@@ -26,6 +26,9 @@ export const TablePaid = ({ data }: Props) => {
                 Precio
               </th>
               <th scope="col" className="px-6 py-3">
+                Envío incluido
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Comisión
               </th>
               <th scope="col" className="px-6 py-3">
@@ -60,12 +63,16 @@ export const TablePaid = ({ data }: Props) => {
                       {formatCurrency(order.product.price * 100)}
                     </td>
                     <td className="px-6 py-4">
+                      {formatCurrency(order.summary.shippingIncluded * 100)}
+                    </td>
+                    <td className="px-6 py-4">
                       {formatCurrency(order.summary.serviceFeeSeller * 100)}
                     </td>
                     <td className="px-6 py-4">
                       {formatCurrency(
                         (order.summary.productPrice -
-                          order.summary.serviceFeeSeller) *
+                          (order.summary.serviceFeeSeller +
+                            order.summary.shippingIncluded)) *
                           100
                       )}
                     </td>

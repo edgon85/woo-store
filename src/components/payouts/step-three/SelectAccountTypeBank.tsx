@@ -23,7 +23,7 @@ export const SelectAccountTypeBank = () => {
               <p>Monetarios</p>
             </div>
             {accountTypeBank === 'monetarios' && (
-              <RadioButtonOn className="text-cerise-red-600" />
+              <RadioButtonOn className="text-cerise-red-600 w-6 h-6" />
             )}
           </div>
         </div>
@@ -42,7 +42,7 @@ export const SelectAccountTypeBank = () => {
               <p>Ahorros</p>
             </div>
             {accountTypeBank === 'ahorros' && (
-              <RadioButtonOn className="text-cerise-red-600" />
+              <RadioButtonOn className="text-cerise-red-600 w-6 h-6" />
             )}
           </div>
         </div>

@@ -39,7 +39,7 @@ export const StepOne = () => {
                 <p>· 3 a 7 días hábiles</p>
               </div>
               {payoutType === 'bank' && (
-                <RadioButtonOn className="text-cerise-red-600" />
+                <RadioButtonOn className="text-cerise-red-600 w-6 h-6" />
               )}
             </div>
           </div>

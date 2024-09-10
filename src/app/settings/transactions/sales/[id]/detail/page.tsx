@@ -79,7 +79,7 @@ export default async function PageOrderDetail({ params }: Props) {
             <div>
               <p className="text-base">Método de pago</p>
               <p>{order.paymentMethod.name}</p>
-              <p>{order.paymentMethod.label}</p>
+              {/* <p>{order.paymentMethod.label}</p> */}
             </div>
 
             {/* TODO: Cambiar esto */}

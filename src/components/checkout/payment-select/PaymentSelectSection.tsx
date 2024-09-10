@@ -44,7 +44,7 @@ export const PaymentSelectSection = ({ paymentMethods }: Props) => {
                     <img
                       src={option.logo}
                       alt={option.name}
-                      className="w-12 h-8"
+                      className="w-8 h-8"
                     />
                   </picture>
                   <h3>{option.name}</h3>
@@ -54,9 +54,21 @@ export const PaymentSelectSection = ({ paymentMethods }: Props) => {
           </div>
         ))}
       </div>
-      {selectedOption === 1 && <>{label}</>}
-      {selectedOption === 2 && <>{label}</>}
-      {selectedOption === 3 && <>{label}</>}
+      {selectedOption === 1 && (
+        <div className="mb-6 p-4 bg-blue-100 rounded-lg">
+          <p className="text-gray-700 whitespace-pre-wrap">{label}</p>
+        </div>
+      )}
+      {selectedOption === 2 && (
+        <div className="mb-6 p-4 bg-blue-100 rounded-lg">
+          <p className="text-gray-700 whitespace-pre-wrap">{label}</p>
+        </div>
+      )}
+      {selectedOption === 3 && (
+        <div className="mb-6 p-4 bg-blue-100 rounded-lg">
+          <p className="text-gray-700 whitespace-pre-wrap">{label}</p>
+        </div>
+      )}
     </div>
   );
 };
