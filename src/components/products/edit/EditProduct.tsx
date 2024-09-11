@@ -28,7 +28,10 @@ import { useEffect, useState } from 'react';
 import { updateProduct } from '@/actions';
 import { toast } from 'react-toastify';
 import { FormInputs, useProductForm, useUnsavedChangesWarning } from '@/hooks';
-import { Button, SpinnerIcon } from '@/components/ui';
+import { Button, EyeDropIcon, SpinnerIcon } from '@/components/ui';
+import { PriceSectionEdit } from './sections/price-section/PriceSection';
+import Link from 'next/link';
+import { BtnNotification } from '@/components/ui/navbar/btn-actions';
 
 type Props = {
   product: IProduct & { ProductImage?: ProductImage[] };
@@ -46,8 +49,9 @@ export const EditProduct = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { errors },
     reset,
+    isDirty,
     getValues,
     watch,
     initializeEditForm,
@@ -100,7 +104,20 @@ export const EditProduct = ({
 
   return (
     <div className="w-full max-w-2xl px-2 md:px-0">
-      <h2 className="text-2xl font-extrabold mb-4">Editar articulo</h2>
+      <div className="flex justify-between items-center mb-4">
+        <Link
+          href={`/product/${product.slug}`}
+          className="text-2xl font-extrabold hover:text-cerise-red-600"
+        >
+          Editar articulo
+        </Link>
+        <Link
+          href={`/product/${product.slug}`}
+          className="text-2xl font-extrabold text-cerise-red-600 hover:text-cerise-red-400" 
+        >
+          <EyeDropIcon className="mr-2 w-5 h-5" />
+        </Link>
+      </div>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
           <EditImagesSection product={product} />
@@ -137,10 +154,11 @@ export const EditProduct = ({
 
         {/* ····························································· */}
         {getValues('weight') ? (
-          <PriceSection
+          <PriceSectionEdit
             register={register}
             getValues={getValues}
             errors={errors}
+            productId={product.id!}
           />
         ) : null}
         {/* ····························································· */}

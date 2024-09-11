@@ -16,11 +16,12 @@ export default async function InboxPage({ searchParams }: Props) {
 
   return (
     <div className="mt-4">
-      <InboxMainComponent
+      {/* <InboxMainComponent
         recipientId={searchParams.u}
         username={searchParams.n}
         currentUserId={currentUserId}
-      />
+      /> */}
+      <p>No disponible en este momento</p>
     </div>
   );
 }

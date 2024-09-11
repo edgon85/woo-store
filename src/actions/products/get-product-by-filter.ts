@@ -24,7 +24,7 @@ export async function getProductFilters({
   category,
   subcategory,
   page = 1,
-  pageSize = 8,
+  pageSize = 20,
   brands,
   clothesState,
   colors,

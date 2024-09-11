@@ -16,6 +16,7 @@ import {
 } from '@/actions';
 import { ProductStatus } from '@/enums';
 import { Metadata } from 'next';
+import NotFound from './not-found';
 
 type OfferValidationResult = {
   ok: boolean;
@@ -40,10 +41,17 @@ export default async function CheckoutPage({
   const { transaction, offer } = searchParams;
 
   if (!transaction) {
-    throw redirect('/not-found');
+    return NotFound();
   }
 
-  let product = (await getProductBySlug(`${transaction}`)) as IProductWithOffer;
+  let { ok, data } = await getProductBySlug(`${transaction}`);
+
+  if (!ok) {
+    return NotFound();
+  }
+
+  let product = data as IProductWithOffer;
+
   const addressList = await fetchShippingAddress();
   const paymentMethods = (await fetchPaymentMethods()) as IPaymentMethod[];
 

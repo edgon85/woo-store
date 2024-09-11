@@ -10,15 +10,15 @@ export const metadata: Metadata = {
   title: 'Inbox',
 };
 export default async function InboxPage({ searchParams: { username } }: Props) {
-
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
 
   return (
     <div className="main-wrapper min-h-[70vh]">
-      <InboxMainComponent
+      {/*  <InboxMainComponent
         currentUserId={currentUserId}
-      />
+      /> */}
+      <p>No disponible en este momento</p>
     </div>
   );
 }

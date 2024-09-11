@@ -16,8 +16,10 @@ type Props = {
 export const ProductCard = async ({ product, currentUserId }: Props) => {
   const imageUrl = await checkImageAvailable(product.images[0]);
 
+  const statusInfo = getStatusMessage(product.status);
+
   return (
-    <div className="relative w-full max-w-md mx-auto border border-gray-200 rounded-lg">
+    <div className="relative w-full bg-white max-w-md mx-auto border border-gray-200 rounded-lg">
       <div className="relative group">
         <Link href={`/product/${product.slug}`}>
           <Image
@@ -31,6 +33,13 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
         <div className="absolute top-2 right-2">
           <UserProfile user={product.user!} />
         </div>
+        {statusInfo && (
+          <div
+            className={`absolute bottom-0 left-0 right-0 ${statusInfo.bgColor} px-2 py-2`}
+          >
+            <p className="text-white font-bold">{statusInfo.text}</p>
+          </div>
+        )}
       </div>
       <div className="space-y-2 bg-white rounded-b-lg p-2">
         <Link
@@ -61,32 +70,36 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
           <span className="text-gray-500">{product.brand.title}</span>
         </div>
       </div>
+      {currentUserId === product.user?.id && (
+        <Link
+          href={`/product/edit/${product.id}`}
+          className="w-full inline-block bg-cerise-red-600 text-white text-center py-2"
+        >
+          Editar
+        </Link>
+      )}
     </div>
   );
 };
 
-/* 
-    <div className="bg-white rounded-lg shadow-md flex flex-col h-full">
-      <div className="p-2">
-        <UserProfile user={product.user!} />
-      </div>
-      <ImageComponent
-        src={imageUrl ?? '/empty-image.svg'}
-        alt={`Imagen de ${product.title}`}
-        prodSlug={product.slug!}
-      />
-      <div className="p-2 flex flex-col flex-grow">
-        <div className="flex-grow">
-          <ProductInfo {...product} />
-        </div>
-        {product.status === ProductStatus.Available && (
-          <div className="mt-auto">
-            <Suspense fallback={<ButtonSkeleton />}>
-              <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
-            </Suspense>
-          </div>
-        )}
-      </div>
-    </div>
-
-*/
+const getStatusMessage = (status: string) => {
+  switch (status) {
+    case 'pending':
+      return { text: 'Pendiente', bgColor: 'bg-yellow-400' };
+    case 'sold':
+      return { text: 'Vendido', bgColor: 'bg-green-400' };
+    case 'archived':
+      return { text: 'Archivado', bgColor: 'bg-gray-400' };
+    case 'hidden':
+      return { text: 'Oculto', bgColor: 'bg-blue-600' };
+    case 'reserved':
+      return { text: 'Reservado', bgColor: 'bg-blue-400' };
+    case 'under_review':
+      return { text: 'En revisión', bgColor: 'bg-red-800' };
+    case 'pending_payment':
+      return { text: 'Pendiente de pago', bgColor: 'bg-red-400' };
+    case 'available':
+    default:
+      return null;
+  }
+};

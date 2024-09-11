@@ -19,19 +19,19 @@ import {
 
 export const BtnApps = () => {
   const { socket } = useContext(SocketContext);
-  const { dispatch } = useContext(ChatContext);
+  // const { dispatch } = useContext(ChatContext);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const { unreadCount } = useInboxStore();
 
   useNotifications(socket);
 
-  const onHandleClickMessages = async () => {
+  /* const onHandleClickMessages = async () => {
     router.push('/inbox');
     dispatch({ type: '[Chat] - DELETE_CHAT_ACTIVE' });
     setIsCollapsed(false);
-  };
+  }; */
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -80,7 +80,7 @@ export const BtnApps = () => {
           Opciones
         </div>
         <div className="grid grid-cols-3 gap-4 p-4">
-          <button
+          {/* <button
             onClick={onHandleClickMessages}
             className="relative p-4 text-center rounded-lg hover:bg-gray-100 group"
           >
@@ -93,7 +93,7 @@ export const BtnApps = () => {
             <div className="text-sm font-medium text-gray-700">
               Mis Mensajes
             </div>
-          </button>
+          </button> */}
           <Link
             onClick={() => setIsCollapsed(false)}
             href={`/settings/transactions/purchases`}

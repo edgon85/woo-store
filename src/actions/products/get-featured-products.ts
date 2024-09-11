@@ -1,27 +1,25 @@
 'use server';
+import { unstable_noStore as noStore } from 'next/cache';
 
 type PaginationOptions = {
   page?: number;
-  take?: number;
+  pageSize?: number;
   query?: string;
 };
 export async function getFeaturedProducts({
   page = 1,
-  take = 10,
+  pageSize = 20,
   query = '',
 }: PaginationOptions) {
-  if (isNaN(Number(page))) page = 1;
-  if (page < 1) page = 1;
+  noStore();
 
-  let url = `${process.env.API_BASE_URL}/products/featured?take=${take}&skip=${
-    (page - 1) * take
-  }`;
+  const skip = (page - 1) * pageSize;
 
-  // Agregar el parámetro de búsqueda si se proporciona un valor no vacío para query
-  if (query.trim() !== '') {
-    url += `&search=${encodeURIComponent(query)}`;
-  }
+  const url = new URL(`${process.env.API_BASE_URL}/products/featured`);
+  url.searchParams.append('take', pageSize.toString());
+  url.searchParams.append('skip', skip.toString());
 
+  console.log(url);
   try {
     const resp = await fetch(url, {
       method: 'GET',

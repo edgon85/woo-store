@@ -2,18 +2,17 @@ import {
   ProductDetail,
   BtnActions,
   UserInfo,
-  RelatedProducts,
   ProductSlideshow,
   RejectedProduct,
 } from '@/components';
 import { getComments, getProductBySlug } from '@/actions';
-import { IProduct } from '@/interfaces';
 
 import { getAuthInfo } from '@/libs';
 import { Metadata, ResolvingMetadata } from 'next';
 import { formatTitle } from '@/utils';
 import { ProductComments } from '@/components/products/product-detail/comments/ProductComments';
 import NotFound from './not-found';
+import { IProduct } from '@/interfaces';
 
 type Props = {
   params: { slug: string };
@@ -24,18 +23,17 @@ export async function generateMetadata(
   props: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const product = (await getProductBySlug(props.params.slug)) as IProduct;
+  const { ok, data: product } = await getProductBySlug(props.params.slug);
 
-  if (!product) {
+  if (!ok) {
     return {
       title: formatTitle(props.params.slug),
     };
   }
 
-  const title = product.title;
-  const size = product.measurement.size;
-  const imageUrl = product.images[0];
-  const description = product.description || '';
+  const title = product?.title!;
+  const imageUrl = product?.images![0];
+  const description = product?.description || '';
 
   return {
     title,
@@ -54,10 +52,13 @@ export default async function ProductDetailPage({
 }: Props) {
   const focusMessage = focus === 'message';
 
-  const product = (await getProductBySlug(slug)) as IProduct;
+  const { ok, data } = await getProductBySlug(slug);
 
-  if (!product) {
-    NotFound();
+  const product = data as IProduct;
+
+  console.log({ ok });
+  if (!ok) {
+    return NotFound();
   }
 
   const { data: comments } = await getComments(product.id!);
@@ -72,7 +73,6 @@ export default async function ProductDetailPage({
       <section className="main-wrapper mt-0 md:mt-4 grid grid-cols-1 md:grid-cols-3 gap-2">
         {/* Image Slideshow */}
         <div className="col-span-1 md:col-span-2">
-          {/* Desktop */}
           <ProductSlideshow
             images={product.images}
             title={product.title}

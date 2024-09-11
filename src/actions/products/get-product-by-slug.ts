@@ -7,9 +7,7 @@ type ErrorResult = {
   message: string;
 };
 
-export async function getProductBySlug(
-  productSlug: string
-): Promise<IProduct | ErrorResult> {
+export async function getProductBySlug(productSlug: string) {
   noStore();
   const url = `${process.env.API_BASE_URL}/products/${productSlug}`;
 
@@ -28,7 +26,10 @@ export async function getProductBySlug(
 
     const data: IProduct = await resp.json();
 
-    return data;
+    return {
+      ok: true,
+      data,
+    };
   } catch (error: any) {
     console.log(error.message);
     return { ok: false, message: error.message };

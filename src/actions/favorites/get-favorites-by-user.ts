@@ -3,21 +3,23 @@ import { unstable_noStore as noStore } from 'next/cache';
 
 type PaginationOptions = {
   page?: number;
-  take?: number;
+  pageSize?: number;
   username: string;
 };
 
 export async function getFavoritesByUser({
   username,
   page = 1,
-  take = 10,
+  pageSize = 20,
 }: PaginationOptions) {
   noStore();
+  const skip = (page - 1) * pageSize;
+
+  const url = new URL(`${process.env.API_BASE_URL}/favorites/u/${username}`);
+  url.searchParams.append('take', pageSize.toString());
+  url.searchParams.append('skip', skip.toString());
 
   try {
-    const url = `${
-      process.env.API_BASE_URL
-    }/favorites/u/${username}?take=${take}&skip=${(page - 1) * take}`;
     const resp = await fetch(url, {
       method: 'GET',
       headers: {

@@ -28,9 +28,13 @@ export default async function EditProductPage({
       getColors(),
     ]);
 
-  const product = productResult as IProduct;
+  const { ok, data: product } = productResult;
 
-  if (currentUserId !== product.user?.id)
+  if (!ok) {
+    return <p>No pude obtener el producto</p>;
+  }
+
+  if (currentUserId !== product?.user?.id)
     return (
       <>
         <p>No pude actualizar este producto</p>
