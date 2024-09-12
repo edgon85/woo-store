@@ -176,12 +176,12 @@ export const CreateProduct = ({
             {/* ····························································· */}
             <BrandSection brands={brands} />
             {/* ····························································· */}
-            {category && getValues('clothesType') !== 'accesorios' ? (
+            {/* {category && getValues('clothesType') !== 'accesorios' ? ( */}
               <MeasurementSection
                 gender={getValues('gender')}
                 clothesType={getValues('clothesType')}
               />
-            ) : null}
+            {/* ) : null} */}
             {/* ····························································· */}
             <ClothesStateSection
               clothingConditionList={clothingConditionList}

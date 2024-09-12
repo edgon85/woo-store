@@ -19,7 +19,6 @@ export async function getFeaturedProducts({
   url.searchParams.append('take', pageSize.toString());
   url.searchParams.append('skip', skip.toString());
 
-  console.log(url);
   try {
     const resp = await fetch(url, {
       method: 'GET',

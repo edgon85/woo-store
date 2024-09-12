@@ -42,6 +42,7 @@ export async function createProduct(
       body: JSON.stringify({
         ...restProduct,
         images: cloudinaryImages,
+        coverImage: cloudinaryImages[0],
       }),
     });
 

@@ -9,6 +9,7 @@ export interface IProduct {
   category?: ICategory;
   price: number;
   images: string[];
+  coverImage: string;
   isFeatured?: boolean;
   status: string;
   weight: number;

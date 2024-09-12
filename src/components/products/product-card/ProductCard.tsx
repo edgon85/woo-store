@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const ProductCard = async ({ product, currentUserId }: Props) => {
-  const imageUrl = await checkImageAvailable(product.images[0]);
+  const imageUrl = await checkImageAvailable(product.coverImage);
 
   const statusInfo = getStatusMessage(product.status);
 
