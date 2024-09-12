@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Filter, IMeasurement } from '@/interfaces';
-import { generateFilterURL, measurementFormat } from '@/utils';
+import { formatMeasurementString, generateFilterURL } from '@/utils';
 import { useEffect } from 'react';
 import {
   useFilterStore,
@@ -17,8 +17,6 @@ type Props = {
 };
 
 export const MeasurementFilterItems = ({
-  /*  gender,
-  clothing_type, */
   isMobile = false,
   isSearch = false,
 }: Props) => {
@@ -82,7 +80,7 @@ export const MeasurementFilterItems = ({
               htmlFor={measurement.slug}
               className="flex justify-between items-center cursor-pointer hover:text-darkPrimary uppercase"
             >
-              {/* TODO: <span>{measurementFormat(category.title, measurement)}</span> */}
+              {/* <span>{formatMeasurementString(measurement, category)}</span> */}
               <span>{measurement.size}</span>
               <input
                 name={measurement.size}

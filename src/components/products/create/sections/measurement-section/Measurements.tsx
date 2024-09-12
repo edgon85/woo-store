@@ -2,6 +2,7 @@ import { CheckMark } from '@/components/ui';
 import { useFetcher } from '@/hooks';
 import { IMeasurement } from '@/interfaces';
 import { useCreateProductStore, useModalStore } from '@/stores';
+import { formatMeasurementString } from '@/utils';
 
 type Props = {
   gender: string;
@@ -39,12 +40,8 @@ export const Measurements = ({ gender, clothesType }: Props) => {
                 key={id}
                 className="flex justify-between items-center px-1 py-2 border-b cursor-pointer hover:bg-lightPrimary"
               >
-                {formatMeasurementString(
-                  resp,
-                  gender,
-                  clothesType,
-                  category?.title!
-                )}
+                {formatMeasurementString(resp, gender)}
+                {/* {measurementFormat(category?.slug!, resp)} */}
                 {measurement?.id === resp.id ? (
                   <CheckMark className="text-cerise-red-600 w-6 h-6" />
                 ) : null}
@@ -54,31 +51,4 @@ export const Measurements = ({ gender, clothesType }: Props) => {
       </ul>
     </>
   );
-};
-
-export const formatMeasurementString = (
-  measurement: IMeasurement,
-  gender: string,
-  clothesType: string,
-  category: string
-): string => {
-  if (!measurement) return '';
-
-  const { eu, long, size, uk, us, waist } = measurement;
-  let parts: string[] = [];
-
-  if (size !== 'unica') {
-    parts.push(size);
-    if (['zapatos', 'ropa'].includes(clothesType)) {
-      parts.push(`${us} US`, `${eu} EU`);
-    }
-    if (clothesType === 'zapatos' && gender === 'hombre') {
-      parts.push(`${uk} UK`);
-    }
-    if (category === 'pantalones' && waist && long) {
-      parts.push(`${waist} cm`, `${long} cm`);
-    }
-  }
-
-  return parts.join(' / ');
 };

@@ -1,5 +1,5 @@
 import { IProduct } from '@/interfaces';
-import { measurementFormat, formatCurrency } from '@/utils';
+import { formatCurrency, formatMeasurementString } from '@/utils';
 
 import { BtnActionsDetail } from './buttons/BtnActionsDetail';
 import {
@@ -59,7 +59,7 @@ export const ProductDetail = ({ product, currentUserId }: Props) => {
           <ListItem
             icon={<RulerIcon />}
             title="Talla"
-            content={measurementFormat(category?.title!, measurement)}
+            content={formatMeasurementString(measurement, category?.title!)}
           />
           <ListItem
             icon={<CircleCheck />}

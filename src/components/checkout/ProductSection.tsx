@@ -1,5 +1,5 @@
 import { IProduct, ISubcategoryWithCategory } from '@/interfaces';
-import { measurementFormat, formatCurrency } from '@/utils';
+import { formatCurrency, formatMeasurementString } from '@/utils';
 
 type Props = {
   product: IProduct;
@@ -27,9 +27,9 @@ export const ProductSection = ({ product: productCheckout }: Props) => {
             <h2 className="text-lg">{productCheckout?.title}</h2>
             <p className="flex gap-2">
               <span>
-                {measurementFormat(
-                  `${category}`,
-                  productCheckout?.measurement!
+                {formatMeasurementString(
+                  productCheckout?.measurement!,
+                  `${category}`
                 )}
               </span>
               ·

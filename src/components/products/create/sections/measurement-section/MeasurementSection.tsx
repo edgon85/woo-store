@@ -1,7 +1,8 @@
 import { ItemCreate } from '../ItemCreate';
 import { useCreateProductStore, useModalStore } from '@/stores';
-import { Measurements, formatMeasurementString } from './Measurements';
+import { Measurements } from './Measurements';
 import { RulerIcon } from '@/components/ui';
+import { formatMeasurementString } from '@/utils';
 
 type Props = {
   gender: string;
@@ -18,12 +19,7 @@ export const MeasurementSection = ({ gender, clothesType }: Props) => {
       uppercase
       title="Talla"
       icon={<RulerIcon />}
-      value={formatMeasurementString(
-        measurement!,
-        gender,
-        clothesType,
-        category?.title!
-      )}
+      value={formatMeasurementString(measurement!, gender)}
       onClick={() =>
         openModal(
           <div className=" w-72 md:w-96 p-4">

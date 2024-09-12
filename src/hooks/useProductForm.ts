@@ -89,6 +89,7 @@ export const useProductForm = (
 
     const productData: IProduct = {
       images: [],
+      coverImage: '',
       title: data.title,
       description: data.description,
       subcategory: subcategory!,

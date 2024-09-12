@@ -1,32 +1,53 @@
 import { IMeasurement } from '@/interfaces';
 
-export const measurementFormat = (
-  category: string,
-  measurement: IMeasurement
+export const formatMeasurementString = (
+  measurement: IMeasurement,
+  category: string
 ): string => {
-  const { size, us, eu, uk, waist, long, gender, clothesType } = measurement;
+  if (!measurement) return '';
 
-  let measurementFormat = '';
+  const { eu, long, size, uk, us, waist, clothesType, gender, slug } =
+    measurement;
+  let parts: string[] = [];
 
-  const sizeFormat = size === 'única' ? 'única' : size;
-  const usValue = us === undefined ? '' : `/ ${us} us`;
-  const euValue = eu === undefined ? '' : `/ ${eu} eu`;
-  const ukValue = uk === undefined ? '' : `/ ${uk} uk`;
-
-  const waistValue = waist === undefined ? '' : `/ ${waist} cm`;
-  const longValue = waist === undefined ? '' : `/ ${long} cm`;
-
-  if (gender === 'mujer' && clothesType === 'ropa') {
-    measurementFormat = `${size} ${usValue} ${euValue}`;
-  } else if (gender === 'mujer' && clothesType === 'zapatos') {
-    measurementFormat = `${size} cm ${usValue} ${ukValue} ${euValue}`;
-  } else if (gender === 'hombre' && clothesType === 'zapatos') {
-    measurementFormat = `${size} cm ${usValue} ${ukValue} ${euValue}`;
-  } else if (gender === 'hombre' && category === 'pantalones') {
-    measurementFormat = `${size} ${waistValue} ${longValue}`;
-  } else {
-    measurementFormat = `${size}`;
+  if (size === 'unica' || size === 'única') {
+    return 'Única';
   }
 
-  return measurementFormat.toUpperCase();
+  if (clothesType === 'zapatos') {
+    parts.push(`${size}`);
+    parts.push(`${us} US`);
+    parts.push(`${eu} EU`);
+    if (gender === 'hombre') {
+      parts.push(`${uk} UK`);
+    }
+    return parts.join(' / ');
+  }
+
+  if (clothesType === 'ropa') {
+    if (
+      gender === 'hombre' &&
+      !isNaN(Number(size)) &&
+      !slug.includes('pantalon')
+    ) {
+      parts.push(`${size} cm`);
+    } else {
+      parts.push(size);
+    }
+    /* if (us !== 0) parts.push(`${us} US`);
+    if (eu !== 0) parts.push(`${eu} EU`); */
+    if (us !== 0) parts.push(`${us} US`);
+    if (eu !== 0) parts.push(`${eu} EU`);
+    return parts.join(' / ');
+  }
+
+  if (gender === 'hombre' && slug.includes('pantalon')) {
+    return size;
+  }
+
+  if (category === 'pantalones' && waist && long) {
+    parts.push(`${waist} cm`, `${long} cm`);
+  }
+
+  return parts.join(' / ');
 };

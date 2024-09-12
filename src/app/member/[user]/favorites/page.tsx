@@ -20,7 +20,6 @@ export default async function UserRatingsPage({ params, searchParams }: Props) {
 
   const data = await getFavoritesByUser({
     username: params.user.trim(),
-    take: 8,
     page: Number(page) || 1,
   });
 
