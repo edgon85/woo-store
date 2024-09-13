@@ -1,8 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-<<<<<<< HEAD
-.env
-=======
 .vscode
 .vscode/
 
@@ -12,7 +9,6 @@ mongo/
 .env.development
 .env.production
 
->>>>>>> development
 
 # dependencies
 /node_modules
