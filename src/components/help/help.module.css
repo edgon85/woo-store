@@ -1,0 +1,43 @@
+.accordionContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.accordionCheckbox:checked + .accordionItem .accordionContent {
+  max-height: 1000px; /* Ajusta este valor según sea necesario */
+}
+
+.accordionCheckbox:checked + .accordionItem .accordionIconDown {
+  display: none;
+}
+
+.accordionCheckbox:not(:checked) + .accordionItem .accordionIconUp {
+  display: none;
+}
+
+.accordionItem {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.accordionLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.accordionIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.accordionContentInner {
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
