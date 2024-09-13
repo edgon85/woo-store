@@ -40,13 +40,13 @@ export const BtnBuyOrEdit = ({
         {currentUserId !== product.user?.id ? (
           <button
             onClick={handleBuyClick}
-            className="bg-cerise-red-600 hover:bg-cerise-red-500 text-white text-sm rounded flex justify-center items-center px-4 py-2 w-full"
+            className="bg-gradient-to-r from-cerise-red-500 to-cerise-red-600 hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 text-white text-sm rounded flex justify-center items-center px-4 py-2 w-full"
           >
             Comprar
           </button>
         ) : (
           <button
-            className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
+            className="w-full border border-cerise-red-600 text-cerise-red-600 text-sm hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 hover:text-white hover:border-none rounded flex justify-center items-center px-4 py-2"
             onClick={() => handleEditClick(product.id!)}
           >
             Editar

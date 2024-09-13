@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { BtnActions } from './btn-actions';
-import logo from '../../../../public/logo.svg';
+import logo from '../../../../public/logo-lila.svg';
 import { SearchInput } from './search/SearchInput';
 import { ListClothesType } from './clothes-type/ListClothesType';
 

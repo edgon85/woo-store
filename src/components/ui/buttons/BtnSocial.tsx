@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { FacebookIcon, GoogleIcon, SpinnerIcon } from '../icons';
 
 type Provider = string;
@@ -22,7 +22,7 @@ const providerIcons: { [key: string]: JSX.Element } = {
 };
 
 const BASE_BUTTON_CLASSES =
-  'text-white w-full rounded-md py-2 uppercase shadow-md flex justify-center items-center gap-2 cursor-pointer';
+  'text-xs md:text-sm px-1 md:px-0 text-white w-full rounded py-2 uppercase shadow-md flex justify-center items-center gap-2 cursor-pointer';
 
 export const BtnSocial = ({
   title,

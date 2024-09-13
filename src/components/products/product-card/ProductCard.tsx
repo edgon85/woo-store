@@ -73,7 +73,7 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
       {currentUserId === product.user?.id && (
         <Link
           href={`/product/edit/${product.id}`}
-          className="w-full inline-block bg-cerise-red-600 text-white text-center py-2"
+          className="w-full inline-block bg-gradient-to-r from-cerise-red-500 to-cerise-red-600 hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 text-white text-center py-2"
         >
           Editar
         </Link>

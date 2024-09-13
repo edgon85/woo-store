@@ -115,7 +115,7 @@ export const LoginForm = () => {
 
         <button
           type="submit"
-          className="bg-primary w-full py-2 text-lg text-white uppercase rounded-md shadow-md cursor-pointer disabled:opacity-50"
+          className="bg-primary w-full py-2 text-xs md:text-sm text-white uppercase rounded-md shadow-md cursor-pointer disabled:opacity-50"
           disabled={isLoading}
         >
           {isLoading ? (
@@ -127,11 +127,11 @@ export const LoginForm = () => {
           )}
         </button>
       </form>
-      <div className="mt-6 w-full bg-background rounded-md p-2 text-center">
-        <span className="text-sm">¿Ha olvidado su contraseña? </span>
+      <div className="mt-6 w-full bg-background rounded p-2 text-center">
+        <span className="text-xs md:text-sm">¿Ha olvidado su contraseña? </span>
         <Link
           href="#"
-          className={`text-primary underline text-sm uppercase ${
+          className={`text-primary underline text-xs md:text-sm uppercase ${
             isLoading ? 'pointer-events-none opacity-50' : ''
           }`}
         >
@@ -141,5 +141,3 @@ export const LoginForm = () => {
     </div>
   );
 };
-
-

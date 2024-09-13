@@ -29,7 +29,7 @@ export default async function PayoutMethodsPage() {
       <div>
         <Link
           href={'/settings/payments/payout-methods/add'}
-          className="border p-2 rounded bg-cerise-red-600 hover:bg-cerise-red-500 text-white"
+          className="bg-gradient-to-r from-cerise-red-500 to-cerise-red-600 hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 p-2 rounded text-white"
         >
           Agregar una forma de cobro
         </Link>

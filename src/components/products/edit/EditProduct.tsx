@@ -113,7 +113,7 @@ export const EditProduct = ({
         </Link>
         <Link
           href={`/product/${product.slug}`}
-          className="text-2xl font-extrabold text-cerise-red-600 hover:text-cerise-red-400" 
+          className="text-2xl font-extrabold text-cerise-red-600 hover:text-cerise-red-400"
         >
           <EyeDropIcon className="mr-2 w-5 h-5" />
         </Link>
@@ -165,7 +165,7 @@ export const EditProduct = ({
 
         {watch('price') ? (
           <div className="mt-4">
-            <Button
+            {/* <Button
               label={isLoading ? '' : 'Guardar'}
               icon={
                 isLoading ? (
@@ -176,7 +176,19 @@ export const EditProduct = ({
               }
               type="submit"
               disabled={!isDirty}
-            />
+            /> */}
+            <button
+              type="submit"
+              disabled={!isDirty}
+              className="w-full bg-gradient-to-r from-cerise-red-500 to-cerise-red-600 hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 text-white text-sm rounded flex justify-center items-center py-2 mt-2 disabled:opacity-70"
+            >
+              {isLoading ? (
+                <SpinnerIcon className="w-6 h-6 animate-spin text-white" />
+              ) : (
+                <></>
+              )}
+              {isLoading ? '' : 'Guardar'}
+            </button>
           </div>
         ) : null}
       </form>

@@ -46,12 +46,12 @@ export const BtnEditPayout = ({ payoutMethod }: Props) => {
       showLoaderOnConfirm: true,
 
       preConfirm: async () => {
-          const { ok, message } = await deletePayoutMethod(id);
-        
-              if (!ok) {
-                Swal.showValidationMessage(`error: ${message}`);
-                return;
-              }
+        const { ok, message } = await deletePayoutMethod(id);
+
+        if (!ok) {
+          Swal.showValidationMessage(`error: ${message}`);
+          return;
+        }
 
         return 'todo ok';
       },
@@ -72,7 +72,7 @@ export const BtnEditPayout = ({ payoutMethod }: Props) => {
   return (
     <div className="relative flex flex-col" ref={ref}>
       <button
-        className="border border-black px-4 py-2 rounded hover:bg-cerise-red-300"
+        className="border border-cerise-red-500 text-cerise-red-500 px-4 py-2 rounded hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 hover:text-white"
         onClick={() => setIsCollapsed((prev) => !prev)}
       >
         Editar
