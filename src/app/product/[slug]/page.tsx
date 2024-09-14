@@ -58,7 +58,7 @@ export default async function ProductDetailPage({
 
   console.log({ ok });
   if (!ok) {
-    return NotFound();
+    NotFound();
   }
 
   const { data: comments } = await getComments(product.id!);

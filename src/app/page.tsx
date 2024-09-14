@@ -5,9 +5,14 @@ import {
   FeaturedArticles,
   MenWomanExclusive,
 } from '@/components';
+import NotFound from './not-found';
 
 export default async function Home() {
-  const { data } = await getFeaturedProducts({});
+  const { data, ok } = await getFeaturedProducts({});
+
+  if (!ok) {
+    NotFound();
+  }
 
   return (
     <main>

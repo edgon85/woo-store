@@ -5,6 +5,7 @@ import { EmptyTransaction, ProductCard } from '@/components';
 import { IProduct } from '@/interfaces';
 import { getAuthInfo } from '@/libs';
 import { Metadata, ResolvingMetadata } from 'next';
+import NotFound from './not-found';
 
 type Props = {
   params: { user: string };
@@ -51,6 +52,10 @@ export default async function UserMemberPage({ params: { user } }: Props) {
 
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
+
+  if (!products) {
+    NotFound();
+  }
 
   if (products.length === 0) {
     return (

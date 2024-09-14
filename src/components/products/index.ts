@@ -8,3 +8,5 @@ export * from './slideshow/ProductMobileSlideshow';
 export * from './edit/EditProduct';
 
 export * from './product-detail/rejected-product/RejectedProduct';
+
+export * from './NotProductFound';

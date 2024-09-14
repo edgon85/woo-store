@@ -1,8 +1,12 @@
 import { getAuthInfo } from '@/libs';
-import NotFound from './not-found';
 import { Suspense } from 'react';
 import ProductsSkeleton from '@/components/ui/skeletons';
-import { BadgeFilterList, Pagination, ProductCard } from '@/components';
+import {
+  BadgeFilterList,
+  NotProductFound,
+  Pagination,
+  ProductCard,
+} from '@/components';
 import { generateDynamicMetadata, getFilteredProducts } from '@/utils';
 import ErrorPage from './error';
 import { Metadata, ResolvingMetadata } from 'next';
@@ -37,7 +41,7 @@ export default async function GenderPage({
   }
 
   if (products.length === 0) {
-    return NotFound();
+    return NotProductFound();
   }
 
   return (
