@@ -1,7 +1,6 @@
 import { getBrands, getClothingCondition, getColors } from '@/actions';
 import { EditProduct } from '@/components';
 import { getProductBySlug } from '@/actions';
-import { IProduct } from '@/interfaces';
 import { getAuthInfo } from '@/libs';
 import { Metadata } from 'next';
 

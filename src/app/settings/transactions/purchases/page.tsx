@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 export default async function PurchasesPage() {
   const { data, ok } = await fetchOrders('buyer');
 
-  if (!ok) return NotFound();
+  if (!ok) {
+    NotFound();
+  }
 
   if (data.length === 0)
     return (

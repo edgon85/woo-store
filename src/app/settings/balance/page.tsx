@@ -2,6 +2,7 @@ import { getOrdersNoPaid, getOrdersPaid } from '@/actions';
 import { TableNoPaid, TablePaid } from '@/components';
 import { formatCurrency } from '@/utils';
 import { Metadata } from 'next';
+import NotFound from '../not-found';
 
 export const metadata: Metadata = {
   title: 'Mi balance',
@@ -10,6 +11,10 @@ export const metadata: Metadata = {
 export default async function BalancePage() {
   const { ok, data } = await getOrdersNoPaid();
   const { data: OrdersPaid } = await getOrdersPaid();
+
+  if (!ok) {
+    NotFound();
+  }
 
   return (
     <>

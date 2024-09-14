@@ -1,7 +1,11 @@
-import { BadgeFilterList, Pagination, ProductCard } from '@/components';
+import {
+  BadgeFilterList,
+  NotProductFound,
+  Pagination,
+  ProductCard,
+} from '@/components';
 import { getAuthInfo } from '@/libs';
 import { generateDynamicMetadata, getFilteredProducts } from '@/utils';
-import NotFound from '../../not-found';
 import { Suspense } from 'react';
 import ProductsSkeleton from '@/components/ui/skeletons';
 import ErrorPage from '../../error';
@@ -40,7 +44,7 @@ export default async function CategoryPage({
   }
 
   if (products.length === 0) {
-    return NotFound();
+    return NotProductFound();
   }
 
   return (

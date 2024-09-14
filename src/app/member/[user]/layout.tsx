@@ -16,7 +16,7 @@ export default async function ProfileLayout({
   } = await fetchPublicProfile(params.user);
 
   if (!ok) {
-    return <NotFound message={messageData} />;
+    NotFound();
   }
 
   return (

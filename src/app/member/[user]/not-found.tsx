@@ -1,14 +1,21 @@
+import Image from 'next/image';
+
 type Props = {
   message: string;
 };
 
-export default function NotFound({ message = 'usuario no encontrado' }: Props) {
+export default function NotFound() {
   return (
     <div className="w-full mt-10 md:mt-10 flex flex-col justify-center items-center">
-      <picture>
-        <img src="/svgs/void-user.svg" alt={message} className="max-w-80" />
-      </picture>
-      <p className="text-lg">{message}</p>
+      <Image
+        src="/void-user.svg"
+        alt="Usuario no encontrado"
+        className="max-w-80"
+        width={400}
+        height={400}
+      />
+
+      <p className="text-lg">Pagina no disponible</p>
     </div>
   );
 }

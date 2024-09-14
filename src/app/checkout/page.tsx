@@ -41,13 +41,13 @@ export default async function CheckoutPage({
   const { transaction, offer } = searchParams;
 
   if (!transaction) {
-    return NotFound();
+    NotFound();
   }
 
   let { ok, data } = await getProductBySlug(`${transaction}`);
 
   if (!ok) {
-    return NotFound();
+    NotFound();
   }
 
   let product = data as IProductWithOffer;

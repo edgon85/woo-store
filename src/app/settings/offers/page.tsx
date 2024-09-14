@@ -1,6 +1,7 @@
 import { getReceivedOffer } from '@/actions';
 import { OfferList } from '@/components';
 import { Metadata } from 'next';
+import NotFound from '../not-found';
 
 export const metadata: Metadata = {
   title: 'Ofertas',
@@ -8,6 +9,10 @@ export const metadata: Metadata = {
 
 export default async function OfferPage() {
   const { data: offers, ok, message } = await getReceivedOffer();
+
+  if (!ok) {
+    NotFound();
+  }
 
   return (
     <div className="">

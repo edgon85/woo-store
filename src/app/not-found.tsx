@@ -11,7 +11,7 @@ export default function NotFound() {
         height={400}
       />
 
-      <p className="text-lg">Página no encontrada</p>
+      <p className="text-lg">Pagina no disponible</p>
     </div>
   );
 }
