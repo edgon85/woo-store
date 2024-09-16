@@ -19,7 +19,7 @@ export const ListItem = ({
   const menuModal = useSidebar((state) => state.onSidebarOpen);
 
   const baseClasses =
-    'block w-full pl-1 py-4 border-gray-200 cursor-pointer hover:bg-gray-200 hover:text-darkPrimary';
+    'block w-full py-3 border-gray-200 cursor-pointer hover:bg-gray-200 hover:text-darkPrimary';
   const currentClasses = pathname.includes(id) ? 'text-darkPrimary' : '';
   return (
     <Link

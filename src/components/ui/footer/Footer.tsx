@@ -34,7 +34,6 @@ export const Footer = () => {
                   Contacto
                 </a>
               </li>
-              {/* <li><a href="#" className="hover:underline">Blog</a></li> */}
             </ul>
           </div>
           {/* <!-- Columna 2 --> */}
@@ -56,7 +55,6 @@ export const Footer = () => {
                   Cómo vender
                 </Link>
               </li>
-              {/* <li><a href="#" className="hover:underline">Contacto</a></li> */}
             </ul>
           </div>
           {/* <!-- Columna 3 --> */}
@@ -64,23 +62,28 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/terminos-y-condiciones" className="hover:underline">
+                <Link
+                  href="/terminos-y-condiciones"
+                  className="hover:underline"
+                >
                   Términos y condiciones
                 </Link>
               </li>
               <li>
-                <Link href="/politicas-de-privacidad" className="hover:underline">
+                <Link
+                  href="/politicas-de-privacidad"
+                  className="hover:underline"
+                >
                   Política de privacidad
                 </Link>
               </li>
-              {/* <li><a href="#" className="hover:underline">Política de cookies</a></li> */}
             </ul>
           </div>
           {/* <!-- Columna 4 --> */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a href="/" className="text-gray-300 hover:text-white">
                 <svg
                   className="h-6 w-6"
                   fill="currentColor"
@@ -89,7 +92,7 @@ export const Footer = () => {
                   {/* <!-- Icono de redes sociales --> */}
                 </svg>
               </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a href="/" className="text-gray-300 hover:text-white">
                 <svg
                   className="h-6 w-6"
                   fill="currentColor"
@@ -98,7 +101,7 @@ export const Footer = () => {
                   {/* <!-- Icono de redes sociales --> */}
                 </svg>
               </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+              <a href="/" className="text-gray-300 hover:text-white">
                 <svg
                   className="h-6 w-6"
                   fill="currentColor"
@@ -114,7 +117,6 @@ export const Footer = () => {
           <p className="text-base text-gray-400">
             &copy; 2024 Woo. Todos los derechos reservados.
           </p>
-          
         </div>
       </div>
     </footer>

@@ -32,7 +32,10 @@ export const Banner = () => {
               Convierte tu closet en efectivo
             </h1>
             <BtnBuyNow />
-            <Link href="/" className="text-xs text-cerise-red-600">
+            <Link
+              href="/how-it-works"
+              className="text-xs text-cerise-red-600 block mt-2"
+            >
               ¿Cómo funciona?
             </Link>
           </div>
@@ -54,7 +57,10 @@ export const Banner = () => {
         <div className="max-w-[20rem] flex flex-col items-center mx-auto">
           <h1 className="text-xl mb-3">Convierte tu closet en efectivo</h1>
           <BtnBuyNow />
-          <Link href="/" className="text-xs text-cerise-red-600 block mt-2">
+          <Link
+            href="/how-it-works"
+            className="text-xs text-cerise-red-600 block mt-2"
+          >
             ¿Cómo funciona?
           </Link>
         </div>

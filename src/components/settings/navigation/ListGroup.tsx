@@ -53,7 +53,7 @@ export const ListGroup = ({
   ];
 
   return (
-    <nav className="w-full text-base font-medium">
+    <nav className="w-full text-base font-medium px-4">
       {navItems.map((item) => (
         <ListItem key={item.id} {...item} isMobile={isMobile} />
       ))}

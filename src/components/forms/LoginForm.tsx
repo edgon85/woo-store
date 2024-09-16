@@ -8,6 +8,7 @@ import { isEmail } from '@/utils';
 import { useState } from 'react';
 import { SpinnerIcon } from '../ui';
 import { useModalAuth } from '@/stores';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type FormData = {
   email: string;
@@ -18,6 +19,9 @@ export const LoginForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const { closeModal } = useModalAuth();
+  const path = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const {
     register,
@@ -35,6 +39,16 @@ export const LoginForm = () => {
         email,
         password,
       });
+
+      if (path.includes('auth/login') && result?.ok) {
+        const query = searchParams.get('p');
+        router.replace(query || '/');
+        return;
+      }
+
+      if (result?.status === 200) {
+        router.refresh();
+      }
 
       if (result?.error) {
         setError('Email o contraseña incorrectos');
@@ -130,7 +144,7 @@ export const LoginForm = () => {
       <div className="mt-6 w-full bg-background rounded p-2 text-center">
         <span className="text-xs md:text-sm">¿Ha olvidado su contraseña? </span>
         <Link
-          href="#"
+          href="/"
           className={`text-primary underline text-xs md:text-sm uppercase ${
             isLoading ? 'pointer-events-none opacity-50' : ''
           }`}

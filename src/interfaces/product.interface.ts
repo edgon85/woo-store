@@ -19,7 +19,7 @@ export interface IProduct {
   measurement: IMeasurement;
   clothesState: IClothesState;
   reservedFor?: ReservedFor;
-  originMunicipality?: IMunicipality
+  originMunicipality?: IMunicipality;
 
   user?: IUser;
   createdAt?: Date;
@@ -50,7 +50,7 @@ export interface ISubcategory {
 }
 
 export interface IBrand {
-  id: number;
+  id: string;
   title: string;
   slug: string;
 }

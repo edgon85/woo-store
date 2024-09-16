@@ -14,7 +14,7 @@ type FormData = {
 
 export const RegisterForm = () => {
   const [error, setError] = useState('');
-  const {  loginCredentials } = useAuthProviders();
+  const { loginCredentials } = useAuthProviders();
   const { registerUser } = useAuthStore((state) => state);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
