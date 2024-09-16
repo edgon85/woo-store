@@ -39,14 +39,18 @@ const Sidebar = () => {
         )}
       >
         <ul className="border-b shadow-sm h-16 w-full flex justify-start items-center pl-2">
-          <button onClick={setMenuOpen} className="w-8 h-8">
-            <ArrowRightIcon />
-          </button>
+          <li>
+            <button onClick={setMenuOpen} className="w-8 h-8" aria-label="menu">
+              <ArrowRightIcon />
+            </button>
+          </li>
         </ul>
         <ul className="mt-8 pb-8 mx-4 space-y-2">
-          <li>
-            <ButtonCellNow />
-          </li>
+          {user && (
+            <li className="mt-2">
+              <ButtonCellNow />
+            </li>
+          )}
           {!user && (
             <li className="mt-2">
               <ButtonRegister />
@@ -54,29 +58,24 @@ const Sidebar = () => {
           )}
 
           <li className="text-center text-lg font-semibold">Categorías</li>
-          <ul>
-            <MenuItem
-              title={'Ropa'}
-              items={<ClothesList articleType="ropa" />}
-            />
-            <MenuItem
-              title={'Zapatos'}
-              items={<ClothesList articleType="zapatos" />}
-            />
-            <MenuItem
-              title={'Accesorios'}
-              items={<ClothesList articleType="accesorios" />}
-            />
-          </ul>
-          {user && (
-            <>
-              <li className="text-center text-lg font-semibold">Ajustes</li>
-              <ul>
-                <ListGroup userId={user?.id!} isMobile={true} />
-              </ul>
-            </>
-          )}
+
+          <MenuItem title={'Ropa'} items={<ClothesList articleType="ropa" />} />
+          <MenuItem
+            title={'Zapatos'}
+            items={<ClothesList articleType="zapatos" />}
+          />
+          <MenuItem
+            title={'Accesorios'}
+            items={<ClothesList articleType="accesorios" />}
+          />
         </ul>
+        {user && (
+          <div>
+            <p className="text-center text-lg font-semibold">Ajustes</p>
+
+            <ListGroup userId={user?.id!} isMobile={true} />
+          </div>
+        )}
       </div>
     </>
   );

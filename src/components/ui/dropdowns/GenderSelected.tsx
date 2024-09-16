@@ -38,7 +38,7 @@ export const GenderSelected = memo(() => {
   return (
     <div className="relative" ref={ref}>
       <button
-        id="dropdown-button"
+        id={`dropdown-button-${gender}`}
         onClick={toggleCollapsed}
         data-dropdown-toggle="dropdown"
         className="flex-shrink-0 text-cerise-red-600 capitalize z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
