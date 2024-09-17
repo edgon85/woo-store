@@ -36,15 +36,16 @@ export const ShareButton = ({ productName, productPrice }: Props) => {
         onClick={togglePopover}
         className="flex justify-center items-center gap-2"
       >
-        <ShareIcon className="w-6 h-6 text-cerise-red-600" /> <span>Compartir</span>
+        <ShareIcon className="w-6 h-6 text-cerise-red-600" />{' '}
+        <span>Compartir</span>
       </button>
       {isOpen && (
         <div className="absolute z-10 right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
           <div className="py-4 flex gap-2 justify-center items-center">
             <FacebookShareButton
               url={`${process.env.BASE_URL}${pathName}`}
-              title={`Mira esta prenda que vi en woo.online, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${formatCurrency(
-                productPrice
+              title={`Mira esta prenda que vi en woo store, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${formatCurrency(
+                productPrice * 100
               )}`}
               onClick={() => setIsOpen(false)}
             >
@@ -52,8 +53,8 @@ export const ShareButton = ({ productName, productPrice }: Props) => {
             </FacebookShareButton>
             <WhatsappShareButton
               url={`${process.env.BASE_URL}${pathName}`}
-              title={`Mira esta prenda que vi en woo.online, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${formatCurrency(
-                productPrice
+              title={`Mira esta prenda que vi en woo store, seguro te va a gustar! ¿Qué opinas? ${productName} por solo ${formatCurrency(
+                productPrice * 100
               )}`}
               onClick={() => setIsOpen(false)}
             >
