@@ -20,6 +20,9 @@ export const DepartmentState = ({ departmentList }: Props) => {
 
   return (
     <ul>
+      <li className='mb-2'>
+        <h2 className="text-lg capitalize">Departamentos disponibles</h2>
+      </li>
       {departmentList.map((resp) => (
         <li
           onClick={() => handleClick(resp)}
@@ -27,8 +30,7 @@ export const DepartmentState = ({ departmentList }: Props) => {
           key={resp.id}
         >
           <div className="">
-            <h6 className="text-lg capitalize">{resp.name}</h6>
-            {/* <p className="text-gray-500">{resp.}</p> */}
+            <h6 className="text-md capitalize">{resp.name}</h6>
           </div>
           {department?.id === resp.id ? (
             <CheckMark className="w-6 h-6 text-cerise-red-600" />

@@ -177,10 +177,10 @@ export const CreateProduct = ({
             <BrandSection brands={brands} />
             {/* ····························································· */}
             {/* {category && getValues('clothesType') !== 'accesorios' ? ( */}
-              <MeasurementSection
-                gender={getValues('gender')}
-                clothesType={getValues('clothesType')}
-              />
+            <MeasurementSection
+              gender={getValues('gender')}
+              clothesType={getValues('clothesType')}
+            />
             {/* ) : null} */}
             {/* ····························································· */}
             <ClothesStateSection
@@ -204,7 +204,26 @@ export const CreateProduct = ({
         {/* ····························································· */}
 
         {watch('price') ? (
-          <div className="mt-4">
+          <button
+            type="submit"
+            // disabled={!isDirty}
+            className="w-full bg-gradient-to-r from-cerise-red-500 to-cerise-red-600 hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 text-white text-sm rounded flex justify-center items-center py-2 mt-2 disabled:opacity-70"
+          >
+            {isLoading ? (
+              <SpinnerIcon className="w-6 h-6 animate-spin text-white" />
+            ) : (
+              <></>
+            )}
+            {isLoading ? '' : 'Publicar'}
+          </button>
+        ) : null}
+      </form>
+      <CustomModal />
+    </div>
+  );
+};
+{
+  /* <div className="mt-4">
             <Button
               label={isLoading ? '' : 'Publicar'}
               icon={
@@ -217,10 +236,5 @@ export const CreateProduct = ({
               type="submit"
               disabled={disabled}
             />
-          </div>
-        ) : null}
-      </form>
-      <CustomModal />
-    </div>
-  );
-};
+          </div> */
+}
