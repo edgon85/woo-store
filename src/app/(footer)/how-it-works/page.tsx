@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 export default function HowItWorksPage() {
   return (
-    <div className="main-wrapper py-12">
+    <div className="main-wrapper py-12 px-4 md:px-0">
       <div className="">
         <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-12">
           Cómo Funciona

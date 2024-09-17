@@ -116,7 +116,7 @@ export default function EnviosPage() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="max-w-3xl mx-auto px-4 md:px-0">
       <h2 className="text-3xl font-semibold mb-6">
         Proceso de Envío para Vendedores
       </h2>

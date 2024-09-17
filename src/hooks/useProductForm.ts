@@ -3,6 +3,7 @@ import { IProduct } from '@/interfaces';
 import { useCreateProductStore } from '@/stores';
 import { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 export type FormInputs = {
   title: string;
@@ -111,6 +112,23 @@ export const useProductForm = (
     }
 
     if (onSubmitAction) {
+      const validations = [
+        { condition: !brand, message: 'Seleccione una marca' },
+        { condition: !measurement, message: 'Seleccione una talla' },
+        { condition: !colors.length, message: 'Seleccione un color' },
+        {
+          condition: !clothesState,
+          message: 'Seleccione un estado de la prenda',
+        },
+      ];
+
+      for (const { condition, message } of validations) {
+        if (condition) {
+          toast.error(message);
+          return;
+        }
+      }
+
       await onSubmitAction(
         productData,
         action === 'create' ? formData : undefined

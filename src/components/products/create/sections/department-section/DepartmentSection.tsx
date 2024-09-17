@@ -15,6 +15,7 @@ export const DepartmentSection = ({ departments }: Props) => {
   return (
     <ItemCreate
       title="Departamento"
+      subtitle="Departamento donde se encuentra su producto"
       icon={<MapIcon />}
       value={department?.name!}
       onClick={() =>

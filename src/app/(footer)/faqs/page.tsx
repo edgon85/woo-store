@@ -130,7 +130,7 @@ export default function FaqPage() {
     },
   ];
   return (
-    <div className="max-w-3xl mx-auto mt-4 md:mt-8">
+    <div className="max-w-3xl mx-auto mt-4 md:mt-8 px-4 md:px-0">
       <h2 className="text-3xl font-semibold mb-6">Preguntas Frecuentes</h2>
       <p className="mb-6">
         Encuentra respuestas a las preguntas más comunes sobre nuestra

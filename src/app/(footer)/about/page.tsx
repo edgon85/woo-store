@@ -2,7 +2,7 @@ import { BuildIcon, CashIcon, EarthIcon, RecycleIcon } from '@/components';
 
 export default function AboutPage() {
   return (
-    <div className="main-wrapper min-h-screen">
+    <div className="main-wrapper min-h-screen px-4 md:px-0">
       <header className="py-6">
         <h1 className="text-3xl font-bold text-gray-900">Quiénes Somos</h1>
       </header>

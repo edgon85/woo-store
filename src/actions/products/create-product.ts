@@ -119,15 +119,20 @@ async function uploadImages(images: File[]) {
 
         // Procesar la imagen con sharp
         const processedBuffer = await sharp(Buffer.from(buffer))
-          .resize(800) // Cambiar el tamaño de la imagen (puedes ajustar según sea necesario)
-          .toFormat('jpeg') // Convertir a JPEG, puedes cambiar a otro formato si es necesario
+          .resize({
+            width: 800,
+            height: 800,
+            fit: sharp.fit.inside, // Ajusta la imagen dentro de 800x800 sin recortar
+            withoutEnlargement: true, // Evita agrandar imágenes más pequeñas
+          })
+          .toFormat('jpeg', { quality: 80 }) // Cambiar el formato de la imagen (puedes ajustar según sea necesario)
           .toBuffer();
 
         // Convertir la imagen procesada a base64
         const base64Image = processedBuffer.toString('base64');
 
         return cloudinary.uploader
-          .upload(`data:image/png;base64,${base64Image}`, {
+          .upload(`data:image/jpeg;base64,${base64Image}`, {
             folder: 'woo-products',
           })
           .then((r) => r.secure_url);
