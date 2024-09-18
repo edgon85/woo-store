@@ -1,9 +1,11 @@
 'use client';
 import React, { useState } from 'react';
 
-// import { Swiper as SwiperObject } from 'swiper';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import Lightbox from 'yet-another-react-lightbox';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+
 import {
   Autoplay,
   FreeMode,
@@ -19,6 +21,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import './slideshow.css';
 import 'swiper/css/pagination';
+// Import Lightbox css
+import 'yet-another-react-lightbox/styles.css';
+
 import Image from 'next/image';
 
 type Props = {
@@ -29,6 +34,8 @@ type Props = {
 
 export const ProductSlideshow = ({ images, title, className }: Props) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   return (
     <div className={`${className} h-[50vh] md:h-[70vh] flex flex-col`}>
@@ -70,36 +77,23 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
                 style={{ objectFit: 'contain' }}
                 className="rounded-lg"
                 priority={true}
+                onClick={() => {
+                  setLightboxIndex(index);
+                  setLightboxOpen(true);
+                }}
               />
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
 
-      {/*   <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={10}
-        slidesPerView={4}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="h-[200px] thumbs-swiper"
-      >
-        {images.map((image, index) => (
-          <SwiperSlide key={`thumb-${image}`} className="h-[200]">
-            <div className="relative w-full h-[200]">
-              <Image
-                src={image}
-                alt={`${title} - Thumbnail ${index + 1}`}
-                fill
-                sizes="(max-width: 768px) 25vw, (max-width: 1200px) 15vw, 10vw"
-                style={{ objectFit: 'contain' }}
-                className="rounded-md cursor-pointer"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper> */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={images.map((src) => ({ src }))}
+        index={lightboxIndex}
+        plugins={[Zoom]}
+      />
     </div>
   );
 };
