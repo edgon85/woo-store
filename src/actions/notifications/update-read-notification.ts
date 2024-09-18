@@ -27,7 +27,7 @@ export async function readNotification(chatId: string) {
 
     const data = await resp.json();
 
-    console.log(data);
+    // console.log(data);
     return {
       ok: true,
       data,

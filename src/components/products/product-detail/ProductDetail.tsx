@@ -46,10 +46,12 @@ export const ProductDetail = ({ product, currentUserId }: Props) => {
     <div className="bg-white p-2 md:p-4 md:rounded md:shadow">
       <section>
         <h1 className="text-lg font-bold capitalize">{title}</h1>
-        <p className="text-lg font-semibold">{formatCurrency(price * 100)}</p>
+        <p className="text-lg font-semibold text-cerise-red-700">
+          {formatCurrency(price * 100)}
+        </p>
       </section>
-      <section className="py-2 prose lg:prose-xl">
-        <h2 className="text-lg font-bold">Descripción</h2>
+      <section className="prose prose-sm  mt-2 mb-4">
+        <h2 className="text-lg font-bold text-gray-600">Descripción</h2>
         <p className="text-sm font-normal text-justify min-h-[50px] ">
           {description}
         </p>
