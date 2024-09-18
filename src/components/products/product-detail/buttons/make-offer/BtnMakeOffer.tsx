@@ -12,7 +12,7 @@ type Props = {
 
 export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
   const [openOfferModal, setOpenOfferModal] = useState(false);
-  const { isLoggedIn } = useAuthStore( (state) => state );
+  const { isLoggedIn } = useAuthStore((state) => state);
   const { openModal } = useModalAuth();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
   };
 
   return (
-    <div>
+    <>
       <button
         className="w-full border border-cerise-red-700 text-cerise-red-700 text-sm hover:bg-cerise-red-500 hover:text-white rounded flex justify-center items-center py-2"
         onClick={onOpenModal}
@@ -43,6 +43,6 @@ export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
         open={openOfferModal}
         setOpen={setOpenOfferModal}
       />
-    </div>
+    </>
   );
 };

@@ -36,11 +36,11 @@ export const BtnBuyOrEdit = ({
 
   if (status === ProductStatus.Available || status === ProductStatus.Hidden) {
     return (
-      <div className="mt-2 w-full">
+      <div className="w-full">
         {currentUserId !== product.user?.id ? (
           <button
             onClick={handleBuyClick}
-            className="bg-gradient-to-r from-cerise-red-500 to-cerise-red-600 hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 text-white text-sm rounded flex justify-center items-center px-4 py-2 w-full"
+            className="border border-cerise-red-600 md:border-none bg-gradient-to-r from-cerise-red-500 to-cerise-red-600 hover:bg-gradient-to-br hover:from-cerise-red-600 hover:to-cerise-red-700 text-white text-sm rounded flex justify-center items-center px-4 py-2 w-full"
           >
             Comprar
           </button>
