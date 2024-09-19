@@ -5,7 +5,7 @@ import { ButtonRegister } from './ButtonRegister';
 
 import { MenuItem } from '../../filters/NavItems';
 import { ClothesList } from './clothes/ClothesList';
-import { ArrowRightIcon, ListGroup } from '@/components';
+import { ArrowRightIcon, ListGroup, SidebarHelp } from '@/components';
 
 import clsx from 'clsx';
 import { useAuthStore } from '@/stores/auth.store';
@@ -76,6 +76,8 @@ const Sidebar = () => {
             <ListGroup userId={user?.id!} isMobile={true} />
           </div>
         )}
+
+        <SidebarHelp isMobile={true} />
       </div>
     </>
   );

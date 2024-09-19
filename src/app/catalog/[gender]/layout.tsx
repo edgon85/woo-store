@@ -3,18 +3,18 @@ import { SidebarFilter } from '@/components/ui';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="container main-wrapper pt-4 flex">
-      {/* <!-- Sección de Categorías (Lado Izquierdo) --> */}
-      <div className="w-full md:w-1/5 pr-4 hidden sm:block">
+    <div className="flex flex-col md:flex-row min-h-screen main-wrapper">
+      {/* Sidebar */}
+      <div className="w-full md:w-64 md:flex-shrink-0 hidden md:block pt-4">
         <NavCategories />
       </div>
 
-      {/* <!-- Sección de Cuadrícula de 4 Columnas (Lado Derecho) --> */}
-      <div className="w-full md:w-3/4 pl-2 md:pl-0 pr-2 md:pr-2">
+      {/* Main content */}
+      <div className="flex-grow p-4">
         <ButtonFilter />
         {children}
+        <SidebarFilter filters={<NavCategories isMobile={true} />} />
       </div>
-      <SidebarFilter filters={<NavCategories isMobile={true} />} />
     </div>
   );
 }

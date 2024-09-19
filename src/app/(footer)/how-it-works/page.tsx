@@ -2,6 +2,7 @@ import {
   CameraIcon,
   CreditCard,
   PackageIcon,
+  PlusIcon,
   SearchIcon,
   TruckIcon,
   UploadIcon,
@@ -22,27 +23,36 @@ export default function HowItWorksPage() {
             <h3 className="text-2xl font-bold text-gray-900 mb-6">Vende</h3>
             <ul className="space-y-6">
               <Step
-                icon={<CameraIcon className="text-indigo-600" />}
+                icon={<CameraIcon className="text-cerise-red-500" />}
                 title="Fotografía tus prendas"
                 description="Toma fotos claras y atractivas de los artículos que quieres vender."
               />
               <Step
-                icon={<UploadIcon className="text-indigo-600" />}
+                icon={<UploadIcon className="text-cerise-red-500" />}
                 title="Sube y describe"
                 description="Crea un anuncio detallando el estado, marca y precio de tu prenda."
               />
               <Step
-                icon={<PackageIcon className=" text-indigo-600" />}
+                icon={<PackageIcon className=" text-cerise-red-500" />}
                 title="Empaca y envía"
                 description="Cuando vendes un artículo, empácalo con cuidado y envíalo al comprador."
               />
             </ul>
-            <Link
-              href="/products/create"
-              className="mt-6 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              Empezar a vender
-            </Link>
+            <div className="flex flex-col items-start justify-center">
+              <Link
+                href="/products/create"
+                className="mt-6 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cerise-red-600 hover:bg-cerise-red-500"
+              >
+                Empezar a vender
+              </Link>
+              <Link
+                href="/help/vender"
+                className="mt-4 inline-flex items-center justify-center py-3 border border-transparent text-base font-medium rounded-md text-cerise-red-600"
+              >
+                <PlusIcon className="w-6 h-6 text-cerise-red-700" />
+                <span>info para vender</span>
+              </Link>
+            </div>
           </div>
 
           {/* Sección Compra */}
@@ -65,12 +75,21 @@ export default function HowItWorksPage() {
                 description="Espera la llegada de tu nueva adquisición y ¡disfrútala!"
               />
             </ul>
-            <Link
-              href="/catalog/ropa/mujer"
-              className="mt-6 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cerise-red-600 hover:bg-cerise-red-500"
-            >
-              Empezar a comprar
-            </Link>
+            <div className="flex flex-col items-start justify-center">
+              <Link
+                href="/catalog/ropa/mujer"
+                className="mt-6 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cerise-red-600 hover:bg-cerise-red-500"
+              >
+                Empezar a comprar
+              </Link>
+              <Link
+                href="/help/comprar"
+                className="mt-4 inline-flex items-center justify-center py-3 border border-transparent text-base font-medium rounded-md text-cerise-red-600"
+              >
+                <PlusIcon className="w-6 h-6 text-cerise-red-700" />
+                <span>info para comprar</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
