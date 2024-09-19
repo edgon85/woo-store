@@ -15,10 +15,13 @@ type Props = {
 export const UserInfo = async ({ name, image, location, username }: Props) => {
   const imageUrl = await checkImageAvailable(image);
 
-  const { data, ok, message } = await getRatingByUsername(username);
+  const { data, message } = await getRatingByUsername(username);
 
   return (
-    <section className="flex items-center p-2 md:p-4 bg-white md:rounded md:shadow px-4 md:px-0">
+    <Link
+      href={`/member/${username}`}
+      className="flex items-center p-2 md:p-4 bg-white md:rounded md:shadow px-4"
+    >
       {imageUrl !== null ? (
         <Image
           src={imageUrl}
@@ -50,12 +53,9 @@ export const UserInfo = async ({ name, image, location, username }: Props) => {
         <p className="mt-1 text-sm text-gray-500">{location || ''}</p>
       </div>
 
-      <Link
-        className="text-darkPrimary hover:text-primary "
-        href={`/member/${username}`}
-      >
+      <div className="text-darkPrimary hover:text-primary ">
         <ArrowRightIcon />
-      </Link>
-    </section>
+      </div>
+    </Link>
   );
 };

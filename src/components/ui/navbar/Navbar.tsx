@@ -10,7 +10,7 @@ export const Navbar = () => {
   return (
     <>
       <div className="h-[112px]"></div>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white ">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow">
         <div className="main-wrapper h-full flex flex-col">
           <nav className="flex items-center justify-between py-2 md:py-2.5 px-4 lg:px-0 h-[56px]  mx-auto w-full">
             <div className="flex-shrink-0">
