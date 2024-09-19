@@ -6,7 +6,6 @@ import { useState } from 'react';
 import { useModalAuth } from '@/stores';
 import { useAuthProviders } from '@/hooks';
 
-
 export const AuthModal = () => {
   const { providers } = useAuthProviders();
   const [selectRegister, setSelectRegister] = useState<boolean>(false);
@@ -15,7 +14,7 @@ export const AuthModal = () => {
 
   return (
     <Modal open={isOpen} onClose={closeModal} center>
-      <section className="md:w-96">
+      <section className="w-80 md:w-96">
         {selectRegister ? (
           <RegisterComponent providers={providers} />
         ) : (

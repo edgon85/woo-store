@@ -46,7 +46,7 @@ export const CategoryGrid = () => {
   ];
 
   return (
-    <section className="main-wrapper">
+    <section className="main-wrapper px-4 lg:px-0">
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 h-[70vh] md:h-[calc(70vh-2rem)]">
         {sections.map((section, index) => (
           <Link
