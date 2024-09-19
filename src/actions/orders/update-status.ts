@@ -27,7 +27,7 @@ export async function updateSendToShippingService(orderId: string) {
     }
 
     const data = await resp.json();
-    console.log(data);
+    // console.log(data);
     revalidatePath(`/settings/transactions/sales/${orderId}/detail`);
     return {
       ok: true,

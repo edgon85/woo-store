@@ -39,21 +39,21 @@ export const BtnShareProfile = () => {
           <div className="py-4 flex gap-2 justify-center items-center">
             <FacebookShareButton
               url={`${process.env.BASE_URL}${pathName}`}
-              title={`Mira mi perfil en woo.online, seguro te va a gustar! ¿Qué opinas?`}
+              title={`Mira mi perfil en woo store, seguro te va a gustar! ¿Qué opinas?`}
               onClick={() => setIsOpen(false)}
             >
               <FacebookIcon size={32} round={true} />
             </FacebookShareButton>
             <WhatsappShareButton
               url={`${process.env.BASE_URL}${pathName}`}
-              title={`Mira mi perfil en woo.online, seguro te va a gustar! ¿Qué opinas?`}
+              title={`Mira mi perfil en woo store, seguro te va a gustar! ¿Qué opinas?`}
               onClick={() => setIsOpen(false)}
             >
               <WhatsappIcon size={32} round={true} />
             </WhatsappShareButton>
             <EmailShareButton
               url={`${process.env.BASE_URL}${pathName}`}
-              title={`Mira mi perfil en woo.online, seguro te va a gustar! ¿Qué opinas?`}
+              title={`Mira mi perfil en woo store, seguro te va a gustar! ¿Qué opinas?`}
               onClick={() => setIsOpen(false)}
             >
               <EmailIcon size={32} round={true} />

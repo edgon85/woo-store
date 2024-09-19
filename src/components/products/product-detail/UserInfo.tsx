@@ -18,7 +18,7 @@ export const UserInfo = async ({ name, image, location, username }: Props) => {
   const { data, ok, message } = await getRatingByUsername(username);
 
   return (
-    <section className="flex items-center p-2 md:p-4 bg-white md:rounded md:shadow">
+    <section className="flex items-center p-2 md:p-4 bg-white md:rounded md:shadow px-4 md:px-0">
       {imageUrl !== null ? (
         <Image
           src={imageUrl}

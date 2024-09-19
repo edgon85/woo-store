@@ -27,7 +27,7 @@ export async function getRatingByUsername(username: string) {
       data,
     };
   } catch (error: any) {
-    console.log(error.message);
+    // console.log(error.message);
     return { ok: false, message: error.message };
   }
 };

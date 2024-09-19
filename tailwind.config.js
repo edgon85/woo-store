@@ -55,7 +55,7 @@ module.exports = {
       green: colors.green,
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
   corePlugins: {},
   extend: {
     '.no-spin-buttons': {

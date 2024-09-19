@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { TooltipIcon } from '@/components/ui';
 import { IProduct } from '@/interfaces';
 
-import { BtnMakeOffer, BtnSendMessage, BtnBuyOrEdit } from './';
+import { BtnMakeOffer, BtnBuyOrEdit } from './';
 import { ProductStatus } from '@/enums';
 import { CurrentUserReservedContent } from './CurrentUserReservedContent';
 
@@ -103,23 +103,22 @@ const AvailableProduct = ({
   currentUserId: string;
   isOwner: boolean;
 }) => (
-  <div className="flex flex-col gap-2">
-    <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
-    {!isOwner && (
-      <>
-        <BtnMakeOffer product={product} />
-        {/* <BtnSendMessage
-          recipientId={product.user?.id!}
-          recipientUsername={product.user?.username!}
-          productId={product.id!}
-          title={product.title!}
-        /> */}
-      </>
-    )}
-  </div>
+  <>
+    <div className="hidden md:flex md:flex-col md:gap-2">
+      <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
+      {!isOwner && <BtnMakeOffer product={product} />}
+    </div>
+
+    {/* Para pantallas pequeñas */}
+    <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 md:hidden z-30">
+      <div className="flex gap-2">
+        <BtnBuyOrEdit product={product} currentUserId={currentUserId} />
+        {!isOwner && <BtnMakeOffer product={product} />}
+      </div>
+    </div>
+  </>
 );
 
-// ReservedProduct.tsx
 const ReservedProduct = ({
   product,
   isOwner,

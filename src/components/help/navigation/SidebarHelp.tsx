@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown, ChevronUp } from '@/components/ui';
+import { useSidebar } from '@/stores';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -25,21 +26,33 @@ const categories = [
   },
 ];
 
-export const SidebarHelp = () => {
+type ListItemProps = {
+  isMobile?: boolean;
+};
+
+export const SidebarHelp = ({ isMobile = false }: ListItemProps) => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const menuModal = useSidebar((state) => state.onSidebarOpen);
 
   return (
-    <aside className="w-64 bg-white shadow-md">
+    <aside className="w-full bg-white md:shadow-md">
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Centro de ayuda</h1>
+        <h1 className="text-xl font-bold mb-4">Centro de ayuda</h1>
         <div className="relative mb-4"></div>
         <nav>
-          <Link
-            href="/help"
-            className="block p-2 hover:bg-gray-100 rounded mb-2"
-          >
-            Inicio
-          </Link>
+          { !isMobile && (
+            <Link
+              onClick={() => {
+                if (isMobile) {
+                  menuModal();
+                }
+              }}
+              href="/help"
+              className="block p-2 hover:bg-gray-100 rounded mb-2"
+            >
+              Inicio
+            </Link>
+          )}
 
           {categories.map((category) => (
             <div key={category.name} className="mb-2">
@@ -62,6 +75,11 @@ export const SidebarHelp = () => {
                 <div className="ml-4 mt-2">
                   {category.subcategories.map((subcategory) => (
                     <Link
+                      onClick={() => {
+                        if (isMobile) {
+                          menuModal();
+                        }
+                      }}
                       key={subcategory.name}
                       href={subcategory.path}
                       className="block p-2 hover:bg-gray-100 rounded"
