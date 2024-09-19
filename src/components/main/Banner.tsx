@@ -26,18 +26,21 @@ export const Banner = () => {
         />
 
         {/* Contenido centrado verticalmente (visible solo en pantallas md y superiores) */}
-        <div className="absolute inset-y-0 left-0 hidden md:flex items-center">
-          <div className="p-4 max-w-[20rem] rounded-md bg-white md:ml-[4rem] lg:ml-[12rem] xl:ml-[18rem]">
-            <h1 className="text-xl md:text-2xl xl:text-3xl mb-3">
-              Convierte tu closet en efectivo
-            </h1>
-            <BtnBuyNow />
-            <Link
-              href="/how-it-works"
-              className="text-xs text-cerise-red-600 block mt-2"
-            >
-              ¿Cómo funciona?
-            </Link>
+        {/* <div className="absolute inset-y-0 left-0 hidden md:flex items-center border border-red-400"> */}
+        <div className="absolute inset-y-0 left-0 hidden md:flex w-full">
+          <div className="main-wrapper  w-full px-4 lg:px-0">
+            <div className="p-4 max-w-[20rem] rounded-md bg-white shadow-lg">
+              <h1 className="text-xl md:text-2xl xl:text-3xl mb-3">
+                Convierte tu closet en efectivo
+              </h1>
+              <BtnBuyNow />
+              <Link
+                href="/how-it-works"
+                className="text-xs text-cerise-red-600 block mt-2"
+              >
+                ¿Cómo funciona?
+              </Link>
+            </div>
           </div>
         </div>
       </div>

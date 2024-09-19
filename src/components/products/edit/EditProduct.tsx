@@ -20,7 +20,6 @@ import {
   ColorsSection,
   CustomModal,
   MeasurementSection,
-  PriceSection,
   SubcategorySection,
   WeightSection,
 } from '../create/sections';
@@ -28,10 +27,10 @@ import { useEffect, useState } from 'react';
 import { updateProduct } from '@/actions';
 import { toast } from 'react-toastify';
 import { FormInputs, useProductForm, useUnsavedChangesWarning } from '@/hooks';
-import { Button, EyeDropIcon, SpinnerIcon } from '@/components/ui';
+import { EyeDropIcon, SpinnerIcon } from '@/components/ui';
 import { PriceSectionEdit } from './sections/price-section/PriceSection';
 import Link from 'next/link';
-import { BtnNotification } from '@/components/ui/navbar/btn-actions';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   product: IProduct & { ProductImage?: ProductImage[] };
@@ -46,6 +45,8 @@ export const EditProduct = ({
   clothingConditionList,
   colors: colorList,
 }: Props) => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -111,12 +112,12 @@ export const EditProduct = ({
         >
           Editar articulo
         </Link>
-        <Link
-          href={`/product/${product.slug}`}
+        <button
+          onClick={() => router.replace(`/product/${product.slug}`)}
           className="text-2xl font-extrabold text-cerise-red-600 hover:text-cerise-red-400"
         >
           <EyeDropIcon className="mr-2 w-5 h-5" />
-        </Link>
+        </button>
       </div>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">

@@ -7,6 +7,7 @@ import { checkImageAvailable } from '@/actions';
 import Link from 'next/link';
 import { formatCurrency } from '@/utils';
 import { TagPriceIcon } from '@/components/ui';
+import { ProductStatus } from '@/enums';
 
 type Props = {
   product: IProduct;
@@ -16,7 +17,32 @@ type Props = {
 export const ProductCard = async ({ product, currentUserId }: Props) => {
   const imageUrl = await checkImageAvailable(product.coverImage);
 
-  const statusInfo = getStatusMessage(product.status);
+  // If the product is hidden and the current user is not the owner, return null
+  if (
+    product.status === ProductStatus.Hidden &&
+    product.user?.id !== currentUserId
+  ) {
+    return null;
+  }
+  // const statusInfo = getStatusMessage(product.status);
+  const getStatusInfo = () => {
+    if (product.status === ProductStatus.Available) {
+      return null;
+    }
+
+    if (product.status === ProductStatus.Sold) {
+      return getStatusMessage('sold');
+    }
+
+    if (product.user?.id === currentUserId) {
+      return getStatusMessage(product.status);
+    }
+
+    // For other users, show 'pending_payment' or 'not available' message
+    return getStatusMessage('not_available');
+  };
+
+  const statusInfo = getStatusInfo();
 
   return (
     <div className="relative w-full bg-white max-w-md mx-auto border border-gray-200 rounded-lg">
@@ -37,7 +63,9 @@ export const ProductCard = async ({ product, currentUserId }: Props) => {
           <div
             className={`absolute bottom-0 left-0 right-0 ${statusInfo.bgColor} px-2 py-2`}
           >
-            <p className="text-white font-bold">{statusInfo.text}</p>
+            <p className="text-white font-semibold md:font-bold text-xs md:text-sm">
+              {statusInfo.text}
+            </p>
           </div>
         )}
       </div>
@@ -97,8 +125,10 @@ const getStatusMessage = (status: string) => {
     case 'under_review':
       return { text: 'En revisión', bgColor: 'bg-red-800' };
     case 'pending_payment':
-      return { text: 'Pendiente de pago', bgColor: 'bg-red-400' };
+      return { text: 'Comprado - aun no recibido', bgColor: 'bg-red-400' };
     case 'available':
+    case 'not_available':
+      return { text: 'No disponible para compra', bgColor: 'bg-gray-400' };
     default:
       return null;
   }
