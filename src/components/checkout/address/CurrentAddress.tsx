@@ -11,10 +11,10 @@ export const CurrentAddress = () => {
 
   return (
     <>
-      <div className="bg-white border p-6 rounded shadow-sm">
-        <div className="space-y-2">
-          <p className="text-lg">{address.fullName}</p>
-          <p className="flex flex-col md:flex-row gap-1">
+      <div className='bg-white border p-6 rounded shadow-sm'>
+        <div className='space-y-2'>
+          <p className='text-lg'>{address.fullName}</p>
+          <p className='flex flex-col md:flex-row gap-1'>
             <span>{address.streetAddress}</span>
             <span>
               {address.municipality.name}, {address.department.name}

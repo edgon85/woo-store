@@ -7,13 +7,11 @@ import { IOrder } from '@/interfaces';
 import { OrderStatus } from '@/enums';
 import { TransactionStatus } from '../TransactionStatus';
 import { MapMarker } from '@/components/ui';
-import { BtnSendMessage } from '@/components/products/product-detail/buttons';
 
 type Props = {
   orders: IOrder[];
 };
 export const TablePurchases = ({ orders }: Props) => {
-  console.log(orders);
   return (
     <div className="space-y-4">
       {orders?.map((order: IOrder) => {
@@ -54,9 +52,7 @@ export const TablePurchases = ({ orders }: Props) => {
                   </p>
                   <p>
                     <span className="text-gray-500">Envío:</span>{' '}
-                    {summary.deliveryOffer !== 0
-                      ? formatCurrency(summary.deliveryOffer * 100)
-                      : formatCurrency(summary.delivery * 100)}
+                    {formatCurrency(order.summary.deliveryTotal * 100)}
                   </p>
                   <p className="font-semibold mt-2">
                     <span className="text-gray-500">Total:</span>{' '}

@@ -39,7 +39,7 @@ export const TablePaid = ({ data }: Props) => {
           <tbody>
             {data.orders.length === 0 ? (
               <tr className="bg-white w-full text-center">
-                <td colSpan={5} className="text-center">
+                <td colSpan={6} className="text-center">
                   <p className="px-6 py-4 text-gray-700 flex flex-col justify-center items-center gap-4">
                     <ClipboardDocumentIcon className="w-28 h-28" />
                     <span>Todavía no tienes ventas</span>
@@ -52,7 +52,7 @@ export const TablePaid = ({ data }: Props) => {
                   <tr key={order.id} className="bg-white border-b ">
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize"
+                      className="px-6 py-4 font-medium text-gray-900 capitalize max-w-xs"
                     >
                       {order.product.title}
                     </th>
@@ -60,7 +60,24 @@ export const TablePaid = ({ data }: Props) => {
                       {!order.paid ? <span>pagado</span> : <span>pagado</span>}
                     </td>
                     <td className="px-6 py-4">
-                      {formatCurrency(order.product.price * 100)}
+                      <h3
+                        className={`${
+                          order.product.price !== order.summary.productPrice
+                            ? 'line-through'
+                            : ''
+                        }`}
+                      >
+                        {formatCurrency(order.product.price * 100)}
+                      </h3>
+                      <h3
+                        className={` ${
+                          order.product.price === order.summary.productPrice
+                            ? 'hidden'
+                            : 'flex'
+                        }`}
+                      >
+                        {formatCurrency(order.summary.productPrice * 100)}
+                      </h3>
                     </td>
                     <td className="px-6 py-4">
                       {formatCurrency(order.summary.shippingIncluded * 100)}

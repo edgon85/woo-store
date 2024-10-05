@@ -5,7 +5,6 @@ import {
   PaymentSelectSection,
   ProductSection,
 } from '@/components';
-import { redirect } from 'next/navigation';
 
 import { IAddress, IPaymentMethod, IProductWithOffer } from '@/interfaces';
 import {
@@ -86,17 +85,17 @@ export default async function CheckoutPage({
   }
 
   return (
-    <div className="main-wrapper flex flex-col sm:flex-row">
-      <div className="w-full lg:w-3/4 p-2 flex flex-col gap-2">
+    <div className='main-wrapper flex flex-col sm:flex-row'>
+      <div className='w-full lg:w-3/4 p-2 flex flex-col gap-2'>
         <ProductSection product={product} />
         <AddressSection />
 
-        <PaymentSelectSection paymentMethods={paymentMethods} />
         <ShippingServiceSection
           isShippingIncluded={product.isShippingIncluded}
         />
+        <PaymentSelectSection paymentMethods={paymentMethods} />
       </div>
-      <div className="w-full lg:w-2/5 p-2">
+      <div className='w-full lg:w-2/5 p-2'>
         <OrderBreakdown
           product={product}
           address={

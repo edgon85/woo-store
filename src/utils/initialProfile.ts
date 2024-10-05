@@ -57,3 +57,16 @@ export const translateOrderStatus = (status: string): string => {
       return status; // Si no se encuentra ninguna traducción, devuelve el estado original
   }
 };
+
+export const offerStatus = (status: string): string => {
+  switch (status) {
+    case 'accepted':
+      return 'Aceptado';
+    case 'rejected':
+      return 'Rechazado';
+    case 'pending':
+      return 'Pendiente';
+    default:
+      return status;
+  }
+};
