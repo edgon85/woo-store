@@ -15,7 +15,7 @@ export const BtnBuyNow = () => {
     e.preventDefault();
     if (isLoggedIn) {
       resetCreateProdSt();
-      router.push(`/products/create`);
+      router.push(`/product/create`);
     } else {
       openModal();
     }

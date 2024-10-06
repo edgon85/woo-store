@@ -65,6 +65,22 @@ export const LocationSection = ({ setValue, register }: Props) => {
           ))}
         </select>
       </div>
+      {/* <!-- Dirección --> */}
+      <div className=" w-full flex justify-between">
+        <label
+          htmlFor="sobreMi"
+          className="flex-1 block text-base font-medium text-gray-700"
+        >
+          Dirección
+        </label>
+        <textarea
+          id="sobreMi"
+          rows={3}
+          className=" flex-1 w-full p-2 border rounded-md resize-none"
+          placeholder="Dirección, nos sirve si necesitas servicio de recolección"
+          {...register('address')}
+        ></textarea>
+      </div>
     </>
   );
 };

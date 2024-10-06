@@ -40,7 +40,7 @@ export default function HowItWorksPage() {
             </ul>
             <div className="flex flex-col items-start justify-center">
               <Link
-                href="/products/create"
+                href="/product/create"
                 className="mt-6 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cerise-red-600 hover:bg-cerise-red-500"
               >
                 Empezar a vender

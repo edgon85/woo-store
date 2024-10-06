@@ -12,7 +12,7 @@ export default async function ProfilePage({
 }: {
   params: { id: string };
 }) {
-  const { ok, data, message } = await fetchUserProfile(params.id);
+  const { ok, data } = await fetchUserProfile(params.id);
 
   if (!ok) {
     NotFound();

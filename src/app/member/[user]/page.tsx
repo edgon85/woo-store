@@ -62,7 +62,7 @@ export default async function UserMemberPage({ params: { user } }: Props) {
       <EmptyTransaction
         label="¡Aun no tienes Productos!"
         subLabel="¡Consigue tu primera venta! Cuantas más prendas publiques, más oportunidades de vender."
-        path="/products/create"
+        path="/product/create"
         btnText="Subir prenda"
       />
     );
