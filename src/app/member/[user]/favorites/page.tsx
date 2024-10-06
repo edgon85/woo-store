@@ -30,7 +30,7 @@ export default async function UserRatingsPage({ params, searchParams }: Props) {
       <EmptyTransaction
         label="¡Aun no tiene Favoritos!"
         subLabel="¡Tus productos favoritos se mostraran aquí."
-        path="/products/create"
+        path="/product/create"
         btnText="Subir prenda"
         btnShow={false}
       />

@@ -8,7 +8,7 @@ export const ButtonCellNow = () => {
 
   const onHandleClick = () => {
     resetCreateProdSt();
-    router.push('/products/create');
+    router.push('/product/create');
     setMenuOpen();
   };
 

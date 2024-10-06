@@ -25,7 +25,7 @@ export const BtnLoginRegister = () => {
     <button
       onClick={onHandleClick}
       type="button"
-      className="hidden md:inline-flex items-center justify-center bg-cerise-red-600 text-white hover:bg-cerise-red-500 font-medium rounded text-xs px-3 py-1.5 focus:outline-none "
+      className="hidden md:inline-flex items-center justify-center bg-cerise-red-600 text-white hover:bg-cerise-red-500 font-medium rounded text-xs px-3 py-2.5 focus:outline-none "
     >
       Inicia sesión | Regístrate
     </button>

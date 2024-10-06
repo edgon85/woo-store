@@ -25,7 +25,7 @@ export default async function Page() {
       <EmptyTransaction
         label="¡Aun no tienes ventas!"
         subLabel="¡Consigue tu primera venta! Cuantas más prendas publiques, más oportunidades de vender."
-        path="/products/create"
+        path="/product/create"
         btnText="Subir prenda"
       />
     );

@@ -70,7 +70,7 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/products/create',
+    '/product/create/:path*',
     '/product/edit/:path*',
     '/member/transactions/:path*',
     '/inbox/:path*',
@@ -78,7 +78,6 @@ export const config = {
     '/admin/:path*',
     '/settings/:path*',
     '/claim/:path*',
-    // '/offers/:path*',
     '/api/admin/:path*',
   ],
 };

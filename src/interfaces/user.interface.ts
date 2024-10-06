@@ -22,8 +22,8 @@ export interface IProfile {
   location?: string;
   gender: string;
   phone?: string;
+  address?: string;
 }
-
 
 export type LocalDataUser = {
   id: string;

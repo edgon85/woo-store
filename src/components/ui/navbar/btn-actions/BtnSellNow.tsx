@@ -10,7 +10,7 @@ export const BtnSellNow = () => {
 
   const onHandleClick = useCallback(() => {
     resetCreateProdSt();
-    router.push('/products/create');
+    router.push('/product/create');
   }, [resetCreateProdSt, router]);
 
   return (

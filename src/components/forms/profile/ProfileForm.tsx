@@ -24,6 +24,7 @@ export type FormProfileData = {
   dateOfBirth: string;
   gender: string;
   phone: string;
+  address: string;
 };
 
 type Props = {
@@ -49,7 +50,6 @@ export const ProfileForm = ({ profile, userId, fullName }: Props) => {
     });
 
     if (!ok) {
-      // setAlertType('error');
       toast.error(message || 'Ocurrió un error al actualizar.');
       setModalOpen(false);
     } else {
@@ -90,22 +90,12 @@ export const ProfileForm = ({ profile, userId, fullName }: Props) => {
           <LocationSection setValue={setValue} register={register} />
         </div>
         {/* <!-- Divider --> */}
-        <hr className="" />
 
         {/* <!-- Mostrar ubicación en el perfil --> */}
-        <div className="bg-white flex items-center justify-between p-4">
+        {/* <div className="bg-white flex items-center justify-between p-4">
           <ShowLocationInProfile setValue={setValue} register={register} />
         </div>
-        <hr className="" />
-        {/* <!-- Mostrar ubicación en el perfil --> */}
-        <div className="bg-white flex items-center justify-between p-4 mb-4">
-          <BirthDate setValue={setValue} getValues={getValues} />
-        </div>
-
-        <div className="bg-white p-4 w-full ">
-          <GenderSection value={getValues('gender')} setValue={setValue} />
-          {/* <GenderSection value={getValues('gender')} getValues={getValues} /> */}
-        </div>
+        <hr className="" /> */}
 
         <div className="bg-white p-4 w-full">
           <PhoneSection
@@ -113,6 +103,16 @@ export const ProfileForm = ({ profile, userId, fullName }: Props) => {
             register={register}
             errors={errors}
           />
+        </div>
+
+        <hr className="" />
+        <div className="bg-white flex items-center justify-between p-4 mb-4">
+          <BirthDate setValue={setValue} getValues={getValues} />
+        </div>
+
+        <div className="bg-white p-4 w-full ">
+          <GenderSection value={getValues('gender')} setValue={setValue} />
+          {/* <GenderSection value={getValues('gender')} getValues={getValues} /> */}
         </div>
 
         <div className="mt-4 ">

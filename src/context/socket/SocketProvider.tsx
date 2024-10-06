@@ -69,7 +69,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   useEffect(() => {
     socket?.on('new-notification', (notification: INotification) => {
-      console.log('Nueva notificación recibida:', notification);
+      // console.log('Nueva notificación recibida:', notification);
       notificationDispatch({
         type: '[Notification] - ADD_NOTIFICATION',
         payload: notification,

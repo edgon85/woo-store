@@ -4,11 +4,17 @@ import { useRouter } from 'next/navigation';
 import { useProductForm, useUnsavedChangesWarning } from '@/hooks';
 import Swal from 'sweetalert2';
 
-import { IBrand, IClothesState, IColor, IDepartment } from '@/interfaces';
+import {
+  IBrand,
+  IClothesState,
+  IColor,
+  IDepartment,
+  IProfile,
+} from '@/interfaces';
 
 import { createProduct } from '@/actions';
 
-import { Button, SpinnerIcon } from '../../ui';
+import { SpinnerIcon } from '../../ui';
 import {
   CustomModal,
   ClothesTypeSection,
@@ -28,12 +34,14 @@ import {
   MunicipalitySection,
 } from './sections';
 import { useState } from 'react';
+import { AddressSection } from './sections/address-section/AddressSection';
 
 type Props = {
   brands: IBrand[];
   clothingConditionList: IClothesState[];
   colors: IColor[];
   departments: IDepartment[];
+  userProfile: IProfile;
 };
 
 export const CreateProduct = ({
@@ -41,10 +49,10 @@ export const CreateProduct = ({
   clothingConditionList,
   colors,
   departments,
+  userProfile,
 }: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [disabled, setDisabled] = useState(false);
 
   const {
     register,
@@ -104,7 +112,7 @@ export const CreateProduct = ({
             icon: 'success',
           });
           resetStore();
-          setDisabled(true);
+          // setDisabled(true);
           router.replace(`/member/${result.value?.user}`);
         } else if (result.dismiss) {
           setIsLoading(false);
@@ -127,6 +135,11 @@ export const CreateProduct = ({
         <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
           <DepartmentSection departments={departments} />
           {department && <MunicipalitySection />}
+          {department?.slug === 'quetzaltenango' && municipality && (
+            <div>
+              <AddressSection profile={userProfile!} />
+            </div>
+          )}
         </div>
 
         {municipality && (

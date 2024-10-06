@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const TableNoPaid = ({ data }: Props) => {
-  console.log(data);
+  console.log({ data });
   return (
     <section className="mb-4">
       <div className="relative overflow-x-auto">
@@ -16,7 +16,7 @@ export const TableNoPaid = ({ data }: Props) => {
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-2 py-3">
                 Producto
               </th>
               <th scope="col" className="px-6 py-3">
@@ -25,6 +25,9 @@ export const TableNoPaid = ({ data }: Props) => {
               <th scope="col" className="px-6 py-3">
                 Precio
               </th>
+              {/*  <th scope="col" className="px-6 py-3">
+                Ofertado
+              </th> */}
               <th scope="col" className="px-6 py-3">
                 Envío incluido
               </th>
@@ -43,7 +46,7 @@ export const TableNoPaid = ({ data }: Props) => {
                 <tr key={order.id} className="bg-white border-b ">
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize"
+                    className="px-6 py-4 font-medium text-gray-900 capitalize max-w-xs"
                   >
                     {order.product.title}
                   </th>
@@ -51,7 +54,24 @@ export const TableNoPaid = ({ data }: Props) => {
                     {order.paid ? <span>pagado</span> : <span>pendiente</span>}
                   </td>
                   <td className="px-6 py-4">
-                    {formatCurrency(order.product.price * 100)}
+                    <h3
+                      className={`${
+                        order.product.price !== order.summary.productPrice
+                          ? 'line-through'
+                          : ''
+                      }`}
+                    >
+                      {formatCurrency(order.product.price * 100)}
+                    </h3>
+                    <h3
+                      className={` ${
+                        order.product.price === order.summary.productPrice
+                          ? 'hidden'
+                          : 'flex'
+                      }`}
+                    >
+                      {formatCurrency(order.summary.productPrice * 100)}
+                    </h3>
                   </td>
                   <td className="px-6 py-4">
                     {formatCurrency(order.summary.shippingIncluded * 100)}
@@ -77,8 +97,10 @@ export const TableNoPaid = ({ data }: Props) => {
               ></th>
               <td className="px-6 py-4"></td>
               <td className="px-6 py-4"></td>
-              <td className="px-6 py-4"></td>
-              <td className="px-6 py-4 bg-cerise-red-500 text-white">
+              <td
+                colSpan={2}
+                className="px-6 py-4 bg-cerise-red-500 text-white"
+              >
                 Mi balance
               </td>
               <td className="px-6 py-4 bg-cerise-red-500 text-white">

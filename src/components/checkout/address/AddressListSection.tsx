@@ -8,7 +8,7 @@ import Modal from 'react-responsive-modal';
 import { DeleteAddress } from './delete-address/DeleteAddress';
 import { CreateFormAddress } from './CreateForm';
 import { fetchShippingAddress, makeAddressPrimary } from '@/actions';
-import { CirclePlus, EditIcon } from '@/components/ui';
+import { CirclePlus, EditIcon, SpinnerIcon } from '@/components/ui';
 
 export const AddressListSection = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -65,47 +65,52 @@ export const AddressListSection = () => {
     <>
       <button onClick={openModal}>
         {address ? (
-          <span className="flex items-center justify-center gap-2">
+          <span className='flex items-center justify-center gap-2'>
             Cambiar <EditIcon />
           </span>
         ) : (
-          <span className="flex items-center justify-center gap-2">
+          <span className='flex items-center justify-center gap-2'>
             Agregar <CirclePlus />
           </span>
         )}
       </button>
+
       <Modal onClose={closeModal} open={isModalOpen} center>
-        <div className="min-w-96 p-4">
-          <h2 className="text-xl mb-2">
+        <div className='min-w-96 p-4'>
+          <h2 className='text-xl mb-2'>
             {addressList.length === 0
               ? 'Agregue una dirección'
               : 'Seleccione Dirección'}
           </h2>
-          <div className="mx-auto max-w-md">
-            <List>
-              {addressList.map((address: IAddress) => (
-                <ListItem key={address.id}>
-                  <span className="">
-                    {address.streetAddress}, {address.municipality.name},{' '}
-                    {address.department.name}
-                  </span>
-                  <div className="flex gap-2">
-                    <button
-                      className="rounded border text-xs p-2 text-white bg-cerise-red-600 hover:bg-cerise-red-500"
-                      onClick={() => onSelectAddress(address)}
-                    >
-                      seleccionar
-                    </button>
-                    <DeleteAddress
-                      addressId={address.id!}
-                      onAddressDeleted={handleAddressDeleted}
-                    />
-                  </div>
-                </ListItem>
-              ))}
-            </List>
+          <div className='mx-auto max-w-md'>
+            {isLoading ? (
+              <SpinnerIcon className='animate-spin w-5 h-5' />
+            ) : (
+              <List>
+                {addressList.map((address: IAddress) => (
+                  <ListItem key={address.id}>
+                    <span className=''>
+                      {address.streetAddress}, {address.municipality.name},{' '}
+                      {address.department.name}
+                    </span>
+                    <div className='flex gap-2'>
+                      <button
+                        className='rounded border text-xs p-2 text-white bg-cerise-red-600 hover:bg-cerise-red-500'
+                        onClick={() => onSelectAddress(address)}
+                      >
+                        seleccionar
+                      </button>
+                      <DeleteAddress
+                        addressId={address.id!}
+                        onAddressDeleted={handleAddressDeleted}
+                      />
+                    </div>
+                  </ListItem>
+                ))}
+              </List>
+            )}
           </div>
-          <Divider className=" bg-gray-400" />
+          <Divider className=' bg-gray-400' />
           <CreateFormAddress
             closeModalParent={setModalOpen}
             onAddressCreated={onAddressCreated}

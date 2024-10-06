@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { IOffer } from '@/interfaces';
-import { formatCurrency, formatDateToLocal } from '@/utils';
+import { formatCurrency, formatDateToLocal, offerStatus } from '@/utils';
 import { BtnAcceptOffer } from './';
 import { BtnRejectOffer } from './BtnRejectOffer';
 
@@ -56,7 +56,7 @@ export const OfferList = ({ offers }: Props) => {
                   : 'bg-red-100 text-red-800'
               }`}
                 >
-                  {offer.status.charAt(0).toUpperCase() + offer.status.slice(1)}
+                  {offerStatus(offer.status)}
                 </span>
               </td>
               <td className="py-4 px-4">
