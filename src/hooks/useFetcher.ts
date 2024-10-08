@@ -2,8 +2,9 @@ import { SWRConfiguration } from 'swr';
 import useSWR from 'swr';
 
 export const useFetcher = <T>(url: string, config: SWRConfiguration = {}) => {
-  const urlED = `${process.env.API_BASE_URL}${url}`;
-  const { data, error } = useSWR<T>(urlED, config);
+  const localApiUrl = `/api/${url.startsWith('/') ? url.slice(1) : url}`;
+
+  const { data, error } = useSWR<T>(localApiUrl, config);
 
   return {
     data: data || [],
