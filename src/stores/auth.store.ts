@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { signOut, signIn, SignInResponse, getProviders } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { IUser } from '@/interfaces';
 import { userState, makeRegisterUser } from '@/actions';

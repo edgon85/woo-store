@@ -87,8 +87,8 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     strategy: 'jwt',
-    maxAge: 172800, // 48 horas
-    updateAge: 169200, // 47 horas
+    maxAge: 2628000, // 730 horas
+    updateAge: 2541600, // 706 horas
   },
 
   callbacks: {
@@ -120,33 +120,12 @@ export const authOptions: NextAuthOptions = {
 
             const data = await response.json();
             token.user = data.user;
-
-            // Guardar el token en una cookie
-            /* if ((token.user as ExtendedUser).token) {
-                cookies().set('auth_token', (token.user as ExtendedUser).token, {
-                  httpOnly: true,
-                  secure: process.env.NODE_ENV !== 'development',
-                  sameSite: 'strict',
-                  maxAge: 172800, // 48 horas, ajusta según necesites
-                  path: '/',
-                });
-              } */
           } catch (error) {
             console.error('OAuth error:', error);
             token.user = undefined;
           }
         } else if (account.type === 'credentials') {
           token.user = user as ExtendedUser;
-          // Guardar el token en una cookie
-          /*  if ((token.user as ExtendedUser).token) {
-              cookies().set('auth_token', (token.user as ExtendedUser).token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV !== 'development',
-                sameSite: 'strict',
-                maxAge: 172800, // 48 horas, ajusta según necesites
-                path: '/',
-              });
-            } */
         }
       }
       return token as ExtendedToken;
@@ -155,7 +134,6 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }): Promise<ExtendedSession> {
       return {
         ...session,
-        // user: token.user as ExtendedUser,
         user: (token as ExtendedToken).user,
       };
     },

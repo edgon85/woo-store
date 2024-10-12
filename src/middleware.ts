@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-// import { jwt } from './utils';
 
 const VALID_ADMIN_ROLES = ['admin', 'super-user', 'seo'] as const;
 
@@ -36,20 +35,12 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // const validRoles = ['admin', 'super-user', 'seo'];
   if (
     isAdminRoute(requestedPage) &&
     !VALID_ADMIN_ROLES.includes(session.user.role)
   ) {
     return NextResponse.redirect(new URL('/', req.url));
   }
-
-  /* if (
-    isAdminRouteApi(requestedPage) &&
-    !VALID_ADMIN_ROLES.includes(session.user.role)
-  ) {
-    return NextResponse.redirect(new URL('/api/auth/unauthorized', req.url));
-  } */
 
   if (
     isAdminRouteApi(requestedPage) &&
@@ -62,8 +53,6 @@ export async function middleware(req: NextRequest) {
   }
 
   const response = NextResponse.next();
-  response.cookies.set('token', session.user.token);
-  response.cookies.set('userId', session.user.id);
 
   return response;
 }
