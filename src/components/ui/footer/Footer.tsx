@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { FacebookIcon } from '../icons';
 
 export const Footer = () => {
   return (
@@ -83,39 +84,67 @@ export const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
             <div className="flex space-x-4">
-              <a href="/" className="text-gray-300 hover:text-white">
+              <Link
+                href="https://www.facebook.com/woo.online"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <svg
-                  className="h-6 w-6"
+                  className="w-6 h-6 text-gray-800 "
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  {/* <!-- Icono de redes sociales --> */}
+                  <path
+                    fillRule="evenodd"
+                    d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z"
+                    clipRule="evenodd"
+                  />
                 </svg>
-              </a>
-              <a href="/" className="text-gray-300 hover:text-white">
+              </Link>
+              <Link
+                href="https://www.instagram.com/woo.online/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <svg
-                  className="h-6 w-6"
-                  fill="currentColor"
+                  className="w-6 h-6 text-gray-800"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
                   viewBox="0 0 24 24"
                 >
-                  {/* <!-- Icono de redes sociales --> */}
+                  <path
+                    fill="currentColor"
+                    fillRule="evenodd"
+                    d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
+                    clipRule="evenodd"
+                  />
                 </svg>
-              </a>
-              <a href="/" className="text-gray-300 hover:text-white">
-                <svg
-                  className="h-6 w-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  {/* <!-- Icono de redes sociales --> */}
-                </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
-        <div className="mt-8 border-t border-gray-800 pt-8 md:flex md:items-center md:justify-between">
-          <p className="text-base text-gray-400">
-            &copy; 2024 Woo. Todos los derechos reservados.
+
+        <div className="mt-8 border-t border-gray-800 pt-8 ">
+          <div className="flex flex-col md:flex-row  text-sm text-gray-400 gap 2">
+            <span>W (wisdom, sabiduría - Prov 24:3-4)</span>
+            <span>
+              <span className="hidden md:inline">, </span>O (obedience,
+              obediencia - Deut 5:33)
+            </span>
+            <span>
+              <span className="hidden md:inline">, </span>O (opportunity,
+              oportunidad - Efes 5:16)
+            </span>
+          </div>
+          <p className="text-base text-gray-400 mt-2">
+            &copy; {new Date().getFullYear()} Woo. Todos los derechos
           </p>
         </div>
       </div>
