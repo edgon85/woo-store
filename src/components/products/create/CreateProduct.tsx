@@ -87,9 +87,18 @@ export const CreateProduct = ({
         showLoaderOnConfirm: true,
 
         preConfirm: async () => {
+          // Usar las URLs de imágenes ya subidas
+          const cloudinaryImages = await handleImageUpload(
+            formImagesData.getAll('images') as File[]
+          );
+
+          if (!cloudinaryImages) {
+            throw new Error('No se pudieron subir las imágenes');
+          }
+
           const { ok, message, data } = await createProduct(
             newProduct,
-            formImagesData
+            cloudinaryImages
           );
           if (!ok) {
             Swal.showValidationMessage(`error: ${message}`);
@@ -120,6 +129,28 @@ export const CreateProduct = ({
       });
     }
   );
+
+  const handleImageUpload = async (files: File[]) => {
+    try {
+      const formData = new FormData();
+      files.forEach((file) => formData.append('images', file));
+
+      const response = await fetch('/api/upload-images', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al subir las imágenes');
+      }
+
+      const data = await response.json();
+      return data.urls;
+    } catch (error) {
+      console.error('Error al subir imágenes:', error);
+      Swal.fire('Error', 'No se pudieron subir las imágenes', 'error');
+    }
+  };
 
   useUnsavedChangesWarning(isDirty);
 
