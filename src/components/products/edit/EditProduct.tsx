@@ -112,12 +112,20 @@ export const EditProduct = ({
         >
           Editar articulo
         </Link>
-        <button
-          onClick={() => router.replace(`/product/${product.slug}`)}
-          className="text-2xl font-extrabold text-cerise-red-600 hover:text-cerise-red-400"
-        >
-          <EyeDropIcon className="mr-2 w-5 h-5" />
-        </button>
+        <div className="flex gap-2 items-center">
+          <button
+            onClick={() => router.replace(`/product/${product.slug}`)}
+            className="bg-white hover:bg-cerise-red-300 text-primary text-xs rounded border flex justify-center items-center px-2 py-1"
+          >
+            Ver detalle
+          </button>
+          <button
+            onClick={() => router.replace(`/member/${product.user?.username}`)}
+            className=" bg-cerise-red-600 hover:bg-cerise-red-700 text-white text-xs rounded flex justify-center items-center px-2 py-1"
+          >
+            Ver mi closet
+          </button>
+        </div>
       </div>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className="bg-white border rounded shadow p-4 md:p-8 mb-2 md:mb-4">
@@ -166,18 +174,6 @@ export const EditProduct = ({
 
         {watch('price') ? (
           <div className="mt-4">
-            {/* <Button
-              label={isLoading ? '' : 'Guardar'}
-              icon={
-                isLoading ? (
-                  <SpinnerIcon className="w-6 h-6 animate-spin text-white" />
-                ) : (
-                  <></>
-                )
-              }
-              type="submit"
-              disabled={!isDirty}
-            /> */}
             <button
               type="submit"
               disabled={!isDirty}
@@ -197,6 +193,3 @@ export const EditProduct = ({
     </div>
   );
 };
-{
-  /* <SpinnerIcon className="w-6 h-6 animate-spin" /> */
-}

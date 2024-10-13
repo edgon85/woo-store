@@ -44,7 +44,18 @@ export const EditImagesSection = ({ product }: Props) => {
       showLoaderOnConfirm: true,
 
       preConfirm: async () => {
-        const { ok } = await addImagesByProductId(formData);
+        const cloudinaryImages = await handleImageUpload(
+          formData.getAll('images') as File[]
+        );
+
+        if (!cloudinaryImages) {
+          throw new Error('No se pudieron subir las imágenes');
+        }
+
+        const { ok } = await addImagesByProductId(
+          product.id!,
+          cloudinaryImages
+        );
 
         if (!ok) {
           Swal.showValidationMessage(`error: no su pudo cargar las imágenes`);
@@ -109,6 +120,29 @@ export const EditImagesSection = ({ product }: Props) => {
       }
     });
   };
+
+  const handleImageUpload = async (files: File[]) => {
+    try {
+      const formData = new FormData();
+      files.forEach((file) => formData.append('images', file));
+
+      const response = await fetch('/api/upload-images', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al subir las imágenes');
+      }
+
+      const data = await response.json();
+      return data.urls;
+    } catch (error) {
+      console.error('Error al subir imágenes:', error);
+      Swal.fire('Error', 'No se pudieron subir las imágenes', 'error');
+    }
+  };
+
   return (
     <>
       <div className="flex flex-wrap items-center gap-2 border-2 border-cerise-red-300 border-dashed rounded-lg p-2">
