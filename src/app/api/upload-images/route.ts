@@ -5,12 +5,6 @@ import sharp from 'sharp';
 // Configura Cloudinary
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();

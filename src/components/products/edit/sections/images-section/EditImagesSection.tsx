@@ -1,5 +1,4 @@
 import { ChangeEvent, useRef } from 'react';
-
 import Swal from 'sweetalert2';
 
 import { addImagesByProductId, deleteProductImage } from '@/actions';
@@ -7,6 +6,7 @@ import { CloseIcon, PlusIcon } from '@/components/ui';
 import { IProduct, ProductImage } from '@/interfaces';
 import { ImageCoverPage } from './ImageCoverPage';
 import { toast } from 'react-toastify';
+import { compressImages } from '@/utils';
 
 type Props = {
   product: IProduct;
@@ -44,26 +44,31 @@ export const EditImagesSection = ({ product }: Props) => {
       showLoaderOnConfirm: true,
 
       preConfirm: async () => {
-        const cloudinaryImages = await handleImageUpload(
-          formData.getAll('images') as File[]
-        );
+        try {
+          const files = formData.getAll('images') as File[];
+          const compressedFiles = await compressImages(files);
+          const cloudinaryImages = await handleImageUpload(compressedFiles);
 
-        if (!cloudinaryImages) {
-          throw new Error('No se pudieron subir las imágenes');
+          if (!cloudinaryImages || cloudinaryImages.length === 0) {
+            throw new Error('No se pudieron subir las imágenes');
+          }
+
+          const { ok, data, message } = await addImagesByProductId(
+            product.id!,
+            cloudinaryImages
+          );
+
+          if (!ok) {
+            throw new Error(message);
+          }
+
+          toast.success('Imágenes cargadas con éxito');
+          return data;
+        } catch (error) {
+          Swal.showValidationMessage(`Error: ${(error as Error).message}`);
         }
-
-        const { ok } = await addImagesByProductId(
-          product.id!,
-          cloudinaryImages
-        );
-
-        if (!ok) {
-          Swal.showValidationMessage(`error: no su pudo cargar las imágenes`);
-          return;
-        }
-
-        return 'Imágenes cargadas con éxito';
       },
+
       allowOutsideClick: () => {
         const popup = Swal.getPopup() as HTMLElement;
         popup.classList.remove('swal2-show');

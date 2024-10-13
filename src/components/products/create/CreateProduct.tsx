@@ -35,6 +35,7 @@ import {
 } from './sections';
 import { useState } from 'react';
 import { AddressSection } from './sections/address-section/AddressSection';
+import { compressImages } from '@/utils';
 
 type Props = {
   brands: IBrand[];
@@ -87,24 +88,26 @@ export const CreateProduct = ({
         showLoaderOnConfirm: true,
 
         preConfirm: async () => {
-          // Usar las URLs de imágenes ya subidas
-          const cloudinaryImages = await handleImageUpload(
-            formImagesData.getAll('images') as File[]
-          );
+          try {
+            const files = formImagesData.getAll('images') as File[];
+            const compressedFiles = await compressImages(files);
+            const cloudinaryImages = await handleImageUpload(compressedFiles);
 
-          if (!cloudinaryImages) {
-            throw new Error('No se pudieron subir las imágenes');
-          }
+            if (!cloudinaryImages || cloudinaryImages.length === 0) {
+              throw new Error('No se pudieron subir las imágenes');
+            }
 
-          const { ok, message, data } = await createProduct(
-            newProduct,
-            cloudinaryImages
-          );
-          if (!ok) {
-            Swal.showValidationMessage(`error: ${message}`);
-            return;
+            const { ok, message, data } = await createProduct(
+              newProduct,
+              cloudinaryImages
+            );
+            if (!ok) {
+              throw new Error(message);
+            }
+            return data;
+          } catch (error) {
+            Swal.showValidationMessage(`Error: ${(error as Error).message}`);
           }
-          return data;
         },
 
         allowOutsideClick: () => {
@@ -147,7 +150,6 @@ export const CreateProduct = ({
         }
 
         const data = await response.json();
-        console.log( data.urls ); 
         uploadedUrls.push(...data.urls);
       } catch (error) {
         console.error('Error al subir imagen:', error);
