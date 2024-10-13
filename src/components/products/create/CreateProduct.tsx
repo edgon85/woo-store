@@ -35,6 +35,7 @@ import {
 } from './sections';
 import { useState } from 'react';
 import { AddressSection } from './sections/address-section/AddressSection';
+import { compressImages } from '@/utils';
 
 type Props = {
   brands: IBrand[];
@@ -87,24 +88,26 @@ export const CreateProduct = ({
         showLoaderOnConfirm: true,
 
         preConfirm: async () => {
-          // Usar las URLs de imágenes ya subidas
-          const cloudinaryImages = await handleImageUpload(
-            formImagesData.getAll('images') as File[]
-          );
+          try {
+            const files = formImagesData.getAll('images') as File[];
+            const compressedFiles = await compressImages(files);
+            const cloudinaryImages = await handleImageUpload(compressedFiles);
 
-          if (!cloudinaryImages) {
-            throw new Error('No se pudieron subir las imágenes');
-          }
+            if (!cloudinaryImages || cloudinaryImages.length === 0) {
+              throw new Error('No se pudieron subir las imágenes');
+            }
 
-          const { ok, message, data } = await createProduct(
-            newProduct,
-            cloudinaryImages
-          );
-          if (!ok) {
-            Swal.showValidationMessage(`error: ${message}`);
-            return;
+            const { ok, message, data } = await createProduct(
+              newProduct,
+              cloudinaryImages
+            );
+            if (!ok) {
+              throw new Error(message);
+            }
+            return data;
+          } catch (error) {
+            Swal.showValidationMessage(`Error: ${(error as Error).message}`);
           }
-          return data;
         },
 
         allowOutsideClick: () => {
@@ -130,26 +133,31 @@ export const CreateProduct = ({
     }
   );
 
-  const handleImageUpload = async (files: File[]) => {
-    try {
-      const formData = new FormData();
-      files.forEach((file) => formData.append('images', file));
+  const handleImageUpload = async (files: File[]): Promise<string[]> => {
+    const uploadedUrls: string[] = [];
+    for (const file of files) {
+      try {
+        const formData = new FormData();
+        formData.append('images', file);
 
-      const response = await fetch('/api/upload-images', {
-        method: 'POST',
-        body: formData,
-      });
+        const response = await fetch('/api/upload-images', {
+          method: 'POST',
+          body: formData,
+        });
 
-      if (!response.ok) {
-        throw new Error('Error al subir las imágenes');
+        if (!response.ok) {
+          throw new Error(`Error al subir la imagen: ${file.name}`);
+        }
+
+        const data = await response.json();
+        uploadedUrls.push(...data.urls);
+      } catch (error) {
+        console.error('Error al subir imagen:', error);
+        Swal.fire('Error', `No se pudo subir la imagen: ${file.name}`, 'error');
+        throw error;
       }
-
-      const data = await response.json();
-      return data.urls;
-    } catch (error) {
-      console.error('Error al subir imágenes:', error);
-      Swal.fire('Error', 'No se pudieron subir las imágenes', 'error');
     }
+    return uploadedUrls;
   };
 
   useUnsavedChangesWarning(isDirty);

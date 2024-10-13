@@ -11,3 +11,4 @@ export * from './measurement';
 export * from './uuid-format';
 export * from './validations';
 export * from './metadata';
+export * from './compressionImages';
