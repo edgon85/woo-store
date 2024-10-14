@@ -17,9 +17,8 @@ export const GenderSection = ({ gender, onGenderChange }: Props) => {
       value={gender}
       onClick={() =>
         openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <SelectGender gender={gender} onGenderChange={onGenderChange} />
-          </div>
+          <SelectGender gender={gender} onGenderChange={onGenderChange} />,
+          'Seleccione Genero'
         )
       }
     />

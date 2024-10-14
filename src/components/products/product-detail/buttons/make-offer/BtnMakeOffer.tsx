@@ -1,9 +1,9 @@
 'use client';
 import { IProduct } from '@/interfaces';
 import { useEffect, useState } from 'react';
-import { ModalMakeOffer } from './ModalMakeOffer';
+import { MakeOfferContent } from './MakeOfferContent';
 
-import { useAuthStore, useModalAuth } from '@/stores';
+import { useAuthStore, useModalAuth, useModalStore } from '@/stores';
 
 type Props = {
   product: IProduct;
@@ -11,19 +11,20 @@ type Props = {
 };
 
 export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
-  const [openOfferModal, setOpenOfferModal] = useState(false);
+  const openOfferModal = useModalStore((state) => state.openModal);
+
   const { isLoggedIn } = useAuthStore((state) => state);
   const { openModal } = useModalAuth();
 
   useEffect(() => {
     if (triggerOpen) {
-      setOpenOfferModal(true);
+      openOfferModal(<MakeOfferContent product={product} />, 'Haz una oferta');
     }
-  }, [triggerOpen]);
+  }, [openOfferModal, product, triggerOpen]);
 
   const onOpenModal = () => {
     if (isLoggedIn) {
-      setOpenOfferModal(true);
+      openOfferModal(<MakeOfferContent product={product} />, 'Haz una oferta');
     } else {
       openModal();
     }
@@ -37,12 +38,6 @@ export const BtnMakeOffer = ({ product, triggerOpen = false }: Props) => {
       >
         Hacer oferta
       </button>
-
-      <ModalMakeOffer
-        product={product}
-        open={openOfferModal}
-        setOpen={setOpenOfferModal}
-      />
     </>
   );
 };

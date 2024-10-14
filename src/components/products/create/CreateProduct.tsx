@@ -16,7 +16,6 @@ import { createProduct } from '@/actions';
 
 import { SpinnerIcon } from '../../ui';
 import {
-  CustomModal,
   ClothesTypeSection,
   CategorySection,
   TitleSection,
@@ -270,23 +269,6 @@ export const CreateProduct = ({
           </button>
         ) : null}
       </form>
-      <CustomModal />
     </div>
   );
 };
-{
-  /* <div className="mt-4">
-            <Button
-              label={isLoading ? '' : 'Publicar'}
-              icon={
-                isLoading ? (
-                  <SpinnerIcon className="w-6 h-6 animate-spin text-white" />
-                ) : (
-                  <></>
-                )
-              }
-              type="submit"
-              disabled={disabled}
-            />
-          </div> */
-}

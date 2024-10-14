@@ -1,9 +1,10 @@
 import './globals.css';
+import 'react-responsive-modal/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { Providers } from './providers';
 import { AuthModal, Footer, NavClothesType, Navbar } from '@/components';

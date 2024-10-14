@@ -60,13 +60,16 @@ export const AddressForm = ({ profile, setCurrentAddress }: Props) => {
   };
   return (
     <div>
-      <h2 className="mb-4">
-        {address ? 'Actualizar dirección' : 'Agregar dirección'}
-      </h2>
+     
       <form onSubmit={handleSubmit(onHandleSubmit)}>
         <div className="flex flex-col justify-between gap-2 w-full">
           <div>
-            <label htmlFor="address">Dirección</label>
+            <div className="flex flex-col">
+              <label htmlFor="address">Dirección</label>
+              <span className="text-xs text-gray-400">
+                Dirección para el servicio de recolección
+              </span>
+            </div>
 
             <textarea
               id="address"

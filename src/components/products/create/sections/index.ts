@@ -3,7 +3,6 @@ export * from './category-section/CategorySection';
 export * from './clothes-state-section/ClothesStateSection';
 export * from './clothes-type-section/ClothesTypeSection';
 export * from './color-section/ColorsSection';
-export * from './CustomModal';
 export * from './DescriptionSection';
 export * from './gender-section/GenderSection';
 export * from './image-section/ImageSection';

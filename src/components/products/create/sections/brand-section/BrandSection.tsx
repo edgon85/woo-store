@@ -18,11 +18,7 @@ export const BrandSection = ({ brands }: Props) => {
       icon={<TagPriceIcon />}
       value={`${brand?.title !== undefined ? brand?.title : ''}`}
       onClick={() =>
-        openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <BrandSelect brands={brands} />
-          </div>
-        )
+        openModal(<BrandSelect brands={brands} />, 'Seleccione Marca')
       }
     />
   );

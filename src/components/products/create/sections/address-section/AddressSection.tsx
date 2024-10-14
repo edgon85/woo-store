@@ -30,12 +30,11 @@ export const AddressSection = ({ profile }: Props) => {
       value={currentAddress || 'puede agrear después'}
       onClick={() =>
         openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <AddressForm
-              profile={profile}
-              setCurrentAddress={setCurrentAddress}
-            />
-          </div>
+          <AddressForm
+            profile={profile}
+            setCurrentAddress={setCurrentAddress}
+          />,
+          `${address ? 'Actualizar dirección' : 'Agregar dirección'}`
         )
       }
     />

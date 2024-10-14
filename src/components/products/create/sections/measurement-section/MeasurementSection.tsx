@@ -22,9 +22,8 @@ export const MeasurementSection = ({ gender, clothesType }: Props) => {
       value={formatMeasurementString(measurement!, gender)}
       onClick={() =>
         openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <Measurements gender={gender} clothesType={clothesType} />
-          </div>
+          <Measurements gender={gender} clothesType={clothesType} />,
+          'Seleccione talla'
         )
       }
     />

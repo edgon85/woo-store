@@ -20,9 +20,6 @@ export const DepartmentState = ({ departmentList }: Props) => {
 
   return (
     <ul>
-      <li className='mb-2'>
-        <h2 className="text-lg capitalize">Departamentos disponibles</h2>
-      </li>
       {departmentList.map((resp) => (
         <li
           onClick={() => handleClick(resp)}

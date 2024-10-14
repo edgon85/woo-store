@@ -12,13 +12,7 @@ export const MunicipalitySection = () => {
       title="Municipio"
       icon={<MapMarker />}
       value={municipality?.name!}
-      onClick={() =>
-        openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <MunicipalityState />
-          </div>
-        )
-      }
+      onClick={() => openModal(<MunicipalityState />)}
     />
   );
 };

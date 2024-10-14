@@ -1,6 +1,7 @@
 import { ItemCreate } from '../ItemCreate';
 import { useCreateProductStore, useModalStore } from '@/stores';
 import { SelectClothesType } from './SelectClothesType';
+import { title } from 'process';
 
 type Props = {
   clothesType: string;
@@ -20,12 +21,11 @@ export const ClothesTypeSection = ({
       value={clothesType}
       onClick={() =>
         openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <SelectClothesType
-              clothesType={clothesType}
-              onClothesTypeChange={onClothesTypeChange}
-            />
-          </div>
+          <SelectClothesType
+            clothesType={clothesType}
+            onClothesTypeChange={onClothesTypeChange}
+          />,
+          'Seleccione Tipo de Prenda'
         )
       }
     />

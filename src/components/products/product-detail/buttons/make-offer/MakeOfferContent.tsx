@@ -1,5 +1,5 @@
 'use client';
-import Modal from 'react-responsive-modal';
+
 import OfferSlider from './OfferSlider';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,7 @@ import { makeOffer } from '@/actions';
 import { IProduct } from '@/interfaces';
 import { toast } from 'react-toastify';
 import { Button } from '@/components/ui';
+import { useModalStore } from '@/stores';
 
 type FormData = {
   price: number;
@@ -14,12 +15,11 @@ type FormData = {
 
 type Props = {
   product: IProduct;
-  open: boolean;
-  setOpen: (open: boolean) => void;
 };
 
-export const ModalMakeOffer = ({ product, open, setOpen }: Props) => {
+export const MakeOfferContent = ({ product }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const onCloseModal = useModalStore((state) => state.closeModal);
 
   const [offerPrice, setOfferPrice] = useState(0);
 
@@ -50,28 +50,21 @@ export const ModalMakeOffer = ({ product, open, setOpen }: Props) => {
     }
   };
 
-  const onCloseModal = () => {
-    setOpen(false);
-    reset();
-  };
-
   return (
-    <Modal open={open} onClose={onCloseModal} center>
-      <section className="md:w-96">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <OfferSlider
-            productPrice={product.price}
-            onOfferChange={handleOfferChange}
+    <section className="">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <OfferSlider
+          productPrice={product.price}
+          onOfferChange={handleOfferChange}
+        />
+        <div className="mt-4">
+          <Button
+            label={isSubmitting ? 'Enviando...' : 'Enviar oferta'}
+            type="submit"
+            disabled={isSubmitting}
           />
-          <div className="mt-4">
-            <Button
-              label={isSubmitting ? 'Enviando...' : 'Enviar oferta'}
-              type="submit"
-              disabled={isSubmitting}
-            />
-          </div>
-        </form>
-      </section>
-    </Modal>
+        </div>
+      </form>
+    </section>
   );
 };
