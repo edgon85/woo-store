@@ -9,7 +9,7 @@ export const Banner = () => {
       {/* Contenedor de imagen */}
       <div className="relative w-full h-[300px] md:h-[400px] lg:h-[70vh] overflow-hidden">
         <Image
-          src="/main/sarah-brown.jpg"
+          src="/main/sarah-brown.webp"
           alt="Mujer sonriente en un armario"
           className="absolute inset-0 w-full h-full object-cover"
           fill={true}
