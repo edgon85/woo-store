@@ -19,9 +19,8 @@ export const ClothesStateSection = ({ clothingConditionList }: Props) => {
       value={clothesState?.title!}
       onClick={() =>
         openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <ClothesState clothingConditionList={clothingConditionList} />
-          </div>
+          <ClothesState clothingConditionList={clothingConditionList} />,
+          'Seleccione Estado de la prenda'
         )
       }
     />

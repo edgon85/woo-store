@@ -12,3 +12,4 @@ export * from './skeletons';
 export * from './pagination/Pagination';
 export * from './svgs';
 export * from './footer/Footer';
+export * from './modals';

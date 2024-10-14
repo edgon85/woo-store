@@ -20,9 +20,8 @@ export const DepartmentSection = ({ departments }: Props) => {
       value={department?.name!}
       onClick={() =>
         openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <DepartmentState departmentList={departments} />
-          </div>
+          <DepartmentState departmentList={departments} />,
+          'Departamentos disponibles'
         )
       }
     />

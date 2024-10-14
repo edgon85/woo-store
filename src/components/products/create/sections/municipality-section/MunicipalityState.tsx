@@ -63,7 +63,7 @@ export const MunicipalityState = () => {
           key={muni.id}
         >
           <div>
-            <h6 className="text-lg capitalize">{muni.name}</h6>
+            <h6 className="text-md capitalize">{muni.name}</h6>
           </div>
           {municipality?.id === muni.id && (
             <CheckMark className="text-cerise-red-600 w-6 h-6" />
@@ -81,5 +81,12 @@ export const MunicipalityState = () => {
     );
   }
 
-  return <ul>{municipalityItems}</ul>;
+  return (
+    <ul>
+      <li className="mb-2">
+        <h2 className="text-lg capitalize">Municipios</h2>
+      </li>
+      {municipalityItems}
+    </ul>
+  );
 };

@@ -18,7 +18,6 @@ import {
   CategorySection,
   ClothesStateSection,
   ColorsSection,
-  CustomModal,
   MeasurementSection,
   SubcategorySection,
   WeightSection,
@@ -189,7 +188,6 @@ export const EditProduct = ({
           </div>
         ) : null}
       </form>
-      <CustomModal />
     </div>
   );
 };

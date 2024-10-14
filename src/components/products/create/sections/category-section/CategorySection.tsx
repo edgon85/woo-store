@@ -16,11 +16,7 @@ export const CategorySection = ({ gender, clothesType }: Props) => {
       title="Categoría"
       value={category?.title!}
       onClick={() =>
-        openModal(
-          <div className=" w-72 md:w-96 p-4">
-            <SelectCategory gender={gender} clothesType={clothesType} />
-          </div>
-        )
+        openModal(<SelectCategory gender={gender} clothesType={clothesType} />)
       }
     />
   );

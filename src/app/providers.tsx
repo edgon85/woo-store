@@ -1,15 +1,10 @@
 'use client';
 
+import { CustomModal } from '@/components';
 import { AuthStateManager } from '@/components/auth/AuthStateManager';
-import {
-  AuthProvider,
-  ChatProvider,
-  NotificationProvider,
-  SocketProvider,
-} from '@/context';
+import { ChatProvider, NotificationProvider, SocketProvider } from '@/context';
 import { SessionProvider } from 'next-auth/react';
 import { SWRConfig } from 'swr';
-import { Suspense } from 'react';
 
 type Props = {
   children: JSX.Element | JSX.Element[];
@@ -32,6 +27,7 @@ export function Providers({ children }: Props) {
               {children}
               {/* </Suspense> */}
             </SocketProvider>
+            <CustomModal />
           </NotificationProvider>
         </ChatProvider>
       </SessionProvider>

@@ -45,12 +45,12 @@ const OfferSlider = ({ productPrice, onOfferChange }: Props) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-8">
+    <div className="py-4">
       <div className="flex flex-col">
         <span className="self-center">
           ¿Te encantó? ¡Adquiéralo ya antes de que se agote!
         </span>
-        <h2 className="text-2xl font-bold mb-4">Haz una oferta:</h2>
+        {/* <h2 className="text-2xl font-bold mb-4">Haz una oferta:</h2> */}
       </div>
       <div className="flex justify-between items-center mb-2">
         <span className="text-gray-500">Min: Q{minPrice}</span>
