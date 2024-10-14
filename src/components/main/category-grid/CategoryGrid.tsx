@@ -7,7 +7,7 @@ export const CategoryGrid = () => {
       title: 'COLECCIÓN FEMENINA',
       subtitle: '#MUJERES',
       description: 'Vestidos, Pantalones, Blusas y más',
-      imagePath: '/fashion.jpg',
+      imagePath: '/main/fashion.webp',
       gridClass: 'col-span-full md:col-span-1 md:row-span-2',
       link: '/catalog/mujer/ropa',
     },
