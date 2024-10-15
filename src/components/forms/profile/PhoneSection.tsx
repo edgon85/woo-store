@@ -9,7 +9,7 @@ type Props = {
 
 export const PhoneSection = ({ setValue, register, errors }: Props) => {
   return (
-    <div className="flex  items-center py-4">
+    <div className="">
       <label className="flex-1 text-base font-medium text-gray-700">
         Teléfono
       </label>

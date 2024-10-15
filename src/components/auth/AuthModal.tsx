@@ -13,8 +13,8 @@ export const AuthModal = () => {
   const { isOpen, closeModal } = useModalAuth();
 
   return (
-    <Modal open={isOpen} onClose={closeModal} center>
-      <section className="w-80 md:w-96">
+    <Modal open={isOpen} onClose={closeModal} center >
+      <section className="w-72 md:w-96 py-4 ">
         {selectRegister ? (
           <RegisterComponent providers={providers} />
         ) : (

@@ -76,7 +76,7 @@ export const AddressListSection = () => {
       </button>
 
       <Modal onClose={closeModal} open={isModalOpen} center>
-        <div className='min-w-96 p-4'>
+        <div className='w-72 md:w-96 py-4'>
           <h2 className='text-xl mb-2'>
             {addressList.length === 0
               ? 'Agregue una dirección'

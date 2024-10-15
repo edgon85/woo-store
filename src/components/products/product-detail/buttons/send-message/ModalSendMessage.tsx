@@ -79,7 +79,7 @@ export const ModalSendMessage = ({
 
   return (
     <Modal open={open} onClose={onCloseModal} center>
-      <section className="md:w-96">
+      <section className="w-72 md:w-96 py-4">
         <form onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-center text-lg font-semibold">Enviar mensaje</h2>
           <p>
