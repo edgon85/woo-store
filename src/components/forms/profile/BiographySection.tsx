@@ -16,7 +16,7 @@ export const BiographySection = ({ register }: Props) => {
       </label>
       <textarea
         id="sobreMi"
-        rows={3}
+        rows={6}
         className=" flex-1 w-full p-2 border rounded-md resize-none"
         placeholder="Cuéntanos más sobre ti"
         {...register('biography')}

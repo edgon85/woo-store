@@ -116,7 +116,7 @@ export const CreateFormAddress = ({
       </button>
       <Modal onClose={closeModal} open={isModalOpen} center>
         <form onSubmit={handleSubmit(onHandleSubmit)}>
-          <div className="w-96 p-4 flex flex-col gap-2">
+          <div className="w-72 md:w-96 py-4 flex flex-col gap-2">
             <label htmlFor="department">Departamento</label>
             <Controller
               name="department"

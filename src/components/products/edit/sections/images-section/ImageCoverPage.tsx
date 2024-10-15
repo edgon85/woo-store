@@ -59,7 +59,7 @@ export const ImageCoverPage = ({ images, coverImage, productId }: Props) => {
       </button>
 
       <Modal open={isOpenModal} onClose={closeModal} center>
-        <div className="md:min-w-96 p-4 mt-4">
+        <div className="w-72 md:w-96 py-4  mt-4">
           <div className="flex flex-wrap items-center gap-2 border-2 border-cerise-red-300 border-dashed rounded-lg p-2">
             {images.map((image: ProductImage) => (
               <picture key={image.id} className="relative">

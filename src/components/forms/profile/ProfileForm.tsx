@@ -78,7 +78,7 @@ export const ProfileForm = ({ profile, userId, fullName }: Props) => {
         <hr className="" />
 
         {/* <!-- Sobre mí --> */}
-        <div className="bg-white p-4 w-full flex justify-between">
+        <div className="bg-white p-4 w-full flex flex-col md:flex-row justify-between">
           <BiographySection register={register} />
         </div>
 
@@ -97,7 +97,7 @@ export const ProfileForm = ({ profile, userId, fullName }: Props) => {
         </div>
         <hr className="" /> */}
 
-        <div className="bg-white p-4 w-full">
+        <div className="bg-white w-full flex flex-col md:flex-row justify-between p-4">
           <PhoneSection
             setValue={setValue}
             register={register}

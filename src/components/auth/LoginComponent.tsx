@@ -29,7 +29,7 @@ export const LoginComponent = ({ providers }: Props) => {
   }, [error, params]);
 
   return (
-    <div className="bg-white p-4 rounded flex flex-col items-center gap-2 max-w-md w-full">
+    <div className="bg-white py-4 rounded flex flex-col items-center gap-2 max-w-md w-full">
       <h2 className="text-lg mb-3">Bienvenido a Woo</h2>
       <div className="flex flex-col w-full gap-2">
         <AuthButtonsProviders providers={providers} title="iniciar con" />

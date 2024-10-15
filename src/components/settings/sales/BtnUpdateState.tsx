@@ -75,7 +75,7 @@ export const BtnUpdateState = ({ orderId, orderStatus }: Props) => {
       </button>
 
       <Modal open={isOpenModal} onClose={closeModal} center>
-        <div className="md:w-96 p-4 mt-4">
+        <div className="w-72 md:w-96 py-4 mt-4">
           <div className=" flex flex-col md:flex-row gap-2 justify-between items-center mb-2">
             <div className="flex-1">
               <p className="block">Enviado a paquetería</p>
