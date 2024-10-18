@@ -1,2 +1,2 @@
 export * from './Navbar';
-export * from './clothes-type';
+export * from './mega-menu';

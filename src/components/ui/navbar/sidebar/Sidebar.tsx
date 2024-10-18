@@ -1,5 +1,5 @@
 'use client';
-import { useSidebar } from '@/stores';
+import { usePersonalPreferencesStore, useSidebar } from '@/stores';
 import { ButtonCellNow } from './ButtonCellNow';
 import { ButtonRegister } from './ButtonRegister';
 
@@ -9,12 +9,18 @@ import { ArrowRightIcon, ListGroup, SidebarHelp } from '@/components';
 
 import clsx from 'clsx';
 import { useAuthStore } from '@/stores/auth.store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ICategory } from '@/interfaces';
+import { getCategories } from '@/actions/categories';
 
 const Sidebar = () => {
   const menuOpen = useSidebar((state) => state.sidebarOpen);
   const setMenuOpen = useSidebar((state) => state.onSidebarOpen);
   const user = useAuthStore((state) => state.user);
+  const [categories, setCategories] = useState<{ [key: string]: ICategory[] }>(
+    {}
+  );
+  const gender = usePersonalPreferencesStore((state) => state.gender);
 
   useEffect(() => {
     if (menuOpen) {
@@ -27,6 +33,24 @@ const Sidebar = () => {
       document.body.style.overflow = 'unset';
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      const articleTypes = ['ropa', 'zapatos', 'accesorios'];
+      const categoriesData: { [key: string]: ICategory[] } = {};
+
+      for (const articleType of articleTypes) {
+        const { ok, categories } = await getCategories(gender, articleType);
+        if (ok) {
+          categoriesData[articleType] = categories;
+        }
+      }
+
+      setCategories(categoriesData);
+    };
+
+    fetchAllCategories();
+  }, [gender]);
 
   return (
     <>
@@ -79,15 +103,30 @@ const Sidebar = () => {
 
               <MenuItem
                 title={'Ropa'}
-                items={<ClothesList articleType="ropa" />}
+                items={
+                  <ClothesList
+                    articleType="ropa"
+                    categories={categories['ropa'] || []}
+                  />
+                }
               />
               <MenuItem
                 title={'Zapatos'}
-                items={<ClothesList articleType="zapatos" />}
+                items={
+                  <ClothesList
+                    articleType="zapatos"
+                    categories={categories['zapatos'] || []}
+                  />
+                }
               />
               <MenuItem
                 title={'Accesorios'}
-                items={<ClothesList articleType="accesorios" />}
+                items={
+                  <ClothesList
+                    articleType="accesorios"
+                    categories={categories['accesorios'] || []}
+                  />
+                }
               />
             </ul>
             {user && (
@@ -100,7 +139,7 @@ const Sidebar = () => {
 
             <SidebarHelp isMobile={true} />
 
-            <div className='h-20'></div>
+            <div className="h-20"></div>
           </div>
         </div>
       </div>

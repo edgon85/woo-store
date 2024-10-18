@@ -7,7 +7,7 @@ import { Roboto } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 
 import { Providers } from './providers';
-import { AuthModal, Footer, NavClothesType, Navbar } from '@/components';
+import { AuthModal, Footer, Navbar } from '@/components';
 import Sidebar from '@/components/ui/navbar/sidebar/Sidebar';
 import { Suspense } from 'react';
 

@@ -1,4 +1,4 @@
-import { Pagination, ProductCard } from '@/components';
+import { NotProductFound, Pagination, ProductCard } from '@/components';
 import { getAuthInfo } from '@/libs';
 import { getSearchProducts } from '@/utils';
 import { redirect } from 'next/navigation';
@@ -41,7 +41,7 @@ export default async function Page({ searchParams }: Props) {
   }
 
   if (products.length === 0) {
-    NotFound();
+    return NotProductFound();
   }
 
   return (

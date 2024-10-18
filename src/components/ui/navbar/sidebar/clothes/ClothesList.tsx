@@ -1,24 +1,21 @@
-import { useFetcher } from '@/hooks';
+
 import { ICategory } from '@/interfaces';
 import { usePersonalPreferencesStore, useSidebar } from '@/stores';
 import { useRouter } from 'next/navigation';
 
 type Props = {
   articleType: string;
+  categories: ICategory[];
 };
 
-export const ClothesList = ({ articleType }: Props) => {
+export const ClothesList = ({ articleType, categories }: Props) => {
   const gender = usePersonalPreferencesStore((state) => state.gender);
   const router = useRouter();
   const sidebarMenu = useSidebar((state) => state.onSidebarOpen);
 
-  const { data: categories } = useFetcher<ICategory[]>(
-    `/categories?gender=${gender}&type=${articleType}`
-  );
-
   return (
     <>
-      {categories.map((category) => (
+      {categories.map((category: ICategory) => (
         <li key={category.id}>
           <button
             className="py-2 pl-2 capitalize"

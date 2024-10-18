@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { BtnActions } from './btn-actions';
 import logo from '../../../../public/logo-lila.svg';
 import { SearchInput } from './search/SearchInput';
-import { ListClothesType } from './clothes-type/ListClothesType';
+
+import { MegaMenu } from './';
 
 export const Navbar = () => {
   return (
@@ -32,7 +33,13 @@ export const Navbar = () => {
               <SearchInput />
             </div>
             <div className="w-full max-w-lg mx-auto hidden md:flex justify-center">
-              <ListClothesType />
+              <div className="flex-shrink-0"></div>
+              <div className="flex-grow mx-4 hidden md:flex justify-center">
+                <div className="w-full max-w-xl">
+                  <MegaMenu />
+                </div>
+              </div>
+              <div className="flex-shrink-0"></div>
             </div>
           </nav>
         </div>

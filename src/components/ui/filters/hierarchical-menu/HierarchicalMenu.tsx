@@ -18,6 +18,7 @@ type Props = {
   clothingType: string;
   initialPath?: string;
   isMobile?: boolean;
+  menuItems: MenuItem[];
 };
 
 export const HierarchicalMenu = ({
@@ -25,12 +26,13 @@ export const HierarchicalMenu = ({
   clothingType,
   initialPath,
   isMobile = false,
+  menuItems,
 }: Props) => {
-  const {
+  /*   const {
     data: menuItems,
     isLoading,
     isError,
-  } = useFetcher<MenuItem[]>(`/subcategories/menu/${gender}/${clothingType}`);
+  } = useFetcher<MenuItem[]>(`/subcategories/menu/${gender}/${clothingType}`); */
   const params = useParams();
   const [currentMenu, setCurrentMenu] = useState<MenuItem[]>([]);
   const [menuStack, setMenuStack] = useState<MenuItem[][]>([]);
@@ -143,8 +145,9 @@ export const HierarchicalMenu = ({
     }
   };
 
-  if (isLoading) return <div>Cargando...</div>;
+  /*  if (isLoading) return <div>Cargando...</div>;
   if (isError) return <div>Error al cargar el menú</div>;
+  */
   if (!menuItems || menuItems.length === 0)
     return <div>No hay datos disponibles</div>;
 
