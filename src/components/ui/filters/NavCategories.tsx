@@ -15,6 +15,22 @@ type Props = {
   isMobile?: boolean;
 };
 
+const FilterSkeleton = () => {
+  return (
+    <div className="space-y-2 p-4 animate-pulse">
+      {[...Array(7)].map((_, index) => (
+        <div
+          key={index}
+          className="flex items-center justify-between bg-gray-200 p-3 rounded"
+        >
+          <div className="h-5 bg-gray-300 rounded w-24"></div>
+          <div className="h-5 w-5 bg-gray-300 rounded"></div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const FilterContent = ({ isMobile }: Props) => {
   const params = useParams();
   const { gender, clothing_type, category, subcategory } = params;
@@ -22,8 +38,8 @@ const FilterContent = ({ isMobile }: Props) => {
 
   const initialPath = [category, subcategory].filter(Boolean).join('/');
 
-  if (isLoading) return <div>Loading filters...</div>;
-  if (error) return <div>Error loading filters: {error}</div>;
+  if (isLoading) return <FilterSkeleton />;
+  if (error) return null;
 
   return (
     <ul className="space-y-2">
