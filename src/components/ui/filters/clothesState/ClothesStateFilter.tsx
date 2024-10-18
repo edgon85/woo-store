@@ -10,13 +10,15 @@ import { useFetcher } from '@/hooks';
 type Props = {
   isMobile?: boolean;
   isSearch?: boolean;
+  clothesStates: any[]
 };
 
 export const ClothesStateFilter = ({
   isMobile = false,
   isSearch = false,
+  clothesStates
 }: Props) => {
-  const { data: clothesStates } = useFetcher<IClothesState[]>(`/clothes-state`);
+  // const { data: clothesStates } = useFetcher<IClothesState[]>(`/clothes-state`);
 
   const pathName = usePathname();
   const { replace } = useRouter();

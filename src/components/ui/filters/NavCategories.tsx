@@ -6,98 +6,115 @@ import { ColorFilter } from './colors/ColorFilter';
 import { PriceFilter } from './price/PriceFilter';
 import { MenuItem } from './NavItems';
 
-import { useParams, usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { HierarchicalMenu } from './hierarchical-menu/HierarchicalMenu';
 import { ClothingType } from './clothing-type/ClothingType';
+import { FilterDataProvider, useFilterData } from './ContextData';
 
 type Props = {
   isMobile?: boolean;
 };
 
-export const NavCategories = ({ isMobile }: Props) => {
+const FilterContent = ({ isMobile }: Props) => {
   const params = useParams();
   const { gender, clothing_type, category, subcategory } = params;
-  // const pathname = usePathname();
+  const { filterData, isLoading, error } = useFilterData();
 
   const initialPath = [category, subcategory].filter(Boolean).join('/');
 
+  if (isLoading) return <div>Loading filters...</div>;
+  if (error) return <div>Error loading filters: {error}</div>;
+
   return (
-    <div className="p-4">
-      <ul className="space-y-2">
-        {!category && !subcategory ? (
-          <MenuItem
-            title={'Tipo de prenda'}
-            items={
-              <div className="max-h-64 overflow-scroll">
-                <ClothingType isMobile={isMobile} gender={gender.toString()} />
-              </div>
-            }
-          />
-        ) : null}
-
-        {gender && clothing_type ? (
-          <MenuItem
-            title={`${category ? 'Subcategorías' : 'Categorías'} `}
-            items={
-              <div className="max-h-64 overflow-scroll">
-                <HierarchicalMenu
-                  gender={gender.toString()}
-                  clothingType={clothing_type.toString()}
-                  initialPath={initialPath}
-                  isMobile={isMobile}
-                />
-              </div>
-            }
-          />
-        ) : null}
-
+    <ul className="space-y-2">
+      {!category && !subcategory && (
         <MenuItem
-          title={'Marcas'}
+          title={'Tipo de prenda'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <BrandsItems isMobile={isMobile} />
+              <ClothingType isMobile={isMobile} gender={gender.toString()} />
             </div>
           }
         />
+      )}
 
-        {clothing_type && (
-          <MenuItem
-            title={'Tallas'}
-            items={
-              <div className="max-h-64 overflow-scroll">
-                <MeasurementFilterItems isMobile={isMobile} />
-              </div>
-            }
-          />
-        )}
-
+      {gender && clothing_type && (
         <MenuItem
-          title={'Estado'}
+          title={`${category ? 'Subcategorías' : 'Categorías'} `}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ClothesStateFilter isMobile={isMobile} />
+              <HierarchicalMenu
+                gender={gender.toString()}
+                clothingType={clothing_type.toString()}
+                initialPath={initialPath}
+                isMobile={isMobile}
+                menuItems={filterData.menuItems}
+              />
             </div>
           }
         />
+      )}
 
+      <MenuItem
+        title={'Marcas'}
+        items={
+          <div className="max-h-64 overflow-scroll">
+            <BrandsItems isMobile={isMobile} brands={filterData.brands} />
+          </div>
+        }
+      />
+
+      {clothing_type && (
         <MenuItem
-          title={'Color'}
+          title={'Tallas'}
           items={
             <div className="max-h-64 overflow-scroll">
-              <ColorFilter isMobile={isMobile} />
+              <MeasurementFilterItems
+                isMobile={isMobile}
+                measurements={filterData.measurements}
+              />
             </div>
           }
         />
+      )}
 
-        <MenuItem
-          title={'Precio'}
-          items={
-            <div className="">
-              <PriceFilter isMobile={isMobile} />
-            </div>
-          }
-        />
-      </ul>
-    </div>
+      <MenuItem
+        title={'Estado'}
+        items={
+          <div className="max-h-64 overflow-scroll">
+            <ClothesStateFilter
+              isMobile={isMobile}
+              clothesStates={filterData.clothesStates}
+            />
+          </div>
+        }
+      />
+
+      <MenuItem
+        title={'Color'}
+        items={
+          <div className="max-h-64 overflow-scroll">
+            <ColorFilter isMobile={isMobile} colors={filterData.colors} />
+          </div>
+        }
+      />
+
+      <MenuItem
+        title={'Precio'}
+        items={
+          <div className="">
+            <PriceFilter isMobile={isMobile} />
+          </div>
+        }
+      />
+    </ul>
   );
 };
+
+export const NavCategories: React.FC<Props> = (props) => (
+  <FilterDataProvider>
+    <div className="p-4">
+      <FilterContent {...props} />
+    </div>
+  </FilterDataProvider>
+);

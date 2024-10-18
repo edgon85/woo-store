@@ -10,6 +10,7 @@ export async function getBrands(filter: string): Promise<IBrand[]> {
         ? `${process.env.API_BASE_URL}/brands?f=${filter}`
         : `${process.env.API_BASE_URL}/brands/all`;
 
+    console.log({ url });
     const resp = await fetch(url, {
       method: 'GET',
     });
@@ -19,6 +20,27 @@ export async function getBrands(filter: string): Promise<IBrand[]> {
     }
 
     const data: IBrand[] = await resp.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error al obtener marca');
+  }
+}
+
+export async function getFilteredBrands() {
+  try {
+    const url = `${process.env.API_BASE_URL}/brands/all?take=15`;
+
+    const resp = await fetch(url, {
+      method: 'GET',
+    });
+
+    if (!resp.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const data = await resp.json();
     return data;
   } catch (error) {
     console.log(error);

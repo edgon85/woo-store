@@ -10,10 +10,15 @@ import { useEffect } from 'react';
 type Props = {
   isMobile?: boolean;
   isSearch?: boolean;
+  colors: any[];
 };
 
-export const ColorFilter = ({ isMobile = false, isSearch = false }: Props) => {
-  const { data: colors } = useFetcher<IColor[]>(`/colors`);
+export const ColorFilter = ({
+  isMobile = false,
+  isSearch = false,
+  colors,
+}: Props) => {
+  // const { data: colors } = useFetcher<IColor[]>(`/colors`);
 
   const pathName = usePathname();
   const searchParams = useSearchParams();

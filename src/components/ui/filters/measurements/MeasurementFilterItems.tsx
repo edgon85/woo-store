@@ -14,20 +14,22 @@ import { useFetcher } from '@/hooks';
 type Props = {
   isMobile?: boolean;
   isSearch?: boolean;
+  measurements: any[];
 };
 
 export const MeasurementFilterItems = ({
   isMobile = false,
   isSearch = false,
+  measurements,
 }: Props) => {
   const gender = usePersonalPreferencesStore((state) => state.gender);
   const clothing_type = usePersonalPreferencesStore(
     (state) => state.clothesType
   );
 
-  const { data: measurements } = useFetcher<IMeasurement[]>(
+  /* const { data: measurements } = useFetcher<IMeasurement[]>(
     `/measurements?gender=${gender}&type=${clothing_type}`
-  );
+  ); */
 
   const pathName = usePathname();
   const { replace } = useRouter();

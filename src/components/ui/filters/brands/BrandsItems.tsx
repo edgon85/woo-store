@@ -12,12 +12,13 @@ import { useFetcher } from '@/hooks';
 type Props = {
   isMobile?: boolean;
   isSearch?: boolean;
+  brands: any[]
 };
 
-export const BrandsItems = ({ isMobile = false, isSearch = false }: Props) => {
-  const { data: initialBrands = [] } = useFetcher<IBrand[]>(
+export const BrandsItems = ({ isMobile = false, isSearch = false, brands }: Props) => {
+/*   const { data: initialBrands = [] } = useFetcher<IBrand[]>(
     '/brands/all?take=15'
-  );
+  ); */
   const pathname = usePathname();
   const { replace } = useRouter();
 
@@ -35,18 +36,18 @@ export const BrandsItems = ({ isMobile = false, isSearch = false }: Props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const { debounceValue: debouncedSearch } = useDebounce(searchQuery, 500);
 
-  const [searchResults, setSearchResults] = useState<IBrand[]>(initialBrands);
+  const [searchResults, setSearchResults] = useState<IBrand[]>(brands);
 
   const performSearch = useCallback(
     async (query: string) => {
       if (query === '') {
-        setSearchResults(initialBrands);
+        setSearchResults(brands);
       } else {
         const data = await getBrands(query);
         setSearchResults(data);
       }
     },
-    [initialBrands]
+    [brands]
   );
 
   useEffect(() => {
@@ -117,6 +118,7 @@ export const BrandsItems = ({ isMobile = false, isSearch = false }: Props) => {
   return (
     <div className="divide-y divide-gray-300">
       <input
+        id='search-brands'
         className="block w-full mt-2 mb-2 p-2 text-gray-900 sm:text-md rounded-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
         type="text"
         placeholder="Buscar marca"
