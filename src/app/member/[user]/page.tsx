@@ -15,34 +15,40 @@ export async function generateMetadata(
   props: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const {
-    ok,
-    message: messageData,
-    data: userData,
-  } = await fetchPublicProfile(props.params.user);
+  const { data: userData } = await fetchPublicProfile(props.params.user);
 
   if (!userData) {
     return {
-      title: `Perfil de ${props.params.user} | Woo.online`,
+      title: `Perfil de ${props.params.user} | Woo store`,
     };
   }
 
   const username = userData.username;
-  const title = `Explora las prendas de ${username} en Woo.online - Tu destino para renovar tu estilo`;
-  const imageUrl = userData.profileImage || `${process.env.BASE_URL}/logo.svg`;
+  const title = `Explora las prendas de ${username} en Woo store - Tu destino para renovar tu estilo`;
+  const imageUrl =
+    userData.profileImage || `${process.env.BASE_URL}/opengraph-image.png`;
   let description = userData.biography;
 
   if (!description || description.trim() === '') {
-    description = `Sumérgete en el mundo de ${username} en Woo.online. Descubre tesoros de moda, renueva tu armario y da una nueva vida a tus prendas favoritas. ¡Únete a nuestra comunidad de estilo consciente hoy!`;
+    description = `Sumérgete en el mundo de ${username} en Woo store. Descubre tesoros de moda, renueva tu armario y da una nueva vida a tus prendas favoritas. ¡Únete a nuestra comunidad de estilo consciente hoy!`;
   }
   return {
     title,
     description,
     openGraph: {
+      type: 'website',
+      locale: 'es_ES',
+      url: `${process.env.BASE_URL}/member/${username}`,
       title: title,
       description,
-      images: [`${imageUrl}`],
-      type: 'profile',
+      images: [
+        {
+          url: imageUrl,
+          width: 800,
+          height: 400,
+          alt: title,
+        },
+      ],
     },
   };
 }

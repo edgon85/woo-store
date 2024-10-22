@@ -31,17 +31,31 @@ export async function generateMetadata(
     };
   }
 
-  const title = product?.title!;
-  const imageUrl = product?.images![0];
-  const description = product?.description || '';
+  const title = product?.title || 'Woo Store';
+  const imageUrl =
+    product?.coverImage?.replace('.webp', '.jpg') ||
+    `${process.env.BASE_URL}/opengraph-image.png`;
+  const description =
+    product?.description ||
+    'Descubre miles de artículos de moda a precios increíbles en Woo Store. Renueva tu closet y vende lo que ya no usas.';
 
   return {
     title,
     description,
     openGraph: {
+      type: 'website',
+      locale: 'es_ES',
+      url: `${process.env.BASE_URL}/product/${props.params.slug}`, // URL del producto
       title: title,
       description,
-      images: [`${imageUrl}`],
+      images: [
+        {
+          url: imageUrl,
+          width: 800,
+          height: 400,
+          alt: title,
+        },
+      ],
     },
   };
 }
