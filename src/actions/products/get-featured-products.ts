@@ -8,7 +8,7 @@ type PaginationOptions = {
 };
 export async function getFeaturedProducts({
   page = 1,
-  pageSize = 20,
+  pageSize = 40,
   query = '',
 }: PaginationOptions) {
   noStore();
