@@ -130,9 +130,9 @@ export default async function PageOrderDetail({ params }: Props) {
                 </div>
               </div>
               <div className="flex flex-col items-start md:items-end">
-                <p className="font-bold">
-                  <span className="text-base mr-4">Total:</span>
-                  {formatCurrency(order.summary.total * 100)}
+                <p>
+                  <span className="text-base mr-4">Producto:</span>
+                  {formatCurrency(order.summary.productPrice * 100)}
                 </p>
                 <p>
                   <span className="text-base mr-4">Cuota de servicio:</span>
@@ -141,6 +141,10 @@ export default async function PageOrderDetail({ params }: Props) {
                 <p>
                   <span className="text-base mr-4">Envió:</span>
                   {formatCurrency(order.summary.deliveryTotal * 100)}
+                </p>
+                <p className="font-bold text-xl">
+                  <span className="text-base mr-4">Total:</span>
+                  {formatCurrency(order.summary.total * 100)}
                 </p>
               </div>
             </div>

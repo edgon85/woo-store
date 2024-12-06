@@ -18,7 +18,6 @@ export const OrderBreakdown = ({ product, address }: Props) => {
     setProduct,
     setShippingAddress,
     shippingService,
-    serviceFee,
     computed: { amount },
   } = useCheckoutStore();
 
@@ -106,10 +105,10 @@ export const OrderBreakdown = ({ product, address }: Props) => {
           <p>Envío</p>
           {renderShipping()}
         </div>
-        <div className="flex justify-between items-center">
+        {/* <div className="flex justify-between items-center">
           <p>Tarifa de servicio</p>
           <p>{formatCurrency(serviceFee * 100)}</p>
-        </div>
+        </div> */}
         <div className="flex justify-between items-center font-semibold">
           <strong>Total a pagar</strong>
           <strong>{formatCurrency(amount * 100)}</strong>

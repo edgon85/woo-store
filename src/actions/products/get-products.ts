@@ -1,9 +1,11 @@
 'use server';
 
 import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 export async function getProductByUserIdOrUsername(userId: string) {
   noStore();
+  const authToken = await getAuthToken();
 
   try {
     const url = `${process.env.API_BASE_URL}/products/u/${userId}`;
@@ -11,6 +13,7 @@ export async function getProductByUserIdOrUsername(userId: string) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

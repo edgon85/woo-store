@@ -1,6 +1,7 @@
 'use server';
 
 import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 type SearchOptions = {
   searchTerm: string;
@@ -34,7 +35,7 @@ export async function searchProduct({
   maxPrice,
 }: SearchOptions) {
   noStore();
-
+  const authToken = await getAuthToken();
   const skip = (page - 1) * pageSize;
   const url = new URL(`${process.env.API_BASE_URL}/products/search`);
 
@@ -77,6 +78,7 @@ export async function searchProduct({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

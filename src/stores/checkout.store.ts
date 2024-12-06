@@ -13,7 +13,7 @@ interface IProductWithOffer extends IProduct {
 }
 
 interface CheckoutState {
-  serviceFee: number;
+  // serviceFee: number;
   address: IAddress | null;
   product: IProductWithOffer | null;
   paymentMethod: IPaymentMethod | null;
@@ -30,7 +30,7 @@ interface CheckoutState {
 }
 
 export const useCheckoutStore = create<CheckoutState>()((set, get) => ({
-  serviceFee: Number(process.env.SERVICE_FEE),
+  // serviceFee: Number(process.env.SERVICE_FEE),
   address: null,
   product: null,
   paymentMethod: null,
@@ -51,7 +51,7 @@ export const useCheckoutStore = create<CheckoutState>()((set, get) => ({
       const ddp = deliveryService?.discountedPrice;
       const dpToUse = ddp !== 0 && ddp! < drp! ? ddp : drp;
       const deliveryPrice = product?.isShippingIncluded ? 0 : dpToUse;
-      return priceToUse + Number(deliveryPrice ?? 0) + get().serviceFee;
+      return priceToUse + Number(deliveryPrice ?? 0);
     },
   },
 }));

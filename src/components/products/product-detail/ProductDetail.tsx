@@ -40,15 +40,40 @@ export const ProductDetail = ({ product, currentUserId }: Props) => {
     clothesState,
     brand,
     colors,
+    offer,
+    fee,
+    reservedFor,
   } = product;
 
   return (
     <div className="bg-white p-2 md:p-4 md:rounded md:shadow">
       <section>
         <h1 className="text-lg font-bold capitalize">{title}</h1>
-        <p className="text-lg font-semibold text-cerise-red-700">
-          {formatCurrency(price * 100)}
-        </p>
+
+        <div>
+          {offer ? (
+            <>
+              {reservedFor?.userId === currentUserId ? (
+                <>
+                  <p className="line-through text-gray-500">
+                    {formatCurrency(price * 100)}
+                  </p>
+                  <p className="font-semibold">
+                    {formatCurrency((offer?.price! + fee!) * 100)}
+                  </p>
+                </>
+              ) : (
+                <p className="text-lg font-semibold text-cerise-red-700">
+                  {formatCurrency(price * 100)}
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="text-lg font-semibold text-cerise-red-700">
+              {formatCurrency(price * 100)}
+            </p>
+          )}
+        </div>
       </section>
       <section className="prose prose-sm  mt-2 mb-4">
         <h2 className="text-lg font-bold text-gray-600">Descripción</h2>
