@@ -1,4 +1,5 @@
 import {
+  fetchServiceFee,
   fetchUserProfile,
   getBrands,
   getClothingCondition,
@@ -20,14 +21,21 @@ export default async function CreateProductPage() {
     redirect('/auth/login');
   }
 
-  const [departments, brandsData, clothingConditionData, colorsData, profile] =
-    await Promise.all([
-      getDepartmentsAvailable(),
-      getBrands(''),
-      getClothingCondition(),
-      getColors(),
-      fetchUserProfile(userInfo.id),
-    ]);
+  const [
+    departments,
+    brandsData,
+    clothingConditionData,
+    colorsData,
+    profile,
+    sellerFee,
+  ] = await Promise.all([
+    getDepartmentsAvailable(),
+    getBrands(''),
+    getClothingCondition(),
+    getColors(),
+    fetchUserProfile(userInfo.id),
+    fetchServiceFee('seller'),
+  ]);
 
   return (
     <div className="main-wrapper flex justify-center pt-8 pb-8">
@@ -37,6 +45,7 @@ export default async function CreateProductPage() {
         colors={colorsData}
         departments={departments.data.departments}
         userProfile={profile.data?.profile!}
+        sellerFee={sellerFee.fee}
       />
     </div>
   );

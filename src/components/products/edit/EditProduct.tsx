@@ -6,7 +6,7 @@ import {
   IProduct,
   ProductImage,
 } from '@/interfaces';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import {
   DescriptionSection,
   EditImagesSection,
@@ -26,7 +26,7 @@ import { useEffect, useState } from 'react';
 import { updateProduct } from '@/actions';
 import { toast } from 'react-toastify';
 import { FormInputs, useProductForm, useUnsavedChangesWarning } from '@/hooks';
-import { EyeDropIcon, SpinnerIcon } from '@/components/ui';
+import { SpinnerIcon } from '@/components/ui';
 import { PriceSectionEdit } from './sections/price-section/PriceSection';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -36,6 +36,7 @@ type Props = {
   brands: IBrand[];
   clothingConditionList: IClothesState[];
   colors: IColor[];
+  sellerFee: number;
 };
 
 export const EditProduct = ({
@@ -43,6 +44,7 @@ export const EditProduct = ({
   brands,
   clothingConditionList,
   colors: colorList,
+  sellerFee,
 }: Props) => {
   const router = useRouter();
 
@@ -167,6 +169,7 @@ export const EditProduct = ({
             getValues={getValues}
             errors={errors}
             productId={product.id!}
+            sellerFee={sellerFee}
           />
         ) : null}
         {/* ····························································· */}
