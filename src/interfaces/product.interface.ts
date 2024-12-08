@@ -8,6 +8,7 @@ export interface IProduct {
   subcategory: ISubcategory;
   category?: ICategory;
   price: number;
+  fee?: number;
   images: string[];
   coverImage: string;
   isFeatured?: boolean;

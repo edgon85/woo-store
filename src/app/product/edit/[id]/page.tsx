@@ -1,4 +1,9 @@
-import { getBrands, getClothingCondition, getColors } from '@/actions';
+import {
+  fetchServiceFee,
+  getBrands,
+  getClothingCondition,
+  getColors,
+} from '@/actions';
 import { EditProduct } from '@/components';
 import { getProductBySlug } from '@/actions';
 import { getAuthInfo } from '@/libs';
@@ -18,14 +23,19 @@ export default async function EditProductPage({
   const userInfo = await getAuthInfo();
   const { id: currentUserId } = userInfo!;
 
-  const [productResult, brandsData, clothingConditionData, colorsData] =
-    await Promise.all([
-      getProductBySlug(productId),
-
-      getBrands(''),
-      getClothingCondition(),
-      getColors(),
-    ]);
+  const [
+    productResult,
+    brandsData,
+    clothingConditionData,
+    colorsData,
+    sellerFee,
+  ] = await Promise.all([
+    getProductBySlug(productId),
+    getBrands(''),
+    getClothingCondition(),
+    getColors(),
+    fetchServiceFee('seller'),
+  ]);
 
   const { ok, data: product } = productResult;
 
@@ -47,6 +57,7 @@ export default async function EditProductPage({
         brands={brandsData}
         clothingConditionList={clothingConditionData}
         colors={colorsData}
+        sellerFee={sellerFee.fee}
       />
     </div>
   );

@@ -1,12 +1,17 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 
 type Props = {
   productPrice: number;
+  serviceFee: number;
   onOfferChange: (price: number) => void;
 };
 
-const OfferSlider = ({ productPrice, onOfferChange }: Props) => {
+const OfferSlider = ({ productPrice, onOfferChange, serviceFee }: Props) => {
+  // const originalPrice = productPrice - serviceFee;
+
+  /* const minPrice = Math.ceil(originalPrice * 0.7);
+  const maxPrice = originalPrice; */
   const minPrice = Math.ceil(productPrice * 0.7);
   const maxPrice = productPrice;
   const step = 5;
@@ -27,7 +32,10 @@ const OfferSlider = ({ productPrice, onOfferChange }: Props) => {
     }
   };
 
-  const trackFillPercentage = ((offerPrice - minPrice) * 100) / (maxPrice - minPrice);
+  /*   const trackFillPercentage =
+    ((offerPrice - minPrice) * 100) / (maxPrice - minPrice); */
+  const trackFillPercentage =
+    ((offerPrice - minPrice) * 100) / (maxPrice - minPrice);
 
   const getMessage = () => {
     if (!hasInteracted) {

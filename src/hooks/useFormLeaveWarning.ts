@@ -37,7 +37,7 @@ export function useUnsavedChangesWarning(isDirty: boolean) {
 
   useEffect(() => {
     if (isDirty) {
-      console.log('Unsaved changes exist');
+      // console.log('Unsaved changes exist');
       // Aquí podrías implementar lógica adicional cuando la ruta cambia y hay cambios no guardados
     }
   }, [pathname, searchParams, isDirty]);

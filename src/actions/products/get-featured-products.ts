@@ -1,5 +1,6 @@
 'use server';
 import { unstable_noStore as noStore } from 'next/cache';
+import { getAuthToken } from '@/libs';
 
 type PaginationOptions = {
   page?: number;
@@ -12,6 +13,7 @@ export async function getFeaturedProducts({
   query = '',
 }: PaginationOptions) {
   noStore();
+  const token = await getAuthToken();
 
   const skip = (page - 1) * pageSize;
 
@@ -24,7 +26,7 @@ export async function getFeaturedProducts({
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 

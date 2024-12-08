@@ -42,6 +42,7 @@ type Props = {
   colors: IColor[];
   departments: IDepartment[];
   userProfile: IProfile;
+  sellerFee: number;
 };
 
 export const CreateProduct = ({
@@ -50,6 +51,7 @@ export const CreateProduct = ({
   colors,
   departments,
   userProfile,
+  sellerFee,
 }: Props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -250,6 +252,7 @@ export const CreateProduct = ({
             register={register}
             getValues={getValues}
             errors={errors}
+            sellerFee={sellerFee}
           />
         ) : null}
         {/* ····························································· */}

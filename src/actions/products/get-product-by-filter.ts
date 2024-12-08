@@ -1,5 +1,6 @@
 'use server';
 
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 
 type FilterOptions = {
@@ -34,6 +35,7 @@ export async function getProductFilters({
 }: // Add other filter parameters here
 FilterOptions) {
   noStore();
+  const authToken = await getAuthToken();
 
   const skip = (page - 1) * pageSize;
   const url = new URL(`${process.env.API_BASE_URL}/products/filter`);
@@ -76,6 +78,7 @@ FilterOptions) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

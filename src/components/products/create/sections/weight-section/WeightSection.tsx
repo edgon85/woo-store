@@ -1,3 +1,4 @@
+import { WeightIcon } from '@/components';
 import { FormInputs } from '@/hooks';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 
@@ -9,34 +10,39 @@ type Props = {
 export const WeightSection = ({ register, errors }: Props) => {
   return (
     <div className="py-4 px-4 md:px-0">
-      <div className="relative z-0 w-full mb-6 group">
+      <div className="flex items-center justify-between w-full">
         <label
           htmlFor="product-weight"
-          className="block mb-2 text-sm font-medium text-gray-900 flex-1"
+          className="text-sm font-medium text-gray-900 whitespace-nowrap flex gap-1 items-center"
         >
-          Peso (lbs)
+          <WeightIcon className="w-6 h-6 text-gray-500" />
+          Peso:
         </label>
 
-        <input
-          type="number"
-          id="product-weight"
-          className="block w-full p-4 text-gray-900 border border-divider rounded-md  sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
-          placeholder="Peso aproximado del producto"
-          {...register('weight', {
-            required: true,
-            valueAsNumber: true,
-            validate: {
-              positive: (value) =>
-                value > 0 || 'El peso debe ser un número positivo',
-              integer: (value) =>
-                Number.isInteger(value) || 'El peso debe ser un número entero',
-            },
-            min: { value: 1, message: 'El peso debe ser mayor que 0' },
-          })}
-        />
-        {errors.weight && (
-          <p className="text-red-500 text-sm mt-1">{errors.weight.message}</p>
-        )}
+        <div className="">
+          <select
+            id="product-weight"
+            defaultValue=""
+            className="block w-full p-2 text-gray-900 border border-divider rounded-md sm:text-md focus:ring-lightPrimary focus:border-lightPrimary outline-none"
+            {...register('weight', {
+              required: true,
+              valueAsNumber: true,
+            })}
+          >
+            <option value="" disabled>
+              - Seleccione peso -
+            </option>
+            {[...Array(10)].map((_, index) => (
+              <option key={index + 1} value={index + 1}>
+                {index + 1} {index === 0 ? 'libra' : 'libras'}
+              </option>
+            ))}
+          </select>
+
+          {errors.weight && (
+            <p className="text-red-500 text-sm mt-1">{errors.weight.message}</p>
+          )}
+        </div>
       </div>
     </div>
   );

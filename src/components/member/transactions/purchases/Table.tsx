@@ -18,6 +18,7 @@ export const TablePurchases = ({ orders }: Props) => {
         const images = order.product.images.map((image: any) => image.url);
         const { product, summary, seller, shippingService } = order;
 
+        const productPrice = summary.productPrice + summary.serviceFee;
         return (
           <div
             key={order.id}
@@ -44,12 +45,12 @@ export const TablePurchases = ({ orders }: Props) => {
                   </h3>
                   <p>
                     <span className="text-gray-500">Precio:</span>{' '}
-                    {formatCurrency(summary.productPrice * 100)}
+                    {formatCurrency(productPrice * 100)}
                   </p>
-                  <p>
+                  {/* <p>
                     <span className="text-gray-500">Tarifa de servicio:</span>{' '}
                     {formatCurrency(summary.serviceFee * 100)}
-                  </p>
+                  </p> */}
                   <p>
                     <span className="text-gray-500">Envío:</span>{' '}
                     {formatCurrency(order.summary.deliveryTotal * 100)}

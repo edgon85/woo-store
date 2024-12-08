@@ -1,5 +1,6 @@
 'use server';
 import { IProduct } from '@/interfaces';
+import { getAuthToken } from '@/libs';
 import { unstable_noStore as noStore } from 'next/cache';
 
 type ErrorResult = {
@@ -9,6 +10,8 @@ type ErrorResult = {
 
 export async function getProductBySlug(productSlug: string) {
   noStore();
+  const authToken = await getAuthToken();
+
   const url = `${process.env.API_BASE_URL}/products/${productSlug}`;
 
   try {
@@ -16,6 +19,7 @@ export async function getProductBySlug(productSlug: string) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

@@ -56,6 +56,7 @@ export const MakeOfferContent = ({ product }: Props) => {
         <OfferSlider
           productPrice={product.price}
           onOfferChange={handleOfferChange}
+          serviceFee={product.fee || 0}
         />
         <div className="mt-4">
           <Button
