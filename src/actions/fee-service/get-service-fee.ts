@@ -30,7 +30,6 @@ export async function fetchServiceFee(userType: string) {
 
     const data = await resp.json();
 
-    console.log({ data });
     return data;
   } catch (error: any) {
     console.log(error.message);
